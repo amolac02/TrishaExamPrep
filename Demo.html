@@ -37,6 +37,10 @@
     <h1>Exam Portal</h1>
     <label for="max-questions">Enter the number of questions:</label>
     <input type="number" id="max-questions" min="1" placeholder="e.g., 5">
+    <select id="sheetNameSelect">
+        <option value="P4_Science_Unit_6_Seasons">P4_Science_Unit_6_Seasons</option>
+        <option value="P4_GP_Unit_3_FoodWaste">P4_GP_Unit_3_FoodWaste</option>
+    </select>
     <button id="start-exam">Start Exam</button>
     <div id="questions-container" class="question-container"></div>
     <button id="previous-question" style="display: none;">Previous</button>
@@ -55,7 +59,9 @@
 
         // Fetch questions data from the API
         function loadQuestions() {
-            fetch(apiUrl)
+            const sheetName = document.getElementById('sheetNameSelect').value;
+            const url = '${apiUrl}?sheetName=${sheetName}';
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     questionsData = data.questions;
