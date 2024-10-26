@@ -60,7 +60,8 @@
         // Fetch questions data from the API
         function loadQuestions() {
             const sheetName = document.getElementById('sheetNameSelect').value;
-            const url = '${apiUrl}?sheetName=${sheetName}';
+            const url = `${apiUrl}?sheetName=${sheetName}`;
+            
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
