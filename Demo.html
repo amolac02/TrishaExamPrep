@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Exam Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .question-container {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #score,
+        #results-container {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Exam Portal</h1>
+    <label for="max-questions">Enter the number of questions:</label>
+    <input type="number" id="max-questions" min="1" placeholder="e.g., 5">
+    <button id="start-exam">Start Exam</button>
+    <div id="questions-container" class="question-container"></div>
+    <button id="previous-question" style="display: none;">Previous</button>
+    <button id="next-question" style="display: none;">Next</button>
+    <button id="submit-exam" style="display: none;">Submit Exam</button>
+    <div id="results-container" style="display: none;"></div>
+    <p id="score"></p>
+
+    <script>
+        const apiUrl = "https://script.google.com/macros/s/AKfycbztuYbeFXWXJ0YhOSiYeryGeh4_4fW-3bWKKHMJCE7nOom_HfyMsUk3lrBE48RtvFda/exec";
+        let questionsData = [];
+        let selectedQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let questionIds = {};
+
+        // Fetch questions data from the API
+        function loadQuestions() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    questionsData = data.questions;
+                    const maxQuestions = Math.min(parseInt(document.getElementById("max-questions").value), questionsData.length);
+                    selectedQuestions = getRandomQuestions(questionsData, maxQuestions);
+                    displayQuestion(currentQuestionIndex);
+                    document.getElementById("questions-container").style.display = "block";
+                    document.getElementById("next-question").style.display = "inline";
+                    document.getElementById("submit-exam").style.display = "inline";
+                })
+                .catch(error => {
+                    console.error("Error fetching questions data:", error);
+                    document.getElementById("questions-container").innerText = "Failed to load questions.";
+                });
+        }
+
+        // Randomly select a specified number of questions
+        function getRandomQuestions(data, count) {
+            const shuffled = data.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Display the current question
+        function displayQuestion(index) {
+            const container = document.getElementById("questions-container");
+            container.innerHTML = ""; // Clear previous question content
+            const question = selectedQuestions[index];
+
+            // Create HTML structure for the current question with radio buttons
+            container.innerHTML = `
+        <h3>Question ${index + 1}: ${question.question}</h3>
+        <ul class="options">
+          ${question.options.map(option => `
+            <li>
+              <label>
+                <input type="radio" name="question" value="${option}" ${userAnswers[index] === option ? 'checked' : ''}>
+                ${option}
+              </label>
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+            // Manage visibility of navigation buttons
+            document.getElementById("previous-question").style.display = index > 0 ? "inline" : "none";
+            document.getElementById("next-question").style.display = index < selectedQuestions.length - 1 ? "inline" : "none";
+        }
+
+        // Save selected answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector(`input[name="question"]:checked`);
+            if (selectedOption) {
+                userAnswers[currentQuestionIndex] = selectedOption.value;
+            }
+        }
+
+        // Display results with correct answers, status, and references
+        function displayResults() {
+            const resultsContainer = document.getElementById("results-container");
+            resultsContainer.innerHTML = "<h2>Exam Results</h2>";
+            let score = 0;
+
+            selectedQuestions.forEach((question, index) => {
+                questionIds[index] = question.id;
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correctAnswer;
+                if (isCorrect) score++;
+
+                resultsContainer.innerHTML += `
+          <div>
+            <h3>Question ${index + 1}: ${question.question}</h3>
+            <p><strong>Your Answer:</strong> ${userAnswer || "No answer selected"}</p>
+            <p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>
+            <p><strong>Status:</strong> ${isCorrect ? "Correct" : "Incorrect"}</p>
+            <p><strong>References:</strong> ${question.references.join(", ")}</p>
+          </div>
+          <hr>
+        `;
+            });
+
+            document.getElementById("score").innerText = `Your score: ${score} out of ${selectedQuestions.length}`;
+            submitResults(score, selectedQuestions.length, userAnswers); // Submit results
+            document.getElementById("questions-container").style.display = "none";
+            document.getElementById("previous-question").style.display = "none";
+            document.getElementById("next-question").style.display = "none";
+            document.getElementById("submit-exam").style.display = "none";
+            resultsContainer.style.display = "block";
+        }
+
+        // Submit exam results using POST request
+        function submitResults(score, totalQuestions, answers) {
+            const studentId = prompt("Enter Student ID:");
+            const studentName = prompt("Enter Student Name:");
+
+            const payload = {
+                studentId: studentId,
+                studentName: studentName,
+                score: score,
+                totalQuestions: totalQuestions,
+                selectedAnswers: answers,
+                questionIds: questionIds
+            };
+
+            fetch(apiUrl, {
+                method: "POST",
+                mode: "no-cors",  // don't allow CORS
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+
+        }
+
+        // Event listeners
+        document.getElementById("start-exam").addEventListener("click", () => {
+            const maxQuestions = document.getElementById("max-questions").value;
+            if (maxQuestions <= 0) {
+                alert("Please enter a valid number of questions.");
+            } else {
+                loadQuestions();
+                document.getElementById("start-exam").style.display = "none";
+                document.getElementById("max-questions").style.display = "none";
+            }
+        });
+
+        document.getElementById("next-question").addEventListener("click", () => {
+            saveAnswer();
+            currentQuestionIndex++;
+            displayQuestion(currentQuestionIndex);
+        });
+
+        document.getElementById("previous-question").addEventListener("click", () => {
+            saveAnswer();
+            currentQuestionIndex--;
+            displayQuestion(currentQuestionIndex);
+        });
+
+        document.getElementById("submit-exam").addEventListener("click", () => {
+            saveAnswer();
+            displayResults();
+        });
+    </script>
+
+</body>
+
+</html>
