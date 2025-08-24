@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Geometry Worksheet: Angles & Triangles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .diagram {
+            width: 100%;
+            max-width: 250px;
+            margin: 1rem auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <!-- Header -->
+        <header class="bg-white rounded-xl shadow-lg p-6 mb-6 sticky top-4 z-10">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-700">Geometry Practice: Angles & Triangles</h1>
+                    <p class="text-gray-500 mt-1">20 challenging questions to test your skills.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-center">
+                         <span id="score" class="text-2xl font-bold text-indigo-600">0</span>
+                         <span class="text-gray-500">/ 20</span>
+                         <p class="text-sm text-gray-500">Score</p>
+                    </div>
+                     <button id="reset-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main id="worksheet-container" class="space-y-8">
+            <!-- Questions will be dynamically inserted here -->
+            <div id="section-1">
+                <h2 class="text-2xl font-bold mb-4 text-gray-600 border-b-2 border-indigo-200 pb-2">Section 1: Angle Classification and Measurement</h2>
+                <div id="section-1-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+            <div id="section-2">
+                <h2 class="text-2xl font-bold mb-4 text-gray-600 border-b-2 border-teal-200 pb-2">Section 2: Angles in Triangles</h2>
+                <div id="section-2-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+             <div id="section-3">
+                <h2 class="text-2xl font-bold mb-4 text-gray-600 border-b-2 border-amber-200 pb-2">Section 3: Complex Problems and Multi-Step Calculations</h2>
+                <div id="section-3-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const questions = [
+            // Section 1
+            { section: 1, question: "An angle is exactly halfway between a right angle (90°) and a straight angle (180°). What is the measure of this angle, and what type of angle is it?", answer: "135 obtuse", answer_pattern: /135.*obtuse/i },
+            { section: 1, question: "What is the measure of the reflex angle to an angle of 47°?", answer: "313", answer_pattern: /313/ },
+            { section: 1, question: "Two angles, Angle A and Angle B, form a straight line. Angle A is an acute angle. What type of angle must Angle B be? Explain your reasoning.", answer: "Obtuse", answer_pattern: /obtuse/i },
+            { section: 1, question: "Using a protractor, draw an angle of 285°. What is the smaller angle inside your drawing, and what is its classification?", answer: "75 acute", answer_pattern: /75.*acute/i },
+            { section: 1, question: "An angle is 30° more than a right angle. What is its measure? A second angle is 30° less than a straight angle. What is its measure? Find the sum of these two angles.", answer: "270", answer_pattern: /270/ },
+            // Section 2
+            { section: 2, question: "In triangle ABC, Angle A = 55° and Angle B = 72°. Calculate the size of Angle C. Is the triangle scalene, isosceles, or equilateral?", answer: "53 scalene", answer_pattern: /53.*scalene/i },
+            { section: 2, question: "An isosceles triangle has one angle that measures 100°. What are the measures of the other two angles?", answer: "40 40", answer_pattern: /40.*40/ },
+            { section: 2, question: "In a right-angled triangle, one of the acute angles is four times larger than the other acute angle. Find the measure of both acute angles.", answer: "18 72", answer_pattern: /(18.*72|72.*18)/ },
+            { section: 2, question: "Triangle XYZ is an isosceles triangle where XY = XZ. If Angle Y = 48°, what is the measure of Angle X?", answer: "84", answer_pattern: /84/ },
+            { section: 2, question: "Can a triangle have two obtuse angles? Explain why or why not using the 180° rule.", answer: "No", answer_pattern: /no/i },
+            // Section 3
+            { section: 3, question: "Two angles in a triangle are 45° and 75°. What is the third angle? What is the reflex angle to this third angle?", answer: "60 300", answer_pattern: /60.*300/ },
+            { section: 3, question: "An isosceles triangle has a vertex angle (the angle between the two equal sides) of 38°. What are the other two angles? What type of angles are they?", answer: "71 acute", answer_pattern: /71.*acute/i },
+            { section: 3, question: "Look at a clock. What is the measure of the acute angle between the hour hand and the minute hand at 4:00 PM?", answer: "120", answer_pattern: /120/ },
+            { section: 3, question: "A straight line, ABC, is drawn. A point D is placed above the line, and lines are drawn from D to B. If Angle ABD is 65°, what is the measure of Angle DBC?", answer: "115", answer_pattern: /115/, diagram: `<svg class="diagram" viewBox="0 0 100 60"><line x1="0" y1="50" x2="100" y2="50" stroke="black" /><line x1="50" y1="50" x2="70" y2="10" stroke="black" /><circle cx="50" cy="50" r="2" fill="black"/><text x="0" y="55">A</text><text x="48" y="55">B</text><text x="95" y="55">C</text><text x="72" y="10">D</text><text x="55" y="40">65°</text></svg>` },
+            { section: 3, question: "In the diagram, line DE is parallel to line BC. Angle ADE = 50° and Angle AED = 70°. Find the measure of Angle BAC in the larger triangle ABC.", answer: "60", answer_pattern: /60/, diagram: `<svg class="diagram" viewBox="0 0 100 80"><polygon points="50,10 10,70 90,70" stroke="black" fill="none"/><line x1="25" y1="40" x2="75" y2="40" stroke="black"/><text x="48" y="8">A</text><text x="5" y="75">B</text><text x="92" y="75">C</text><text x="20" y="38">D</text><text x="77" y="38">E</text><text x="30" y="35">50°</text><text x="60" y="35">70°</text></svg>` },
+            { section: 3, question: "A triangle has angles in the ratio of 2:3:4. Calculate the size of each angle.", answer: "40 60 80", answer_pattern: /(40.*60.*80|80.*60.*40)/ },
+            { section: 3, question: "In triangle PQR, Angle P is 2x, Angle Q is 3x, and Angle R is 4x. Find the value of x and the measure of each angle.", answer: "x=20, 40 60 80", answer_pattern: /x=20.*40.*60.*80/i },
+            { section: 3, question: "A ship turns 120° clockwise, then 210° anti-clockwise. What single clockwise turn would have resulted in the same final direction? What type of angle is this?", answer: "270 reflex", answer_pattern: /270.*reflex/i },
+            { section: 3, question: "In an isosceles triangle, the vertex angle is 20° more than one of the base angles. Find the measure of all three angles.", answer: "53.3 53.3 73.3", answer_pattern: /53.3.*53.3.*73.3/ },
+            { section: 3, question: "A straight line intersects two parallel lines. One of the angles formed is 115°. Find the measures of all the other seven angles formed at the intersections.", answer: "65", answer_pattern: /65/, diagram: `<svg class="diagram" viewBox="0 0 100 80"><line x1="0" y1="20" x2="100" y2="20" stroke="black" /><line x1="0" y1="60" x2="100" y2="60" stroke="black" /><line x1="20" y1="0" x2="80" y2="80" stroke="black" /><text x="35" y="18">115°</text></svg>` }
+        ];
+
+        const scoreElement = document.getElementById('score');
+        const resetBtn = document.getElementById('reset-btn');
+
+        let score = 0;
+        let correctAnswers = new Set();
+
+        function renderQuestions() {
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'bg-white rounded-xl shadow-md p-4 flex flex-col justify-between';
+                questionCard.id = `q-card-${index}`;
+
+                let diagramHTML = q.diagram ? q.diagram : '';
+
+                questionCard.innerHTML = `
+                    <div>
+                        <p class="font-semibold text-gray-600 mb-2">Question ${index + 1}</p>
+                        <p class="text-lg mb-4">${q.question}</p>
+                        ${diagramHTML}
+                    </div>
+                    <div>
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" id="answer-${index}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Your answer...">
+                            <button onclick="checkAnswer(${index})" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-lg transition-colors">Check</button>
+                        </div>
+                        <p id="feedback-${index}" class="text-sm h-10"></p>
+                    </div>
+                `;
+
+                document.getElementById(`section-${q.section}-grid`).appendChild(questionCard);
+            });
+        }
+
+        function checkAnswer(index) {
+            const userAnswer = document.getElementById(`answer-${index}`).value.trim().replace(/°/g, '');
+            const feedbackElement = document.getElementById(`feedback-${index}`);
+            const questionCard = document.getElementById(`q-card-${index}`);
+            const questionData = questions[index];
+
+            if (userAnswer === "") {
+                feedbackElement.textContent = "Please enter an answer.";
+                feedbackElement.className = "text-sm h-10 text-yellow-600";
+                return;
+            }
+            
+            const isCorrect = questionData.answer_pattern.test(userAnswer);
+
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<strong>Correct!</strong>`;
+                feedbackElement.className = "text-sm h-10 text-green-600 font-semibold";
+                questionCard.classList.remove('border-red-400');
+                questionCard.classList.add('border-2', 'border-green-400');
+                if (!correctAnswers.has(index)) {
+                    score++;
+                    correctAnswers.add(index);
+                }
+            } else {
+                feedbackElement.innerHTML = `Not quite. The correct answer is <strong>${questions[index].answer}</strong>.`;
+                feedbackElement.className = "text-sm h-10 text-red-600 font-semibold";
+                questionCard.classList.remove('border-green-400');
+                questionCard.classList.add('border-2', 'border-red-400');
+                if (correctAnswers.has(index)) {
+                    score--;
+                    correctAnswers.delete(index);
+                }
+            }
+            updateScore();
+        }
+
+        function updateScore() {
+            scoreElement.textContent = score;
+        }
+
+        function resetWorksheet() {
+            questions.forEach((q, index) => {
+                document.getElementById(`answer-${index}`).value = '';
+                document.getElementById(`feedback-${index}`).innerHTML = '';
+                document.getElementById(`q-card-${index}`).classList.remove('border-2', 'border-green-400', 'border-red-400');
+            });
+            score = 0;
+            correctAnswers.clear();
+            updateScore();
+        }
+
+        resetBtn.addEventListener('click', resetWorksheet);
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>
+
