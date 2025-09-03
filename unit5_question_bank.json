@@ -1,0 +1,805 @@
+[
+  {
+    "id": 1,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which unit is used to measure weight in science?",
+    "options": ["Kilogram (kg)", "Newton (N)", "Gram (g)", "Joule (J)"],
+    "answer_index": 1
+  },
+  {
+    "id": 2,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which statement is correct about mass and weight when you travel from Earth to the Moon?",
+    "options": ["Both mass and weight decrease.", "Mass stays the same; weight decreases.", "Mass decreases; weight stays the same.", "Both mass and weight stay the same."],
+    "answer_index": 1
+  },
+  {
+    "id": 3,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "On a planet where gravity is half of Earth’s, how does an object’s weight compare to its weight on Earth?",
+    "options": ["Double", "Half", "The same", "Zero"],
+    "answer_index": 1
+  },
+  {
+    "id": 4,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Why do scientists prefer to say a baby has a mass of 3.6 kg instead of saying it 'weighs' 3.6 kg?",
+    "options": ["Because kilograms are not allowed for babies.", "Because mass is measured in kg, but weight is a force measured in N.", "Because weight is always zero on Earth.", "Because mass changes when gravity changes."],
+    "answer_index": 1
+  },
+  {
+    "id": 5,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which instrument directly measures weight?",
+    "options": ["Measuring scale (balance)", "Thermometer", "Forcemeter (spring scale)", "Voltmeter"],
+    "answer_index": 2
+  },
+  {
+    "id": 6,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "On Earth, if an object has a mass of 3 kg, which is the best approximate weight?",
+    "options": ["3 N", "9.8 N", "30 N", "98 N"],
+    "answer_index": 2
+  },
+  {
+    "id": 7,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "A forcemeter shows 15 N for an object on Earth. What is the object’s approximate mass?",
+    "options": ["0.15 kg", "1.5 kg", "15 kg", "150 kg"],
+    "answer_index": 1
+  },
+  {
+    "id": 8,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "A planet has a gravitational strength of 5 N/kg. What weight will a 4 kg object have there?",
+    "options": ["5 N", "9.8 N", "20 N", "40 N"],
+    "answer_index": 2
+  },
+  {
+    "id": 9,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which sentence completes the pattern you would find by measuring mass and weight on Earth?",
+    "options": ["Mass and weight are unrelated.", "As mass increases, weight decreases.", "As mass increases, weight increases proportionally.", "Weight stays constant while mass changes."],
+    "answer_index": 2
+  },
+  {
+    "id": 10,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "When should you repeat a measurement during a mass–weight investigation?",
+    "options": ["When it perfectly fits the pattern.", "When it does not fit the pattern or seems unusual.", "Only when you forgot to record it.", "Never; one reading is enough."],
+    "answer_index": 1
+  },
+  {
+    "id": 11,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Why do astronauts feel 'weightless' on the International Space Station?",
+    "options": ["There is no gravity in space.", "They are in free fall around Earth, so they and the station fall together.", "Their mass becomes zero.", "The station pushes them upwards."],
+    "answer_index": 1
+  },
+  {
+    "id": 12,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Inside the International Space Station, an astronaut’s mass is ___ and their weight is ___ compared with on Earth.",
+    "options": ["smaller; smaller but not zero", "the same; effectively near zero", "larger; larger", "the same; the same"],
+    "answer_index": 1
+  },
+  {
+    "id": 13,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which is the best reason astronauts exercise daily in orbit?",
+    "options": ["To reduce air resistance.", "To prevent muscle and bone weakening caused by weightlessness.", "To increase their mass.", "To change gravity."],
+    "answer_index": 1
+  },
+  {
+    "id": 14,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "Two identical objects are taken to the Moon. Which statement is correct?",
+    "options": ["Both have lower mass and the same weight.", "Both have the same mass but lower weight.", "Both have larger mass and weight.", "One has larger mass; the other has lower weight."],
+    "answer_index": 1
+  },
+  {
+    "id": 15,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "A dataset shows mass vs weight on Earth. Which pair is likely an anomaly?",
+    "options": ["(1 kg, ~10 N)", "(2 kg, ~20 N)", "(0.5 kg, ~5 N)", "(3 kg, ~12 N)"],
+    "answer_index": 3
+  },
+  {
+    "id": 16,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Complete: 'One kilogram of mass has a weight of about ___ on Earth.'",
+    "options": ["1 N", "5 N", "10 N", "100 N"],
+    "answer_index": 2
+  },
+  {
+    "id": 17,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which would NOT change if you traveled to Jupiter?",
+    "options": ["Your weight", "Your mass", "Your forcemeter reading", "The force of gravity on you"],
+    "answer_index": 1
+  },
+  {
+    "id": 18,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Newtons are named after Isaac Newton because he was first to explain:",
+    "options": ["Atoms", "Electric circuits", "Forces and gravity", "Cells"],
+    "answer_index": 2
+  },
+  {
+    "id": 19,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which table headings are MOST suitable for recording a mass–weight investigation?",
+    "options": ["Object; Length (cm); Time (s)", "Object; Mass (g or kg); Weight (N)", "Object; Volume (cm³); Temperature (°C)", "Object; Voltage (V); Current (A)"],
+    "answer_index": 1
+  },
+  {
+    "id": 20,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "A 2.5 kg tool is taken to a planet where g = 15 N/kg. What is its weight there?",
+    "options": ["2.5 N", "15 N", "25 N", "37.5 N"],
+    "answer_index": 3
+  },
+  {
+    "id": 21,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "On the Moon (≈1/6 g), which reading changes on the same bathroom scale?",
+    "options": ["Mass in kg", "Mass in g", "Neither mass nor weight", "Neither—bathroom scales display mass but are calibrated for Earth’s gravity, so the indicated 'kg' would be misleading there"],
+    "answer_index": 3
+  },
+  {
+    "id": 22,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "Which action improves reliability when results don’t fit the trend?",
+    "options": ["Ignore them", "Repeat those measurements", "Change the hypothesis immediately", "Average all results including obvious mistakes without checking"],
+    "answer_index": 1
+  },
+  {
+    "id": 23,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "A satellite stays in orbit mainly because:",
+    "options": ["It is pushed by wind.", "It is pulled by gravity while moving forward fast enough to keep missing Earth.", "It has no mass.", "It is supported by air."],
+    "answer_index": 1
+  },
+  {
+    "id": 24,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "high",
+    "question": "If gravity suddenly became zero everywhere, what would happen to weight and mass?",
+    "options": ["Weight stays; mass becomes zero.", "Weight becomes zero; mass stays the same.", "Both become zero.", "Both increase."],
+    "answer_index": 1
+  },
+  {
+    "id": 25,
+    "topic": "5.1 Mass & Weight",
+    "difficulty": "medium",
+    "question": "On Earth, a 5 kg crate exerts which approximate force due to gravity?",
+    "options": ["5 N", "10 N", "50 N", "500 N"],
+    "answer_index": 2
+  },
+
+  {
+    "id": 26,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "A ping-pong ball resting on a table is not moving. Which statement best explains this?",
+    "options": ["No forces act on it.", "Forces act but are balanced (gravity and the table's upward push).", "Only gravity acts.", "Only air resistance acts."],
+    "answer_index": 1
+  },
+  {
+    "id": 27,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Blowing a ball through a straw makes it speed up. Which effect of a force is this?",
+    "options": ["Change of shape", "Change of direction", "Change of speed (starting or speeding up)", "Stopping motion"],
+    "answer_index": 2
+  },
+  {
+    "id": 28,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "A rolling ball hits a book and stops. Which force mainly causes it to stop at the instant of collision?",
+    "options": ["Gravity", "Air resistance", "Contact force from the book", "Magnetic force"],
+    "answer_index": 2
+  },
+  {
+    "id": 29,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Covering the table with a cloth makes the ball slow down more quickly because:",
+    "options": ["Gravity increases.", "Upthrust increases.", "Friction increases.", "The ball loses mass."],
+    "answer_index": 2
+  },
+  {
+    "id": 30,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "Flicking the ball between players repeatedly demonstrates which effect of a force most clearly?",
+    "options": ["Change in shape only", "Start of motion only", "Change of direction", "No change—forces cancel"],
+    "answer_index": 2
+  },
+  {
+    "id": 31,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Pressing down on a ping-pong ball so it dents shows that a force can:",
+    "options": ["Change an object’s mass.", "Change an object’s volume of water displaced.", "Change shape/size.", "Remove gravity."],
+    "answer_index": 2
+  },
+  {
+    "id": 32,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "If equal and opposite horizontal forces act on a moving puck with low friction, what happens to its motion?",
+    "options": ["It speeds up.", "It slows down to a stop.", "It continues at constant speed in the same direction.", "It immediately changes direction."],
+    "answer_index": 2
+  },
+  {
+    "id": 33,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "Which situation best shows an unbalanced force?",
+    "options": ["A book resting on a table.", "A car moving at constant speed on a straight road.", "A ball accelerating when pushed.", "A lamp hanging motionless."],
+    "answer_index": 2
+  },
+  {
+    "id": 34,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Which labelled force pair would appear on a force diagram of a ball on a horizontal table?",
+    "options": ["Weight and upthrust from water", "Weight (down) and normal contact force (up)", "Thrust (forward) and lift (up)", "Magnetic (north) and electric (south)"],
+    "answer_index": 1
+  },
+  {
+    "id": 35,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "A player hits a table-tennis ball. Which is the most complete description of the changes caused by the force?",
+    "options": ["Only speed changes.", "Only direction changes.", "Speed and/or direction change depending on the hit.", "Mass changes."],
+    "answer_index": 2
+  },
+  {
+    "id": 36,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "Which investigation step improves the quality of observations over time?",
+    "options": ["Measure once and move on.", "Repeat uncertain observations and compare within the group.", "Avoid discussing results.", "Change tools after each reading."],
+    "answer_index": 1
+  },
+  {
+    "id": 37,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "What force primarily slows down a rolling ball on a carpeted surface?",
+    "options": ["Weight", "Air resistance", "Normal force", "Friction with the carpet"],
+    "answer_index": 3
+  },
+  {
+    "id": 38,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "A football is kicked, flies upward, then comes down. Which force acts downward throughout the motion?",
+    "options": ["Thrust", "Lift", "Gravity", "Tension"],
+    "answer_index": 2
+  },
+  {
+    "id": 39,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Choose the best example of 'force makes an object start moving'.",
+    "options": ["A parked bicycle begins to move when pushed.", "A puck glides at steady speed.", "A hanging lamp stays still.", "A clay ball is squashed."],
+    "answer_index": 0
+  },
+  {
+    "id": 40,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Which outcome indicates 'force changes shape' rather than 'force changes motion'?",
+    "options": ["Ball thrown faster", "Car braking", "Clay being pressed flat", "Ball changing direction"],
+    "answer_index": 2
+  },
+  {
+    "id": 41,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "A snooker ball at rest begins to roll after a cue strike. Which forces act immediately after the strike to slow it down again?",
+    "options": ["Only gravity", "Friction and air resistance", "Only upthrust", "Only magnetic forces"],
+    "answer_index": 1
+  },
+  {
+    "id": 42,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "When a ball is flicked to a friend, what must they do to reverse its direction back to you?",
+    "options": ["Apply no force.", "Apply a force in the same direction it’s moving.", "Apply a force in the opposite direction to change direction.", "Increase gravity."],
+    "answer_index": 2
+  },
+  {
+    "id": 43,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "On a smooth table, a ball moves at constant speed in a straight line. What can you say about the net horizontal force?",
+    "options": ["It is forward.", "It is zero.", "It is backward.", "It is upward."],
+    "answer_index": 1
+  },
+  {
+    "id": 44,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Which is the most direct way a force can stop a moving object?",
+    "options": ["Reduce its mass.", "Apply a force opposite its motion.", "Increase its weight.", "Decrease gravity."],
+    "answer_index": 1
+  },
+  {
+    "id": 45,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "Which pair best matches the five effects of forces listed in the unit?",
+    "options": ["Start/stop motion; change speed; change direction; change shape/size; no effect", "Start motion; slow down; stop; change direction; change shape/size", "Only speed up; only slow down; only stop; only change shape; only change direction", "Start motion; reduce mass; change density; change color; stop"],
+    "answer_index": 1
+  },
+  {
+    "id": 46,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "When a ball rolls up to a wall and bounces back, the wall exerts a force on the ball that:",
+    "options": ["Is in the same direction as the ball’s incoming motion.", "Is opposite the ball’s incoming motion, changing its direction.", "Removes gravity.", "Changes the ball’s mass."],
+    "answer_index": 1
+  },
+  {
+    "id": 47,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "high",
+    "question": "Which scenario best separates the role of friction from gravity?",
+    "options": ["Dropping a ball in a vacuum vs in air.", "Measuring mass vs weight.", "Using a heavier ball.", "Changing table color."],
+    "answer_index": 0
+  },
+  {
+    "id": 48,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Which choice lists ONLY contact forces?",
+    "options": ["Gravity, friction", "Friction, push from a hand", "Gravity, magnetism", "Weight, air resistance, gravity"],
+    "answer_index": 1
+  },
+  {
+    "id": 49,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "A ball rests on a table. If the table is removed suddenly, the ball falls because:",
+    "options": ["Weight disappears.", "Upward support force is gone; gravity is unbalanced.", "Mass increases.", "Air resistance pushes down."],
+    "answer_index": 1
+  },
+  {
+    "id": 50,
+    "topic": "5.2 Effects of Forces",
+    "difficulty": "medium",
+    "question": "Which pair correctly matches force with likely effect in the ping-pong activities?",
+    "options": ["Push with straw → change shape", "Friction with cloth → slow down", "Book contact → speed up", "Gravity → make it float"],
+    "answer_index": 1
+  },
+
+  {
+    "id": 51,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which two forces are most important when deciding whether an object floats or sinks?",
+    "options": ["Weight and friction", "Upthrust and weight", "Thrust and lift", "Magnetism and gravity"],
+    "answer_index": 1
+  },
+  {
+    "id": 52,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "An object floats if:",
+    "options": ["Upthrust equals or exceeds its weight.", "Upthrust is smaller than its weight.", "Its mass is greater than the mass of displaced water.", "Its volume is small."],
+    "answer_index": 0
+  },
+  {
+    "id": 53,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "According to displacement ideas, a container ship floats because:",
+    "options": ["It has no mass.", "It displaces a mass of water greater than its own mass.", "It reduces gravity.", "The water pushes down on it."],
+    "answer_index": 1
+  },
+  {
+    "id": 54,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which change increases upthrust on an object in water?",
+    "options": ["Decreasing displaced water volume", "Increasing displaced water volume", "Reducing the water’s density", "Turning off gravity"],
+    "answer_index": 1
+  },
+  {
+    "id": 55,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "A small plastic container floats empty but sinks after enough sand is added. Which variable is independent in this test?",
+    "options": ["Type of container", "Amount of sand added each step", "Whether it floats or sinks", "Temperature of water"],
+    "answer_index": 1
+  },
+  {
+    "id": 56,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "In the sand-adding experiment, which is the dependent variable?",
+    "options": ["Amount of sand", "Water volume", "Float/sink outcome (or the point when it sinks)", "Container material"],
+    "answer_index": 2
+  },
+  {
+    "id": 57,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which is a suitable control variable for fair testing in the sand-adding experiment?",
+    "options": ["Same container and water conditions each time", "Random container shapes", "Different liquids each time", "Different starting water depths each time"],
+    "answer_index": 0
+  },
+  {
+    "id": 58,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "Which force diagram best represents a floating ball at rest?",
+    "options": ["Upthrust arrow shorter than weight arrow", "Weight arrow shorter than upthrust arrow", "Upthrust and weight arrows equal length in opposite directions", "No forces shown"],
+    "answer_index": 2
+  },
+  {
+    "id": 59,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "A stone sinks because:",
+    "options": ["Upthrust exceeds weight.", "Weight exceeds upthrust at full displacement.", "Weight equals upthrust.", "There is no gravity in water."],
+    "answer_index": 1
+  },
+  {
+    "id": 60,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "A marble sinks in water. Placing the marble in a foil boat makes the system float longer mainly because:",
+    "options": ["The marble loses mass.", "Upthrust increases by displacing more water due to the boat’s shape.", "Gravity decreases.", "The water becomes denser."],
+    "answer_index": 1
+  },
+  {
+    "id": 61,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which shape feature helped a foil boat hold more marbles?",
+    "options": ["Small base area and deep narrow sides", "Large base area and suitable depth to displace more water", "Sharp pointed base", "Rounded corners only"],
+    "answer_index": 1
+  },
+  {
+    "id": 62,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "You plot area of base (cm²) vs number of coins held before sinking. Which trend best fits as area increases?",
+    "options": ["Negative trend", "No trend", "Positive trend", "Cyclical trend"],
+    "answer_index": 2
+  },
+  {
+    "id": 63,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which prediction is most reasonable as you add 10 g of sand each time to a floating cup?",
+    "options": ["It will float forever.", "At some mass, weight will exceed upthrust and it will sink.", "It will become lighter.", "Upthrust will reduce to zero while floating."],
+    "answer_index": 1
+  },
+  {
+    "id": 64,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "A cork floats while a coin sinks mainly because:",
+    "options": ["Cork has no mass.", "Coin experiences no gravity.", "The cork–water system can displace enough water to balance weight; the coin cannot at the surface.", "Coins repel water."],
+    "answer_index": 2
+  },
+  {
+    "id": 65,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "Which change would MOST likely allow a heavy object to float?",
+    "options": ["Decreasing the water level", "Reshaping it to increase displaced volume (like a boat)", "Painting it", "Heating the object"],
+    "answer_index": 1
+  },
+  {
+    "id": 66,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "An object just floats. What happens if you gently push it deeper under water and let go?",
+    "options": ["It stays down.", "It sinks.", "It rises back to its original level because upthrust was greater when pushed down.", "It shoots out of the water and flies."],
+    "answer_index": 2
+  },
+  {
+    "id": 67,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Why do ships sit lower in the water when loaded with heavy containers?",
+    "options": ["Upthrust decreases.", "They must displace more water to balance greater weight.", "Water density increases.", "Gravity is weaker at sea."],
+    "answer_index": 1
+  },
+  {
+    "id": 68,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which statement about Archimedes and displacement is MOST accurate?",
+    "options": ["He discovered electricity.", "He noted that adding his body to the bath displaced water, helping explain upthrust.", "He invented batteries.", "He proved gravity does not act in water."],
+    "answer_index": 1
+  },
+  {
+    "id": 69,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "Two plastic boats of identical mass have different base areas. Which boat carries more marbles before sinking?",
+    "options": ["Smaller base area", "Larger base area (with similar depth)", "Neither; base area doesn’t matter", "One with tallest flag"],
+    "answer_index": 1
+  },
+  {
+    "id": 70,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Upthrust acts in which direction relative to gravity for an object immersed in water?",
+    "options": ["Sideways", "Downward", "Upward, opposite to gravity", "No preferred direction"],
+    "answer_index": 2
+  },
+  {
+    "id": 71,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "You compare two balls of the same size: one floats, one sinks. Which force diagram pair is correct?",
+    "options": ["Floating: upthrust<weight; Sinking: upthrust=weight", "Floating: upthrust=weight; Sinking: weight>upthrust", "Floating: weight>upthrust; Sinking: upthrust>weight", "Both: upthrust=weight"],
+    "answer_index": 1
+  },
+  {
+    "id": 72,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "When designing a cheap 'boat' from foil, which design goal is BEST?",
+    "options": ["Minimize water displaced", "Maximize displaced water for the same mass", "Make it as pointy as possible regardless of volume", "Use the shiniest side of foil"],
+    "answer_index": 1
+  },
+  {
+    "id": 73,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "high",
+    "question": "In a scattergraph of (base area) vs (coins held), the independent variable should be on which axis?",
+    "options": ["Vertical (y-axis)", "Horizontal (x-axis)", "Either; it doesn’t matter", "Neither; scattergraphs have no axes"],
+    "answer_index": 1
+  },
+  {
+    "id": 74,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "Which conclusion is most supported after testing different foil boat shapes?",
+    "options": ["Shape doesn’t matter.", "Wider, well-supported bases displace more water and carry greater mass before sinking.", "Heavier boats always carry more.", "Only height matters."],
+    "answer_index": 1
+  },
+  {
+    "id": 75,
+    "topic": "5.3 Floating & Sinking",
+    "difficulty": "medium",
+    "question": "If empty containers are shipped back, what happens to a container ship’s draft (how deep it sits)?",
+    "options": ["It sits deeper.", "It sits higher (displaces less water).", "No change.", "It cannot float."],
+    "answer_index": 1
+  },
+
+  {
+    "id": 76,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "What do circuit diagrams use so that people worldwide can understand them?",
+    "options": ["Realistic pictures", "Conventional symbols", "Random drawings", "Color codes only"],
+    "answer_index": 1
+  },
+  {
+    "id": 77,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Two 1.5 V cells in series make a:",
+    "options": ["1.5 V battery", "3 V battery", "4.5 V battery", "0 V battery"],
+    "answer_index": 1
+  },
+  {
+    "id": 78,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "A 3 V buzzer is connected to a single 1.5 V cell with a closed switch. The most likely result:",
+    "options": ["It works normally.", "It is too loud.", "It may not work because voltage is too low.", "It overheats."],
+    "answer_index": 2
+  },
+  {
+    "id": 79,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which circuit will NOT allow current to flow?",
+    "options": ["Closed switch, good connections", "Open switch, good connections", "Closed switch with suitable battery", "Closed switch with lamp"],
+    "answer_index": 1
+  },
+  {
+    "id": 80,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Which action usually makes a lamp shine brighter (within safe limits)?",
+    "options": ["Add more lamps in series to share voltage", "Use a higher total cell voltage appropriate for the lamp", "Add more switches", "Use longer wires only"],
+    "answer_index": 1
+  },
+  {
+    "id": 81,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "In a series circuit with two identical lamps and one battery, compared with a single-lamp series circuit the two lamps will be:",
+    "options": ["Brighter", "The same brightness", "Dimmer", "Off"],
+    "answer_index": 2
+  },
+  {
+    "id": 82,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "In a parallel circuit with two identical lamps and one battery, compared with a single-lamp circuit each lamp is typically:",
+    "options": ["Dimmer", "Same brightness as alone", "Off", "Brighter due to sharing current"],
+    "answer_index": 1
+  },
+  {
+    "id": 83,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Unscrewing one lamp in a series circuit of two lamps causes the other lamp to:",
+    "options": ["Stay on at same brightness", "Go off (open circuit)", "Get brighter", "Explode"],
+    "answer_index": 1
+  },
+  {
+    "id": 84,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Unscrewing one lamp in a parallel circuit of two lamps causes the other lamp to:",
+    "options": ["Go off", "Glow dimmer", "Glow brighter", "Remain on with the same brightness"],
+    "answer_index": 3
+  },
+  {
+    "id": 85,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Each branch in a parallel circuit receives:",
+    "options": ["Half the voltage", "Zero voltage", "The full circuit voltage (from the battery)", "Random voltage"],
+    "answer_index": 2
+  },
+  {
+    "id": 86,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Which circuit has the 'bigger energy source'?",
+    "options": ["One 1.5 V cell", "Two 1.5 V cells in series (3 V)", "Open switch with a cell", "A lamp with no cell"],
+    "answer_index": 1
+  },
+  {
+    "id": 87,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which statement best explains why long strings of lamps wired in series are inconvenient?",
+    "options": ["They are too bright.", "If one lamp fails, the whole string goes out.", "They cannot be switched off.", "They use no electricity."],
+    "answer_index": 1
+  },
+  {
+    "id": 88,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which risk note is sensible for lamp experiments?",
+    "options": ["Touch hot lamps immediately to test heat.", "Unscrew lamps while still hot.", "Avoid touching hot lamps; allow them to cool.", "Use wet hands to cool lamps."],
+    "answer_index": 2
+  },
+  {
+    "id": 89,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which symbol pair correctly matches positive and negative ends of a cell in diagrams?",
+    "options": ["Long thin line = negative; short thick line = positive", "Long thin line = positive; short thick line = negative", "They are not shown", "Triangle = positive; square = negative"],
+    "answer_index": 1
+  },
+  {
+    "id": 90,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Choose the working buzzer circuit:",
+    "options": ["3 V buzzer + 1.5 V cell + open switch", "3 V buzzer + 3 V battery + closed switch", "3 V buzzer + wires only", "3 V buzzer + lamp in series + open switch"],
+    "answer_index": 1
+  },
+  {
+    "id": 91,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Why do we sometimes repeat observations in circuit tests?",
+    "options": ["To make the circuit warmer", "To improve reliability when results are uncertain", "To change the voltage", "To waste time"],
+    "answer_index": 1
+  },
+  {
+    "id": 92,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "Which statement best distinguishes series vs parallel for two lamps?",
+    "options": ["Series: both get full voltage; Parallel: share one path", "Series: single path so lamps share voltage; Parallel: separate branches each getting full voltage", "Series: more branches; Parallel: one path", "No difference"],
+    "answer_index": 1
+  },
+  {
+    "id": 93,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which arrangement will typically produce brighter lamps, keeping the same battery?",
+    "options": ["Two lamps in series", "Two lamps in parallel", "No lamps", "Open circuit with two lamps"],
+    "answer_index": 1
+  },
+  {
+    "id": 94,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "A circuit has a battery, lamp, wires, and a switch drawn open. Predict the lamp’s state and why.",
+    "options": ["On; because the switch increases voltage", "Off; because the open switch breaks the circuit", "Brighter; because air completes the circuit", "Dim; because less voltage"],
+    "answer_index": 1
+  },
+  {
+    "id": 95,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which statement about a 'battery' is correct in these diagrams?",
+    "options": ["Battery means a single cell.", "Battery means two or more cells joined end-to-end.", "Battery means any component.", "Battery is the same as a switch."],
+    "answer_index": 1
+  },
+  {
+    "id": 96,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "A correct diagram of a simple working circuit should include:",
+    "options": ["Battery, lamp, at least one gap, wires", "Battery, lamp, closed switch, wires", "Lamp only", "Wires only"],
+    "answer_index": 1
+  },
+  {
+    "id": 97,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "In a parallel circuit of two identical lamps, the total current from the battery is usually:",
+    "options": ["Less than in a single-lamp circuit", "About the same as a single-lamp circuit", "Greater than in a single-lamp circuit (because there are two branches)", "Zero"],
+    "answer_index": 2
+  },
+  {
+    "id": 98,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "high",
+    "question": "A student adds a second buzzer in SERIES and they both stop working. Which change is MOST likely to fix it without adding components?",
+    "options": ["Rewire so the two buzzers are in PARALLEL instead of series.", "Remove the battery.", "Open the switch further.", "Use longer wires only."],
+    "answer_index": 0
+  },
+  {
+    "id": 99,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Why are conventional symbols preferred over detailed drawings?",
+    "options": ["They look nicer.", "They take longer to draw.", "They are quicker and are understood globally.", "They require color pencils."],
+    "answer_index": 2
+  },
+  {
+    "id": 100,
+    "topic": "5.4 Circuits & Diagrams",
+    "difficulty": "medium",
+    "question": "Which component set best matches 'battery + switch + buzzer'?",
+    "options": ["Energy source + control + sound output", "Energy source only", "Control only", "Light output only"],
+    "answer_index": 0
+  }
+]
