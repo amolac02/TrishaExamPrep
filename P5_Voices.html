@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active vs. Passive Voice: The Great Grammar Showdown!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://css.gg/css?|spinner|play-button-o|volume|speaker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The SPA is structured as a single, vertically scrolling page with five interactive learning zones: 1) A side-by-side 'Showdown' to introduce core concepts, 2) An interactive 'Face-Off' sentence flipper for direct comparison, 3) A 'Secret Weapon' tool for users to test the 'By Zombies' trick, 4) A multi-step 'Training Ground' quiz for practice, and 5) A clear summary of when to use passive voice. This thematic, task-oriented structure was chosen over a linear slide format to encourage active exploration and hands-on learning, making a grammar topic more engaging for a 5th-grade audience. -->
+    <!-- Visualization & Content Choices: Report Info: Definitions -> Goal: Inform -> Method: Side-by-side styled text blocks. Interaction: Highlights on hover. Justification: Clear, direct comparison. | Info: Example sentences -> Goal: Compare -> Method: AI-powered quiz with interactive buttons and a score counter. Interaction: User selects an answer, gets immediate feedback, and a new sentence is generated. Justification: More dynamic, engaging, and provides limitless practice compared to static examples. | Info: 'By Zombies' Rule -> Goal: Apply -> Method: JS-powered text input tool. Interaction: User types and gets feedback. Justification: Hands-on application of the rule. | Info: Practice questions -> Goal: Reinforce -> Method: Interactive JS quiz. Interaction: Button clicks and text input with immediate feedback. Justification: Active recall and application. All visuals created with HTML/Tailwind CSS. CONFIRMED: NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Baloo 2', cursive;
+        }
+        .interactive-card {
+            perspective: 1000px;
+        }
+        .flipper {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        .flipper.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .back {
+            transform: rotateY(180deg);
+        }
+        .btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .correct-answer {
+            animation: correct 0.5s ease-out;
+        }
+        @keyframes correct {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background-color: #D1FAE5; border-color: #10B981; }
+            100% { transform: scale(1); }
+        }
+        .incorrect-answer {
+            animation: incorrect 0.5s ease-out;
+        }
+        @keyframes incorrect {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); background-color: #FEE2E2; border-color: #EF4444;}
+        }
+        .anatomy-word {
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .anatomy-word:hover {
+            background-color: #f0f0f0;
+        }
+        .subject-found { background-color: #BFDBFE; }
+        .verb-found { background-color: #A7F3D0; }
+        .object-found { background-color: #FBCFE8; }
+        .selector-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .gg-spinner {
+            transform: scale(var(--ggs,1));
+        }
+        .step-arrow {
+            font-size: 2rem;
+            color: #FDBA74;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-5xl md:text-7xl font-bold text-orange-500">The Great Grammar Showdown!</h1>
+            <p class="text-xl md:text-2xl mt-2 text-gray-600">Active Voice vs. Passive Voice</p>
+        </header>
+
+        <main>
+            <section id="showdown" class="mb-16">
+                <h2 class="text-4xl font-bold text-center mb-2">Meet the Contenders</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">Voice tells us who the main character of the sentence is. Let's see how our two contenders handle the action!</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-blue-300">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-3xl font-bold text-blue-600">🦸‍♂️ Active Voice: The Action Hero</h3>
+                            <button class="listen-btn btn bg-blue-100 text-blue-600 p-2 rounded-full" data-voice="active">
+                                <i class="gg-volume"></i>
+                                <i class="gg-spinner hidden"></i>
+                            </button>
+                        </div>
+                        <p class="mt-2 mb-4" id="active-voice-text">The subject is the hero who **PERFORMS** the action. It's direct, strong, and clear!</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="font-semibold">Formula:</p>
+                            <p class="text-lg"><span class="font-bold text-blue-700">Subject</span> (Hero) + <span class="font-bold text-green-700">Verb</span> (Action) + <span class="font-bold text-red-700">Object</span> (Receives Action)</p>
+                        </div>
+                        <div class="mt-4">
+                            <p class="font-semibold">Example:</p>
+                            <p class="text-lg p-2 bg-gray-100 rounded">
+                                <span class="font-bold text-blue-700">Maria</span> 
+                                <span class="font-bold text-green-700">kicked</span> 
+                                <span class="font-bold text-red-700">the ball</span>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-300">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-3xl font-bold text-purple-600">🕵️‍♀️ Passive Voice: The Mystery Solver</h3>
+                            <button class="listen-btn btn bg-purple-100 text-purple-600 p-2 rounded-full" data-voice="passive">
+                                 <i class="gg-volume"></i>
+                                 <i class="gg-spinner hidden"></i>
+                            </button>
+                        </div>
+                        <p class="mt-2 mb-4" id="passive-voice-text">The subject **RECEIVES** the action. The focus is on what happened, not who did it.</p>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <p class="font-semibold">Formula:</p>
+                            <p class="text-lg"><span class="font-bold text-red-700">Object</span> + <span class="font-bold text-yellow-700">'to be' verb</span> + <span class="font-bold text-green-700">Verb</span> (Action) + by + <span class="font-bold text-blue-700">Subject</span> (Hero)</p>
+                        </div>
+                        <div class="mt-4">
+                            <p class="font-semibold">Example:</p>
+                            <p class="text-lg p-2 bg-gray-100 rounded">
+                                <span class="font-bold text-red-700">The ball</span> 
+                                <span class="font-bold text-yellow-700">was</span> 
+                                <span class="font-bold text-green-700">kicked</span> 
+                                by <span class="font-bold text-blue-700">Maria</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sentence-anatomy" class="mb-16">
+                <h2 class="text-4xl font-bold text-center mb-2">Meet the Players</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">Before the showdown, let's practice finding the key parts of a sentence. First select a part, then click the word(s) in the sentence below.</p>
+                <div class="bg-white p-8 rounded-2xl shadow-lg max-w-3xl mx-auto text-center">
+                    <div class="mb-6 flex justify-center gap-4">
+                        <button id="select-subject" data-type="subject" class="selector-btn btn bg-blue-500 text-white font-bold py-2 px-6 rounded-lg">Subject</button>
+                        <button id="select-verb" data-type="verb" class="selector-btn btn bg-green-500 text-white font-bold py-2 px-6 rounded-lg">Verb</button>
+                        <button id="select-object" data-type="object" class="selector-btn btn bg-pink-500 text-white font-bold py-2 px-6 rounded-lg">Object</button>
+                    </div>
+                    <p id="anatomy-sentence" class="text-3xl font-semibold mb-6 p-4 bg-gray-50 rounded-lg min-h-[5rem] flex items-center justify-center"></p>
+                    <p id="anatomy-feedback" class="h-6 mb-4 font-semibold"></p>
+                    <button id="next-anatomy-btn" class="btn bg-gray-700 text-white font-bold py-2 px-6 rounded-lg hidden">Next Sentence</button>
+                </div>
+            </section>
+
+            <section id="secret-weapon" class="mb-16 text-center">
+                <h2 class="text-4xl font-bold text-center mb-2">The Secret Weapon!</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">Here's a secret trick to find the passive voice. Add "by zombies" after the action. If it makes sense, it's passive!</p>
+                <div class="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto">
+                    <p class="text-5xl mb-4">🧟</p>
+                    <p class="mb-4">"The window was broken..." → "The window was broken <strong>by zombies</strong>." (Makes sense! It's passive!)</p>
+                    <p class="mb-6">"The boy broke the window..." → "The boy broke the window <strong>by zombies</strong>." (Sounds silly! It's active!)</p>
+                    <div class="w-full">
+                         <input type="text" id="zombie-input" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent" placeholder="Type a sentence to test...">
+                         <button id="zombie-btn" class="btn mt-4 bg-orange-500 text-white font-bold py-2 px-6 rounded-lg shadow-md">Test with Zombies!</button>
+                         <p id="zombie-result" class="mt-4 text-lg font-semibold h-6"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="faceoff" class="mb-16">
+                <h2 class="text-4xl font-bold text-center mb-2">The Face-Off</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">A sentence will appear below. Can you tell which voice it is? Test your skills!</p>
+                <div class="flex justify-center items-center gap-8 mb-8">
+                    <div class="text-center bg-green-100 px-6 py-2 rounded-xl">
+                        <p class="text-lg font-semibold text-green-800">Correct</p>
+                        <p id="correct-counter" class="text-4xl font-bold text-green-600">0</p>
+                    </div>
+                    <div class="text-center bg-red-100 px-6 py-2 rounded-xl">
+                        <p class="text-lg font-semibold text-red-800">Incorrect</p>
+                        <p id="incorrect-counter" class="text-4xl font-bold text-red-600">0</p>
+                    </div>
+                </div>
+                <div class="interactive-card h-64 max-w-2xl mx-auto">
+                    <div class="flipper w-full h-full" id="faceoff-flipper">
+                        <div class="front bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center border-2 border-gray-200">
+                            <p id="faceoff-sentence" class="text-2xl mb-6 min-h-[5rem] flex items-center justify-center px-4"></p>
+                            <div id="faceoff-buttons" class="flex gap-4">
+                                <button id="active-btn" class="btn bg-blue-500 text-white font-bold py-3 px-8 rounded-lg">Active</button>
+                                <button id="passive-btn" class="btn bg-purple-500 text-white font-bold py-3 px-8 rounded-lg">Passive</button>
+                            </div>
+                            <div id="faceoff-feedback" class="text-2xl font-bold mt-4"></div>
+                             <div id="faceoff-loader" class="hidden">
+                                <i class="gg-spinner"></i>
+                                <p class="mt-2 text-gray-500">Getting new sentence...</p>
+                             </div>
+                        </div>
+                        <div class="back bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center border-2 border-gray-200">
+                            <h4 class="text-2xl font-bold text-red-500 mb-4">Not Quite!</h4>
+                            <p id="faceoff-explanation" class="text-xl mb-6 px-4"></p>
+                            <button id="next-faceoff-btn" class="btn bg-gray-700 text-white font-bold py-2 px-6 rounded-lg">Next Sentence</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="conversion-active-to-passive" class="mb-16">
+                <div class="bg-white p-8 rounded-2xl shadow-lg max-w-3xl mx-auto">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h2 class="text-4xl font-bold">Sentence Surgery: Active to Passive</h2>
+                            <p class="text-lg text-gray-600">Let's operate on a sentence! Follow these 4 steps.</p>
+                        </div>
+                        <button class="listen-btn btn bg-orange-100 text-orange-600 p-2 rounded-full flex-shrink-0" data-voice="activeToPassive">
+                            <i class="gg-speaker"></i>
+                            <i class="gg-spinner hidden"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4 text-lg">
+                        <p class="text-center font-bold bg-gray-100 p-2 rounded-lg">Original Sentence: <span class="font-bold text-blue-700">The cat</span> <span class="font-bold text-green-700">chased</span> <span class="font-bold text-red-700">the mouse</span>.</p>
+                        <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 1 & 2:</strong> Swap the subject and the object.</p>
+                        <p class="pl-6 bg-gray-50 p-2 rounded-lg italic text-gray-500"><span class="font-bold text-red-700">the mouse</span> <span class="text-green-700">chased</span> <span class="text-blue-700">The cat</span></p>
+                         <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 3:</strong> Add a 'to be' verb (like <span class="font-semibold">was</span>) and change the verb to its past participle.</p>
+                        <p class="pl-6 bg-gray-50 p-2 rounded-lg italic text-gray-500"><span class="text-red-700">the mouse</span> <span class="font-bold text-green-700">was chased</span> <span class="text-blue-700">The cat</span></p>
+                         <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 4:</strong> Add the word 'by'.</p>
+                        <p class="text-center font-bold bg-green-100 text-green-800 p-2 rounded-lg">Final Sentence: <span class="font-bold text-red-700">The mouse</span> <span class="font-bold text-green-700">was chased</span> by <span class="font-bold text-blue-700">the cat</span>.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="conversion-passive-to-active" class="mb-16">
+                 <div class="bg-white p-8 rounded-2xl shadow-lg max-w-3xl mx-auto">
+                     <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h2 class="text-4xl font-bold">Reversing the Mystery: Passive to Active</h2>
+                            <p class="text-lg text-gray-600">Let's flip it back! It's just as easy.</p>
+                        </div>
+                        <button class="listen-btn btn bg-orange-100 text-orange-600 p-2 rounded-full flex-shrink-0" data-voice="passiveToActive">
+                            <i class="gg-speaker"></i>
+                            <i class="gg-spinner hidden"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4 text-lg">
+                        <p class="text-center font-bold bg-gray-100 p-2 rounded-lg">Original Sentence: <span class="font-bold text-red-700">The homework</span> <span class="font-bold text-green-700">was finished</span> by <span class="font-bold text-blue-700">the student</span>.</p>
+                        <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 1:</strong> Find the real hero after the word 'by'.</p>
+                        <p class="pl-6 bg-gray-50 p-2 rounded-lg italic text-gray-500">It's <span class="font-bold text-blue-700">the student</span>!</p>
+                         <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 2 & 3:</strong> Move the hero to the front and fix the verb (remove 'was').</p>
+                        <p class="pl-6 bg-gray-50 p-2 rounded-lg italic text-gray-500"><span class="font-bold text-blue-700">The student</span> <span class="font-bold text-green-700">finished</span> ...</p>
+                         <div class="text-center step-arrow">↓</div>
+                        <p><strong class="bg-orange-200 rounded px-2 py-1">Step 4:</strong> Move the object to the end.</p>
+                        <p class="text-center font-bold bg-blue-100 text-blue-800 p-2 rounded-lg">Final Sentence: <span class="font-bold text-blue-700">The student</span> <span class="font-bold text-green-700">finished</span> <span class="font-bold text-red-700">the homework</span>.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="training-ground" class="mb-16">
+                <h2 class="text-4xl font-bold text-center mb-2">The Training Ground</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">Time to test your skills! Identify the voice, then transform the sentence.</p>
+                <div class="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto">
+                    <div id="quiz-container">
+                        <p class="text-gray-600 mb-2">Sentence <span id="question-number">1</span> of <span id="total-questions">4</span>:</p>
+                        <p id="quiz-sentence" class="text-2xl font-semibold mb-6 h-20 flex items-center justify-center text-center"></p>
+                        <div id="quiz-step-1">
+                            <p class="text-center mb-4 font-bold">Is this sentence Active or Passive?</p>
+                            <div class="flex justify-center gap-4">
+                                <button data-voice="Active" class="quiz-choice btn bg-blue-500 text-white font-bold py-3 px-8 rounded-lg">Active</button>
+                                <button data-voice="Passive" class="quiz-choice btn bg-purple-500 text-white font-bold py-3 px-8 rounded-lg">Passive</button>
+                            </div>
+                        </div>
+                        <div id="quiz-step-2" class="hidden">
+                            <p class="text-center mb-4 font-bold">Great! Now <span id="transform-instruction"></span></p>
+                            <input type="text" id="transform-input" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent" placeholder="Type the new sentence here...">
+                            <div class="text-center">
+                               <button id="transform-btn" class="btn mt-4 bg-green-500 text-white font-bold py-2 px-6 rounded-lg">Check Answer</button>
+                            </div>
+                        </div>
+                         <p id="quiz-feedback" class="mt-4 text-center font-semibold h-12"></p>
+                         <div class="text-center">
+                           <button id="next-question-btn" class="btn hidden mt-4 bg-gray-700 text-white font-bold py-2 px-6 rounded-lg">Next Question</button>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="when-to-use" class="mb-16">
+                 <h2 class="text-4xl font-bold text-center mb-2">When Should I Use Passive Voice?</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">Active voice is usually your best choice, but passive voice is very useful sometimes. Here's when:</p>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg">
+                        <p class="text-4xl mb-2">❓</p>
+                        <h4 class="text-xl font-bold mb-2">When you don't know who did it</h4>
+                        <p class="bg-gray-100 p-2 rounded-lg italic">"My bike was stolen."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg">
+                        <p class="text-4xl mb-2">🤷</p>
+                        <h4 class="text-xl font-bold mb-2">When it's not important who did it</h4>
+                        <p class="bg-gray-100 p-2 rounded-lg italic">"The bridge was built last year."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg">
+                         <p class="text-4xl mb-2">🧪</p>
+                        <h4 class="text-xl font-bold mb-2">To sound formal or scientific</h4>
+                        <p class="bg-gray-100 p-2 rounded-lg italic">"The experiment was conducted."</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="appendix" class="mb-16">
+                <h2 class="text-4xl font-bold text-center mb-2">Appendix: The Verb Transformation Trick</h2>
+                <p class="text-lg text-center text-gray-600 mb-8">When a sentence changes from active to passive, the verb also gets a makeover! It always uses a helping verb (a form of "to be") and the past participle of the main verb.</p>
+                <div class="bg-white p-8 rounded-2xl shadow-lg max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-4">How Verbs Change (Verb Tenses)</h3>
+                    <p class="mb-6">The secret is the formula: <strong class="bg-yellow-200 rounded px-2 py-1">form of "to be" + past participle</strong>. The "to be" verb must match the tense of the original active verb.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mb-8">
+                        <div><p class="font-bold text-lg mb-2">Simple Tenses</p>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-2"><p class="font-semibold">Active (Present): ...<strong class="text-green-600">prepares</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive (Present): ...<strong class="text-green-600">is prepared</strong>...</p></div>
+                            <div class="bg-blue-50 p-4 rounded-lg mt-2"><p class="font-semibold">Active (Past): ...<strong class="text-green-600">prepared</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive (Past): ...<strong class="text-green-600">was prepared</strong>...</p></div>
+                        </div>
+                        <div><p class="font-bold text-lg mb-2">Continuous Tenses</p>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-2"><p class="font-semibold">Active: ...<strong class="text-green-600">is preparing</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">is being prepared</strong>...</p></div>
+                            <div class="bg-blue-50 p-4 rounded-lg mt-2"><p class="font-semibold">Active: ...<strong class="text-green-600">was preparing</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">was being prepared</strong>...</p></div>
+                        </div>
+                        <div><p class="font-bold text-lg mb-2">Perfect Tenses</p>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-2"><p class="font-semibold">Active: ...<strong class="text-green-600">has prepared</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">has been prepared</strong>...</p></div>
+                            <div class="bg-blue-50 p-4 rounded-lg mt-2"><p class="font-semibold">Active: ...<strong class="text-green-600">had prepared</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">had been prepared</strong>...</p></div>
+                        </div>
+                         <div><p class="font-bold text-lg mb-2">Perfect Continuous Tenses</p>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-2"><p class="font-semibold">Active: ...<strong class="text-green-600">has been preparing</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">has been being prepared</strong>...</p></div>
+                             <div class="bg-blue-50 p-4 rounded-lg mt-2"><p class="font-semibold">Active: ...<strong class="text-green-600">had been preparing</strong>...</p></div>
+                            <div class="bg-purple-50 p-4 rounded-lg"><p class="font-semibold">Passive: ...<strong class="text-green-600">had been being prepared</strong>...</p></div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mt-12 mb-4">Sentence Superpowers: Working with Modals</h3>
+                    <p class="mb-6">Modals are special verbs like <em class="font-semibold">can, will, may, must, should,</em> and <em class="font-semibold">ought to</em>. They give verbs extra powers! The rule is simple: <strong class="bg-yellow-200 rounded px-2 py-1">Modal + be + Past Participle</strong>.</p>
+                     <div class="overflow-x-auto rounded-lg border">
+                        <table class="w-full text-left">
+                             <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="p-3 font-semibold text-sm">Active Sentence with Modal</th>
+                                    <th class="p-3 font-semibold text-sm">Passive Sentence with Modal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                <tr><td class="p-3">She <strong class="text-blue-600">can</strong> bake a cake.</td><td class="p-3">A cake <strong class="text-purple-600">can be baked</strong> by her.</td></tr>
+                                <tr><td class="p-3">He <strong class="text-blue-600">will</strong> finish the project.</td><td class="p-3">The project <strong class="text-purple-600">will be finished</strong> by him.</td></tr>
+                                <tr><td class="p-3">They <strong class="text-blue-600">may</strong> win the prize.</td><td class="p-3">The prize <strong class="text-purple-600">may be won</strong> by them.</td></tr>
+                                <tr><td class="p-3">You <strong class="text-blue-600">must</strong> follow the rules.</td><td class="p-3">The rules <strong class="text-purple-600">must be followed</strong>.</td></tr>
+                                <tr><td class="p-3">We <strong class="text-blue-600">should</strong> clean the room.</td><td class="p-3">The room <strong class="text-purple-600">should be cleaned</strong> by us.</td></tr>
+                                <tr><td class="p-3">You <strong class="text-blue-600">ought to</strong> tell the truth.</td><td class="p-3">The truth <strong class="text-purple-600">ought to be told</strong>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <h3 class="text-2xl font-bold mt-8 mb-4">Common Verb Transformations</h3>
+                    <div class="overflow-x-auto rounded-lg border">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="p-3 font-semibold text-sm">Active (Present)</th>
+                                    <th class="p-3 font-semibold text-sm">Passive (Present)</th>
+                                    <th class="p-3 font-semibold text-sm">Active (Past)</th>
+                                    <th class="p-3 font-semibold text-sm">Passive (Past)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                <tr><td class="p-3">ask</td><td class="p-3">is asked</td><td class="p-3">asked</td><td class="p-3">was asked</td></tr>
+                                <tr><td class="p-3">build</td><td class="p-3">is built</td><td class="p-3">built</td><td class="p-3">was built</td></tr>
+                                <tr><td class="p-3">call</td><td class="p-3">is called</td><td class="p-3">called</td><td class="p-3">was called</td></tr>
+                                <tr><td class="p-3">carry</td><td class="p-3">is carried</td><td class="p-3">carried</td><td class="p-3">was carried</td></tr>
+                                <tr><td class="p-3">clean</td><td class="p-3">is cleaned</td><td class="p-3">cleaned</td><td class="p-3">was cleaned</td></tr>
+                                <tr><td class="p-3">close</td><td class="p-3">is closed</td><td class="p-3">closed</td><td class="p-3">was closed</td></tr>
+                                <tr><td class="p-3">cook</td><td class="p-3">is cooked</td><td class="p-3">cooked</td><td class="p-3">was cooked</td></tr>
+                                <tr><td class="p-3">cover</td><td class="p-3">is covered</td><td class="p-3">covered</td><td class="p-3">was covered</td></tr>
+                                <tr><td class="p-3">cross</td><td class="p-3">is crossed</td><td class="p-3">crossed</td><td class="p-3">was crossed</td></tr>
+                                <tr><td class="p-3">cut</td><td class="p-3">is cut</td><td class="p-3">cut</td><td class="p-3">was cut</td></tr>
+                                <tr><td class="p-3">deliver</td><td class="p-3">is delivered</td><td class="p-3">delivered</td><td class="p-3">was delivered</td></tr>
+                                <tr><td class="p-3">discover</td><td class="p-3">is discovered</td><td class="p-3">discovered</td><td class="p-3">was discovered</td></tr>
+                                <tr><td class="p-3">do</td><td class="p-3">is done</td><td class="p-3">did</td><td class="p-3">was done</td></tr>
+                                <tr><td class="p-3">drink</td><td class="p-3">is drunk</td><td class="p-3">drank</td><td class="p-3">was drunk</td></tr>
+                                <tr><td class="p-3">drive</td><td class="p-3">is driven</td><td class="p-3">drove</td><td class="p-3">was driven</td></tr>
+                                <tr><td class="p-3">eat</td><td class="p-3">is eaten</td><td class="p-3">ate</td><td class="p-3">was eaten</td></tr>
+                                <tr><td class="p-3">explain</td><td class="p-3">is explained</td><td class="p-3">explained</td><td class="p-3">was explained</td></tr>
+                                <tr><td class="p-3">find</td><td class="p-3">is found</td><td class="p-3">found</td><td class="p-3">was found</td></tr>
+                                <tr><td class="p-3">fix</td><td class="p-3">is fixed</td><td class="p-3">fixed</td><td class="p-3">was fixed</td></tr>
+                                <tr><td class="p-3">follow</td><td class="p-3">is followed</td><td class="p-3">followed</td><td class="p-3">was followed</td></tr>
+                                <tr><td class="p-3">give</td><td class="p-3">is given</td><td class="p-3">gave</td><td class="p-3">was given</td></tr>
+                                <tr><td class="p-3">help</td><td class="p-3">is helped</td><td class="p-3">helped</td><td class="p-3">was helped</td></tr>
+                                <tr><td class="p-3">hold</td><td class="p-3">is held</td><td class="p-3">held</td><td class="p-3">was held</td></tr>
+                                <tr><td class="p-3">keep</td><td class="p-3">is kept</td><td class="p-3">kept</td><td class="p-3">was kept</td></tr>
+                                <tr><td class="p-3">know</td><td class="p-3">is known</td><td class="p-3">knew</td><td class="p-3">was known</td></tr>
+                                <tr><td class="p-3">learn</td><td class="p-3">is learned</td><td class="p-3">learned</td><td class="p-3">was learned</td></tr>
+                                <tr><td class="p-3">leave</td><td class="p-3">is left</td><td class="p-3">left</td><td class="p-3">was left</td></tr>
+                                <tr><td class="p-3">like</td><td class="p-3">is liked</td><td class="p-3">liked</td><td class="p-3">was liked</td></tr>
+                                <tr><td class="p-3">listen to</td><td class="p-3">is listened to</td><td class="p-3">listened to</td><td class="p-3">was listened to</td></tr>
+                                <tr><td class="p-3">love</td><td class="p-3">is loved</td><td class="p-3">loved</td><td class="p-3">was loved</td></tr>
+                                <tr><td class="p-3">make</td><td class="p-3">is made</td><td class="p-3">made</td><td class="p-3">was made</td></tr>
+                                <tr><td class="p-3">need</td><td class="p-3">is needed</td><td class="p-3">needed</td><td class="p-3">was needed</td></tr>
+                                <tr><td class="p-3">open</td><td class="p-3">is opened</td><td class="p-3">opened</td><td class="p-3">was opened</td></tr>
+                                <tr><td class="p-3">paint</td><td class="p-3">is painted</td><td class="p-3">painted</td><td class="p-3">was painted</td></tr>
+                                <tr><td class="p-3">play</td><td class="p-3">is played</td><td class="p-3">played</td><td class="p-3">was played</td></tr>
+                                <tr><td class="p-3">prepare</td><td class="p-3">is prepared</td><td class="p-3">prepared</td><td class="p-3">was prepared</td></tr>
+                                <tr><td class="p-3">push</td><td class="p-3">is pushed</td><td class="p-3">pushed</td><td class="p-3">was pushed</td></tr>
+                                <tr><td class="p-3">read</td><td class="p-3">is read</td><td class="p-3">read</td><td class="p-3">was read</td></tr>
+                                <tr><td class="p-3">remember</td><td class="p-3">is remembered</td><td class="p-3">remembered</td><td class="p-3">was remembered</td></tr>
+                                <tr><td class="p-3">repair</td><td class="p-3">is repaired</td><td class="p-3">repaired</td><td class="p-3">was repaired</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-8 mb-4">Tricky Verb Transformations</h3>
+                    <div class="overflow-x-auto rounded-lg border">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="p-3 font-semibold text-sm">Active (Present)</th>
+                                    <th class="p-3 font-semibold text-sm">Passive (Present)</th>
+                                    <th class="p-3 font-semibold text-sm">Active (Past)</th>
+                                    <th class="p-3 font-semibold text-sm">Passive (Past)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                <tr><td class="p-3">begin</td><td class="p-3">is begun</td><td class="p-3">began</td><td class="p-3">was begun</td></tr>
+                                <tr><td class="p-3">break</td><td class="p-3">is broken</td><td class="p-3">broke</td><td class="p-3">was broken</td></tr>
+                                <tr><td class="p-3">choose</td><td class="p-3">is chosen</td><td class="p-3">chose</td><td class="p-3">was chosen</td></tr>
+                                <tr><td class="p-3">fly</td><td class="p-3">is flown</td><td class="p-3">flew</td><td class="p-3">was flown</td></tr>
+                                <tr><td class="p-3">forget</td><td class="p-3">is forgotten</td><td class="p-3">forgot</td><td class="p-3">was forgotten</td></tr>
+                                <tr><td class="p-3">see</td><td class="p-3">is seen</td><td class="p-3">saw</td><td class="p-3">was seen</td></tr>
+                                <tr><td class="p-3">sing</td><td class="p-3">is sung</td><td class="p-3">sang</td><td class="p-3">was sung</td></tr>
+                                <tr><td class="p-3">speak</td><td class="p-3">is spoken</td><td class="p-3">spoke</td><td class="p-3">was spoken</td></tr>
+                                <tr><td class="p-3">take</td><td class="p-3">is taken</td><td class="p-3">took</td><td class="p-3">was taken</td></tr>
+                                <tr><td class="p-3">write</td><td class="p-3">is written</td><td class="p-3">wrote</td><td class="p-3">was written</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-12 py-8 border-t">
+            <h2 class="text-4xl font-bold">You're the Boss of Your Sentences!</h2>
+            <p class="text-lg mt-2 text-gray-600">Great job, super writer! Now you can choose the perfect voice for any situation.</p>
+        </footer>
+        <audio id="tts-audio" class="hidden"></audio>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const allSentences = [
+                { sentence: "The chef prepares the meal.", voice: "Active", subject: ["The", "chef"], verb: ["prepares"], object: ["the", "meal"], explanation: "This is Active because 'The chef' is doing the action.", convertedSentence: "The meal is prepared by the chef.", conversionSteps: "Move the object 'the meal' to the front, change the verb to 'is prepared', and add 'by the chef' to the end." },
+                { sentence: "The meal is prepared by the chef.", voice: "Passive", subject: ["the", "chef"], verb: ["is", "prepared"], object: ["The", "meal"], explanation: "This is Passive because 'The meal' receives the action.", convertedSentence: "The chef prepares the meal.", conversionSteps: "Find the doer 'the chef', move it to the front, change the verb to 'prepares', and move the object 'the meal' to the end." },
+                { sentence: "A pirate discovered the treasure.", voice: "Active", subject: ["A", "pirate"], verb: ["discovered"], object: ["the", "treasure"], explanation: "This is Active because 'A pirate' is doing the action.", convertedSentence: "The treasure was discovered by a pirate.", conversionSteps: "Move the object 'the treasure' to the front, change the verb to 'was discovered', and add 'by a pirate' to the end." },
+                { sentence: "The treasure was discovered by a pirate.", voice: "Passive", subject: ["a", "pirate"], verb: ["was", "discovered"], object: ["The", "treasure"], explanation: "This is Passive because 'The treasure' receives the action.", convertedSentence: "A pirate discovered the treasure.", conversionSteps: "Find the doer 'a pirate', move it to the front, change the verb to 'discovered', and move the object 'the treasure' to the end." },
+                { sentence: "The cat chased the mouse.", voice: "Active", subject: ["The", "cat"], verb: ["chased"], object: ["the", "mouse"], explanation: "This is Active because 'The cat' is doing the action.", convertedSentence: "The mouse was chased by the cat.", conversionSteps: "Move the object 'the mouse' to the front, change the verb to 'was chased', and add 'by the cat' to the end." },
+                { sentence: "The mouse was chased by the cat.", voice: "Passive", subject: ["the", "cat"], verb: ["was", "chased"], object: ["The", "mouse"], explanation: "This is Passive because 'The mouse' receives the action.", convertedSentence: "The cat chased the mouse.", conversionSteps: "Find the doer 'the cat', move it to the front, change the verb to 'chased', and move the object 'the mouse' to the end." },
+                { sentence: "The teacher wrote the lesson.", voice: "Active", subject: ["The", "teacher"], verb: ["wrote"], object: ["the", "lesson"], explanation: "This is Active because 'The teacher' is doing the action.", convertedSentence: "The lesson was written by the teacher.", conversionSteps: "Move the object 'the lesson' to the front, change the verb to 'was written', and add 'by the teacher' to the end." },
+                { sentence: "The lesson was written by the teacher.", voice: "Passive", subject: ["the", "teacher"], verb: ["was", "written"], object: ["The", "lesson"], explanation: "This is Passive because 'The lesson' receives the action.", convertedSentence: "The teacher wrote the lesson.", conversionSteps: "Find the doer 'the teacher', move it to the front, change the verb to 'wrote', and move the object 'the lesson' to the end." },
+                { sentence: "A scientist made a discovery.", voice: "Active", subject: ["A", "scientist"], verb: ["made"], object: ["a", "discovery"], explanation: "This is Active because 'A scientist' is doing the action.", convertedSentence: "A discovery was made by a scientist.", conversionSteps: "Move the object 'a discovery' to the front, change the verb to 'was made', and add 'by a scientist' to the end." },
+                { sentence: "A discovery was made by a scientist.", voice: "Passive", subject: ["a", "scientist"], verb: ["was", "made"], object: ["A", "discovery"], explanation: "This is Passive because 'A discovery' receives the action.", convertedSentence: "A scientist made a discovery.", conversionSteps: "Find the doer 'a scientist', move it to the front, change the verb to 'made', and move the object 'a discovery' to the end." },
+                { sentence: "The dog fetched the stick.", voice: "Active", subject: ["The", "dog"], verb: ["fetched"], object: ["the", "stick"], explanation: "This is Active because 'The dog' is doing the action.", convertedSentence: "The stick was fetched by the dog.", conversionSteps: "Move the object 'the stick' to the front, change the verb to 'was fetched', and add 'by the dog' to the end." },
+                { sentence: "The stick was fetched by the dog.", voice: "Passive", subject: ["the", "dog"], verb: ["was", "fetched"], object: ["The", "stick"], explanation: "This is Passive because 'The stick' receives the action.", convertedSentence: "The dog fetched the stick.", conversionSteps: "Find the doer 'the dog', move it to the front, change the verb to 'fetched', and move the object 'the stick' to the end." },
+                { sentence: "The artist painted a masterpiece.", voice: "Active", subject: ["The", "artist"], verb: ["painted"], object: ["a", "masterpiece"], explanation: "This is Active because 'The artist' is doing the action.", convertedSentence: "A masterpiece was painted by the artist.", conversionSteps: "Move the object 'a masterpiece' to the front, change the verb to 'was painted', and add 'by the artist' to the end." },
+                { sentence: "A masterpiece was painted by the artist.", voice: "Passive", subject: ["the", "artist"], verb: ["was", "painted"], object: ["A", "masterpiece"], explanation: "This is Passive because 'A masterpiece' receives the action.", convertedSentence: "The artist painted a masterpiece.", conversionSteps: "Find the doer 'the artist', move it to the front, change the verb to 'painted', and move the object 'a masterpiece' to the end." },
+                { sentence: "The children sang a song.", voice: "Active", subject: ["The", "children"], verb: ["sang"], object: ["a", "song"], explanation: "This is Active because 'The children' are doing the action.", convertedSentence: "A song was sung by the children.", conversionSteps: "Move the object 'a song' to the front, change the verb to 'was sung', and add 'by the children' to the end." },
+                { sentence: "A song was sung by the children.", voice: "Passive", subject: ["the", "children"], verb: ["was", "sung"], object: ["A", "song"], explanation: "This is Passive because 'A song' receives the action.", convertedSentence: "The children sang a song.", conversionSteps: "Find the doer 'the children', move it to the front, change the verb to 'sang', and move the object 'a song' to the end." },
+                { sentence: "The gardener waters the plants.", voice: "Active", subject: ["The", "gardener"], verb: ["waters"], object: ["the", "plants"], explanation: "This is Active because 'The gardener' is doing the action.", convertedSentence: "The plants are watered by the gardener.", conversionSteps: "Move the object 'the plants' to the front, change the verb to 'are watered', and add 'by the gardener' to the end." },
+                { sentence: "The plants are watered by the gardener.", voice: "Passive", subject: ["the", "gardener"], verb: ["are", "watered"], object: ["The", "plants"], explanation: "This is Passive because 'The plants' receive the action.", convertedSentence: "The gardener waters the plants.", conversionSteps: "Find the doer 'the gardener', move it to the front, change the verb to 'waters', and move the object 'the plants' to the end." },
+                { sentence: "A detective solved the case.", voice: "Active", subject: ["A", "detective"], verb: ["solved"], object: ["the", "case"], explanation: "This is Active because 'A detective' is doing the action.", convertedSentence: "The case was solved by a detective.", conversionSteps: "Move the object 'the case' to the front, change the verb to 'was solved', and add 'by a detective' to the end." },
+                { sentence: "The case was solved by a detective.", voice: "Passive", subject: ["a", "detective"], verb: ["was", "solved"], object: ["The", "case"], explanation: "This is Passive because 'The case' receives the action.", convertedSentence: "A detective solved the case.", conversionSteps: "Find the doer 'a detective', move it to the front, change the verb to 'solved', and move the object 'the case' to the end." },
+                { sentence: "The lion roared loudly.", voice: "Active", subject: ["The", "lion"], verb: ["roared"], object: [], explanation: "This is Active because 'The lion' is doing the action.", convertedSentence: "A loud roar was made by the lion.", conversionSteps: "To make this passive, we turn the action into an object 'a loud roar', move it to the front, and change the verb to 'was made'." },
+                { sentence: "A loud roar was made by the lion.", voice: "Passive", subject: ["the", "lion"], verb: ["was", "made"], object: ["A", "loud", "roar"], explanation: "This is Passive because 'A loud roar' receives the action.", convertedSentence: "The lion roared loudly.", conversionSteps: "Find the doer 'the lion', move it to the front, and change the verb to 'roared loudly'." },
+                { sentence: "The queen wears a crown.", voice: "Active", subject: ["The", "queen"], verb: ["wears"], object: ["a", "crown"], explanation: "This is Active because 'The queen' is doing the action.", convertedSentence: "A crown is worn by the queen.", conversionSteps: "Move the object 'a crown' to the front, change the verb to 'is worn', and add 'by the queen' to the end." },
+                { sentence: "A crown is worn by the queen.", voice: "Passive", subject: ["the", "queen"], verb: ["is", "worn"], object: ["A", "crown"], explanation: "This is Passive because 'A crown' receives the action.", convertedSentence: "The queen wears a crown.", conversionSteps: "Find the doer 'the queen', move it to the front, change the verb to 'wears', and move the object 'a crown' to the end." },
+                { sentence: "The farmer grows corn.", voice: "Active", subject: ["The", "farmer"], verb: ["grows"], object: ["corn"], explanation: "This is Active because 'The farmer' is doing the action.", convertedSentence: "Corn is grown by the farmer.", conversionSteps: "Move the object 'corn' to the front, change the verb to 'is grown', and add 'by the farmer' to the end." },
+                { sentence: "Corn is grown by the farmer.", voice: "Passive", subject: ["the", "farmer"], verb: ["is", "grown"], object: ["Corn"], explanation: "This is Passive because 'Corn' receives the action.", convertedSentence: "The farmer grows corn.", conversionSteps: "Find the doer 'the farmer', move it to the front, change the verb to 'grows', and move the object 'corn' to the end." },
+                { sentence: "A baker bakes bread.", voice: "Active", subject: ["A", "baker"], verb: ["bakes"], object: ["bread"], explanation: "This is Active because 'A baker' is doing the action.", convertedSentence: "Bread is baked by a baker.", conversionSteps: "Move the object 'bread' to the front, change the verb to 'is baked', and add 'by a baker' to the end." },
+                { sentence: "Bread is baked by a baker.", voice: "Passive", subject: ["a", "baker"], verb: ["is", "baked"], object: ["Bread"], explanation: "This is Passive because 'Bread' receives the action.", convertedSentence: "A baker bakes bread.", conversionSteps: "Find the doer 'a baker', move it to the front, change the verb to 'bakes', and move the object 'bread' to the end." },
+                { sentence: "The student read the book.", voice: "Active", subject: ["The", "student"], verb: ["read"], object: ["the", "book"], explanation: "This is Active because 'The student' is doing the action.", convertedSentence: "The book was read by the student.", conversionSteps: "Move the object 'the book' to the front, change the verb to 'was read', and add 'by the student' to the end." },
+                { sentence: "The book was read by the student.", voice: "Passive", subject: ["the", "student"], verb: ["was", "read"], object: ["The", "book"], explanation: "This is Passive because 'The book' receives the action.", convertedSentence: "The student read the book.", conversionSteps: "Find the doer 'the student', move it to the front, change the verb to 'read', and move the object 'the book' to the end." },
+                { sentence: "The pilot flies the airplane.", voice: "Active", subject: ["The", "pilot"], verb: ["flies"], object: ["the", "airplane"], explanation: "This is Active because 'The pilot' is doing the action.", convertedSentence: "The airplane is flown by the pilot.", conversionSteps: "Move the object 'the airplane' to the front, change the verb to 'is flown', and add 'by the pilot' to the end." },
+                { sentence: "The airplane is flown by the pilot.", voice: "Passive", subject: ["the", "pilot"], verb: ["is", "flown"], object: ["The", "airplane"], explanation: "This is Passive because 'The airplane' receives the action.", convertedSentence: "The pilot flies the airplane.", conversionSteps: "Find the doer 'the pilot', move it to the front, change the verb to 'flies', and move the object 'the airplane' to the end." },
+                { sentence: "The mechanic fixed the car.", voice: "Active", subject: ["The", "mechanic"], verb: ["fixed"], object: ["the", "car"], explanation: "This is Active because 'The mechanic' is doing the action.", convertedSentence: "The car was fixed by the mechanic.", conversionSteps: "Move the object 'the car' to the front, change the verb to 'was fixed', and add 'by the mechanic' to the end." },
+                { sentence: "The car was fixed by the mechanic.", voice: "Passive", subject: ["the", "mechanic"], verb: ["was", "fixed"], object: ["The", "car"], explanation: "This is Passive because 'The car' receives the action.", convertedSentence: "The mechanic fixed the car.", conversionSteps: "Find the doer 'the mechanic', move it to the front, change the verb to 'fixed', and move the object 'the car' to the end." },
+                { sentence: "An author writes novels.", voice: "Active", subject: ["An", "author"], verb: ["writes"], object: ["novels"], explanation: "This is Active because 'An author' is doing the action.", convertedSentence: "Novels are written by an author.", conversionSteps: "Move the object 'novels' to the front, change the verb to 'are written', and add 'by an author' to the end." },
+                { sentence: "Novels are written by an author.", voice: "Passive", subject: ["an", "author"], verb: ["are", "written"], object: ["Novels"], explanation: "This is Passive because 'Novels' receive the action.", convertedSentence: "An author writes novels.", conversionSteps: "Find the doer 'an author', move it to the front, change the verb to 'writes', and move the object 'novels' to the end." },
+                { sentence: "The team won the game.", voice: "Active", subject: ["The", "team"], verb: ["won"], object: ["the", "game"], explanation: "This is Active because 'The team' is doing the action.", convertedSentence: "The game was won by the team.", conversionSteps: "Move the object 'the game' to the front, change the verb to 'was won', and add 'by the team' to the end." },
+                { sentence: "The game was won by the team.", voice: "Passive", subject: ["the", "team"], verb: ["was", "won"], object: ["The", "game"], explanation: "This is Passive because 'The game' receives the action.", convertedSentence: "The team won the game.", conversionSteps: "Find the doer 'the team', move it to the front, change the verb to 'won', and move the object 'the game' to the end." },
+                { sentence: "The director filmed the movie.", voice: "Active", subject: ["The", "director"], verb: ["filmed"], object: ["the", "movie"], explanation: "This is Active because 'The director' is doing the action.", convertedSentence: "The movie was filmed by the director.", conversionSteps: "Move the object 'the movie' to the front, change the verb to 'was filmed', and add 'by the director' to the end." },
+                { sentence: "The movie was filmed by the director.", voice: "Passive", subject: ["the", "director"], verb: ["was", "filmed"], object: ["The", "movie"], explanation: "This is Passive because 'The movie' receives the action.", convertedSentence: "The director filmed the movie.", conversionSteps: "Find the doer 'the director', move it to the front, change the verb to 'filmed', and move the object 'the movie' to the end." },
+                { sentence: "A reporter will write the story.", voice: "Active", subject: ["A", "reporter"], verb: ["will", "write"], object: ["the", "story"], explanation: "This is Active because 'A reporter' is doing the action.", convertedSentence: "The story will be written by a reporter.", conversionSteps: "Move the object 'the story' to the front, change the verb to 'will be written', and add 'by a reporter' to the end." },
+                { sentence: "The story will be written by a reporter.", voice: "Passive", subject: ["a", "reporter"], verb: ["will", "be", "written"], object: ["The", "story"], explanation: "This is Passive because 'The story' receives the action.", convertedSentence: "A reporter will write the story.", conversionSteps: "Find the doer 'a reporter', move it to the front, change the verb to 'will write', and move the object 'the story' to the end." },
+                { sentence: "The company builds houses.", voice: "Active", subject: ["The", "company"], verb: ["builds"], object: ["houses"], explanation: "This is Active because 'The company' is doing the action.", convertedSentence: "Houses are built by the company.", conversionSteps: "Move the object 'houses' to the front, change the verb to 'are built', and add 'by the company' to the end." },
+                { sentence: "Houses are built by the company.", voice: "Passive", subject: ["the", "company"], verb: ["are", "built"], object: ["Houses"], explanation: "This is Passive because 'Houses' receive the action.", convertedSentence: "The company builds houses.", conversionSteps: "Find the doer 'the company', move it to the front, change the verb to 'builds', and move the object 'houses' to the end." },
+                { sentence: "The mailman delivered the package.", voice: "Active", subject: ["The", "mailman"], verb: ["delivered"], object: ["the", "package"], explanation: "This is Active because 'The mailman' is doing the action.", convertedSentence: "The package was delivered by the mailman.", conversionSteps: "Move the object 'the package' to the front, change the verb to 'was delivered', and add 'by the mailman' to the end." },
+                { sentence: "The package was delivered by the mailman.", voice: "Passive", subject: ["the", "mailman"], verb: ["was", "delivered"], object: ["The", "package"], explanation: "This is Passive because 'The package' receives the action.", convertedSentence: "The mailman delivered the package.", conversionSteps: "Find the doer 'the mailman', move it to the front, change the verb to 'delivered', and move the object 'the package' to the end." },
+                { sentence: "The orchestra played a symphony.", voice: "Active", subject: ["The", "orchestra"], verb: ["played"], object: ["a", "symphony"], explanation: "This is Active because 'The orchestra' is doing the action.", convertedSentence: "A symphony was played by the orchestra.", conversionSteps: "Move the object 'a symphony' to the front, change the verb to 'was played', and add 'by the orchestra' to the end." },
+                { sentence: "A symphony was played by the orchestra.", voice: "Passive", subject: ["the", "orchestra"], verb: ["was", "played"], object: ["A", "symphony"], explanation: "This is Passive because 'A symphony' receives the action.", convertedSentence: "The orchestra played a symphony.", conversionSteps: "Find the doer 'the orchestra', move it to the front, change the verb to 'played', and move the object 'a symphony' to the end." },
+                { sentence: "The firefighters rescued the cat.", voice: "Active", subject: ["The", "firefighters"], verb: ["rescued"], object: ["the", "cat"], explanation: "This is Active because 'The firefighters' are doing the action.", convertedSentence: "The cat was rescued by the firefighters.", conversionSteps: "Move the object 'the cat' to the front, change the verb to 'was rescued', and add 'by the firefighters' to the end." },
+                { sentence: "The cat was rescued by the firefighters.", voice: "Passive", subject: ["the", "firefighters"], verb: ["was", "rescued"], object: ["The", "cat"], explanation: "This is Passive because 'The cat' receives the action.", convertedSentence: "The firefighters rescued the cat.", conversionSteps: "Find the doer 'the firefighters', move it to the front, change the verb to 'rescued', and move the object 'the cat' to the end." }
+            ];
+
+            const zombieBtn = document.getElementById('zombie-btn');
+            const zombieInput = document.getElementById('zombie-input');
+            const zombieResult = document.getElementById('zombie-result');
+            zombieBtn.addEventListener('click', () => {
+                const sentence = zombieInput.value.trim();
+                if (sentence === '') {
+                    zombieResult.textContent = 'Please enter a sentence!';
+                    zombieResult.className = 'mt-4 text-lg font-semibold h-6 text-red-500';
+                    return;
+                }
+                zombieResult.textContent = `"${sentence} by zombies." Does that make sense?`;
+                zombieResult.className = 'mt-4 text-lg font-semibold h-6 text-orange-600';
+            });
+            
+            const shuffledSentences = allSentences.sort(() => 0.5 - Math.random());
+            const quizData = shuffledSentences.slice(0, 4); 
+
+            let currentQuestionIndex = 0;
+            const quizSentence = document.getElementById('quiz-sentence');
+            const questionNumber = document.getElementById('question-number');
+            const totalQuestions = document.getElementById('total-questions');
+            const quizChoices = document.querySelectorAll('.quiz-choice');
+            const quizFeedback = document.getElementById('quiz-feedback');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const quizStep1 = document.getElementById('quiz-step-1');
+            const quizStep2 = document.getElementById('quiz-step-2');
+            const transformInstruction = document.getElementById('transform-instruction');
+            const transformInput = document.getElementById('transform-input');
+            const transformBtn = document.getElementById('transform-btn');
+
+            function loadQuestion() {
+                if (quizData.length === 0) return;
+                const question = quizData[currentQuestionIndex];
+                quizSentence.textContent = question.sentence;
+                questionNumber.textContent = currentQuestionIndex + 1;
+                totalQuestions.textContent = quizData.length;
+                quizStep1.classList.remove('hidden');
+                quizStep2.classList.add('hidden');
+                quizFeedback.textContent = '';
+                nextQuestionBtn.classList.add('hidden');
+                transformInput.value = '';
+                quizChoices.forEach(btn => btn.disabled = false);
+            }
+
+            quizChoices.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const selectedVoice = e.target.dataset.voice;
+                    const correctVoice = quizData[currentQuestionIndex].voice;
+                    quizChoices.forEach(btn => btn.disabled = true);
+                    if (selectedVoice === correctVoice) {
+                        quizFeedback.textContent = 'Correct! Good job!';
+                        quizFeedback.className = 'mt-4 text-center font-semibold h-12 text-green-600';
+                        e.target.classList.add('correct-answer');
+                        setTimeout(() => {
+                           e.target.classList.remove('correct-answer');
+                           quizStep1.classList.add('hidden');
+                           quizStep2.classList.remove('hidden');
+                           transformInstruction.textContent = correctVoice === 'Active' ? 'change it to Passive.' : 'change it to Active.';
+                        }, 1000);
+                    } else {
+                        quizFeedback.textContent = `Not quite! This sentence is ${correctVoice}.`;
+                        quizFeedback.className = 'mt-4 text-center font-semibold h-12 text-red-600';
+                        e.target.classList.add('incorrect-answer');
+                        setTimeout(() => e.target.classList.remove('incorrect-answer'), 500);
+                        nextQuestionBtn.classList.remove('hidden');
+                    }
+                });
+            });
+
+            transformBtn.addEventListener('click', () => {
+                const userAnswer = transformInput.value.trim().toLowerCase().replace(/[.,!?;]/g, '');
+                const correctAnswer = quizData[currentQuestionIndex].convertedSentence.toLowerCase().replace(/[.,!?;]/g, '');
+                if (userAnswer === correctAnswer) {
+                    quizFeedback.textContent = 'Perfect transformation! You got it!';
+                    quizFeedback.className = 'mt-4 text-center font-semibold h-12 text-green-600';
+                    transformInput.classList.add('correct-answer');
+                } else {
+                    quizFeedback.textContent = `So close! Correct answer: "${quizData[currentQuestionIndex].convertedSentence}". Tip: ${quizData[currentQuestionIndex].conversionSteps}`;
+                    quizFeedback.className = 'mt-4 text-center font-semibold h-auto text-orange-600';
+                    transformInput.classList.add('incorrect-answer');
+                }
+                setTimeout(() => { transformInput.classList.remove('correct-answer', 'incorrect-answer'); }, 500);
+                nextQuestionBtn.classList.remove('hidden');
+            });
+
+            nextQuestionBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                quizFeedback.className = 'mt-4 text-center font-semibold h-12'; 
+                if (currentQuestionIndex < quizData.length) { loadQuestion(); } 
+                else {
+                    quizSentence.textContent = "You've completed the training!";
+                    quizStep1.classList.add('hidden');
+                    quizStep2.classList.add('hidden');
+                    quizFeedback.textContent = 'Amazing work, Grammar Master!';
+                    quizFeedback.className = 'mt-4 text-center font-semibold h-12 text-green-600';
+                    nextQuestionBtn.textContent = 'Start Over';
+                    nextQuestionBtn.addEventListener('click', () => location.reload());
+                }
+            });
+
+            loadQuestion();
+            
+            let currentAnatomySentence = {};
+            let selectedType = null;
+            let foundParts = {};
+            const anatomySentenceEl = document.getElementById('anatomy-sentence');
+            const selectorBtns = document.querySelectorAll('.selector-btn');
+            const anatomyFeedbackEl = document.getElementById('anatomy-feedback');
+            const nextAnatomyBtn = document.getElementById('next-anatomy-btn');
+
+            function loadAnatomySentence() {
+                currentAnatomySentence = allSentences[Math.floor(Math.random() * allSentences.length)];
+                
+                anatomySentenceEl.innerHTML = '';
+                currentAnatomySentence.sentence.split(' ').forEach(word => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.textContent = word;
+                    wordSpan.className = 'anatomy-word';
+                    wordSpan.dataset.word = word.replace(/[.,!?;]/g, '');
+                    anatomySentenceEl.appendChild(wordSpan);
+                    anatomySentenceEl.append(' ');
+                });
+
+                selectedType = null;
+                foundParts = { subject: false, verb: false, object: false };
+                selectorBtns.forEach(btn => btn.classList.remove('active'));
+                nextAnatomyBtn.classList.add('hidden');
+                anatomyFeedbackEl.textContent = '';
+                 document.querySelectorAll('.anatomy-word').forEach(span => {
+                    span.classList.remove('subject-found', 'verb-found', 'object-found');
+                });
+            }
+
+            selectorBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectorBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedType = btn.dataset.type;
+                    anatomyFeedbackEl.textContent = `Now, find the ${selectedType}.`;
+                    anatomyFeedbackEl.className = 'h-6 mb-4 font-semibold text-gray-700';
+                });
+            });
+
+            anatomySentenceEl.addEventListener('click', e => {
+                if (e.target.classList.contains('anatomy-word') && selectedType) {
+                    const clickedWord = e.target.dataset.word;
+                    const correctParts = currentAnatomySentence[selectedType];
+
+                    if (correctParts.length === 0 && selectedType === 'object') {
+                         anatomyFeedbackEl.textContent = 'Good catch! This sentence has no object.';
+                         anatomyFeedbackEl.className = 'h-6 mb-4 font-semibold text-blue-600';
+                         foundParts.object = true;
+                    } else if (correctParts.includes(clickedWord)) {
+                        document.querySelectorAll(`.anatomy-word`).forEach(span => {
+                           if(correctParts.includes(span.dataset.word)) {
+                               span.classList.add(`${selectedType}-found`);
+                           }
+                        });
+                        foundParts[selectedType] = true;
+                        anatomyFeedbackEl.textContent = `Great! You found the ${selectedType}!`;
+                        anatomyFeedbackEl.className = 'h-6 mb-4 font-semibold text-green-600';
+                    } else {
+                        anatomyFeedbackEl.textContent = 'Not quite, try again!';
+                        anatomyFeedbackEl.className = 'h-6 mb-4 font-semibold text-red-500';
+                    }
+
+                    if (foundParts.subject && foundParts.verb && foundParts.object) {
+                        anatomyFeedbackEl.textContent = 'Awesome! You found all the parts!';
+                        nextAnatomyBtn.classList.remove('hidden');
+                    }
+
+                } else if (!selectedType) {
+                    anatomyFeedbackEl.textContent = 'Please select Subject, Verb, or Object first.';
+                    anatomyFeedbackEl.className = 'h-6 mb-4 font-semibold text-orange-500';
+                }
+            });
+
+            nextAnatomyBtn.addEventListener('click', loadAnatomySentence);
+            loadAnatomySentence();
+
+            const faceoffFlipper = document.getElementById('faceoff-flipper');
+            const faceoffSentenceEl = document.getElementById('faceoff-sentence');
+            const faceoffExplanationEl = document.getElementById('faceoff-explanation');
+            const activeBtn = document.getElementById('active-btn');
+            const passiveBtn = document.getElementById('passive-btn');
+            const nextFaceoffBtn = document.getElementById('next-faceoff-btn');
+            const correctCounterEl = document.getElementById('correct-counter');
+            const incorrectCounterEl = document.getElementById('incorrect-counter');
+            const faceoffFeedbackEl = document.getElementById('faceoff-feedback');
+            const faceoffButtons = document.getElementById('faceoff-buttons');
+            const faceoffLoader = document.getElementById('faceoff-loader');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let currentFaceoffSentence = {};
+            
+            function loadFaceoffSentence() {
+                faceoffLoader.classList.add('hidden');
+                faceoffFlipper.classList.remove('is-flipped');
+                faceoffFeedbackEl.textContent = '';
+                faceoffButtons.classList.remove('hidden');
+                activeBtn.disabled = false;
+                passiveBtn.disabled = false;
+
+                currentFaceoffSentence = allSentences[Math.floor(Math.random() * allSentences.length)];
+                faceoffSentenceEl.textContent = currentFaceoffSentence.sentence;
+            }
+
+            function handleAnswer(userChoice) {
+                activeBtn.disabled = true;
+                passiveBtn.disabled = true;
+
+                if (userChoice === currentFaceoffSentence.voice) {
+                    correctCount++;
+                    correctCounterEl.textContent = correctCount;
+                    faceoffFeedbackEl.textContent = 'Correct! ✅';
+                    faceoffFeedbackEl.className = 'text-2xl font-bold mt-4 text-green-500';
+                    setTimeout(loadFaceoffSentence, 1500);
+                } else {
+                    incorrectCount++;
+                    incorrectCounterEl.textContent = incorrectCount;
+                    faceoffExplanationEl.textContent = currentFaceoffSentence.explanation;
+                    faceoffFlipper.classList.add('is-flipped');
+                }
+            }
+            
+            activeBtn.addEventListener('click', () => handleAnswer('Active'));
+            passiveBtn.addEventListener('click', () => handleAnswer('Passive'));
+            nextFaceoffBtn.addEventListener('click', loadFaceoffSentence);
+            
+            loadFaceoffSentence();
+
+            const apiKey = "";
+            const ttsApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+            const listenBtns = document.querySelectorAll('.listen-btn');
+            const audioPlayer = document.getElementById('tts-audio');
+
+            const textToSpeak = {
+                active: document.getElementById('active-voice-text').innerText,
+                passive: document.getElementById('passive-voice-text').innerText,
+                activeToPassive: "Ready to become a sentence surgeon? Let's change an active sentence to passive in four easy steps! Let's use the sentence: 'The cat chased the mouse.' Step one: Find the subject, verb, and object. Here, the subject is 'the cat', the verb is 'chased', and the object is 'the mouse'. Step two: Swap the subject and object. So, 'the mouse' moves to the front, and 'the cat' moves to the end. It looks a little funny for now! Step three: Change the verb. Since 'chased' is in the past, we add the helping verb 'was' and keep the main verb 'chased'. Now we have 'The mouse was chased the cat'. We are almost there! Step four: Add the word 'by' before the original subject. This gives us our final sentence: 'The mouse was chased by the cat.' Great job!",
+                passiveToActive: "Okay, let's reverse the mystery and change a passive sentence back to active! Our sentence is: 'The homework was finished by the student.' Step one: Find the original hero, the one who actually did the action. They are hiding at the end of the sentence, after the word 'by'. In this case, it's 'the student'. Step two: Move that hero back to the front of the sentence where they belong! Now we have 'The student...'. Step three: Fix the verb. The passive sentence uses a helping verb like 'was' and a past participle like 'finished'. We need to remove the helping verb 'was' and make sure the main verb 'finished' matches our hero. 'The student finished...' sounds right! Step four: Move the original subject, 'the homework', to the end of the sentence, where it becomes the object again. And there you have it! Our new, active sentence is: 'The student finished the homework.' You did it!"
+            };
+            
+            function base64ToArrayBuffer(base64) {
+                const binaryString = window.atob(base64);
+                const len = binaryString.length;
+                const bytes = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return bytes.buffer;
+            }
+
+            function pcmToWav(pcmData, sampleRate) {
+                const numChannels = 1;
+                const bitsPerSample = 16;
+                const byteRate = sampleRate * numChannels * bitsPerSample / 8;
+                const blockAlign = numChannels * bitsPerSample / 8;
+                const dataSize = pcmData.byteLength;
+                const buffer = new ArrayBuffer(44 + dataSize);
+                const view = new DataView(buffer);
+
+                function writeString(view, offset, string) {
+                    for (let i = 0; i < string.length; i++) {
+                        view.setUint8(offset + i, string.charCodeAt(i));
+                    }
+                }
+                
+                writeString(view, 0, 'RIFF');
+                view.setUint32(4, 36 + dataSize, true);
+                writeString(view, 8, 'WAVE');
+                writeString(view, 12, 'fmt ');
+                view.setUint32(16, 16, true);
+                view.setUint16(20, 1, true);
+                view.setUint16(22, numChannels, true);
+                view.setUint32(24, sampleRate, true);
+                view.setUint32(28, byteRate, true);
+                view.setUint16(32, blockAlign, true);
+                view.setUint16(34, bitsPerSample, true);
+                writeString(view, 36, 'data');
+                view.setUint32(40, dataSize, true);
+
+                const dataView = new DataView(pcmData);
+                for (let i = 0; i < dataSize; i++) {
+                    view.setUint8(44 + i, dataView.getUint8(i));
+                }
+
+                return new Blob([view], { type: 'audio/wav' });
+            }
+
+            listenBtns.forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const currentBtn = e.currentTarget;
+                    const voiceType = currentBtn.dataset.voice;
+                    const text = textToSpeak[voiceType];
+
+                    const icon = currentBtn.querySelector('.gg-volume, .gg-speaker');
+                    const spinnerIcon = currentBtn.querySelector('.gg-spinner');
+
+                    icon.classList.add('hidden');
+                    spinnerIcon.classList.remove('hidden');
+                    currentBtn.disabled = true;
+
+                    const payload = {
+                        contents: [{ parts: [{ text: `Say this in a friendly and encouraging voice for a child: ${text}` }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                        },
+                        model: "gemini-2.5-flash-preview-tts"
+                    };
+
+                    try {
+                        const response = await fetch(ttsApiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if(!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data;
+                        const mimeType = part?.inlineData?.mimeType;
+
+                        if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                            const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                            const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                            const pcmData = base64ToArrayBuffer(audioData);
+                            const wavBlob = pcmToWav(pcmData, sampleRate);
+                            const audioUrl = URL.createObjectURL(wavBlob);
+                            
+                            audioPlayer.src = audioUrl;
+                            audioPlayer.play();
+                        } else {
+                            throw new Error("Invalid audio data received.");
+                        }
+
+                    } catch (error) {
+                        console.error("TTS generation failed:", error);
+                        alert("Sorry, I couldn't generate the audio right now. Please try again later.");
+                    } finally {
+                        const onAudioEnd = () => {
+                            icon.classList.remove('hidden');
+                            spinnerIcon.classList.add('hidden');
+                            currentBtn.disabled = false;
+                            audioPlayer.removeEventListener('ended', onAudioEnd);
+                            audioPlayer.removeEventListener('error', onAudioEnd);
+                        }
+                        audioPlayer.addEventListener('ended', onAudioEnd);
+                        audioPlayer.addEventListener('error', onAudioEnd);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
