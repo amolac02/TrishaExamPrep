@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हिंदी कारक सीखें - Learn Hindi Kaarak for Trisha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-bg-1: rgba(59, 130, 246, 0.08);
+            --color-bg-2: rgba(245, 158, 11, 0.08);
+            --color-bg-3: rgba(34, 197, 94, 0.08);
+            --color-bg-4: rgba(239, 68, 68, 0.08);
+            --color-bg-5: rgba(147, 51, 234, 0.08);
+            --color-bg-6: rgba(249, 115, 22, 0.08);
+            --color-bg-7: rgba(236, 72, 153, 0.08);
+            --color-bg-8: rgba(6, 182, 212, 0.08);
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-card-border: rgba(119, 124, 124, 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #E8F5F7 100%);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hindi-text {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+
+        /* Navigation */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            background: var(--color-surface);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: var(--space-16) var(--space-20);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: var(--space-12);
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: var(--space-8) var(--space-16);
+            background: var(--color-bg-1);
+            border: 2px solid transparent;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-24);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: var(--space-32) var(--space-20);
+            background: linear-gradient(135deg, var(--color-bg-1) 0%, var(--color-bg-3) 100%);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-32);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: var(--color-text);
+            margin-bottom: var(--space-12);
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-8);
+        }
+
+        .hero .for-trisha {
+            font-size: 16px;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--color-card-border);
+        }
+
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: var(--space-16);
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: var(--space-12);
+            color: var(--color-text);
+        }
+
+        /* Kaarak Card */
+        .kaarak-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-20);
+            border: 3px solid;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .kaarak-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .kaarak-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-16);
+            flex-wrap: wrap;
+            gap: var(--space-12);
+        }
+
+        .kaarak-title {
+            flex: 1;
+        }
+
+        .kaarak-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: var(--space-8);
+        }
+
+        .kaarak-english {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+        .marker-badge {
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-full);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .question-badge {
+            background: var(--color-bg-2);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-16);
+            display: inline-block;
+        }
+
+        .explanation {
+            background: var(--color-bg-5);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-16);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .explanation-hindi {
+            font-size: 16px;
+            margin-bottom: var(--space-8);
+            line-height: 1.7;
+        }
+
+        .explanation-english {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        /* Examples Table */
+        .examples-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-16);
+        }
+
+        .examples-table th {
+            background: var(--color-bg-8);
+            padding: var(--space-12);
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid var(--color-card-border);
+        }
+
+        .examples-table td {
+            padding: var(--space-12);
+            border: 1px solid var(--color-card-border);
+        }
+
+        .examples-table tr:nth-child(even) {
+            background: var(--color-bg-1);
+        }
+
+        /* Summary Table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-16);
+            overflow-x: auto;
+            display: block;
+        }
+
+        .summary-table table {
+            width: 100%;
+            min-width: 800px;
+        }
+
+        .summary-table th {
+            background: var(--color-primary);
+            color: white;
+            padding: var(--space-16);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .summary-table td {
+            padding: var(--space-12);
+            border: 1px solid var(--color-card-border);
+        }
+
+        .summary-table tr:hover {
+            background: var(--color-bg-2);
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-20);
+        }
+
+        .comparison-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            border: 2px solid var(--color-card-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-16);
+            color: var(--color-primary);
+            text-align: center;
+        }
+
+        .comparison-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-12);
+        }
+
+        .comparison-side {
+            padding: var(--space-12);
+            border-radius: var(--radius-base);
+        }
+
+        .comparison-side.left {
+            background: var(--color-bg-3);
+        }
+
+        .comparison-side.right {
+            background: var(--color-bg-7);
+        }
+
+        .comparison-side h4 {
+            font-size: 16px;
+            margin-bottom: var(--space-8);
+            font-weight: 600;
+        }
+
+        .comparison-side ul {
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .comparison-side li {
+            margin-bottom: var(--space-8);
+            padding-left: var(--space-16);
+            position: relative;
+        }
+
+        .comparison-side li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+
+        /* Learning Steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-20);
+        }
+
+        .step-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            text-align: center;
+            border: 2px solid var(--color-card-border);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: scale(1.05);
+        }
+
+        .step-icon {
+            font-size: 48px;
+            margin-bottom: var(--space-12);
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--space-8);
+            color: var(--color-text);
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Special table for ka/ke/ki */
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-16) 0;
+        }
+
+        .rules-table th {
+            background: var(--color-bg-6);
+            padding: var(--space-12);
+            font-weight: 600;
+            border: 1px solid var(--color-card-border);
+        }
+
+        .rules-table td {
+            padding: var(--space-12);
+            border: 1px solid var(--color-card-border);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .comparison-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: var(--space-16);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+            <button class="nav-btn" onclick="showSection('intro')">📖 Introduction</button>
+            <button class="nav-btn" onclick="showSection('kaaracks')">🎯 8 Kaarak Types</button>
+            <button class="nav-btn" onclick="showSection('summary')">📊 Summary Table</button>
+            <button class="nav-btn" onclick="showSection('differences')">⚖️ Differences</button>
+            <button class="nav-btn" onclick="showSection('strategy')">💡 Learning Strategy</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1 class="hindi-text">📚 हिंदी कारक सीखें</h1>
+                <p class="subtitle">Learn Hindi Kaarak - Grammatical Cases</p>
+                <p class="for-trisha">🌟 Special Learning Material for Trisha - Grade 5 🌟</p>
+            </div>
+            
+            <div class="card">
+                <h2>🎓 Welcome to Kaarak Learning!</h2>
+                <p style="font-size: 18px; line-height: 1.8; margin-bottom: 16px;">
+                    Namaste Trisha! 🙏 Is app mein tum <strong>Hindi ke 8 Kaarak</strong> seekhogi. Kaarak grammar ka ek bahut important part hai jo tumhe sentences ko better samajhne mein madad karega.
+                </p>
+                <p style="font-size: 18px; line-height: 1.8; margin-bottom: 16px;">
+                    Each section has <strong>Hindi explanations</strong> with <strong>English translations</strong>, colorful examples, and interactive learning materials specially designed for Grade 5 students!
+                </p>
+                <p style="font-size: 18px; line-height: 1.8; color: var(--color-primary); font-weight: 600;">
+                    ✨ Navigate using the menu above to explore different sections!
+                </p>
+            </div>
+        </section>
+
+        <!-- Introduction Section -->
+        <section id="intro" class="section">
+            <div class="card">
+                <h2>📖 <span class="hindi-text">परिचय (Introduction)</span></h2>
+                
+                <h3 class="hindi-text">कारक क्या होते हैं? (What are Kaaracks?)</h3>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">
+                        कारक का अर्थ व्याकरणिक कारक होता है। हिंदी में इसका उपयोग संज्ञा या सर्वनाम का संबंध वाक्य के दूसरे शब्द से बताने के लिए होता है।
+                    </p>
+                    <p class="explanation-english">
+                        A Kaarak (case) is a grammatical category that shows the relationship between a noun or pronoun and other words in a sentence. It indicates the role of that noun in the action described.
+                    </p>
+                </div>
+
+                <div style="background: var(--color-bg-2); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h4 style="margin-bottom: 12px;">🌟 Simple Example:</h4>
+                    <p style="font-size: 18px; margin-bottom: 8px;" class="hindi-text"><strong>राम किताब पढ़ रहा है।</strong></p>
+                    <p style="font-size: 16px; color: var(--color-text-secondary);">Ram is reading a book.</p>
+                </div>
+
+                <div style="background: var(--color-bg-4); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h4 style="margin-bottom: 12px;">✨ With Case Marker:</h4>
+                    <p style="font-size: 18px; margin-bottom: 8px;" class="hindi-text"><strong>राम ने किताब पढ़ी है।</strong></p>
+                    <p style="font-size: 16px; color: var(--color-text-secondary);">Ram has read the book. (Here "ने" is the case marker)</p>
+                </div>
+
+                <h3 class="hindi-text" style="margin-top: 32px;">विभक्ति चिन्ह क्या होते हैं? (What are Vibhakti Chinh?)</h3>
+                <p style="font-size: 16px; margin-bottom: 16px; line-height: 1.7;">
+                    Vibhakti Chinh (case markers) are special words that we add to nouns to show their relationship with other words in the sentence. Hindi mein <strong>8 main Kaarak</strong> hote hain, aur har ek ka apna marker hota hai.
+                </p>
+
+                <table class="rules-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">विभक्ति चिन्ह (Marker)</th>
+                            <th class="hindi-text">उद्देश्य (Purpose) - Hindi</th>
+                            <th>Purpose - English</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text"><strong>ने</strong></td>
+                            <td class="hindi-text">कर्ता के लिए</td>
+                            <td>For Subject</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>को</strong></td>
+                            <td class="hindi-text">कर्म के लिए</td>
+                            <td>For Object</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>से</strong></td>
+                            <td class="hindi-text">करण और अपादान के लिए</td>
+                            <td>For Instrumental and Ablative</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>के लिए</strong></td>
+                            <td class="hindi-text">सम्प्रदान के लिए</td>
+                            <td>For Dative</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>का, के, की</strong></td>
+                            <td class="hindi-text">संबंध के लिए</td>
+                            <td>For Possessive</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>में</strong></td>
+                            <td class="hindi-text">अधिकरण के लिए</td>
+                            <td>For Locative (inside)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>पर</strong></td>
+                            <td class="hindi-text">अधिकरण के लिए</td>
+                            <td>For Locative (on)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>हे!, अरे!</strong></td>
+                            <td class="hindi-text">संबोधन के लिए</td>
+                            <td>For Vocative</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 8 Kaarak Types Section -->
+        <section id="kaaracks" class="section">
+            <div class="card">
+                <h2>🎯 <span class="hindi-text">8 कारक के प्रकार (8 Types of Kaarak)</span></h2>
+                <p style="margin-bottom: 24px; font-size: 16px;">Click on each Kaarak to learn about them in detail with examples!</p>
+            </div>
+
+            <!-- Karta Karak -->
+            <div class="kaarak-card" style="border-color: #4A90E2;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">1. कर्ता कारक</div>
+                        <div class="kaarak-english">Nominative Case - The Doer</div>
+                    </div>
+                    <div class="marker-badge" style="background: #4A90E2;">ने (ne)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: कौन? (Who?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">कर्ता वह व्यक्ति या वस्तु है जो कार्य करता है। जो क्रिया को अंजाम देता है, वही कर्ता कारक में होता है।</p>
+                    <p class="explanation-english">The Karta Karak indicates the subject - the person or thing that performs the action. It answers the question 'Who?' or 'What?'</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">राम ने खाना खाया।</td>
+                            <td>Ram ate food.</td>
+                            <td>राम = कर्ता (doer), ने = marker showing the doer</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">प्रिया ने किताब पढ़ी।</td>
+                            <td>Priya read the book.</td>
+                            <td>प्रिया = कर्ता, ने = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">बिक्रम ने पत्र लिखा।</td>
+                            <td>Bikram wrote the letter.</td>
+                            <td>बिक्रम = कर्ता, ने = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">मैंने होमवर्क किया।</td>
+                            <td>I did homework.</td>
+                            <td>मैं = कर्ता, ने = attached to pronoun</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Karma Karak -->
+            <div class="kaarak-card" style="border-color: #50C878;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">2. कर्म कारक</div>
+                        <div class="kaarak-english">Accusative Case - The Object</div>
+                    </div>
+                    <div class="marker-badge" style="background: #50C878;">को (ko)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: किसको? (Whom?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">कर्म वह व्यक्ति या वस्तु है जिस पर कार्य का प्रभाव पड़ता है। जिसे कार्य किया जाता है, वही कर्म कारक में होता है।</p>
+                    <p class="explanation-english">The Karma Karak indicates the object - the person or thing that receives the action or is affected by it. It answers 'Whom?' or 'What?'</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">राम ने आम को खाया।</td>
+                            <td>Ram ate the mango.</td>
+                            <td>आम = कर्म (object), को = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">शिक्षक ने छात्र को पुस्तक दी।</td>
+                            <td>Teacher gave book to student.</td>
+                            <td>पुस्तक = कर्म (object of action)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">माँ ने बेटे को प्यार किया।</td>
+                            <td>Mother loved the son.</td>
+                            <td>बेटा = कर्म (recipient of action)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">मैंने पेन को देखा।</td>
+                            <td>I saw the pen.</td>
+                            <td>पेन = कर्म (object being seen)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Karan Karak -->
+            <div class="kaarak-card" style="border-color: #FF8C42;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">3. करण कारक</div>
+                        <div class="kaarak-english">Instrumental Case - The Means</div>
+                    </div>
+                    <div class="marker-badge" style="background: #FF8C42;">से (se), के द्वारा (ke dwara)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: कैसे? किससे? (How? By what?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">करण वह साधन या माध्यम है जिससे कार्य को अंजाम दिया जाता है। जिस औज़ार से काम होता है, वही करण कारक में होता है।</p>
+                    <p class="explanation-english">The Karan Karak shows the instrument or means by which an action is performed. It indicates 'with what' or 'by what means.'</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">राम ने चाकू से सेब काटा।</td>
+                            <td>Ram cut apple with knife.</td>
+                            <td>चाकू = करण (instrument/tool)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">बिकाश ने पेन से लिखा।</td>
+                            <td>Bikash wrote with pen.</td>
+                            <td>पेन = करण (means of writing)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">वह हाथ से खाना खाता है।</td>
+                            <td>He eats food with hand.</td>
+                            <td>हाथ = करण (means/instrument)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">शिक्षक किताब के द्वारा पढ़ाते हैं।</td>
+                            <td>Teachers teach by means of book.</td>
+                            <td>किताब = करण (method/means)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sampradan Karak -->
+            <div class="kaarak-card" style="border-color: #9B59B6;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">4. सम्प्रदान कारक</div>
+                        <div class="kaarak-english">Dative Case - For Whom</div>
+                    </div>
+                    <div class="marker-badge" style="background: #9B59B6;">को (ko), के लिए (ke liye)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: किसे? किसके लिए? (To whom? For whom?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">सम्प्रदान वह व्यक्ति या वस्तु है जिसके लिए कोई कार्य किया जाता है। जिसे कुछ दिया जाता है, वही सम्प्रदान कारक में होता है।</p>
+                    <p class="explanation-english">The Sampradan Karak indicates the recipient or beneficiary - the person for whom or to whom an action is performed. It answers 'For whom?' or 'To whom?'</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">राज ने भिखारी को पैसा दिया।</td>
+                            <td>Raj gave money to beggar.</td>
+                            <td>भिखारी = सम्प्रदान (recipient), को = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">माँ बेटे के लिए खाना बनाती है।</td>
+                            <td>Mother cooks food for son.</td>
+                            <td>बेटा = सम्प्रदान (for whom), के लिए = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">शिक्षक छात्रों को किताबें देते हैं।</td>
+                            <td>Teachers give books to students.</td>
+                            <td>छात्र = सम्प्रदान (recipients)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">मैंने दोस्त के लिए तोहफा खरीदा।</td>
+                            <td>I bought gift for friend.</td>
+                            <td>दोस्त = सम्प्रदान (beneficiary)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Apadan Karak -->
+            <div class="kaarak-card" style="border-color: #E74C3C;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">5. अपादान कारक</div>
+                        <div class="kaarak-english">Ablative Case - From/Source</div>
+                    </div>
+                    <div class="marker-badge" style="background: #E74C3C;">से (se)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: कहाँ से? (From where?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">अपादान वह स्थान या वस्तु है जिससे कोई दूसरी वस्तु अलग हो जाती है। जहाँ से कुछ निकलता है या अलग होता है, वही अपादान कारक में होता है।</p>
+                    <p class="explanation-english">The Apadan Karak indicates the source or origin from which something is separated or emerges. It answers 'From where?' or 'From what?'</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">पेड़ से फल गिरता है।</td>
+                            <td>Fruit falls from tree.</td>
+                            <td>पेड़ = अपादान (source of separation), से = marker</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">हिमालय से गंगा निकलती है।</td>
+                            <td>Ganga originates from Himalayas.</td>
+                            <td>हिमालय = अपादान (source)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">कमरे से बाहर निकलो।</td>
+                            <td>Come out from room.</td>
+                            <td>कमरा = अपादान (place of origin)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">मैं स्कूल से घर जा रहा हूँ।</td>
+                            <td>I am going home from school.</td>
+                            <td>स्कूल = अपादान (starting point)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sambandh Karak -->
+            <div class="kaarak-card" style="border-color: #F06292;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">6. संबंध कारक</div>
+                        <div class="kaarak-english">Possessive Case - Whose/Ownership</div>
+                    </div>
+                    <div class="marker-badge" style="background: #F06292;">का (ka), के (ke), की (ki)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: किसका? (Whose?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">संबंध कारक किसी वस्तु की मालिकी या रिश्ता दिखाता है। जब बताना हो कि चीज़ किसकी है, तो संबंध कारक का प्रयोग होता है।</p>
+                    <p class="explanation-english">The Sambandh Karak shows possession or relationship. It indicates 'Whose?' and shows ownership or association between nouns.</p>
+                </div>
+                
+                <h4 style="margin: 20px 0 12px 0;">📋 Special Rules for का, के, की:</h4>
+                <table class="rules-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Marker</th>
+                            <th class="hindi-text">Usage (Hindi)</th>
+                            <th>Usage (English)</th>
+                            <th class="hindi-text">Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text"><strong>का</strong></td>
+                            <td class="hindi-text">पुल्लिंग एकवचन</td>
+                            <td>Masculine singular</td>
+                            <td class="hindi-text">राज का घर, बिल्ली का दूध</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>के</strong></td>
+                            <td class="hindi-text">पुल्लिंग बहुवचन</td>
+                            <td>Masculine plural</td>
+                            <td class="hindi-text">लड़कों के खिलौने, घरों के दरवाज़े</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>की</strong></td>
+                            <td class="hindi-text">स्त्रीलिंग</td>
+                            <td>Feminine</td>
+                            <td class="hindi-text">लड़की की किताब, माँ की साड़ी</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">यह राम का घर है।</td>
+                            <td>This is Ram's house.</td>
+                            <td>का = possession marker (masculine singular)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">प्रिया की किताब</td>
+                            <td>Priya's book</td>
+                            <td>की = possession marker (feminine)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">बिक्रम के खिलौने</td>
+                            <td>Bikram's toys</td>
+                            <td>के = possession marker (masculine plural)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">शिक्षक की कलम</td>
+                            <td>Teacher's pen</td>
+                            <td>की = possession marker (feminine)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Adhikaran Karak -->
+            <div class="kaarak-card" style="border-color: #26A69A;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">7. अधिकरण कारक</div>
+                        <div class="kaarak-english">Locative Case - Where/When</div>
+                    </div>
+                    <div class="marker-badge" style="background: #26A69A;">में (mein), पर (par)</div>
+                </div>
+                <div class="question-badge hindi-text">प्रश्न: कहाँ? कब? (Where? When?)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">अधिकरण कारक वह स्थान या समय दिखाता है जहाँ या जब कार्य होता है। जब बताना हो कि काम कहाँ या कब हुआ, तो अधिकरण कारक का प्रयोग होता है।</p>
+                    <p class="explanation-english">The Adhikaran Karak indicates the place or time where an action occurs. It answers 'Where?' or 'When?'</p>
+                </div>
+                
+                <h4 style="margin: 20px 0 12px 0;">📋 Different Locative Markers:</h4>
+                <table class="rules-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Marker</th>
+                            <th class="hindi-text">Meaning</th>
+                            <th class="hindi-text">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text"><strong>में</strong></td>
+                            <td>Inside, In</td>
+                            <td class="hindi-text">कमरे में (in the room)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>पर</strong></td>
+                            <td>On, Upon</td>
+                            <td class="hindi-text">मेज पर (on the table)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>के ऊपर</strong></td>
+                            <td>Above, On top</td>
+                            <td class="hindi-text">छत के ऊपर (on the roof)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text"><strong>के नीचे</strong></td>
+                            <td>Below, Under</td>
+                            <td class="hindi-text">पेड़ के नीचे (under the tree)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">वह कक्षा में पढ़ता है।</td>
+                            <td>He studies in classroom.</td>
+                            <td>कक्षा में = location (inside)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">शिक्षक मंच पर खड़े हैं।</td>
+                            <td>Teacher stands on stage.</td>
+                            <td>मंच पर = location (on top of)</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">जनवरी में ठंड पड़ती है।</td>
+                            <td>It is cold in January.</td>
+                            <td>जनवरी में = time period</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">बिल्ली छत पर बैठी है।</td>
+                            <td>Cat sits on roof.</td>
+                            <td>छत पर = location (on top of)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sambodhan Karak -->
+            <div class="kaarak-card" style="border-color: #8D6E63;">
+                <div class="kaarak-header">
+                    <div class="kaarak-title">
+                        <div class="kaarak-name hindi-text">8. संबोधन कारक</div>
+                        <div class="kaarak-english">Vocative Case - Addressing</div>
+                    </div>
+                    <div class="marker-badge" style="background: #8D6E63;">हे! (he!), अरे! (are!), ओ! (o!)</div>
+                </div>
+                <div class="question-badge hindi-text">संबोधन (Addressing)</div>
+                <div class="explanation">
+                    <p class="explanation-hindi hindi-text">संबोधन कारक का प्रयोग किसी को सीधे पुकारने या संबोधित करने के लिए होता है। जब किसी से सीधे बात करनी हो, तो संबोधन कारक का प्रयोग होता है।</p>
+                    <p class="explanation-english">The Sambodhan Karak is used when directly addressing someone. It shows that you are speaking directly to or calling someone.</p>
+                </div>
+                <h4 style="margin: 20px 0 12px 0;">📝 Examples:</h4>
+                <table class="examples-table">
+                    <thead>
+                        <tr>
+                            <th class="hindi-text">Hindi</th>
+                            <th>English</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="hindi-text">हे राम, यहाँ आओ।</td>
+                            <td>O Ram, come here.</td>
+                            <td>हे = vocative marker, directly addressing Ram</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">अरे दोस्त, तुम कहाँ थे?</td>
+                            <td>Hey friend, where were you?</td>
+                            <td>अरे = vocative marker, directly addressing friend</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">ओ प्रिया! सुनो मेरी बात।</td>
+                            <td>O Priya! Listen to me.</td>
+                            <td>ओ = vocative marker, directly calling Priya</td>
+                        </tr>
+                        <tr>
+                            <td class="hindi-text">हे भगवान! मेरी मदद करो।</td>
+                            <td>O God! Help me.</td>
+                            <td>हे = vocative marker, direct address</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Summary Table Section -->
+        <section id="summary" class="section">
+            <div class="card">
+                <h2>📊 <span class="hindi-text">सारांश - सभी 8 कारक (Summary - All 8 Kaaracks)</span></h2>
+                <p style="margin-bottom: 20px; font-size: 16px;">Quick reference table showing all 8 Kaaracks with their markers, questions, and examples!</p>
+                
+                <div class="summary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="hindi-text">क्रम</th>
+                                <th class="hindi-text">कारक का नाम</th>
+                                <th>English Name</th>
+                                <th class="hindi-text">विभक्ति चिन्ह</th>
+                                <th class="hindi-text">प्रश्न</th>
+                                <th class="hindi-text">उदाहरण</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td class="hindi-text">कर्ता कारक</td>
+                                <td>Nominative</td>
+                                <td class="hindi-text">ने</td>
+                                <td class="hindi-text">कौन?</td>
+                                <td class="hindi-text">राम ने खाना खाया।</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td class="hindi-text">कर्म कारक</td>
+                                <td>Accusative</td>
+                                <td class="hindi-text">को</td>
+                                <td class="hindi-text">किसको?</td>
+                                <td class="hindi-text">राम ने आम को खाया।</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td class="hindi-text">करण कारक</td>
+                                <td>Instrumental</td>
+                                <td class="hindi-text">से, के द्वारा</td>
+                                <td class="hindi-text">कैसे?</td>
+                                <td class="hindi-text">राम ने चाकू से सेब काटा।</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td class="hindi-text">सम्प्रदान कारक</td>
+                                <td>Dative</td>
+                                <td class="hindi-text">को, के लिए</td>
+                                <td class="hindi-text">किसके लिए?</td>
+                                <td class="hindi-text">माँ बेटे के लिए खाना बनाती है।</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td class="hindi-text">अपादान कारक</td>
+                                <td>Ablative</td>
+                                <td class="hindi-text">से</td>
+                                <td class="hindi-text">कहाँ से?</td>
+                                <td class="hindi-text">पेड़ से फल गिरता है।</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td class="hindi-text">संबंध कारक</td>
+                                <td>Possessive</td>
+                                <td class="hindi-text">का, के, की</td>
+                                <td class="hindi-text">किसका?</td>
+                                <td class="hindi-text">यह राम का घर है।</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td class="hindi-text">अधिकरण कारक</td>
+                                <td>Locative</td>
+                                <td class="hindi-text">में, पर</td>
+                                <td class="hindi-text">कहाँ? कब?</td>
+                                <td class="hindi-text">वह कक्षा में पढ़ता है।</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td class="hindi-text">संबोधन कारक</td>
+                                <td>Vocative</td>
+                                <td class="hindi-text">हे!, अरे!, ओ!</td>
+                                <td class="hindi-text">संबोधन</td>
+                                <td class="hindi-text">हे राम, यहाँ आओ।</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Important Differences Section -->
+        <section id="differences" class="section">
+            <div class="card">
+                <h2>⚖️ <span class="hindi-text">महत्वपूर्ण अंतर (Important Differences)</span></h2>
+                <p style="margin-bottom: 24px; font-size: 16px;">Understanding the key differences between similar-looking Kaaracks!</p>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Karta vs Karma -->
+                <div class="comparison-card">
+                    <div class="comparison-title hindi-text">कर्ता vs कर्म (Karta vs Karma)</div>
+                    <div class="comparison-content">
+                        <div class="comparison-side left">
+                            <h4 class="hindi-text">कर्ता कारक</h4>
+                            <ul>
+                                <li class="hindi-text">जो काम करता है = विषय</li>
+                                <li>The doer/subject</li>
+                                <li class="hindi-text">"ने" लगता है</li>
+                                <li>Takes "ने" marker</li>
+                                <li class="hindi-text">सक्रिय भूमिका</li>
+                                <li>Active participant</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-side right">
+                            <h4 class="hindi-text">कर्म कारक</h4>
+                            <ul>
+                                <li class="hindi-text">जो काम को प्राप्त करता है = वस्तु</li>
+                                <li>The receiver/object</li>
+                                <li class="hindi-text">"को" लगता है</li>
+                                <li>Takes "को" marker</li>
+                                <li class="hindi-text">निष्क्रिय भूमिका</li>
+                                <li>Passive recipient</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px; padding: 12px; background: var(--color-bg-2); border-radius: 8px;">
+                        <strong>Example:</strong><br>
+                        <span class="hindi-text">राम <strong>ने</strong> आम <strong>को</strong> खाया।</span><br>
+                        <small>राम = कर्ता (doer), आम = कर्म (object)</small>
+                    </div>
+                </div>
+
+                <!-- Karan vs Apadan -->
+                <div class="comparison-card">
+                    <div class="comparison-title hindi-text">करण vs अपादान (Karan vs Apadan)</div>
+                    <p style="font-size: 14px; text-align: center; margin-bottom: 16px; color: var(--color-primary);"><strong>Both use "से" but meaning is different!</strong></p>
+                    <div class="comparison-content">
+                        <div class="comparison-side left">
+                            <h4 class="hindi-text">करण कारक</h4>
+                            <ul>
+                                <li class="hindi-text">साधन/माध्यम = चीज़ जिससे काम हो</li>
+                                <li>Instrument/Tool</li>
+                                <li class="hindi-text">कैसे? (How?)</li>
+                                <li>Shows "How?"</li>
+                                <li class="hindi-text">उदाहरण: कलम से लिखना</li>
+                                <li>Example: Writing with pen</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-side right">
+                            <h4 class="hindi-text">अपादान कारक</h4>
+                            <ul>
+                                <li class="hindi-text">पृथक्करण = कहाँ से अलग हुआ</li>
+                                <li>Source/Origin</li>
+                                <li class="hindi-text">कहाँ से? (From where?)</li>
+                                <li>Shows "From where?"</li>
+                                <li class="hindi-text">उदाहरण: पेड़ से फल गिरना</li>
+                                <li>Example: Fruit falling from tree</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px; padding: 12px; background: var(--color-bg-4); border-radius: 8px;">
+                        <strong>Compare:</strong><br>
+                        <span class="hindi-text">कलम <strong>से</strong> लिखो। (करण - instrument)</span><br>
+                        <span class="hindi-text">पेड़ <strong>से</strong> फल गिरा। (अपादान - separation)</span>
+                    </div>
+                </div>
+
+                <!-- का, के, की Usage -->
+                <div class="comparison-card">
+                    <div class="comparison-title hindi-text">का, के, की का प्रयोग (Usage Rules)</div>
+                    <div style="padding: 16px;">
+                        <div style="background: var(--color-bg-3); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h4 class="hindi-text">का (Masculine Singular)</h4>
+                            <p class="hindi-text">राम <strong>का</strong> घर, लड़का <strong>का</strong> खिलौना</p>
+                            <p><small>Used with masculine singular nouns</small></p>
+                        </div>
+                        <div style="background: var(--color-bg-5); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h4 class="hindi-text">के (Masculine Plural)</h4>
+                            <p class="hindi-text">लड़कों <strong>के</strong> खिलौने, घरों <strong>के</strong> दरवाज़े</p>
+                            <p><small>Used with masculine plural nouns</small></p>
+                        </div>
+                        <div style="background: var(--color-bg-7); padding: 12px; border-radius: 8px;">
+                            <h4 class="hindi-text">की (Feminine - Singular &amp; Plural)</h4>
+                            <p class="hindi-text">लड़की <strong>की</strong> किताब, माँ <strong>की</strong> साड़ी</p>
+                            <p><small>Used with all feminine nouns</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Strategy Section -->
+        <section id="strategy" class="section">
+            <div class="card">
+                <h2>💡 <span class="hindi-text">सीखने की रणनीति (Learning Strategy)</span></h2>
+                <p style="margin-bottom: 24px; font-size: 16px;">Follow these simple steps to master Hindi Kaarak, Trisha! 🌟</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">📝</div>
+                    <div class="step-title hindi-text">चरण 1: विभक्ति चिन्ह याद करो</div>
+                    <div class="step-title">Step 1: Memorize the Markers</div>
+                    <div class="step-desc hindi-text">विभक्ति चिन्ह को पहले याद करो, फिर प्रयोग करो।</div>
+                    <div class="step-desc">First memorize the markers (ने, को, से, etc.), then practice using them in sentences.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">✏️</div>
+                    <div class="step-title hindi-text">चरण 2: अभ्यास वाक्य बनाओ</div>
+                    <div class="step-title">Step 2: Practice Sentences</div>
+                    <div class="step-desc hindi-text">साधारण वाक्यों से शुरू करो</div>
+                    <div class="step-desc">Start with simple sentences and gradually make more complex ones. Try writing your own examples!</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">📋</div>
+                    <div class="step-title hindi-text">चरण 3: परीक्षण कार्यपत्र हल करो</div>
+                    <div class="step-title">Step 3: Solve Test Worksheets</div>
+                    <div class="step-desc hindi-text">इंटरेक्टिव ऐप में दोनों कार्यपत्र उपलब्ध हैं।</div>
+                    <div class="step-desc">Practice with worksheets and tests to check your understanding and improve!</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px; background: linear-gradient(135deg, var(--color-bg-3) 0%, var(--color-bg-1) 100%);">
+                <h3>🎯 Tips for Success:</h3>
+                <ul style="font-size: 16px; line-height: 1.8; margin-left: 24px;">
+                    <li>Read examples aloud to remember better</li>
+                    <li class="hindi-text">रोज़ 5-10 नए वाक्य बनाओ (Make 5-10 new sentences daily)</li>
+                    <li>Use flashcards for markers and questions</li>
+                    <li class="hindi-text">दोस्तों के साथ practice करो (Practice with friends)</li>
+                    <li>Review the summary table regularly</li>
+                    <li>Don't worry about mistakes - they help you learn! 💪</li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-top: 24px; text-align: center; background: linear-gradient(135deg, var(--color-bg-5) 0%, var(--color-bg-7) 100%);">
+                <h2>🌟 You can do it, Trisha! 🌟</h2>
+                <p style="font-size: 18px; margin-top: 16px;">Keep practicing and you'll become a Kaarak expert! शुभकामनाएँ! 🎓✨</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</div>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all nav buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Back to Top Button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
