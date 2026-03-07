@@ -315,4 +315,135 @@
                 
                 // Shuffle both and take 25 unique
                 const combined = [...this.shuffle(struggling), ...this.shuffle(rest)];
-    
+                this.sessionPool = combined.slice(0, this.TOTAL_GAME_CARDS);
+                
+                this.currentIndex = 0;
+                this.score = 0;
+                this.feedback = null;
+                this.switchView('game');
+            }
+
+            generateOptions() {
+                const target = this.sessionPool[this.currentIndex];
+                const others = VILOM_DATA
+                    .filter(d => d.word !== target.word)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3)
+                    .map(d => d.antonym);
+                
+                this.gameOptions = this.shuffle([...others, target.antonym]);
+            }
+
+            renderGame() {
+                if (this.currentIndex >= this.sessionPool.length) {
+                    this.renderResult();
+                    return;
+                }
+
+                if (!this.feedback) {
+                    this.generateOptions();
+                }
+
+                const current = this.sessionPool[this.currentIndex];
+                const progress = ((this.currentIndex) / this.sessionPool.length) * 100;
+
+                const html = `
+                    <div class="p-6 h-full flex flex-col animate-in">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-slate-400 font-bold">Progress: ${this.currentIndex + 1}/${this.sessionPool.length}</span>
+                            <div class="flex items-center gap-1 bg-orange-50 px-3 py-1 rounded-full shadow-sm">
+                                <i data-lucide="trophy" class="w-4 h-4 text-orange-500"></i>
+                                <span class="font-bold text-orange-600">${this.score}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 mb-8 text-center shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 left-0 h-1 bg-orange-100 w-full">
+                                <div class="progress-bar-inner h-full bg-orange-500" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="text-xs uppercase font-black text-slate-400 mb-2 block tracking-wider">Antonym of</span>
+                            <div class="text-4xl font-black text-slate-800">${current.word}</div>
+                        </div>
+
+                        <div class="space-y-3">
+                            ${this.gameOptions.map(opt => {
+                                let style = "bg-white border-2 border-slate-100 hover:border-orange-500 active:bg-orange-50 active:scale-95";
+                                let disabled = "";
+                                let icon = "";
+
+                                if (this.feedback) {
+                                    disabled = "disabled";
+                                    if (opt === current.antonym) {
+                                        style = "bg-green-500 text-white border-green-500 scale-[1.02]";
+                                        icon = '<i data-lucide="check-circle-2" class="w-5 h-5"></i>';
+                                    } else {
+                                        style = "bg-white border-2 border-slate-100 text-slate-300 opacity-60";
+                                    }
+                                }
+
+                                return `
+                                    <button onclick="app.handleAnswer('${opt}')" ${disabled} class="w-full p-4 rounded-2xl text-lg font-bold text-left flex justify-between items-center transition-all shadow-sm ${style}">
+                                        ${opt} ${icon}
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        ${this.feedback ? `
+                            <div class="mt-6 p-4 rounded-2xl text-center animate-in ${this.feedback.correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}">
+                                <p class="text-sm font-bold italic">"${current.usage}"</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                this.content.innerHTML = html;
+                lucide.createIcons();
+            }
+
+            handleAnswer(selected) {
+                if (this.feedback) return;
+
+                const current = this.sessionPool[this.currentIndex];
+                const isCorrect = selected === current.antonym;
+                
+                this.feedback = { correct: isCorrect };
+                if (isCorrect) this.score++;
+                
+                this.updateStats(current.word, isCorrect);
+                this.render();
+
+                setTimeout(() => {
+                    this.currentIndex++;
+                    this.feedback = null;
+                    this.render();
+                }, 1200);
+            }
+
+            renderResult() {
+                const html = `
+                    <div class="p-8 text-center flex flex-col items-center justify-center min-h-full animate-in">
+                        <div class="text-orange-500 mb-6">
+                            <i data-lucide="trophy" class="w-16 h-16"></i>
+                        </div>
+                        <h2 class="text-3xl font-black mb-2 text-slate-800">Round Complete!</h2>
+                        <div class="text-5xl font-black text-orange-500 mb-8">${this.score}/${this.sessionPool.length}</div>
+                        
+                        <div class="space-y-3 w-full">
+                            <button onclick="app.startGame()" class="w-full bg-orange-500 text-white p-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-95 shadow-lg">
+                                <i data-lucide="rotate-ccw"></i> New Round
+                            </button>
+                            <button onclick="app.switchView('home')" class="w-full bg-slate-100 text-slate-600 p-4 rounded-2xl font-bold active:scale-95">Main Menu</button>
+                        </div>
+                    </div>
+                `;
+                this.content.innerHTML = html;
+                lucide.createIcons();
+            }
+        }
+
+        // Initialize App
+        const app = new VilomApp();
+
+    </script>
+</body>
+</html>
