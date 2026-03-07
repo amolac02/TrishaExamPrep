@@ -1,385 +1,318 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { 
-  BookOpen, 
-  Trophy, 
-  RotateCcw, 
-  CheckCircle2, 
-  XCircle, 
-  ChevronRight, 
-  ChevronLeft,
-  BrainCircuit,
-  Home,
-  Shuffle,
-  RefreshCw
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vilom Master - Antonym Learning App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
 
-// Word Data derived from the image
-const VILOM_DATA = [
-  { word: "अक्लमंद", antonym: "बेअकल", english: "Intelligent x Foolish", usage: "वह अक्लमंद लड़का है, पर उसका दोस्त बेअकल है।" },
-  { word: "अपना", antonym: "पराया", english: "Self x Other", usage: "हमें सबको अपना समझना चाहिए, किसी को पराया नहीं।" },
-  { word: "अधिकता", antonym: "कमी", english: "Excess x Scarcity", usage: "यहाँ अनाज की अधिकता है, पर पानी की कमी है।" },
-  { word: "अंधकार", antonym: "प्रकाश", english: "Darkness x Light", usage: "ज्ञान अंधकार को मिटाकर प्रकाश लाता है।" },
-  { word: "अपमान", antonym: "सम्मान", english: "Insult x Honor", usage: "बड़ों का अपमान मत करो, उन्हें सम्मान दो।" },
-  { word: "आदान", antonym: "प्रदान", english: "Take x Give", usage: "विचारों का आदान-प्रदान जरूरी है।" },
-  { word: "आदि", antonym: "अंत", english: "Start x End", usage: "हर कहानी का एक आदि और एक अंत होता है।" },
-  { word: "आयात", antonym: "निर्यात", english: "Import x Export", usage: "भारत चाय का निर्यात और तेल का आयात करता है।" },
-  { word: "उपजाऊ", antonym: "बंजर", english: "Fertile x Barren", usage: "यह खेत उपजाऊ है, पर वह हिस्सा बंजर है।" },
-  { word: "उपस्थित", antonym: "अनुपस्थित", english: "Present x Absent", usage: "आज कक्षा में सभी छात्र उपस्थित हैं।" },
-  { word: "उदय", antonym: "अस्त", english: "Sunrise x Sunset", usage: "सूर्य पूर्व में उदय और पश्चिम में अस्त होता है।" },
-  { word: "उचित", antonym: "अनुचित", english: "Proper x Improper", usage: "झूठ बोलना अनुचित व्यवहार है।" },
-  { word: "कठिन", antonym: "सरल", english: "Hard x Easy", usage: "अभ्यास से कठिन कार्य भी सरल हो जाता है।" },
-  { word: "क्रय", antonym: "विक्रय", english: "Buy x Sell", usage: "बाज़ार में वस्तुओं का क्रय-विक्रय होता है।" },
-  { word: "दुर्जन", antonym: "सज्जन", english: "Bad person x Good person", usage: "दुर्जन का साथ छोड़ो और सज्जन की संगति करो।" },
-  { word: "गहरा", antonym: "उथला", english: "Deep x Shallow", usage: "नदी यहाँ गहरी है, पर किनारे पर उथली है।" },
-  { word: "चल", antonym: "अचल", english: "Movable x Still", usage: "पहाड़ अचल होते हैं, पर नदियाँ चल।" },
-  { word: "जल", antonym: "थल", english: "Water x Earth/Land", usage: "मेढक जल और थल दोनों जगह रहता है।" },
-  { word: "जड़", antonym: "चेतन", english: "Lifeless x Living", usage: "ईश्वर जड़ और चेतन सबमें व्याप्त है।" },
-  { word: "ज्ञानी", antonym: "मूर्ख", english: "Wise x Foolish", usage: "ज्ञानी व्यक्ति चुप रहता है, मूर्ख शोर मचाता है।" },
-  { word: "जीवित", antonym: "मृत", english: "Alive x Dead", usage: "पौधा अब जीवित नहीं है, वह मृत हो चुका है।" },
-  { word: "दयालु", antonym: "निर्दयी", english: "Kind x Cruel", usage: "राजा दयालु था, पर उसका मंत्री निर्दयी।" },
-  { word: "दानव", antonym: "मानव", english: "Demon x Human", usage: "अत्याचार दानव का काम है, प्रेम मानव का।" },
-  { word: "देश", antonym: "विदेश", english: "Country x Foreign", usage: "वह देश की सेवा छोड़कर विदेश चला गया।" },
-  { word: "निंदा", antonym: "प्रशंसा", english: "Criticism x Praise", usage: "अच्छे काम की प्रशंसा और बुरे की निंदा होती है।" },
-  { word: "न्याय", antonym: "अन्याय", english: "Justice x Injustice", usage: "न्यायालय में सबको न्याय मिलना चाहिए।" },
-  { word: "पाप", antonym: "पुण्य", english: "Sin x Virtue", usage: "किसी को सताना पाप है, मदद करना पुण्य।" },
-  { word: "प्रातः", antonym: "सायं", english: "Morning x Evening", usage: "वह प्रातः जल्दी उठता है और सायं व्यायाम करता है।" },
-  { word: "प्रेम", antonym: "घृणा", english: "Love x Hate", usage: "प्रेम जोड़ता है, जबकि घृणा तोड़ती है।" },
-  { word: "बलवान", antonym: "निर्बल", english: "Strong x Weak", usage: "हमें निर्बल की सहायता करनी चाहिए।" },
-  { word: "बाह्य", antonym: "आंतरिक", english: "External x Internal", usage: "बाह्य सुंदरता से अधिक आंतरिक गुण जरूरी हैं।" },
-  { word: "भला", antonym: "बुरा", english: "Good x Bad", usage: "सबके साथ भला व्यवहार करो, बुरा नहीं।" },
-  { word: "महल", antonym: "झोंपड़ी", english: "Palace x Hut", usage: "महल की चमक झोंपड़ी के अंधेरे को नहीं मिटा सकती।" },
-  { word: "मितव्ययी", antonym: "अपव्ययी", english: "Frugal x Extravagant", usage: "पैसे बचाना मितव्ययी होने की निशानी है।" },
-  { word: "मौखिक", antonym: "लिखित", english: "Oral x Written", usage: "यह मौखिक परीक्षा है, कल लिखित होगी।" },
-  { word: "मंजूर", antonym: "नामंजूर", english: "Accepted x Rejected", usage: "आपका प्रस्ताव हमें मंजूर है।" },
-  { word: "रहमदिल", antonym: "बेरहम", english: "Merciful x Merciless", usage: "वह रहमदिल इंसान है, पर उसका मालिक बेरहम है।" },
-  { word: "रात", antonym: "दिन", english: "Night x Day", usage: "दिन में सूरज चमकता है, रात में चाँद।" },
-  { word: "रोगी", antonym: "नीरोग", english: "Sick x Healthy", usage: "योग रोगी को नीरोग बनाता है।" },
-  { word: "प्राचीन", antonym: "नवीन", english: "Old x New", usage: "यह प्राचीन मंदिर है और वह नवीन इमारत।" },
-  { word: "वर", antonym: "वधू", english: "Groom x Bride", usage: "वर और वधू ने एक दूसरे को माला पहनाई।" },
-  { word: "वरदान", antonym: "अभिशाप", english: "Boon x Curse", usage: "विज्ञान वरदान भी है और अभिशाप भी।" },
-  { word: "शत्रु", antonym: "मित्र", english: "Enemy x Friend", usage: "शत्रु को भी मित्र बनाने की कोशिश करो।" },
-  { word: "शिक्षित", antonym: "अशिक्षित", english: "Educated x Uneducated", usage: "शिक्षित समाज ही देश का विकास करता है।" },
-  { word: "शोक", antonym: "हर्ष", english: "Sorrow x Joy", usage: "दुख के बाद हर्ष के दिन जरूर आते हैं।" },
-  { word: "शांत", antonym: "उग्र", english: "Calm x Aggressive", usage: "नेता का भाषण शांत था, पर भीड़ उग्र हो गई।" },
-  { word: "स्वर्ग", antonym: "नरक", english: "Heaven x Hell", usage: "अच्छे कर्म स्वर्ग की राह दिखाते हैं।" },
-  { word: "स्वाधीन", antonym: "पराधीन", english: "Independent x Dependent", usage: "पराधीनता में कोई सुख नहीं, स्वाधीन रहो।" },
-  { word: "स्वामी", antonym: "सेवक", english: "Master x Servant", usage: "स्वामी को अपने सेवक का सम्मान करना चाहिए।" },
-  { word: "सरस", antonym: "नीरस", english: "Juicy x Dry/Dull", usage: "यह कविता सरस है, पर वह पाठ नीरस था।" },
-  { word: "सुपुत्र", antonym: "कुपुत्र", english: "Good son x Bad son", usage: "सुपुत्र कुल का नाम रोशन करता है।" },
-  { word: "सुमति", antonym: "कुमति", english: "Wise mind x Evil mind", usage: "जहाँ सुमति वहाँ संपत्ति नाना।" },
-  { word: "सुयश", antonym: "अपयश", english: "Good fame x Infamy", usage: "बुरे कर्मों से सुयश, अपयश में बदल जाता है।" },
-  { word: "सूर्योदय", antonym: "सूर्यास्त", english: "Sunrise x Sunset", usage: "सूर्योदय के समय आकाश लाल हो जाता है।" },
-  { word: "हार", antonym: "जीत", english: "Loss x Win", usage: "खेल में हार और जीत लगी रहती है।" },
-  { word: "हानि", antonym: "लाभ", english: "Loss x Profit", usage: "व्यापार में कभी लाभ तो कभी हानि होती है।" },
-  { word: "इच्छा", antonym: "अनिच्छा", english: "Desire x Reluctance", usage: "उसने अनिच्छा से काम पूरा किया।" }
-];
-
-const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-const App = () => {
-  const [view, setView] = useState('home');
-  const [stats, setStats] = useState(() => {
-    const saved = localStorage.getItem('vilom_stats');
-    return saved ? JSON.parse(saved) : { mastered: [], struggling: [] };
-  });
-
-  useEffect(() => {
-    localStorage.setItem('vilom_stats', JSON.stringify(stats));
-  }, [stats]);
-
-  const updateStats = (word, isCorrect) => {
-    setStats(prev => {
-      const struggling = new Set(prev.struggling);
-      const mastered = new Set(prev.mastered);
-      if (isCorrect) {
-        struggling.delete(word);
-        mastered.add(word);
-      } else {
-        mastered.delete(word);
-        struggling.add(word);
-      }
-      return { mastered: Array.from(mastered), struggling: Array.from(struggling) };
-    });
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-200">
-      <style>{`
+        /* 3D Flashcard Styles */
         .perspective-1000 { perspective: 1000px; }
         .preserve-3d { transform-style: preserve-3d; }
         .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
-      `}</style>
-      
-      <div className="max-w-md mx-auto min-h-screen flex flex-col bg-white shadow-xl relative overflow-hidden">
-        <header className="p-4 bg-orange-500 text-white flex justify-between items-center shrink-0 shadow-md z-10">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('home')}>
-            <div className="bg-white/20 p-1.5 rounded-lg"><BookOpen size={20} /></div>
-            <h1 className="text-xl font-bold tracking-tight">Vilom Master</h1>
-          </div>
-          {view !== 'home' && (
-            <button onClick={() => setView('home')} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-              <Home size={22} />
+        
+        .card-container {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress Bar */
+        .progress-bar-inner {
+            transition: width 0.3s ease;
+        }
+
+        .no-select {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <div class="max-w-md mx-auto min-h-screen flex flex-col bg-white shadow-2xl relative overflow-hidden">
+        <!-- Header -->
+        <header class="p-4 bg-orange-500 text-white flex justify-between items-center shrink-0 shadow-md z-20">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="app.switchView('home')">
+                <div class="bg-white/20 p-1.5 rounded-lg">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">Vilom Master</h1>
+            </div>
+            <button id="homeBtn" onclick="app.switchView('home')" class="p-2 hover:bg-white/10 rounded-full transition-colors hidden">
+                <i data-lucide="home" class="w-6 h-6"></i>
             </button>
-          )}
         </header>
 
-        <main className="flex-1 relative overflow-y-auto">
-          {view === 'flashcards' && <FlashcardView />}
-          {view === 'game' && <GameView onBack={() => setView('home')} onResult={updateStats} stats={stats} />}
-          {view === 'home' && <HomeView stats={stats} setView={setView} />}
+        <!-- Main Content Area -->
+        <main id="app-content" class="flex-1 relative overflow-y-auto">
+            <!-- Content injected by JS -->
         </main>
-      </div>
-    </div>
-  );
-};
-
-const HomeView = ({ stats, setView }) => (
-  <div className="p-6 space-y-8 animate-in fade-in duration-500">
-    <div className="space-y-2">
-      <h2 className="text-3xl font-extrabold text-slate-800">नमस्ते!</h2>
-      <p className="text-slate-500 text-sm">Challenge yourself with 25 unique antonyms.</p>
     </div>
 
-    <div className="grid grid-cols-2 gap-4">
-      <div className="bg-green-50 p-4 rounded-2xl border border-green-100 flex flex-col items-center text-center">
-        <div className="text-green-600 bg-green-100 p-2 rounded-xl mb-2"><CheckCircle2 size={24} /></div>
-        <span className="text-2xl font-bold text-green-700">{stats.mastered.length}</span>
-        <span className="text-xs font-medium text-green-600 uppercase tracking-wider">Mastered</span>
-      </div>
-      <div className="bg-orange-50 p-4 rounded-2xl border border-orange-100 flex flex-col items-center text-center">
-        <div className="text-orange-600 bg-orange-100 p-2 rounded-xl mb-2"><BrainCircuit size={24} /></div>
-        <span className="text-2xl font-bold text-orange-700">{stats.struggling.length}</span>
-        <span className="text-xs font-medium text-orange-600 uppercase tracking-wider">Review</span>
-      </div>
-    </div>
+    <script>
+        const VILOM_DATA = [
+            { word: "अक्लमंद", antonym: "बेअकल", english: "Intelligent x Foolish", usage: "वह अक्लमंद लड़का है, पर उसका दोस्त बेअकल है।" },
+            { word: "अपना", antonym: "पराया", english: "Self x Other", usage: "हमें सबको अपना समझना चाहिए, किसी को पराया नहीं।" },
+            { word: "अधिकता", antonym: "कमी", english: "Excess x Scarcity", usage: "यहाँ अनाज की अधिकता है, पर पानी की कमी है।" },
+            { word: "अंधकार", antonym: "प्रकाश", english: "Darkness x Light", usage: "ज्ञान अंधकार को मिटाकर प्रकाश लाता है।" },
+            { word: "अपमान", antonym: "सम्मान", english: "Insult x Honor", usage: "बड़ों का अपमान मत करो, उन्हें सम्मान दो।" },
+            { word: "आदान", antonym: "प्रदान", english: "Take x Give", usage: "विचारों का आदान-प्रदान जरूरी है।" },
+            { word: "आदि", antonym: "अंत", english: "Start x End", usage: "हर कहानी का एक आदि और एक अंत होता है।" },
+            { word: "आयात", antonym: "निर्यात", english: "Import x Export", usage: "भारत चाय का निर्यात और तेल का आयात करता है।" },
+            { word: "उपजाऊ", antonym: "बंजर", english: "Fertile x Barren", usage: "यह खेत उपजाऊ है, पर वह हिस्सा बंजर है।" },
+            { word: "उपस्थित", antonym: "अनुपस्थित", english: "Present x Absent", usage: "आज कक्षा में सभी छात्र उपस्थित हैं।" },
+            { word: "उदय", antonym: "अस्त", english: "Sunrise x Sunset", usage: "सूर्य पूर्व में उदय और पश्चिम में अस्त होता है।" },
+            { word: "उचित", antonym: "अनुचित", english: "Proper x Improper", usage: "झूठ बोलना अनुचित व्यवहार है।" },
+            { word: "कठिन", antonym: "सरल", english: "Hard x Easy", usage: "अभ्यास से कठिन कार्य भी सरल हो जाता है।" },
+            { word: "क्रय", antonym: "विक्रय", english: "Buy x Sell", usage: "बाज़ार में वस्तुओं का क्रय-विक्रय होता है।" },
+            { word: "दुर्जन", antonym: "सज्जन", english: "Bad person x Good person", usage: "दुर्जन का साथ छोड़ो और सज्जन की संगति करो।" },
+            { word: "गहरा", antonym: "उथला", english: "Deep x Shallow", usage: "नदी यहाँ गहरी है, पर किनारे पर उथली है।" },
+            { word: "चल", antonym: "अचल", english: "Movable x Still", usage: "पहाड़ अचल होते हैं, पर नदियाँ चल।" },
+            { word: "जल", antonym: "थल", english: "Water x Earth/Land", usage: "मेढक जल और थल दोनों जगह रहता है।" },
+            { word: "जड़", antonym: "चेतन", english: "Lifeless x Living", usage: "ईश्वर जड़ और चेतन सबमें व्याप्त है।" },
+            { word: "ज्ञानी", antonym: "मूर्ख", english: "Wise x Foolish", usage: "ज्ञानी व्यक्ति चुप रहता है, मूर्ख शोर मचाता है।" },
+            { word: "जीवित", antonym: "मृत", english: "Alive x Dead", usage: "पौधा अब जीवित नहीं है, वह मृत हो चुका है।" },
+            { word: "दयालु", antonym: "निर्दयी", english: "Kind x Cruel", usage: "राजा दयालु था, पर उसका मंत्री निर्दयी।" },
+            { word: "दानव", antonym: "मानव", english: "Demon x Human", usage: "अत्याचार दानव का काम है, प्रेम मानव का।" },
+            { word: "देश", antonym: "विदेश", english: "Country x Foreign", usage: "वह देश की सेवा छोड़कर विदेश चला गया।" },
+            { word: "निंदा", antonym: "प्रशंसा", english: "Criticism x Praise", usage: "अच्छे काम की प्रशंसा और बुरे की निंदा होती है।" },
+            { word: "न्याय", antonym: "अन्याय", english: "Justice x Injustice", usage: "न्यायालय में सबको न्याय मिलना चाहिए।" },
+            { word: "पाप", antonym: "पुण्य", english: "Sin x Virtue", usage: "किसी को सताना पाप है, मदद करना पुण्य।" },
+            { word: "प्रातः", antonym: "सायं", english: "Morning x Evening", usage: "वह प्रातः जल्दी उठता है और सायं व्यायाम करता है।" },
+            { word: "प्रेम", antonym: "घृणा", english: "Love x Hate", usage: "प्रेम जोड़ता है, जबकि घृणा तोड़ती है।" },
+            { word: "बलवान", antonym: "निर्बल", english: "Strong x Weak", usage: "हमें निर्बल की सहायता करनी चाहिए।" },
+            { word: "बाह्य", antonym: "आंतरिक", english: "External x Internal", usage: "बाह्य सुंदरता से अधिक आंतरिक गुण जरूरी हैं।" },
+            { word: "भला", antonym: "बुरा", english: "Good x Bad", usage: "सबके साथ भला व्यवहार करो, बुरा नहीं।" },
+            { word: "महल", antonym: "झोंपड़ी", english: "Palace x Hut", usage: "महल की चमक झोंपड़ी के अंधेरे को नहीं मिटा सकती।" },
+            { word: "मितव्ययी", antonym: "अपव्ययी", english: "Frugal x Extravagant", usage: "पैसे बचाना मितव्ययी होने की निशानी है।" },
+            { word: "मौखिक", antonym: "लिखित", english: "Oral x Written", usage: "यह मौखिक परीक्षा है, कल लिखित होगी।" },
+            { word: "मंजूर", antonym: "नामंजूर", english: "Accepted x Rejected", usage: "आपका प्रस्ताव हमें मंजूर है।" },
+            { word: "रहमदिल", antonym: "बेरहम", english: "Merciful x Merciless", usage: "वह रहमदिल इंसान है, पर उसका मालिक बेरहम है।" },
+            { word: "रात", antonym: "दिन", english: "Night x Day", usage: "दिन में सूरज चमकता है, रात में चाँद।" },
+            { word: "रोगी", antonym: "नीरोग", english: "Sick x Healthy", usage: "योग रोगी को नीरोग बनाता है।" },
+            { word: "प्राचीन", antonym: "नवीन", english: "Old x New", usage: "यह प्राचीन मंदिर है और वह नवीन इमारत।" },
+            { word: "वर", antonym: "वधू", english: "Groom x Bride", usage: "वर और वधू ने एक दूसरे को माला पहनाई।" },
+            { word: "वरदान", antonym: "अभिशाप", english: "Boon x Curse", usage: "विज्ञान वरदान भी है और अभिशाप भी।" },
+            { word: "शत्रु", antonym: "मित्र", english: "Enemy x Friend", usage: "शत्रु को भी मित्र बनाने की कोशिश करो।" },
+            { word: "शिक्षित", antonym: "अशिक्षित", english: "Educated x Uneducated", usage: "शिक्षित समाज ही देश का विकास करता है।" },
+            { word: "शोक", antonym: "हर्ष", english: "Sorrow x Joy", usage: "दुख के बाद हर्ष के दिन जरूर आते हैं।" },
+            { word: "शांत", antonym: "उग्र", english: "Calm x Aggressive", usage: "नेता का भाषण शांत था, पर भीड़ उग्र हो गई।" },
+            { word: "स्वर्ग", antonym: "नरक", english: "Heaven x Hell", usage: "अच्छे कर्म स्वर्ग की राह दिखाते हैं।" },
+            { word: "स्वाधीन", antonym: "पराधीन", english: "Independent x Dependent", usage: "पराधीनता में कोई सुख नहीं, स्वाधीन रहो।" },
+            { word: "स्वामी", antonym: "सेवक", english: "Master x Servant", usage: "स्वामी को अपने सेवक का सम्मान करना चाहिए।" },
+            { word: "सरस", antonym: "नीरस", english: "Juicy x Dry/Dull", usage: "यह कविता सरस है, पर वह पाठ नीरस था।" },
+            { word: "सुपुत्र", antonym: "कुपुत्र", english: "Good son x Bad son", usage: "सुपुत्र कुल का नाम रोशन करता है।" },
+            { word: "सुमति", antonym: "कुमति", english: "Wise mind x Evil mind", usage: "जहाँ सुमति वहाँ संपत्ति नाना।" },
+            { word: "सुयश", antonym: "अपयश", english: "Good fame x Infamy", usage: "बुरे कर्मों से सुयश, अपयश में बदल जाता है।" },
+            { word: "सूर्योदय", antonym: "सूर्यास्त", english: "Sunrise x Sunset", usage: "सूर्योदय के समय आकाश लाल हो जाता है।" },
+            { word: "हार", antonym: "जीत", english: "Loss x Win", usage: "खेल में हार और जीत लगी रहती है।" },
+            { word: "हानि", antonym: "लाभ", english: "Loss x Profit", usage: "व्यापार में कभी लाभ तो कभी हानि होती है।" },
+            { word: "इच्छा", antonym: "अनिच्छा", english: "Desire x Reluctance", usage: "उसने अनिच्छा से काम पूरा किया।" }
+        ];
 
-    <div className="space-y-4">
-      <button onClick={() => setView('flashcards')} className="w-full bg-slate-800 text-white p-5 rounded-2xl flex items-center justify-between hover:bg-slate-700 transition-all shadow-lg active:scale-95 group">
-        <div className="flex items-center gap-4">
-          <div className="bg-slate-700 p-2.5 rounded-xl group-hover:scale-110 transition-transform"><BookOpen size={24} /></div>
-          <div className="text-left font-bold text-lg">Learn Words</div>
-        </div>
-        <ChevronRight size={20} className="text-slate-500" />
-      </button>
+        class VilomApp {
+            constructor() {
+                this.content = document.getElementById('app-content');
+                this.homeBtn = document.getElementById('homeBtn');
+                this.stats = JSON.parse(localStorage.getItem('vilom_stats')) || { mastered: [], struggling: [] };
+                this.currentView = 'home';
+                
+                // Session State
+                this.sessionPool = [];
+                this.currentIndex = 0;
+                this.score = 0;
+                this.flipped = false;
+                this.feedback = null;
+                this.gameOptions = [];
+                this.TOTAL_GAME_CARDS = 25;
 
-      <button onClick={() => setView('game')} className="w-full bg-orange-500 text-white p-5 rounded-2xl flex items-center justify-between hover:bg-orange-400 transition-all shadow-lg active:scale-95 group">
-        <div className="flex items-center gap-4">
-          <div className="bg-orange-400 p-2.5 rounded-xl group-hover:scale-110 transition-transform"><Trophy size={24} /></div>
-          <div className="text-left font-bold text-lg">Challenge Mode (25)</div>
-        </div>
-        <ChevronRight size={20} className="text-orange-100" />
-      </button>
-    </div>
-  </div>
-);
+                this.init();
+            }
 
-const FlashcardView = () => {
-  const [sessionData, setSessionData] = useState([]);
-  const [index, setIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
+            saveStats() {
+                localStorage.setItem('vilom_stats', JSON.stringify(this.stats));
+            }
 
-  useEffect(() => {
-    setSessionData(shuffleArray(VILOM_DATA));
-  }, []);
+            updateStats(word, isCorrect) {
+                const mastered = new Set(this.stats.mastered);
+                const struggling = new Set(this.stats.struggling);
 
-  const reshuffle = () => {
-    setFlipped(false);
-    setIndex(0);
-    setSessionData(shuffleArray(VILOM_DATA));
-  };
+                if (isCorrect) {
+                    struggling.delete(word);
+                    mastered.add(word);
+                } else {
+                    mastered.delete(word);
+                    struggling.add(word);
+                }
 
-  if (sessionData.length === 0) return null;
+                this.stats.mastered = Array.from(mastered);
+                this.stats.struggling = Array.from(struggling);
+                this.saveStats();
+            }
 
-  const current = sessionData[index];
+            shuffle(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            }
 
-  return (
-    <div className="p-6 h-full flex flex-col items-center">
-      <div className="w-full flex justify-between items-center mb-6">
-        <h3 className="font-bold text-slate-700">Card {index + 1}/{sessionData.length}</h3>
-        <button onClick={reshuffle} className="text-orange-500 hover:bg-orange-50 p-2 rounded-full transition-colors">
-          <RefreshCw size={18} />
-        </button>
-      </div>
+            switchView(view) {
+                this.currentView = view;
+                this.homeBtn.classList.toggle('hidden', view === 'home');
+                this.render();
+            }
 
-      <div onClick={() => setFlipped(!flipped)} className="w-full h-80 relative cursor-pointer perspective-1000">
-        <div className={`relative w-full h-full transition-all duration-500 preserve-3d shadow-xl rounded-3xl ${flipped ? 'rotate-y-180' : ''}`}>
-          <div className="absolute inset-0 backface-hidden bg-white border-2 border-slate-100 rounded-3xl flex flex-col items-center justify-center p-8">
-            <span className="text-slate-400 text-xs font-bold uppercase mb-4 tracking-tighter">Word</span>
-            <div className="text-4xl font-black text-slate-800 text-center leading-tight">{current.word}</div>
-            <div className="text-slate-400 text-sm mt-8">Tap to flip</div>
-          </div>
-          <div className="absolute inset-0 backface-hidden bg-orange-50 border-2 border-orange-200 rounded-3xl flex flex-col items-center justify-center p-8 rotate-y-180">
-            <span className="text-orange-400 text-xs font-bold uppercase mb-4 tracking-tighter">Antonym</span>
-            <div className="text-4xl font-black text-orange-600 text-center leading-tight">{current.antonym}</div>
-            <p className="text-slate-500 font-medium mt-2 italic text-sm">{current.english}</p>
-            <hr className="w-full my-4 border-orange-200" />
-            <p className="text-center text-slate-700 text-sm italic">"{current.usage}"</p>
-          </div>
-        </div>
-      </div>
+            init() {
+                this.render();
+            }
 
-      <div className="flex gap-4 mt-8 w-full">
-        <button 
-          onClick={() => { setFlipped(false); setIndex(i => (i - 1 + sessionData.length) % sessionData.length); }}
-          className="flex-1 bg-white border border-slate-200 p-4 rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow-sm"
-        >
-          <ChevronLeft size={20} /> Prev
-        </button>
-        <button 
-          onClick={() => { setFlipped(false); setIndex(i => (i + 1) % sessionData.length); }}
-          className="flex-1 bg-slate-800 text-white p-4 rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow-sm"
-        >
-          Next <ChevronRight size={20} />
-        </button>
-      </div>
-    </div>
-  );
-};
+            render() {
+                this.content.innerHTML = '';
+                if (this.currentView === 'home') this.renderHome();
+                else if (this.currentView === 'flashcards') this.renderFlashcards();
+                else if (this.currentView === 'game') this.renderGame();
+                
+                lucide.createIcons();
+            }
 
-const GameView = ({ onBack, onResult, stats }) => {
-  const TOTAL_QUESTIONS = 25;
-  const [questions, setQuestions] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [options, setOptions] = useState([]);
-  const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState(null);
-  const [isFinished, setIsFinished] = useState(false);
+            // --- Views ---
 
-  // Initialize pool ONCE at start
-  useEffect(() => {
-    const struggling = VILOM_DATA.filter(d => stats.struggling.includes(d.word));
-    const rest = VILOM_DATA.filter(d => !stats.struggling.includes(d.word));
-    const combined = [...shuffleArray(struggling), ...shuffleArray(rest)];
-    setQuestions(combined.slice(0, TOTAL_QUESTIONS));
-  }, []); 
+            renderHome() {
+                const html = `
+                    <div class="p-6 space-y-8 animate-in">
+                        <div class="space-y-2">
+                            <h2 class="text-3xl font-extrabold text-slate-800">नमस्ते!</h2>
+                            <p class="text-slate-500 text-sm">Master Hindi Antonyms with unique practice sessions.</p>
+                        </div>
 
-  // Option generator logic
-  useEffect(() => {
-    // Safety check: Don't load options if we are finished
-    if (questions.length > 0 && currentIndex < TOTAL_QUESTIONS) {
-      const target = questions[currentIndex];
-      if (!target) return;
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-2xl border border-green-100 flex flex-col items-center text-center">
+                                <div class="text-green-600 bg-green-100 p-2 rounded-xl mb-2"><i data-lucide="check-circle-2"></i></div>
+                                <span class="text-2xl font-bold text-green-700">${this.stats.mastered.length}</span>
+                                <span class="text-xs font-medium text-green-600 uppercase tracking-wider">Mastered</span>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100 flex flex-col items-center text-center">
+                                <div class="text-orange-600 bg-orange-100 p-2 rounded-xl mb-2"><i data-lucide="brain-circuit"></i></div>
+                                <span class="text-2xl font-bold text-orange-700">${this.stats.struggling.length}</span>
+                                <span class="text-xs font-medium text-orange-600 uppercase tracking-wider">Review</span>
+                            </div>
+                        </div>
 
-      const others = VILOM_DATA
-        .filter(d => d.word !== target.word)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map(d => d.antonym);
-      
-      setOptions(shuffleArray([...others, target.antonym]));
-      setFeedback(null);
-    }
-  }, [currentIndex, questions]);
+                        <div class="space-y-4">
+                            <button onclick="app.startFlashcards()" class="w-full bg-slate-800 text-white p-5 rounded-2xl flex items-center justify-between hover:bg-slate-700 transition-all shadow-lg active:scale-95 group">
+                                <div class="flex items-center gap-4">
+                                    <div class="bg-slate-700 p-2.5 rounded-xl group-hover:scale-110 transition-transform"><i data-lucide="book-open"></i></div>
+                                    <div class="text-left font-bold text-lg">Learn Words</div>
+                                </div>
+                                <i data-lucide="chevron-right" class="text-slate-500"></i>
+                            </button>
 
-  const handleAnswer = (selected) => {
-    if (feedback || isFinished) return;
+                            <button onclick="app.startGame()" class="w-full bg-orange-500 text-white p-5 rounded-2xl flex items-center justify-between hover:bg-orange-400 transition-all shadow-lg active:scale-95 group">
+                                <div class="flex items-center gap-4">
+                                    <div class="bg-orange-400 p-2.5 rounded-xl group-hover:scale-110 transition-transform"><i data-lucide="trophy"></i></div>
+                                    <div class="text-left font-bold text-lg">Challenge Mode (25)</div>
+                                </div>
+                                <i data-lucide="chevron-right" class="text-orange-100"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                this.content.innerHTML = html;
+            }
+
+            startFlashcards() {
+                this.sessionPool = this.shuffle(VILOM_DATA);
+                this.currentIndex = 0;
+                this.flipped = false;
+                this.switchView('flashcards');
+            }
+
+            renderFlashcards() {
+                const current = this.sessionPool[this.currentIndex];
+                const html = `
+                    <div class="p-6 h-full flex flex-col items-center animate-in">
+                        <div class="w-full flex justify-between items-center mb-6">
+                            <h3 class="font-bold text-slate-700">Card ${this.currentIndex + 1}/${this.sessionPool.length}</h3>
+                            <span class="bg-slate-100 text-slate-500 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-bold">
+                                <i data-lucide="shuffle" class="w-3 h-3"></i> Unique Session
+                            </span>
+                        </div>
+
+                        <div id="flashcard" onclick="app.flipCard()" class="w-full h-80 relative cursor-pointer perspective-1000 no-select">
+                            <div class="card-container relative w-full h-full preserve-3d shadow-xl rounded-3xl ${this.flipped ? 'rotate-y-180' : ''}">
+                                <!-- Front -->
+                                <div class="absolute inset-0 backface-hidden bg-white border-2 border-slate-100 rounded-3xl flex flex-col items-center justify-center p-8">
+                                    <span class="text-slate-400 text-xs font-bold uppercase mb-4 tracking-tighter">The Word</span>
+                                    <div class="text-4xl font-black text-slate-800 text-center leading-tight">${current.word}</div>
+                                    <div class="text-slate-400 text-sm mt-8">Tap to flip</div>
+                                </div>
+                                <!-- Back -->
+                                <div class="absolute inset-0 backface-hidden bg-orange-50 border-2 border-orange-200 rounded-3xl flex flex-col items-center justify-center p-8 rotate-y-180">
+                                    <span class="text-orange-400 text-xs font-bold uppercase mb-4 tracking-tighter">Antonym</span>
+                                    <div class="text-4xl font-black text-orange-600 text-center leading-tight">${current.antonym}</div>
+                                    <p class="text-slate-500 font-medium mt-2 italic text-sm">${current.english}</p>
+                                    <hr class="w-full my-4 border-orange-200" />
+                                    <p class="text-center text-slate-700 text-sm italic leading-relaxed">"${current.usage}"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 mt-8 w-full">
+                            <button onclick="app.prevCard()" class="flex-1 bg-white border border-slate-200 p-4 rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                <i data-lucide="chevron-left"></i> Prev
+                            </button>
+                            <button onclick="app.nextCard()" class="flex-1 bg-slate-800 text-white p-4 rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                Next <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                this.content.innerHTML = html;
+            }
+
+            flipCard() {
+                this.flipped = !this.flipped;
+                const container = document.querySelector('.card-container');
+                if (container) {
+                    container.classList.toggle('rotate-y-180', this.flipped);
+                }
+            }
+
+            nextCard() {
+                this.flipped = false;
+                this.currentIndex = (this.currentIndex + 1) % this.sessionPool.length;
+                this.render();
+            }
+
+            prevCard() {
+                this.flipped = false;
+                this.currentIndex = (this.currentIndex - 1 + this.sessionPool.length) % this.sessionPool.length;
+                this.render();
+            }
+
+            // --- Game Logic ---
+
+            startGame() {
+                const struggling = VILOM_DATA.filter(d => this.stats.struggling.includes(d.word));
+                const rest = VILOM_DATA.filter(d => !this.stats.struggling.includes(d.word));
+                
+                // Shuffle both and take 25 unique
+                const combined = [...this.shuffle(struggling), ...this.shuffle(rest)];
     
-    const target = questions[currentIndex];
-    const correct = selected === target.antonym;
-    
-    setFeedback({ correct, answer: target.antonym });
-    if (correct) setScore(s => s + 1);
-    
-    onResult(target.word, correct);
-    
-    setTimeout(() => {
-      if (currentIndex + 1 >= TOTAL_QUESTIONS) {
-        setIsFinished(true);
-      } else {
-        setCurrentIndex(prev => prev + 1);
-      }
-    }, 1200);
-  };
-
-  // 1. Finished State
-  if (isFinished) return (
-    <div className="p-8 text-center flex flex-col items-center justify-center min-h-full animate-in zoom-in">
-      <Trophy size={64} className="text-orange-500 mb-6" />
-      <h2 className="text-3xl font-black mb-2 text-slate-800">Round Complete!</h2>
-      <div className="text-5xl font-black text-orange-500 mb-8">{score}/{TOTAL_QUESTIONS}</div>
-      <div className="space-y-3 w-full">
-        <button 
-          onClick={() => {
-            setIsFinished(false);
-            setCurrentIndex(0);
-            setScore(0);
-            const struggling = VILOM_DATA.filter(d => stats.struggling.includes(d.word));
-            const rest = VILOM_DATA.filter(d => !stats.struggling.includes(d.word));
-            setQuestions([...shuffleArray(struggling), ...shuffleArray(rest)].slice(0, TOTAL_QUESTIONS));
-          }} 
-          className="w-full bg-orange-500 text-white p-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-95 shadow-lg"
-        >
-          <RotateCcw size={20}/> New Round
-        </button>
-        <button onClick={onBack} className="w-full bg-slate-100 text-slate-600 p-4 rounded-2xl font-bold active:scale-95">Main Menu</button>
-      </div>
-    </div>
-  );
-
-  // 2. Loading State
-  if (questions.length === 0) return (
-    <div className="flex items-center justify-center h-full">
-      <RefreshCw className="animate-spin text-orange-500" size={32} />
-    </div>
-  );
-
-  // 3. Active Question State (Safety check included)
-  const currentQ = questions[currentIndex];
-  if (!currentQ) return null; // Prevents the blank screen crash
-
-  return (
-    <div className="p-6 h-full flex flex-col">
-      <div className="flex justify-between items-center mb-6">
-        <span className="text-slate-400 font-bold">Q: {currentIndex + 1}/{TOTAL_QUESTIONS}</span>
-        <div className="flex items-center gap-1 bg-orange-50 px-3 py-1 rounded-full shadow-sm">
-          <Trophy size={16} className="text-orange-500" />
-          <span className="font-bold text-orange-600">{score}</span>
-        </div>
-      </div>
-      
-      <div className="bg-white border-2 border-slate-100 rounded-3xl p-8 mb-8 text-center shadow-sm relative overflow-hidden">
-        <div className="absolute top-0 left-0 h-1 bg-orange-100 w-full">
-          <div 
-            className="h-full bg-orange-500 transition-all duration-300" 
-            style={{ width: `${((currentIndex + 1) / TOTAL_QUESTIONS) * 100}%` }} 
-          />
-        </div>
-        <span className="text-xs uppercase font-black text-slate-400 mb-2 block tracking-wider">Antonym of</span>
-        <div className="text-4xl font-black text-slate-800">{currentQ.word}</div>
-      </div>
-
-      <div className="space-y-3">
-        {options.map((opt, i) => (
-          <button 
-            key={i} 
-            disabled={!!feedback} 
-            onClick={() => handleAnswer(opt)} 
-            className={`w-full p-4 rounded-2xl text-lg font-bold text-left flex justify-between items-center transition-all shadow-sm ${
-              feedback 
-                ? (opt === currentQ.antonym ? 'bg-green-500 text-white border-green-500 scale-[1.02]' : 'bg-white border-2 border-slate-100 text-slate-300 opacity-60') 
-                : 'bg-white border-2 border-slate-100 hover:border-orange-500 active:bg-orange-50 active:scale-95'
-            }`}
-          >
-            {opt} {feedback && opt === currentQ.antonym && <CheckCircle2 size={20} />}
-          </button>
-        ))}
-      </div>
-
-      {feedback && (
-        <div className={`mt-6 p-4 rounded-2xl text-center animate-in slide-in-from-bottom-2 duration-300 ${feedback.correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-          <p className="text-sm font-bold italic">"{currentQ.usage}"</p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
