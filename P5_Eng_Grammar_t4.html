@@ -3,34 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IGCSE Grammar & Literary Devices Quiz</title>
+    <title>IGCSE Grammar & Literary Devices - 75 Question Masterclass</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        .option-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .option-btn:disabled {
-            cursor: not-allowed;
-        }
-        .correct-answer {
-            background-color: #dcfce7;
-            border-color: #22c55e;
-            color: #166534;
-        }
-        .incorrect-answer {
-            background-color: #fee2e2;
-            border-color: #ef4444;
-            color: #991b1b;
-        }
-        .unselected-disabled {
-            opacity: 0.6;
-            background-color: #f1f5f9;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .option-btn { transition: all 0.2s ease-in-out; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .correct-answer { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+        .incorrect-answer { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        .unselected-disabled { opacity: 0.6; background-color: #f1f5f9; }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex items-center justify-center p-4 sm:p-8">
@@ -40,16 +22,31 @@
         <!-- Header -->
         <div class="bg-indigo-600 text-white p-6 sm:px-10 text-center">
             <h1 class="text-2xl sm:text-3xl font-bold">IGCSE Grade 5 English</h1>
-            <p class="text-indigo-200 mt-2">Grammar & Literary Devices Practice Test</p>
+            <p class="text-indigo-200 mt-2">Grammar & Literary Devices Masterclass</p>
         </div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="p-8 sm:p-12 text-center">
-            <h2 class="text-xl font-semibold mb-4">Welcome to your Practice Test!</h2>
-            <p class="text-slate-600 mb-8 max-w-lg mx-auto">This quiz contains 25 questions covering relative pronouns, complex sentences, colons, semicolons, conditionals, and figurative language (similes, metaphors, alliteration, personification).</p>
-            <button onclick="startQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-colors text-lg">
-                Start Assessment
-            </button>
+        <!-- Dashboard / Start Screen -->
+        <div id="start-screen" class="p-8 sm:p-12 text-center block">
+            <h2 class="text-xl font-semibold mb-4">Select a Practice Test</h2>
+            <p class="text-slate-600 mb-8 max-w-lg mx-auto">Choose one of the 3 available tests below. Each test contains 25 unique questions covering advanced punctuation, complex sentences, conditionals, and figurative language.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                <button onclick="startQuiz(0)" class="bg-white border-2 border-indigo-200 hover:border-indigo-600 hover:bg-indigo-50 text-indigo-700 font-semibold py-6 px-4 rounded-xl shadow-sm transition-all flex flex-col items-center">
+                    <span class="text-2xl mb-2">📝</span>
+                    <span>Practice Test 1</span>
+                    <span class="text-xs text-slate-500 font-normal mt-1">25 Questions</span>
+                </button>
+                <button onclick="startQuiz(1)" class="bg-white border-2 border-indigo-200 hover:border-indigo-600 hover:bg-indigo-50 text-indigo-700 font-semibold py-6 px-4 rounded-xl shadow-sm transition-all flex flex-col items-center">
+                    <span class="text-2xl mb-2">🚀</span>
+                    <span>Practice Test 2</span>
+                    <span class="text-xs text-slate-500 font-normal mt-1">25 Questions</span>
+                </button>
+                <button onclick="startQuiz(2)" class="bg-white border-2 border-indigo-200 hover:border-indigo-600 hover:bg-indigo-50 text-indigo-700 font-semibold py-6 px-4 rounded-xl shadow-sm transition-all flex flex-col items-center">
+                    <span class="text-2xl mb-2">🏆</span>
+                    <span>Practice Test 3</span>
+                    <span class="text-xs text-slate-500 font-normal mt-1">25 Questions</span>
+                </button>
+            </div>
         </div>
 
         <!-- Quiz Screen -->
@@ -74,7 +71,7 @@
             </div>
 
             <div id="options-container" class="space-y-3 mb-8">
-                <!-- Options will be injected here via JS -->
+                <!-- Options injected via JS -->
             </div>
 
             <div id="feedback-container" class="hidden mb-6 p-4 rounded-lg">
@@ -82,7 +79,8 @@
                 <p id="rationale-text" class="text-sm"></p>
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-between items-center mt-6">
+                <button onclick="goHome()" class="text-slate-500 hover:text-slate-700 text-sm font-medium underline">Quit Test</button>
                 <button id="next-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition-colors">
                     Next Question
                 </button>
@@ -94,8 +92,8 @@
             <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             </div>
-            <h2 class="text-3xl font-bold mb-2 text-slate-800">Assessment Complete!</h2>
-            <p class="text-slate-600 mb-6">Here is how you did:</p>
+            <h2 class="text-3xl font-bold mb-2 text-slate-800">Test Complete!</h2>
+            <p class="text-slate-600 mb-6" id="result-subtitle">Here is how you did on this test:</p>
             
             <div class="text-5xl font-extrabold text-indigo-600 mb-2">
                 <span id="final-score">0</span> / 25
@@ -104,10 +102,10 @@
 
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <button onclick="retakeQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-colors">
-                    Retake Assessment
+                    Retake This Test
                 </button>
                 <button onclick="goHome()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-3 px-8 rounded-lg transition-colors">
-                    Return Home
+                    Return to Dashboard
                 </button>
             </div>
         </div>
@@ -115,262 +113,99 @@
     </div>
 
     <script>
-        const quizData = [
-            {
-                "question": "Which sentence correctly uses a semicolon to join two independent clauses?",
-                "answerOptions": [
-                    { "text": "The concert was amazing; the band played all their hits.", "rationale": "A semicolon appropriately connects two closely related, complete thoughts without the need for a conjunction.", "isCorrect": true },
-                    { "text": "I went to the store to buy; bread, milk, and eggs.", "rationale": "Semicolons are not used to separate a verb from its direct objects in a list.", "isCorrect": false },
-                    { "text": "Although it was raining heavily; we still played football.", "rationale": "The first part of this sentence is a dependent clause starting with 'Although', so a comma should be used instead of a semicolon.", "isCorrect": false },
-                    { "text": "She is a great swimmer; but her brother prefers running.", "rationale": "When a coordinating conjunction like 'but' is present, a comma is typically used instead of a semicolon.", "isCorrect": false }
-                ],
-                "hint": "Look for the sentence where both halves can stand completely on their own as separate sentences."
-            },
-            {
-                "question": "Where should a colon be placed in the following sentence? 'The coach gave the team one final instruction win the game.'",
-                "answerOptions": [
-                    { "text": "After the word 'coach'", "rationale": "Placing a punctuation mark here interrupts the subject and its verb.", "isCorrect": false },
-                    { "text": "After the word 'team'", "rationale": "This breaks the sentence before the complete thought has finished.", "isCorrect": false },
-                    { "text": "After the word 'instruction'", "rationale": "The first part of the sentence is a complete independent clause, and the phrase following it directly explains what that 'instruction' is.", "isCorrect": true },
-                    { "text": "After the word 'win'", "rationale": "This separates the verb from its object inappropriately.", "isCorrect": false }
-                ],
-                "hint": "Find the spot that introduces the specific explanation of what was just mentioned."
-            },
-            {
-                "question": "Choose the correct punctuation to complete the sentence: 'The experiment was a complete success _____ furthermore, it proved our initial hypothesis.'",
-                "answerOptions": [
-                    { "text": ", (comma)", "rationale": "Using only a comma here creates a comma splice because 'furthermore' is a conjunctive adverb, not a coordinating conjunction.", "isCorrect": false },
-                    { "text": ": (colon)", "rationale": "While a colon introduces an explanation, the conjunctive adverb 'furthermore' signals the need to join two related but distinct independent clauses.", "isCorrect": false },
-                    { "text": "; (semicolon)", "rationale": "A semicolon is the standard punctuation used before a conjunctive adverb that links two independent clauses.", "isCorrect": true },
-                    { "text": ". (period)", "rationale": "While a period is grammatically possible, the presence of 'furthermore' with a lowercase letter makes a semicolon the intended mechanical choice to link the related ideas.", "isCorrect": false }
-                ],
-                "hint": "Notice the conjunctive adverb 'furthermore' connecting two complete thoughts."
-            },
-            {
-                "question": "Which sentence uses a colon correctly to introduce a list?",
-                "answerOptions": [
-                    { "text": "The recipe requires: flour, sugar, eggs, and butter.", "rationale": "A colon should follow a complete independent clause, but 'The recipe requires' is an incomplete thought.", "isCorrect": false },
-                    { "text": "You will need the following ingredients: flour, sugar, eggs, and butter.", "rationale": "The clause before the colon is a complete independent thought, making it the proper structure to introduce the list.", "isCorrect": true },
-                    { "text": "I want to visit: Paris, Rome, and Tokyo.", "rationale": "The verb 'visit' should flow directly into its objects without the interruption of a colon.", "isCorrect": false },
-                    { "text": "My favorite colors are: blue, green, and red.", "rationale": "A colon should not separate a linking verb ('are') from the subject complements.", "isCorrect": false }
-                ],
-                "hint": "The text coming before the colon must be a full sentence that could end with a period."
-            },
-            {
-                "question": "Which punctuation mark best fits the blank to introduce a dramatic explanation? 'There was only one reason he missed the flight _____ he forgot his passport at home.'",
-                "answerOptions": [
-                    { "text": "semicolon (;)", "rationale": "A semicolon joins two related clauses, but it lacks the intended dramatic emphasis of an introduction or explanation.", "isCorrect": false },
-                    { "text": "colon (:)", "rationale": "A colon perfectly acts as a dramatic pause to introduce the specific explanation of the 'one reason' mentioned.", "isCorrect": true },
-                    { "text": "comma (,)", "rationale": "Using a comma here would create a grammatical error known as a comma splice.", "isCorrect": false },
-                    { "text": "hyphen (-)", "rationale": "While an em dash (—) could work for informal emphasis, a hyphen is used to join words together, not clauses.", "isCorrect": false }
-                ],
-                "hint": "You are introducing the direct answer to the setup in the first half of the sentence."
-            },
-            {
-                "question": "Select the correct relative pronoun: 'The artist, _____ paintings are currently on display at the gallery, will be giving a speech tonight.'",
-                "answerOptions": [
-                    { "text": "who", "rationale": "'Who' is a subject pronoun and does not show ownership of the paintings.", "isCorrect": false },
-                    { "text": "whom", "rationale": "'Whom' is an object pronoun, which does not fit here.", "isCorrect": false },
-                    { "text": "whose", "rationale": "This pronoun correctly demonstrates possession, indicating that the paintings belong to the artist.", "isCorrect": true },
-                    { "text": "which", "rationale": "'Which' is generally used for objects, not to show possession for a person.", "isCorrect": false }
-                ],
-                "hint": "You need a word that shows the paintings belong to the artist."
-            },
-            {
-                "question": "Which relative pronoun completes the sentence correctly? 'The committee members with _____ I discussed the proposal were very supportive.'",
-                "answerOptions": [
-                    { "text": "who", "rationale": "'Who' acts as a subject, but a preposition requires an object pronoun.", "isCorrect": false },
-                    { "text": "whom", "rationale": "Following the preposition 'with', the object pronoun 'whom' is the grammatically correct choice for people.", "isCorrect": true },
-                    { "text": "whose", "rationale": "There is no possession being indicated in this clause.", "isCorrect": false },
-                    { "text": "that", "rationale": "'That' is not used directly after a preposition in this formal relative clause structure.", "isCorrect": false }
-                ],
-                "hint": "Pay attention to the preposition 'with' right before the blank. It requires an object."
-            },
-            {
-                "question": "'The ancient manuscript, _____ was discovered in a hidden cave, is over a thousand years old.' Which word best fills the blank?",
-                "answerOptions": [
-                    { "text": "that", "rationale": "'That' is generally reserved for restrictive clauses (without commas) and is rarely used in non-restrictive clauses surrounded by commas.", "isCorrect": false },
-                    { "text": "which", "rationale": "This pronoun is the standard choice for referring to an object in a non-restrictive clause set off by commas.", "isCorrect": true },
-                    { "text": "who", "rationale": "'Who' is used for people, not manuscripts.", "isCorrect": false },
-                    { "text": "what", "rationale": "'What' cannot function as a relative pronoun referring back to a specific noun in this manner.", "isCorrect": false }
-                ],
-                "hint": "The clause provides extra, non-essential information about a thing and is set off by commas."
-            },
-            {
-                "question": "Choose the correct relative pronoun for the subject of the clause: 'I spoke to the mechanic _____ repaired my car.'",
-                "answerOptions": [
-                    { "text": "whom", "rationale": "'Whom' is an object pronoun, but the blank requires a subject to perform the action 'repaired'.", "isCorrect": false },
-                    { "text": "which", "rationale": "'Which' refers to things, not people.", "isCorrect": false },
-                    { "text": "whose", "rationale": "There is no ownership or possession being expressed here.", "isCorrect": false },
-                    { "text": "who", "rationale": "'Who' correctly serves as the subject pronoun performing the action of repairing the car.", "isCorrect": true }
-                ],
-                "hint": "You need a pronoun that acts as the subject doing the verb 'repaired' and refers to a person."
-            },
-            {
-                "question": "Identify the dependent clause in this complex sentence: 'Since you have finished your chores early, you may go out and play.'",
-                "answerOptions": [
-                    { "text": "you may go out and play", "rationale": "This is the independent clause because it expresses a complete thought on its own.", "isCorrect": false },
-                    { "text": "Since you have finished your chores early", "rationale": "Starting with the subordinating conjunction 'Since', this clause relies on the rest of the sentence to make complete sense.", "isCorrect": true },
-                    { "text": "finished your chores early", "rationale": "This is a verb phrase, missing its subject and the subordinating conjunction.", "isCorrect": false },
-                    { "text": "you may go out", "rationale": "This is only a partial segment of the independent clause.", "isCorrect": false }
-                ],
-                "hint": "Look for the part of the sentence that begins with a subordinating conjunction and cannot stand alone."
-            },
-            {
-                "question": "What subordinating conjunction best completes this sentence to show a cause-and-effect relationship? '_____ the roads were icy, the school bus was delayed.'",
-                "answerOptions": [
-                    { "text": "Because", "rationale": "'Because' clearly establishes the icy roads as the reason for the delayed bus.", "isCorrect": true },
-                    { "text": "Even though", "rationale": "This shows contrast, suggesting the bus was delayed despite the roads being icy, which doesn't make logical sense.", "isCorrect": false },
-                    { "text": "Unless", "rationale": "This establishes a condition, which does not fit the past-tense factual statement of the sentence.", "isCorrect": false },
-                    { "text": "Whereas", "rationale": "This implies a comparison between two different subjects or scenarios.", "isCorrect": false }
-                ],
-                "hint": "You need a word that means 'for the reason that'."
-            },
-            {
-                "question": "Which word makes this a complex sentence by introducing a condition? 'We will hold the outdoor concert _____ it rains.'",
-                "answerOptions": [
-                    { "text": "therefore", "rationale": "This is a conjunctive adverb showing a result, not a condition.", "isCorrect": false },
-                    { "text": "unless", "rationale": "This subordinating conjunction sets a specific condition (if it does not rain) under which the main clause will occur.", "isCorrect": true },
-                    { "text": "and", "rationale": "This is a coordinating conjunction used to create compound, not complex, sentences.", "isCorrect": false },
-                    { "text": "however", "rationale": "This is an adverb used to show contrast between two independent clauses.", "isCorrect": false }
-                ],
-                "hint": "Find the word that means 'except on the condition that'."
-            },
-            {
-                "question": "Which of the following is a complex sentence?",
-                "answerOptions": [
-                    { "text": "The cat slept on the mat, and the dog barked at the mailman.", "rationale": "This is a compound sentence joining two independent clauses with 'and'.", "isCorrect": false },
-                    { "text": "The tall, green trees swayed gently in the afternoon breeze.", "rationale": "This is a simple sentence with one subject and one predicate.", "isCorrect": false },
-                    { "text": "Whenever I hear that song, I remember our trip to the beach.", "rationale": "This features a dependent clause starting with 'Whenever' attached to an independent clause, making it complex.", "isCorrect": true },
-                    { "text": "She wanted to go to the party, but she had too much homework.", "rationale": "The coordinating conjunction 'but' links two independent clauses to form a compound sentence.", "isCorrect": false }
-                ],
-                "hint": "Look for a sentence that has an independent clause and a dependent clause starting with a word like when, because, or although."
-            },
-            {
-                "question": "Complete the zero conditional sentence describing a scientific fact: 'If you freeze water, it _____ into ice.'",
-                "answerOptions": [
-                    { "text": "turned", "rationale": "This is past tense, which is not used for stating general, timeless facts.", "isCorrect": false },
-                    { "text": "will turn", "rationale": "This creates a first conditional sentence, but scientific facts generally use the zero conditional.", "isCorrect": false },
-                    { "text": "turns", "rationale": "The zero conditional uses the present simple tense in both clauses to express universal truths and facts.", "isCorrect": true },
-                    { "text": "would turn", "rationale": "This is used for the second conditional, indicating a hypothetical situation rather than a fact.", "isCorrect": false }
-                ],
-                "hint": "For facts that are always true, keep both parts of the sentence in the simple present tense."
-            },
-            {
-                "question": "Complete the first conditional sentence: 'If the weather is clear tonight, we _____ the meteor shower.'",
-                "answerOptions": [
-                    { "text": "will see", "rationale": "The first conditional uses 'will' + base verb in the main clause to express a realistic future outcome.", "isCorrect": true },
-                    { "text": "see", "rationale": "This would make it a zero conditional, which is for general facts rather than a specific future event.", "isCorrect": false },
-                    { "text": "would see", "rationale": "This is for the second conditional (hypothetical/unreal situations).", "isCorrect": false },
-                    { "text": "saw", "rationale": "This is the past tense, which contradicts the 'tonight' timeframe.", "isCorrect": false }
-                ],
-                "hint": "This is a real possibility for the future. You need a future tense verb."
-            },
-            {
-                "question": "Choose the correct verb for this second conditional (hypothetical) sentence: 'If she _____ the CEO of the company, she would implement a four-day work week.'",
-                "answerOptions": [
-                    { "text": "is", "rationale": "This is present tense and would be used in a first conditional sentence.", "isCorrect": false },
-                    { "text": "was", "rationale": "While sometimes used in informal speech, formal grammar requires the subjunctive mood here.", "isCorrect": false },
-                    { "text": "were", "rationale": "In formal English, the subjunctive 'were' is used for all subjects in hypothetical or unreal 'if' clauses.", "isCorrect": true },
-                    { "text": "has been", "rationale": "This present perfect tense does not fit the structure of a second conditional.", "isCorrect": false }
-                ],
-                "hint": "In formal grammar, imaginary present situations use a special 'subjunctive' form of the 'to be' verb for all subjects."
-            },
-            {
-                "question": "Complete the third conditional sentence indicating an unreal past situation: 'If I had set my alarm, I _____ the bus.'",
-                "answerOptions": [
-                    { "text": "wouldn't miss", "rationale": "This is the structure for the second conditional, dealing with the present or future.", "isCorrect": false },
-                    { "text": "won't miss", "rationale": "This is the structure for the first conditional, dealing with real future possibilities.", "isCorrect": false },
-                    { "text": "didn't miss", "rationale": "This is just simple past tense and doesn't form the correct conditional clause.", "isCorrect": false },
-                    { "text": "wouldn't have missed", "rationale": "The third conditional uses 'would have' + past participle to describe the imaginary outcome of a past event that didn't happen.", "isCorrect": true }
-                ],
-                "hint": "You are talking about an event entirely in the past that cannot be changed. You need the 'would have' structure."
-            },
-            {
-                "question": "'If you study hard, you will pass the exam.' What type of conditional is this?",
-                "answerOptions": [
-                    { "text": "Zero Conditional", "rationale": "This would require both clauses to be in the present tense (If you study, you pass).", "isCorrect": false },
-                    { "text": "First Conditional", "rationale": "The combination of present tense in the 'if' clause and future tense ('will pass') in the main clause makes this the first conditional.", "isCorrect": true },
-                    { "text": "Second Conditional", "rationale": "This would use past tense and 'would' (If you studied, you would pass).", "isCorrect": false },
-                    { "text": "Third Conditional", "rationale": "This would use past perfect and 'would have' (If you had studied, you would have passed).", "isCorrect": false }
-                ],
-                "hint": "Look at the tenses: present tense in the condition, future tense in the result. This describes a highly likely future outcome."
-            },
-            {
-                "question": "Why might an author use the simile 'His memory was like a sieve'?",
-                "answerOptions": [
-                    { "text": "To show that he remembers everything perfectly.", "rationale": "A sieve is used to drain things, so it doesn't hold much inside.", "isCorrect": false },
-                    { "text": "To describe his face as having many holes.", "rationale": "The simile is comparing his memory, not his physical appearance.", "isCorrect": false },
-                    { "text": "To vividly illustrate that he forgets things very easily.", "rationale": "A sieve lets liquid pour right through it, providing a strong visual for a memory that cannot hold onto facts.", "isCorrect": true },
-                    { "text": "To state literally that his brain is made of metal.", "rationale": "Similes are figurative language, meaning they are not meant to be taken literally.", "isCorrect": false }
-                ],
-                "hint": "Think about what a sieve is used for in the kitchen (straining pasta, letting water run through) and apply that to a person's brain."
-            },
-            {
-                "question": "Which of the following is a simile rather than a metaphor?",
-                "answerOptions": [
-                    { "text": "The world is a stage.", "rationale": "This directly states one thing is another, making it a metaphor.", "isCorrect": false },
-                    { "text": "Her smile was as bright as the morning sun.", "rationale": "This sentence uses the word 'as' to make a direct comparison between two things.", "isCorrect": true },
-                    { "text": "He is a walking dictionary.", "rationale": "This is a metaphor, directly calling him a dictionary.", "isCorrect": false },
-                    { "text": "The thunder was an angry monster roaring in the sky.", "rationale": "This equates the thunder to a monster without comparison words, making it a metaphor.", "isCorrect": false }
-                ],
-                "hint": "A simile always requires specific comparison words to link the two objects."
-            },
-            {
-                "question": "Identify the metaphor in the following options:",
-                "answerOptions": [
-                    { "text": "The child swam like a fish in the pool.", "rationale": "The use of 'like' makes this a simile.", "isCorrect": false },
-                    { "text": "The stars danced playfully in the moonlit sky.", "rationale": "This gives human actions to stars, making it personification.", "isCorrect": false },
-                    { "text": "The internet is a massive ocean of information.", "rationale": "This directly states that the internet IS an ocean, without using comparison words.", "isCorrect": true },
-                    { "text": "The fresh bread smelled delicious.", "rationale": "This is simply a literal descriptive sentence.", "isCorrect": false }
-                ],
-                "hint": "Look for a sentence that says one thing is entirely another thing."
-            },
-            {
-                "question": "What does the metaphor 'The classroom was a refrigerator' imply?",
-                "answerOptions": [
-                    { "text": "The classroom was used to store food.", "rationale": "Metaphors are not meant to be read literally.", "isCorrect": false },
-                    { "text": "The classroom was painted white.", "rationale": "While refrigerators are often white, this is not the primary defining trait used in this common metaphor.", "isCorrect": false },
-                    { "text": "The classroom was extremely cold.", "rationale": "The metaphor uses the defining characteristic of a refrigerator (cold temperatures) to vividly describe the room's atmosphere.", "isCorrect": true },
-                    { "text": "The classroom was completely empty.", "rationale": "Refrigerators are meant to be full, so this doesn't match the comparison.", "isCorrect": false }
-                ],
-                "hint": "Think about the main purpose and feeling inside the appliance being mentioned."
-            },
-            {
-                "question": "Which sentence uses alliteration to create a musical or rhythmic effect?",
-                "answerOptions": [
-                    { "text": "The dog barked loudly at the passing cars.", "rationale": "There is no significant repetition of initial consonant sounds here.", "isCorrect": false },
-                    { "text": "The beautiful butterfly landed gently on the flower.", "rationale": "While descriptive, it lacks the repetitive sounds of alliteration.", "isCorrect": false },
-                    { "text": "Peter planted plenty of petunias in the pot.", "rationale": "The repetition of the 'p' sound at the beginning of almost every word creates strong alliteration.", "isCorrect": true },
-                    { "text": "The ocean waves crashed against the rocky shore.", "rationale": "This uses imagery and possibly onomatopoeia ('crashed'), but not alliteration.", "isCorrect": false }
-                ],
-                "hint": "Read the sentences aloud and listen for the same letter sound repeating over and over at the start of the words."
-            },
-            {
-                "question": "In which sentence is an inanimate object given a human action (personification)?",
-                "answerOptions": [
-                    { "text": "The fierce lion roared loudly in the jungle.", "rationale": "Lions actually roar; this is literal.", "isCorrect": false },
-                    { "text": "The old wooden floorboards groaned under his weight.", "rationale": "Floorboards cannot truly 'groan' as humans do; this human trait vividly describes the creaking sound.", "isCorrect": true },
-                    { "text": "The bright sun shone down on the desert.", "rationale": "The sun literally shines, so this is just a factual description.", "isCorrect": false },
-                    { "text": "The fast sports car drove down the highway.", "rationale": "Driving is the function of a car; no human emotion or trait is given here.", "isCorrect": false }
-                ],
-                "hint": "Find the noun that is doing an emotional or physical action that only a person can truly do."
-            },
-            {
-                "question": "'The last piece of pie called my name from the refrigerator.' What does this personification mean?",
-                "answerOptions": [
-                    { "text": "The pie was actually speaking.", "rationale": "Personification is figurative; the pie is not literally talking.", "isCorrect": false },
-                    { "text": "The speaker was hallucinating voices.", "rationale": "This misses the poetic, literary intent of the sentence.", "isCorrect": false },
-                    { "text": "The pie had a name tag on it.", "rationale": "This is a literal interpretation of a figurative phrase.", "isCorrect": false },
-                    { "text": "The speaker felt very tempted to eat the pie.", "rationale": "Giving the pie the human action of 'calling' perfectly illustrates the strong psychological pull or temptation the speaker is experiencing.", "isCorrect": true }
-                ],
-                "hint": "Think about how you feel when your favorite dessert is sitting nearby and you really want to eat it."
-            }
+        // Data Structure for all 3 Tests
+        const allTests = [
+            // ================= TEST 1 =================
+            [
+                { q: "Choose the correct relative pronoun: 'The scientist _____ research revolutionized physics was awarded the Nobel Prize.'", opts: [{ t: "who", r: "'Who' is a subject pronoun.", c: false }, { t: "whom", r: "'Whom' is an object pronoun.", c: false }, { t: "whose", r: "'Whose' correctly shows possession of the research.", c: true }, { t: "which", r: "'Which' is for things.", c: false }], h: "You need a pronoun showing possession." },
+                { q: "Which relative pronoun best completes the sentence? 'The antique vase, _____ was from the Ming Dynasty, shattered.'", opts: [{ t: "that", r: "'That' is not used in non-restrictive clauses.", c: false }, { t: "which", r: "'Which' is used for things in non-restrictive clauses separated by commas.", c: true }, { t: "whom", r: "Used for people.", c: false }, { t: "what", r: "Cannot refer back to 'vase' this way.", c: false }], h: "This is a non-restrictive clause referring to an object." },
+                { q: "Select the correct relative pronoun: 'I need to find the person to _____ this letter is addressed.'", opts: [{ t: "who", r: "Subject pronoun.", c: false }, { t: "whom", r: "Correct object pronoun after the preposition 'to'.", c: true }, { t: "whose", r: "No possession here.", c: false }, { t: "which", r: "Refers to things.", c: false }], h: "Look at the preposition 'to'." },
+                { q: "Which of the following is a complex sentence?", opts: [{ t: "The sun set, and stars appeared.", r: "Compound sentence.", c: false }, { t: "Even though she was exhausted, she finished the marathon.", r: "Contains a dependent and independent clause.", c: true }, { t: "The fox jumps over the dog.", r: "Simple sentence.", c: false }, { t: "He likes coffee, but she prefers tea.", r: "Compound sentence.", c: false }], h: "Look for a subordinating conjunction." },
+                { q: "Identify the dependent clause: 'While the guests were eating, the band started playing music.'", opts: [{ t: "the band started playing music", r: "Independent clause.", c: false }, { t: "While the guests were eating", r: "Begins with 'While' and cannot stand alone.", c: true }, { t: "the guests were eating", r: "Missing the conjunction.", c: false }, { t: "started playing music", r: "Predicate only.", c: false }], h: "Look for the part that cannot stand alone." },
+                { q: "What subordinating conjunction best completes this: '_____ you study consistently, you will find the exam manageable.'", opts: [{ t: "Therefore", r: "Conjunctive adverb.", c: false }, { t: "Provided that", r: "Acts as a subordinating conjunction for condition.", c: true }, { t: "However", r: "Shows contrast.", c: false }, { t: "And", r: "Coordinating conjunction.", c: false }], h: "Means 'on the condition that'." },
+                { q: "Which sentence is punctuated correctly?", opts: [{ t: "I need to buy: apples, bananas, and milk.", r: "Colon shouldn't separate verb and object.", c: false }, { t: "The weather was terrible; therefore, we stayed inside.", r: "Semicolon properly joins independent clauses with a conjunctive adverb.", c: true }, { t: "She loved reading; but her brother preferred sports.", r: "Don't use semicolon with 'but'.", c: false }, { t: "There is only one rule; listen.", r: "Should be a colon.", c: false }], h: "Look for two complete thoughts joined properly." },
+                { q: "Choose the correct punctuation: 'The chef's secret ingredient was finally revealed _____ a pinch of smoked paprika.'", opts: [{ t: "; (semicolon)", r: "Must be followed by independent clause.", c: false }, { t: ": (colon)", r: "Introduces an explanation/revelation.", c: true }, { t: ", (comma)", r: "Not dramatic enough.", c: false }, { t: ". (period)", r: "Creates a fragment.", c: false }], h: "Introducing a specific revelation." },
+                { q: "Where should a semicolon be placed? 'The mountains are beautiful in winter they offer great skiing opportunities.'", opts: [{ t: "After 'beautiful'", r: "Breaks the clause.", c: false }, { t: "After 'winter'", r: "Correctly separates the two independent clauses.", c: true }, { t: "After 'they'", r: "Splits subject/verb.", c: false }, { t: "After 'great'", r: "Breaks a phrase.", c: false }], h: "Find where the first complete thought ends." },
+                { q: "Identify the conditional: 'If I had known you were coming, I would have baked a cake.'", opts: [{ t: "Zero", r: "For facts.", c: false }, { t: "First", r: "For future possibilities.", c: false }, { t: "Second", r: "For present hypotheticals.", c: false }, { t: "Third", r: "Uses past perfect for unreal past situations.", c: true }], h: "Notice the past perfect tense 'had known'." },
+                { q: "Complete the first conditional: 'If it rains tomorrow, we _____ the picnic.'", opts: [{ t: "would cancel", r: "Second conditional.", c: false }, { t: "will cancel", r: "First conditional uses will + base verb.", c: true }, { t: "canceled", r: "Past tense.", c: false }, { t: "would have canceled", r: "Third conditional.", c: false }], h: "Future real possibility." },
+                { q: "Complete the second conditional: 'If I _____ a billionaire, I would donate millions.'", opts: [{ t: "am", r: "Present tense.", c: false }, { t: "was", r: "Informal, not strictly grammatical.", c: false }, { t: "were", r: "Formal English uses the subjunctive 'were' for all subjects here.", c: true }, { t: "have been", r: "Present perfect.", c: false }], h: "Hypothetical present uses subjunctive mood." },
+                { q: "'Unless you apologize, she will not forgive you.' Which word is the conditional trigger?", opts: [{ t: "apologize", r: "Verb.", c: false }, { t: "Unless", r: "Functions like 'if... not'.", c: true }, { t: "will", r: "Modal verb.", c: false }, { t: "forgive", r: "Verb.", c: false }], h: "Word meaning 'if you do not'." },
+                { q: "Which of the following is a simile?", opts: [{ t: "The classroom was a zoo.", r: "Metaphor.", c: false }, { t: "Her eyes shone like diamonds.", r: "Compares using 'like'.", c: true }, { t: "The sun smiled.", r: "Personification.", c: false }, { t: "He is a star.", r: "Metaphor.", c: false }], h: "Must use 'like' or 'as'." },
+                { q: "Complete the simile: 'My legs felt as heavy as _____.'", opts: [{ t: "water", r: "Not associated with heavy.", c: false }, { t: "lead", r: "Classic simile for extreme weight.", c: true }, { t: "clouds", r: "Associated with light.", c: false }, { t: "speed", r: "Abstract concept.", c: false }], h: "Dense, heavy metal." },
+                { q: "Primary purpose of a simile?", opts: [{ t: "Give human traits to objects.", r: "Personification.", c: false }, { t: "Repeat sounds.", r: "Alliteration.", c: false }, { t: "Make descriptions vivid by comparing two things.", r: "Enhances imagery via comparison.", c: true }, { t: "State one thing IS another.", r: "Metaphor.", c: false }], h: "Why say 'cold as ice' instead of 'very cold'?" },
+                { q: "Which contains a metaphor?", opts: [{ t: "The snow is a white blanket.", r: "Directly states it IS a blanket.", c: true }, { t: "He ran fast as a cheetah.", r: "Simile.", c: false }, { t: "The wind howled.", r: "Personification.", c: false }, { t: "She sells seashells.", r: "Alliteration.", c: false }], h: "One thing IS another." },
+                { q: "Metaphor meaning: 'Life is a rollercoaster.'", opts: [{ t: "Life is full of unpredictable highs and lows.", r: "Relies on the physical nature of the ride.", c: true }, { t: "Life is an amusement park.", r: "Too literal.", c: false }, { t: "Life moves in a straight line.", r: "Opposite of a coaster.", c: false }, { t: "Life requires a ticket.", r: "Not the universal meaning.", c: false }], h: "Think about how a rollercoaster physically moves." },
+                { q: "Change to metaphor: 'The warrior fought like a lion.'", opts: [{ t: "Fought as fiercely as a lion.", r: "Still a simile.", c: false }, { t: "The warrior was a lion in battle.", r: "Removes 'like/as' and equates them.", c: true }, { t: "The lion fought the warrior.", r: "Changes meaning.", c: false }, { t: "They fought together.", r: "Literal statement.", c: false }], h: "Remove comparison words, state subject IS object." },
+                { q: "Identify alliteration:", opts: [{ t: "The silent, slithering snake slid slowly.", r: "Repetition of 's' sound.", c: true }, { t: "The bright moon.", r: "No repetition.", c: false }, { t: "Cats and dogs.", r: "Factual.", c: false }, { t: "The heavy door creaked.", r: "Imagery, no alliteration.", c: false }], h: "Repeating starting consonant sounds." },
+                { q: "Words creating alliteration in: 'The curious cat caught a cold.'", opts: [{ t: "The, a", r: "Articles.", c: false }, { t: "curious, cat, caught, cold", r: "All start with hard 'c' sound.", c: true }, { t: "curious, caught", r: "Incomplete list.", c: false }, { t: "cat, cold", r: "Incomplete list.", c: false }], h: "Find all words with hard 'c'." },
+                { q: "Why use alliteration?", opts: [{ t: "Explain science.", r: "Stylistic, not explanatory.", c: false }, { t: "Create musical/rhythmic effect.", r: "Makes phrases catchy.", c: true }, { t: "Compare objects.", r: "Simile/Metaphor.", c: false }, { t: "Join clauses.", r: "Conjunctions.", c: false }], h: "Think of tongue twisters." },
+                { q: "Clearest example of personification:", opts: [{ t: "The old car made a noise.", r: "Literal.", c: false }, { t: "The angry alarm clock yelled at me.", r: "Clocks cannot feel angry or yell.", c: true }, { t: "The loyal dog barked.", r: "Literal.", c: false }, { t: "The river flowed.", r: "Literal.", c: false }], h: "Object doing a human action." },
+                { q: "What human trait is given? 'The tired old house slumped its shoulders.'", opts: [{ t: "Ability to change color.", r: "Not mentioned.", c: false }, { t: "Ability to feel exhaustion and have posture.", r: "Tired, slumping, watching are human traits.", c: true }, { t: "Ability to build.", r: "Not stated.", c: false }, { t: "Ability to speak.", r: "Not stated.", c: false }], h: "Look at the adjectives and verbs." },
+                { q: "What is personified? 'The greedy fire swallowed the forest.'", opts: [{ t: "The forest", r: "Being consumed, not acting.", c: false }, { t: "The hours", r: "Measurement of time.", c: false }, { t: "The fire", r: "Described as greedy and swallowing.", c: true }, { t: "A matter", r: "Idiom.", c: false }], h: "Which noun is acting 'greedy'?" }
+            ],
+            // ================= TEST 2 =================
+            [
+                { q: "Which sentence correctly uses a semicolon?", opts: [{ t: "The concert was amazing; the band played all their hits.", r: "Connects closely related independent clauses.", c: true }, { t: "I went to buy; bread, milk.", r: "Breaks verb/object.", c: false }, { t: "Although it rained; we played.", r: "First clause is dependent.", c: false }, { t: "She swims; but he runs.", r: "Don't use with coordinating conjunction.", c: false }], h: "Both sides must be independent clauses." },
+                { q: "Where should the colon be? 'The coach gave one instruction win the game.'", opts: [{ t: "After coach", r: "Breaks subject/verb.", c: false }, { t: "After team", r: "Breaks thought.", c: false }, { t: "After instruction", r: "Introduces the explanation of the instruction.", c: true }, { t: "After win", r: "Breaks verb/object.", c: false }], h: "Introduces the specific explanation." },
+                { q: "Correct punctuation: 'The test was a success _____ furthermore, it proved our theory.'", opts: [{ t: ", (comma)", r: "Comma splice.", c: false }, { t: ": (colon)", r: "Not an explanation.", c: false }, { t: "; (semicolon)", r: "Used before conjunctive adverbs linking independent clauses.", c: true }, { t: ". (period)", r: "Furthermore is lowercase.", c: false }], h: "Notice the conjunctive adverb." },
+                { q: "Correct colon usage:", opts: [{ t: "Recipe requires: flour, sugar.", r: "Incomplete thought before colon.", c: false }, { t: "You need these ingredients: flour, sugar.", r: "Complete independent thought introduces list.", c: true }, { t: "I visit: Paris, Rome.", r: "Breaks verb/object.", c: false }, { t: "Colors are: blue, red.", r: "Breaks linking verb.", c: false }], h: "Must follow a full sentence." },
+                { q: "Punctuation for dramatic explanation: 'There was one reason he missed the flight _____ he forgot his passport.'", opts: [{ t: "semicolon", r: "Lacks dramatic emphasis.", c: false }, { t: "colon", r: "Perfect dramatic pause for explanation.", c: true }, { t: "comma", r: "Comma splice.", c: false }, { t: "hyphen", r: "Joins words, not clauses.", c: false }], h: "Direct answer to the setup." },
+                { q: "Select relative pronoun: 'The artist, _____ paintings are on display, will speak tonight.'", opts: [{ t: "who", r: "Subject.", c: false }, { t: "whom", r: "Object.", c: false }, { t: "whose", r: "Shows possession of the paintings.", c: true }, { t: "which", r: "For objects.", c: false }], h: "Shows ownership." },
+                { q: "Complete the sentence: 'The members with _____ I spoke were supportive.'", opts: [{ t: "who", r: "Subject.", c: false }, { t: "whom", r: "Object pronoun follows preposition 'with'.", c: true }, { t: "whose", r: "No possession.", c: false }, { t: "that", r: "Not used after prepositions here.", c: false }], h: "Follows the preposition 'with'." },
+                { q: "Fill the blank: 'The manuscript, _____ was discovered recently, is old.'", opts: [{ t: "that", r: "Not used in non-restrictive (comma) clauses.", c: false }, { t: "which", r: "Standard for objects in non-restrictive clauses.", c: true }, { t: "who", r: "For people.", c: false }, { t: "what", r: "Cannot refer back to noun like this.", c: false }], h: "Non-restrictive clause for an object." },
+                { q: "Correct relative pronoun for subject: 'I spoke to the mechanic _____ repaired my car.'", opts: [{ t: "whom", r: "Object.", c: false }, { t: "which", r: "For things.", c: false }, { t: "whose", r: "No ownership.", c: false }, { t: "who", r: "Acts as the subject doing the repairing.", c: true }], h: "Performs the verb 'repaired'." },
+                { q: "Identify dependent clause: 'Since you finished early, you may go out.'", opts: [{ t: "you may go out", r: "Independent.", c: false }, { t: "Since you finished early", r: "Starts with subordinating conjunction.", c: true }, { t: "finished early", r: "Verb phrase.", c: false }, { t: "you may go", r: "Partial clause.", c: false }], h: "Cannot stand alone." },
+                { q: "Subordinating conjunction for cause-and-effect: '_____ the roads were icy, the bus was delayed.'", opts: [{ t: "Because", r: "Establishes reason.", c: true }, { t: "Even though", r: "Shows contrast.", c: false }, { t: "Unless", r: "Condition.", c: false }, { t: "Whereas", r: "Comparison.", c: false }], h: "Means 'for the reason that'." },
+                { q: "Word introducing a condition: 'We will hold the concert _____ it rains.'", opts: [{ t: "therefore", r: "Result.", c: false }, { t: "unless", r: "Sets a specific condition.", c: true }, { t: "and", r: "Compound.", c: false }, { t: "however", r: "Contrast.", c: false }], h: "Means 'except if'." },
+                { q: "Which is a complex sentence?", opts: [{ t: "Cat slept, and dog barked.", r: "Compound.", c: false }, { t: "Trees swayed gently.", r: "Simple.", c: false }, { t: "Whenever I hear that song, I remember the beach.", r: "Dependent + Independent clause.", c: true }, { t: "She wanted to go, but had homework.", r: "Compound.", c: false }], h: "Look for 'Whenever'." },
+                { q: "Zero conditional fact: 'If you freeze water, it _____ into ice.'", opts: [{ t: "turned", r: "Past.", c: false }, { t: "will turn", r: "First conditional.", c: false }, { t: "turns", r: "Present simple for universal truths.", c: true }, { t: "would turn", r: "Second conditional.", c: false }], h: "Always true fact." },
+                { q: "First conditional: 'If the weather is clear, we _____ the stars.'", opts: [{ t: "will see", r: "Real future possibility uses will + verb.", c: true }, { t: "see", r: "Zero conditional.", c: false }, { t: "would see", r: "Second conditional.", c: false }, { t: "saw", r: "Past tense.", c: false }], h: "Realistic future outcome." },
+                { q: "Second conditional: 'If she _____ the boss, she would allow a 4-day week.'", opts: [{ t: "is", r: "First cond.", c: false }, { t: "was", r: "Informal.", c: false }, { t: "were", r: "Subjunctive mood for hypothetical 'if' clauses.", c: true }, { t: "has been", r: "Present perfect.", c: false }], h: "Formal imaginary present." },
+                { q: "Third conditional: 'If I had set my alarm, I _____ the bus.'", opts: [{ t: "wouldn't miss", r: "Second cond.", c: false }, { t: "won't miss", r: "First cond.", c: false }, { t: "didn't miss", r: "Past simple.", c: false }, { t: "wouldn't have missed", r: "Unreal past outcome.", c: true }], h: "Event entirely in the past." },
+                { q: "Type of conditional: 'If you study, you will pass.'", opts: [{ t: "Zero", r: "Would be present/present.", c: false }, { t: "First", r: "Present condition, future result.", c: true }, { t: "Second", r: "Would be past/would.", c: false }, { t: "Third", r: "Would be past perfect/would have.", c: false }], h: "Highly likely future outcome." },
+                { q: "Purpose of simile 'memory like a sieve'?", opts: [{ t: "Remembers perfectly.", r: "Opposite of a sieve.", c: false }, { t: "Face has holes.", r: "Literal.", c: false }, { t: "Forgets easily.", r: "Sieve lets liquid pour through.", c: true }, { t: "Brain is metal.", r: "Literal.", c: false }], h: "What does a sieve do with water?" },
+                { q: "Which is a simile?", opts: [{ t: "World is a stage.", r: "Metaphor.", c: false }, { t: "Smile as bright as the sun.", r: "Uses 'as' for comparison.", c: true }, { t: "Walking dictionary.", r: "Metaphor.", c: false }, { t: "Thunder was a monster.", r: "Metaphor.", c: false }], h: "Uses comparison words." },
+                { q: "Identify the metaphor:", opts: [{ t: "Swam like a fish.", r: "Simile.", c: false }, { t: "Stars danced.", r: "Personification.", c: false }, { t: "Internet is an ocean of info.", r: "Directly states it IS an ocean.", c: true }, { t: "Bread smelled delicious.", r: "Literal.", c: false }], h: "One thing IS another." },
+                { q: "Meaning of metaphor 'Classroom was a refrigerator'?", opts: [{ t: "Stored food.", r: "Literal.", c: false }, { t: "Painted white.", r: "Not primary trait.", c: false }, { t: "Extremely cold.", r: "Uses defining characteristic of fridge.", c: true }, { t: "Empty.", r: "Not a fridge trait.", c: false }], h: "How does a fridge feel?" },
+                { q: "Which sentence uses alliteration?", opts: [{ t: "Dog barked.", r: "No repetition.", c: false }, { t: "Butterfly landed.", r: "No repetition.", c: false }, { t: "Peter planted plenty of petunias.", r: "Repetition of 'p' sound.", c: true }, { t: "Waves crashed.", r: "Imagery.", c: false }], h: "Repeating consonant sounds." },
+                { q: "Which is personification?", opts: [{ t: "Lion roared.", r: "Literal.", c: false }, { t: "Floorboards groaned.", r: "Inanimate object doing a human action.", c: true }, { t: "Sun shone.", r: "Literal.", c: false }, { t: "Car drove.", r: "Function of a car.", c: false }], h: "Human trait on non-human object." },
+                { q: "Meaning of personification: 'Pie called my name.'", opts: [{ t: "Actually speaking.", r: "Literal.", c: false }, { t: "Hallucinating.", r: "Misses poetic intent.", c: false }, { t: "Had a name tag.", r: "Literal.", c: false }, { t: "Felt tempted to eat it.", r: "Illustrates strong psychological pull.", c: true }], h: "How do you feel about a favorite dessert?" }
+            ],
+            // ================= TEST 3 (Brand New) =================
+            [
+                { q: "Choose the correct relative pronoun: 'The author, _____ latest novel won an award, will visit our school.'", opts: [{ t: "who", r: "Subject.", c: false }, { t: "whom", r: "Object.", c: false }, { t: "whose", r: "Demonstrates ownership of the novel.", c: true }, { t: "that", r: "Cannot show possession.", c: false }], h: "Shows ownership." },
+                { q: "Which word best completes the sentence? 'The bridge, _____ was built in 1920, is being restored.'", opts: [{ t: "that", r: "Not used with comma clauses.", c: false }, { t: "which", r: "Used for objects in non-restrictive clauses.", c: true }, { t: "who", r: "For people.", c: false }, { t: "whose", r: "No possession.", c: false }], h: "Non-restrictive clause regarding an object." },
+                { q: "Select the correct relative pronoun: 'She is the doctor to _____ I owe my life.'", opts: [{ t: "who", r: "Subject.", c: false }, { t: "whom", r: "Correct object pronoun following preposition 'to'.", c: true }, { t: "whose", r: "No possession.", c: false }, { t: "which", r: "For things.", c: false }], h: "Follows the preposition 'to'." },
+                { q: "Identify the independent clause: 'Because the train was late, we missed the opening act.'", opts: [{ t: "Because the train was late", r: "Dependent clause.", c: false }, { t: "we missed the opening act", r: "Can stand alone as a complete sentence.", c: true }, { t: "the train was late", r: "Missing the conjunction context.", c: false }, { t: "missed the opening act", r: "Predicate only.", c: false }], h: "Part that can stand alone." },
+                { q: "What subordinating conjunction best fits here? '_____ it was freezing outside, the children wanted to play in the snow.'", opts: [{ t: "Since", r: "Implies cause.", c: false }, { t: "Because", r: "Implies cause.", c: false }, { t: "Although", r: "Correctly establishes a contrast.", c: true }, { t: "If", r: "Condition.", c: false }], h: "Shows a contrast or surprise." },
+                { q: "Which of these is a complex sentence?", opts: [{ t: "I ran to the store.", r: "Simple.", c: false }, { t: "I ran to the store, and I bought milk.", r: "Compound.", c: false }, { t: "Before I ran to the store, I checked the pantry.", r: "Dependent clause + Independent clause.", c: true }, { t: "The store was closed today.", r: "Simple.", c: false }], h: "Needs a subordinating conjunction." },
+                { q: "Which sentence uses a semicolon correctly?", opts: [{ t: "I brought; a pen, a pencil, and an eraser.", r: "Separates verb and objects.", c: false }, { t: "The sky was dark and cloudy; we expected a storm.", r: "Properly links two related independent clauses.", c: true }, { t: "Because it was cold; I wore a coat.", r: "First clause is dependent.", c: false }, { t: "I like dogs; but I love cats.", r: "Don't use with coordinating conjunction 'but'.", c: false }], h: "Both sides must be full sentences." },
+                { q: "Where does the colon belong? 'Please bring the following items a notebook, a pen, and a ruler.'", opts: [{ t: "After 'bring'", r: "Interrupts flow.", c: false }, { t: "After 'items'", r: "Complete thought introduces a list.", c: true }, { t: "After 'notebook'", r: "Breaks the list.", c: false }, { t: "After 'following'", r: "Interrupts phrase.", c: false }], h: "Just before the list begins." },
+                { q: "Fill the blank: 'He only had one goal in mind _____ to win the championship.'", opts: [{ t: "semicolon (;)", r: "Second part isn't a full sentence.", c: false }, { t: "colon (:)", r: "Perfectly introduces the explanation of the goal.", c: true }, { t: "comma (,)", r: "Too weak for a dramatic explanation.", c: false }, { t: "period (.)", r: "Creates a fragment.", c: false }], h: "Dramatic explanation." },
+                { q: "Identify the zero conditional: 'If you mix red and blue paint, you _____ purple.'", opts: [{ t: "got", r: "Past tense.", c: false }, { t: "will get", r: "First conditional.", c: false }, { t: "get", r: "Present simple for scientific facts.", c: true }, { t: "would get", r: "Second conditional.", c: false }], h: "A fact that is always true." },
+                { q: "Complete the first conditional: 'If she studies hard, she _____ the final exam.'", opts: [{ t: "passed", r: "Past tense.", c: false }, { t: "will pass", r: "Future real possibility.", c: true }, { t: "would pass", r: "Second conditional.", c: false }, { t: "would have passed", r: "Third conditional.", c: false }], h: "Real future possibility." },
+                { q: "Complete the second conditional: 'If I _____ a bird, I would fly across the ocean.'", opts: [{ t: "am", r: "Present.", c: false }, { t: "was", r: "Informal.", c: false }, { t: "were", r: "Subjunctive used for all hypothetical conditions.", c: true }, { t: "been", r: "Grammatically incorrect.", c: false }], h: "Formal imaginary present." },
+                { q: "Complete the third conditional: 'If we had left earlier, we _____ the train.'", opts: [{ t: "catch", r: "Present.", c: false }, { t: "will catch", r: "First cond.", c: false }, { t: "would catch", r: "Second cond.", c: false }, { t: "would have caught", r: "Unreal past outcome.", c: true }], h: "Event completely in the past." },
+                { q: "Which sentence contains a simile?", opts: [{ t: "The stars are diamonds in the sky.", r: "Metaphor.", c: false }, { t: "He fought like a brave lion.", r: "Compares using 'like'.", c: true }, { t: "The wind whispered to me.", r: "Personification.", c: false }, { t: "The big brown bear bit the branch.", r: "Alliteration.", c: false }], h: "Must use 'like' or 'as'." },
+                { q: "Complete this simile: 'Without her glasses, she was as blind as a _____.'", opts: [{ t: "bat", r: "Classic, widely used idiom/simile.", c: true }, { t: "rock", r: "Not known for blindness.", c: false }, { t: "cloud", r: "Not known for blindness.", c: false }, { t: "mouse", r: "Known for being quiet, not blind.", c: false }], h: "A nocturnal flying animal." },
+                { q: "What is the intended meaning of the metaphor 'Time is a thief'?", opts: [{ t: "Someone stole a watch.", r: "Literal.", c: false }, { t: "Time passes quickly, taking our moments away.", r: "Describes how time 'steals' youth or moments.", c: true }, { t: "Thieves only work at night.", r: "Not related.", c: false }, { t: "Time is illegal.", r: "Literal misinterpretation.", c: false }], h: "What does a thief do?" },
+                { q: "Which of the following changes a simile to a metaphor? 'The runner was as fast as a cheetah.'", opts: [{ t: "The runner was like a cheetah.", r: "Still a simile.", c: false }, { t: "The cheetah chased the runner.", r: "Literal event.", c: false }, { t: "The runner was a cheetah on the track.", r: "Directly equates them.", c: true }, { t: "The fast runner won the race.", r: "Literal statement.", c: false }], h: "Remove the comparison words." },
+                { q: "Which phrase effectively uses alliteration?", opts: [{ t: "The tall building stood high.", r: "No repetition.", c: false }, { t: "Dunkin' Donuts", r: "Repetition of the 'D' sound.", c: true }, { t: "The quick brown fox.", r: "No repetition.", c: false }, { t: "Apples and oranges.", r: "No repetition.", c: false }], h: "Repeating starting consonant sounds." },
+                { q: "What is the primary effect of the alliteration in 'the whispering wind in the woods'?", opts: [{ t: "It creates a hard, aggressive tone.", r: "W sounds are soft.", c: false }, { t: "It mimics the soft, blowing sound of the wind.", r: "The repeated 'w' sound sounds like wind blowing.", c: true }, { t: "It personifies the woods.", r: "It does not.", c: false }, { t: "It confuses the reader.", r: "Not the intent.", c: false }], h: "Read it aloud. What does it sound like?" },
+                { q: "Identify the words creating alliteration: 'The fantastic phantom flew far away.'", opts: [{ t: "The, away", r: "Not alliteration.", c: false }, { t: "fantastic, phantom, flew, far", r: "All begin with the 'f' sound (ph makes an f sound).", c: true }, { t: "phantom, away", r: "No repetition.", c: false }, { t: "fantastic, far", r: "Misses two words.", c: false }], h: "Look for the 'f' sound (including 'ph')." },
+                { q: "Which sentence provides the best example of personification?", opts: [{ t: "The angry storm pounded the roof with its heavy fists.", r: "Storms do not have fists or feel anger.", c: true }, { t: "The loud thunder shook the windows.", r: "Literal.", c: false }, { t: "The rain fell heavily all night.", r: "Literal.", c: false }, { t: "The clouds were dark grey.", r: "Literal description.", c: false }], h: "Look for human body parts or emotions." },
+                { q: "What is the personified trait in: 'The old car groaned in protest as it climbed the steep hill'?", opts: [{ t: "Climbed the hill", r: "Cars literally go up hills.", c: false }, { t: "Being old", r: "Cars can literally be old.", c: false }, { t: "Groaning in protest", r: "Cars make noise, but 'protesting' is a human attitude.", c: true }, { t: "Being steep", r: "Literal description of the hill.", c: false }], h: "Which action shows human emotion?" },
+                { q: "Why might an author write 'The camera loves her'?", opts: [{ t: "The camera is a sentient being.", r: "Literal.", c: false }, { t: "To convey she is very photogenic and looks great in pictures.", r: "Personifies the camera to emphasize how well she photographs.", c: true }, { t: "She bought a new camera.", r: "Literal.", c: false }, { t: "She is a professional photographer.", r: "Does not explain the phrase.", c: false }], h: "What does it mean when someone always looks good in photos?" },
+                { q: "What is a complex sentence?", opts: [{ t: "Two independent clauses joined by 'and'.", r: "Compound.", c: false }, { t: "One independent clause.", r: "Simple.", c: false }, { t: "One independent clause plus at least one dependent clause.", r: "Definition of a complex sentence.", c: true }, { t: "A sentence with a semicolon.", r: "Punctuation doesn't define complexity.", c: false }], h: "It involves a dependent clause." },
+                { q: "Which punctuation mark is strictly required to join two independent clauses if you do NOT use a conjunction (like 'and' or 'but')?", opts: [{ t: "Comma", r: "Creates a comma splice error.", c: false }, { t: "Apostrophe", r: "For possession.", c: false }, { t: "Semicolon", r: "The grammatical tool for linking related independent clauses.", c: true }, { t: "Hyphen", r: "For joining words.", c: false }], h: "The stronger pause." }
+            ]
         ];
 
+        let currentTestIndex = 0;
         let currentQuestionIndex = 0;
         let score = 0;
         let hasAnswered = false;
+        let currentQuizData = [];
 
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
@@ -381,17 +216,20 @@
         const progressBar = document.getElementById('progress-bar');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
-        
         const hintText = document.getElementById('hint-text');
         
         const feedbackContainer = document.getElementById('feedback-container');
         const feedbackTitle = document.getElementById('feedback-title');
         const rationaleText = document.getElementById('rationale-text');
         const nextBtn = document.getElementById('next-btn');
+        const resultSubtitle = document.getElementById('result-subtitle');
 
-        function startQuiz() {
+        function startQuiz(testIndex) {
+            currentTestIndex = testIndex;
+            currentQuizData = allTests[testIndex];
             currentQuestionIndex = 0;
             score = 0;
+            
             startScreen.classList.add('hidden');
             resultScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
@@ -400,56 +238,48 @@
 
         function loadQuestion() {
             hasAnswered = false;
-            const currentQ = quizData[currentQuestionIndex];
+            const currentQ = currentQuizData[currentQuestionIndex];
             
-            // Update Headers & Progress
-            questionCounter.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            questionCounter.innerText = `Test ${currentTestIndex + 1} • Q ${currentQuestionIndex + 1} of ${currentQuizData.length}`;
             scoreTracker.innerText = `Score: ${score}`;
-            progressBar.style.width = `${((currentQuestionIndex) / quizData.length) * 100}%`;
+            progressBar.style.width = `${((currentQuestionIndex) / currentQuizData.length) * 100}%`;
             
-            // Set Text
-            questionText.innerText = currentQ.question;
-            hintText.innerText = currentQ.hint;
-            hintText.classList.add('hidden'); // hide hint by default
+            questionText.innerText = currentQ.q;
+            hintText.innerText = currentQ.h;
+            hintText.classList.add('hidden'); 
             
-            // Reset Feedback
             feedbackContainer.classList.add('hidden');
             nextBtn.classList.add('hidden');
             
-            // Render Options
             optionsContainer.innerHTML = '';
-            currentQ.answerOptions.forEach((option, index) => {
+            currentQ.opts.forEach((option, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 font-medium text-slate-700 focus:outline-none';
-                btn.innerText = option.text;
-                btn.onclick = () => selectOption(index, option.isCorrect);
+                btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 font-medium text-slate-700 focus:outline-none shadow-sm';
+                btn.innerText = option.t;
+                btn.onclick = () => selectOption(index, option.c);
                 optionsContainer.appendChild(btn);
             });
         }
 
-        function toggleHint() {
-            hintText.classList.toggle('hidden');
-        }
+        function toggleHint() { hintText.classList.toggle('hidden'); }
 
         function selectOption(selectedIndex, isCorrect) {
             if (hasAnswered) return;
             hasAnswered = true;
 
             const buttons = optionsContainer.querySelectorAll('button');
-            const currentQ = quizData[currentQuestionIndex];
+            const currentQ = currentQuizData[currentQuestionIndex];
 
-            // Update Score
             if (isCorrect) {
                 score++;
                 scoreTracker.innerText = `Score: ${score}`;
             }
 
-            // Styling buttons to show correct/incorrect
             buttons.forEach((btn, index) => {
-                btn.disabled = true; // disable all
-                const optionData = currentQ.answerOptions[index];
+                btn.disabled = true;
+                const optionData = currentQ.opts[index];
                 
-                if (optionData.isCorrect) {
+                if (optionData.c) {
                     btn.classList.add('correct-answer');
                     btn.classList.remove('hover:border-indigo-400', 'hover:bg-indigo-50');
                 } else if (index === selectedIndex && !isCorrect) {
@@ -461,9 +291,7 @@
                 }
             });
 
-            // Show Feedback
-            feedbackContainer.classList.remove('hidden');
-            feedbackContainer.classList.remove('bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
+            feedbackContainer.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
             
             if (isCorrect) {
                 feedbackContainer.classList.add('bg-green-100', 'text-green-800');
@@ -473,12 +301,11 @@
                 feedbackTitle.innerText = "Incorrect";
             }
             
-            rationaleText.innerText = currentQ.answerOptions[selectedIndex].rationale;
-
-            // Show Next Button
+            rationaleText.innerText = currentQ.opts[selectedIndex].r;
             nextBtn.classList.remove('hidden');
-            if (currentQuestionIndex === quizData.length - 1) {
-                nextBtn.innerText = "Finish Assessment";
+            
+            if (currentQuestionIndex === currentQuizData.length - 1) {
+                nextBtn.innerText = "View Final Results";
             } else {
                 nextBtn.innerText = "Next Question";
             }
@@ -486,7 +313,7 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < quizData.length) {
+            if (currentQuestionIndex < currentQuizData.length) {
                 loadQuestion();
             } else {
                 showResults();
@@ -497,29 +324,20 @@
             quizScreen.classList.add('hidden');
             resultScreen.classList.remove('hidden');
             
+            resultSubtitle.innerText = `Here is how you did on Practice Test ${currentTestIndex + 1}:`;
             document.getElementById('final-score').innerText = score;
             const msgEl = document.getElementById('performance-message');
             
-            const percentage = (score / quizData.length) * 100;
-            if (percentage >= 90) {
-                msgEl.innerText = "Outstanding! You have a masterful grasp of grammar and literary devices.";
-            } else if (percentage >= 70) {
-                msgEl.innerText = "Great job! You have a solid understanding of the concepts.";
-            } else if (percentage >= 50) {
-                msgEl.innerText = "Good effort! Keep practicing to iron out a few tricky rules.";
-            } else {
-                msgEl.innerText = "Keep studying! Review the study guide and try again. You've got this!";
-            }
+            const percentage = (score / currentQuizData.length) * 100;
+            if (percentage >= 90) { msgEl.innerText = "Outstanding! You have a masterful grasp of this material."; } 
+            else if (percentage >= 70) { msgEl.innerText = "Great job! You have a solid understanding of the concepts."; } 
+            else if (percentage >= 50) { msgEl.innerText = "Good effort! Keep practicing to iron out a few tricky rules."; } 
+            else { msgEl.innerText = "Keep studying! Review your notes and try this test again. You've got this!"; }
         }
 
-        function retakeQuiz() {
-            startQuiz(); // Resets and starts over
-        }
+        function retakeQuiz() { startQuiz(currentTestIndex); }
 
         function goHome() {
-            // In a standalone file, "Home" acts as resetting to the start screen.
-            currentQuestionIndex = 0;
-            score = 0;
             resultScreen.classList.add('hidden');
             quizScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
