@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary 5 Hindi Hub - One Word & Homonyms</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load React, ReactDOM, and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        /* 3D Flashcard specific styles */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        /* Custom Scrollbar for inner elements */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        const { useState, useEffect } = React;
+
+        // ==========================================
+        // DATA SET 1: One Word Substitution
+        // ==========================================
+        const hindiWordsData = [
+            { id: 1, category: "ईश्वर और आस्था", phrase: "जिसका कोई आकार हो", word: "साकार", sentence: "ईश्वर का रूप साकार भी माना जाता है।" },
+            { id: 2, category: "ईश्वर और आस्था", phrase: "जिसका कोई आकार न हो", word: "निराकार", sentence: "ईश्वर निराकार है, उसका कोई एक रूप नहीं है।" },
+            { id: 3, category: "स्वभाव और बोलचाल", phrase: "जिसमें दया न हो", word: "निर्दय", sentence: "जानवरों को मारना एक निर्दय काम है।" },
+            { id: 4, category: "जीव-जंतु", phrase: "जो आकाश में उड़ता है", word: "नभचर", sentence: "कबूतर और चील नभचर प्राणी हैं।" },
+            { id: 5, category: "विशेषताएँ", phrase: "जिसमें कम बल हो", word: "दुर्बल", sentence: "बुखार के कारण राम बहुत दुर्बल हो गया है।" },
+            { id: 6, category: "विशेषताएँ", phrase: "जो अपने देश का हो", word: "स्वदेशी", sentence: "हमें स्वदेशी वस्तुओं का ही उपयोग करना चाहिए।" },
+            { id: 7, category: "व्यवसाय", phrase: "जो खेती करता है", word: "किसान", sentence: "किसान खेत में हल चला रहा है।" },
+            { id: 8, category: "व्यवसाय", phrase: "जो मिट्टी के बरतन बनाता है", word: "कुम्हार", sentence: "कुम्हार चाक पर सुंदर घड़े बनाता है।" },
+            { id: 9, category: "व्यवसाय", phrase: "जो सोने के गहने बनाता है", word: "सुनार", sentence: "सुनार ने माँ के लिए सोने का हार बनाया।" },
+            { id: 10, category: "व्यवसाय", phrase: "जो लोहे के औज़ार बनाता है", word: "लुहार", sentence: "लुहार हथौड़े से लोहे को आकार देता है।" },
+            { id: 11, category: "समय", phrase: "प्रत्येक दिन", word: "प्रतिदिन", sentence: "मैं प्रतिदिन सुबह सैर करने जाता हूँ।" },
+            { id: 12, category: "समय", phrase: "जो प्रतिदिन होता है", word: "दैनिक", sentence: "समाचार पत्र में हमारी दैनिक खबरें होती हैं।" },
+            { id: 13, category: "जीव-जंतु", phrase: "माँस खाने वाला", word: "मांसाहारी", sentence: "शेर एक मांसाहारी जानवर है।" },
+            { id: 14, category: "लोग", phrase: "जिसके आने की कोई तिथि न हो", word: "अतिथि", sentence: "आज हमारे घर कुछ अतिथि आए हैं।" },
+            { id: 15, category: "व्यवसाय", phrase: "लकड़ी का सामान बनाने वाले", word: "बढ़ई", sentence: "बढ़ई ने हमारे लिए एक नई मेज़ बनाई।" },
+            { id: 16, category: "स्वभाव और बोलचाल", phrase: "जो कम बोलता हो", word: "मितभाषी", sentence: "राम एक मितभाषी लड़का है, वह सिर्फ काम की बात करता है।" },
+            { id: 17, category: "स्वभाव और बोलचाल", phrase: "जो अधिक बोलता हो", word: "वाचाल", sentence: "कक्षा में वाचाल बच्चों को अक्सर डांट पड़ती है।" },
+            { id: 18, category: "विशेषताएँ", phrase: "नीचे लिखा हुआ", word: "निम्नलिखित", sentence: "कृपया निम्नलिखित प्रश्नों के उत्तर अपनी कॉपी में लिखें।" },
+            { id: 19, category: "स्वभाव और बोलचाल", phrase: "जानने की इच्छा रखने वाला", word: "जिज्ञासु", sentence: "छोटे बच्चे हर नई चीज़ के प्रति बहुत जिज्ञासु होते हैं।" },
+            { id: 20, category: "समय", phrase: "सप्ताह में एक बार होने वाला", word: "साप्ताहिक", sentence: "रविवार को हमारे यहाँ साप्ताहिक बाज़ार लगता है।" },
+            { id: 21, category: "स्वभाव और बोलचाल", phrase: "कम खर्च करने वाला", word: "मितव्ययी", sentence: "भविष्य के लिए हमें मितव्ययी होना चाहिए।" },
+            { id: 22, category: "लोग", phrase: "जिससे कोई परिचय न हो", word: "अपरिचित", sentence: "बच्चों को अपरिचित लोगों से दूर रहना चाहिए।" },
+            { id: 23, category: "स्वभाव और बोलचाल", phrase: "जिसमें स्वार्थ की भावना हो", word: "स्वार्थी", sentence: "हमें स्वार्थी नहीं, बल्कि दूसरों का मददगार बनना चाहिए।" },
+            { id: 24, category: "समय", phrase: "वर्ष में एक बार होने वाला", word: "वार्षिक", sentence: "मार्च के महीने में हमारी वार्षिक परीक्षा होती है।" },
+            { id: 25, category: "विशेषताएँ", phrase: "जो नष्ट होने वाला हो", word: "नश्वर", sentence: "यह मनुष्य का शरीर नश्वर है।" },
+            { id: 26, category: "विशेषताएँ", phrase: "जो कभी न मरे", word: "अमर", sentence: "हमारे देश के वीर जवान हमेशा के लिए अमर हो गए।" },
+            { id: 27, category: "जीव-जंतु", phrase: "जल में विचरण करने वाला", word: "जलचर", sentence: "मछलियाँ और मगरमच्छ जलचर जीव हैं।" },
+            { id: 28, category: "जीव-जंतु", phrase: "ज़मीन (थल) पर चलने वाला", word: "थलचर", sentence: "गाय, कुत्ता और बिल्ली थलचर प्राणी हैं।" },
+            { id: 29, category: "जीव-जंतु", phrase: "रात्रि में विचरण करने वाला", word: "निशाचर", sentence: "उल्लू और चमगादड़ निशाचर पक्षी होते हैं।" },
+            { id: 30, category: "विशेषताएँ", phrase: "जिसका कोई अंत न हो", word: "अनंत", sentence: "तारों से भरा यह आकाश अनंत है।" },
+            { id: 31, category: "विशेषताएँ", phrase: "जो देखने योग्य हो", word: "दर्शनीय", sentence: "दिल्ली का लाल किला एक दर्शनीय स्थल है।" },
+            { id: 32, category: "स्वभाव और बोलचाल", phrase: "दूसरों का भला करने वाला", word: "परोपकारी", sentence: "पेड़-पौधे बहुत परोपकारी होते हैं, वे हमें फल देते हैं।" },
+            { id: 33, category: "स्वभाव और बोलचाल", phrase: "जो मीठा बोलता हो", word: "मृदुभाषी", sentence: "कोयल अपनी मृदुभाषी आवाज़ के लिए जानी जाती है।" },
+            { id: 34, category: "स्वभाव और बोलचाल", phrase: "जो कड़वा बोलता हो", word: "कटुभाषी", sentence: "कटुभाषी व्यक्ति के ज्यादा दोस्त नहीं बन पाते हैं।" },
+            { id: 35, category: "विशेषताएँ", phrase: "साहित्य से संबंध रखनेवाला", word: "साहित्यिक", sentence: "मुंशी प्रेमचंद जी का साहित्यिक योगदान बहुत बड़ा है।" },
+            { id: 36, category: "विशेषताएँ", phrase: "जिसमें रस न हो", word: "नीरस", sentence: "बिना नमक के खाना बिल्कुल नीरस लगता है।" },
+            { id: 37, category: "लोग", phrase: "जिसके संतान न हो", word: "निःसंतान", sentence: "राजा निःसंतान था इसलिए उसने एक बच्चा गोद लिया।" },
+            { id: 38, category: "लोग", phrase: "लोगों में प्रिय", word: "लोकप्रिय", sentence: "महेंद्र सिंह धोनी एक बहुत लोकप्रिय क्रिकेट खिलाड़ी हैं।" },
+            { id: 39, category: "विशेषताएँ", phrase: "हानि पहुँचाने वाला", word: "हानिकारक", sentence: "बाहर का जंक फूड हमारे स्वास्थ्य के लिए हानिकारक है।" },
+            { id: 40, category: "लोग", phrase: "साथ पढ़ने वाला", word: "सहपाठी", sentence: "राहुल मेरा सहपाठी है, हम रोज़ साथ स्कूल जाते हैं।" },
+            { id: 41, category: "ईश्वर और आस्था", phrase: "ईश्वर पर विश्वास न रखने वाला", word: "नास्तिक", sentence: "जो भगवान की पूजा नहीं करता, उसे नास्तिक कहते हैं।" },
+            { id: 42, category: "ईश्वर और आस्था", phrase: "ईश्वर पर विश्वास करने वाला", word: "आस्तिक", sentence: "मेरी दादी बहुत आस्तिक हैं, वे रोज़ मंदिर जाती हैं।" },
+            { id: 43, category: "विशेषताएँ", phrase: "जो नियम के अनुसार न हो", word: "अनियमित", sentence: "अनियमित रूप से खाना खाने से हम बीमार पड़ सकते हैं।" },
+            { id: 44, category: "लोग", phrase: "जिसके माता-पिता न हों", word: "अनाथ", sentence: "हमें अनाथ बच्चों की मदद और प्यार करना चाहिए।" },
+            { id: 45, category: "विशेषताएँ", phrase: "जिसका कोई अंग खराब हो", word: "विकलांग", sentence: "सरकार विकलांग लोगों को विशेष सुविधाएँ देती है।" },
+            { id: 46, category: "विशेषताएँ", phrase: "जो प्रशंसा के योग्य हो", word: "प्रशंसनीय", sentence: "खेल प्रतियोगिता में तुम्हारा प्रदर्शन प्रशंसनीय था।" },
+            { id: 47, category: "स्वभाव और बोलचाल", phrase: "जिसे परवाह नहीं है", word: "लापरवाह", sentence: "हमें अपनी पढ़ाई के प्रति लापरवाह नहीं होना चाहिए।" },
+            { id: 48, category: "विशेषताएँ", phrase: "बुरी गंध", word: "दुर्गंध", sentence: "कचरे के डिब्बे से बहुत बुरी दुर्गंध आ रही है।" },
+            { id: 49, category: "लोग", phrase: "देश-विदेश में घूमनेवाला", word: "पर्यटक", sentence: "हर साल भारत में कई विदेशी पर्यटक घूमने आते हैं।" },
+            { id: 50, category: "स्वभाव और बोलचाल", phrase: "जो हमेशा सच बोलता हो", word: "सत्यवादी", sentence: "महात्मा गांधी एक सत्यवादी महापुरुष थे।" }
+        ];
+
+        // ==========================================
+        // DATA SET 2: Homonyms (श्रुतिसम भिन्नार्थक शब्द)
+        // ==========================================
+        const homonymPairsData = [
+            { id: 1, w1: "उतर", m1: "ऊँचे स्थान से नीचे आना", s1: "वह सीढ़ियों से उतर रहा है।", w2: "उत्तर", m2: "एक दिशा, जवाब", s2: "मेरे प्रश्न का उत्तर कौन देगा?" },
+            { id: 2, w1: "पता", m1: "किसी का रहने का स्थान", s1: "अपने घर का पता मुझे लिखवा दो।", w2: "पत्ता", m2: "किसी पेड़-पौधे का पत्ता", s2: "पेड़ से पत्ता गिरा।" },
+            { id: 3, w1: "पूछ", m1: "पूछना", s1: "राहुल तुम्हारे बारे में पूछ रहा था।", w2: "पूँछ", m2: "किसी पशु की दुम", s2: "कुत्ता पूँछ हिला रहा था।" },
+            { id: 4, w1: "बाग", m1: "बगीचा, उपवन", s1: "कल बाग में टहलने जाएँगे।", w2: "बाघ", m2: "एक पशु", s2: "बाघ मांसाहारी जानवर है।" },
+            { id: 5, w1: "समान", m1: "बराबर", s1: "लड़का-लड़की सब समान होते हैं।", w2: "सामान", m2: "सामग्री या पदार्थ", s2: "खाने-पीने का सामान कहाँ रखूँ?" },
+            { id: 6, w1: "पवन", m1: "वायु", s1: "वे पवन के वेग से आगे बढ़ने लगे।", w2: "पावन", m2: "पवित्र", s2: "गंगा पावन नदी है।" },
+            { id: 7, w1: "हँस", m1: "हँसना", s1: "राधिका हँस रही है।", w2: "हंस", m2: "एक पक्षी", s2: "हंस मानसरोवर झील में मिलते हैं।" },
+            { id: 8, w1: "दिन", m1: "दिवस", s1: "आज का दिन सुहावना है।", w2: "दीन", m2: "गरीब", s2: "दीन मित्र की सहायता करो।" },
+            { id: 9, w1: "अंदर", m1: "भीतर", s1: "पिताजी अंदर बैठे हैं।", w2: "अंतर", m2: "भेद, भिन्नता", s2: "दोनों भाइयों में बहुत अंतर है।" },
+            { id: 10, w1: "आदि", m1: "आरंभ", s1: "ईश्वर का न आदि है, न अंत।", w2: "आदी", m2: "अभ्यस्त", s2: "वह मोबाइल का आदी है।" },
+            { id: 11, w1: "आँधी", m1: "तेज़ हवा", s1: "लगता है, आँधी आने वाली है।", w2: "आधी", m2: "आधा हिस्सा", s2: "तेल की शीशी आधी खाली है।" },
+            { id: 12, w1: "ओर", m1: "तरफ", s1: "आसमान की ओर देखो।", w2: "और", m2: "तथा, अन्य, दूसरा", s2: "तुम और क्या करते हो?" },
+            { id: 13, w1: "कढ़ाई", m1: "सुई-धागे से कपड़े पर फूल-पत्ती बनाना", s1: "रूमाल पर बहुत सुंदर कढ़ाई की हुई है।", w2: "कड़ाही", m2: "खाना बनाने का बरतन", s2: "करेले कड़ाही में बनाओ।" },
+            { id: 14, w1: "परिमाण", m1: "मात्रा, नाप-तोल", s1: "पानी का परिमाण बताइए।", w2: "परिणाम", m2: "नतीजा, फल", s2: "आज परीक्षा का परिणाम निकलेगा।" },
+            { id: 15, w1: "अचार", m1: "आम-नींबू आदि का अचार", s1: "आम का अचार खाओ।", w2: "आचार", m2: "आचरण, चाल-चलन", s2: "सदा अपने आचार और व्यवहार पर ध्यान दीजिए।" },
+            { id: 16, w1: "मेला", m1: "त्योहार पर लगा बाज़ार", s1: "आज दीपावली मेला लगा है।", w2: "मैला", m2: "गंदा", s2: "कुरता मैला है।" },
+            // Extra pairs extracted from exercises
+            { id: 17, w1: "पिता", m1: "जनक", s1: "मेरे पिता जी आए हैं।", w2: "पीता", m2: "तरल पदार्थ पीना", s2: "वह दूध पीता है।" },
+            { id: 18, w1: "बेल", m1: "लता (Creeper)", s1: "दीवार पर बेल चढ़ रही है।", w2: "बैल", m2: "एक पशु (Ox)", s2: "बैल खेत जोतता है।" },
+            { id: 19, w1: "लोट", m1: "लोटना, लेटना", s1: "कुत्ता ज़मीन पर लोट रहा है।", w2: "लौट", m2: "वापस आना", s2: "माँ बाज़ार से लौट आईं।" },
+            { id: 20, w1: "बेर", m1: "एक फल", s1: "ये बेर मीठे हैं।", w2: "बैर", m2: "दुश्मनी", s2: "हमें किसी से बैर नहीं रखना चाहिए।" },
+            { id: 21, w1: "सैर", m1: "भ्रमण, घूमना", s1: "खुली हवा में सैर करनी चाहिए।", w2: "सेर", m2: "एक तौल (Unit of weight)", s2: "मैंने एक सेर मिठाई खरीदी।" }
+        ];
+
+        // Homonyms Quiz (From Textbook Exercises)
+        const homonymQuizData = [
+            { id: 1, sentence: "ये ________ मीठे नहीं हैं।", options: ["बेर", "बैर"], answer: "बेर" },
+            { id: 2, sentence: "माँ बाज़ार से ________ आईं।", options: ["लोट", "लौट"], answer: "लौट" },
+            { id: 3, sentence: "हमारी परीक्षा का ________ कल आएगा।", options: ["परिमाण", "परिणाम"], answer: "परिणाम" },
+            { id: 4, sentence: "सड़क के दोनों ________ पेड़ लगे हैं।", options: ["और", "ओर"], answer: "ओर" },
+            { id: 5, sentence: "मैंने बहुत ________ से कोई फ़िल्म नहीं देखी।", options: ["दीन", "दिन"], answer: "दिन" },
+            { id: 6, sentence: "मेज़ कमरे के ________ रखी है।", options: ["अंदर", "अंतर"], answer: "अंदर" },
+            { id: 7, sentence: "दीपक और उसके मित्र ज़ोर-ज़ोर से ________ रहे थे।", options: ["हंस", "हँस"], answer: "हँस" },
+            { id: 8, sentence: "आज मैंने चिड़ियाघर में बहुत बड़ा ________ देखा।", options: ["बाघ", "बाग"], answer: "बाघ" },
+            { id: 9, sentence: "घर का सारा ________ चोरी हो गया।", options: ["समान", "सामान"], answer: "सामान" },
+            { id: 10, sentence: "अध्यापिका तुम्हारे बारे में ________ रही थी।", options: ["पूँछ", "पूछ"], answer: "पूछ" },
+            { id: 11, sentence: "गाय के बछड़े बड़े होकर ________ बनते हैं।", options: ["बेल", "बैल"], answer: "बैल" },
+            { id: 12, sentence: "खुली हवा में ________ अवश्य करनी चाहिए।", options: ["सैर", "सेर"], answer: "सैर" },
+            { id: 13, sentence: "वह फीका खाना खाने का ________ है।", options: ["आदि", "आदी"], answer: "आदी" },
+            { id: 14, sentence: "वह आदमी मनीष के घर का ________ पूछ रहा है।", options: ["पता", "पत्ता"], answer: "पता" },
+            { id: 15, sentence: "माँ ने ________ में सब्ज़ी बनाई।", options: ["कढ़ाई", "कड़ाही"], answer: "कड़ाही" },
+            { id: 16, sentence: "वह सीढ़ियों से जल्दी-जल्दी ________ गया।", options: ["उत्तर", "उतर"], answer: "उतर" }
+        ];
+
+        const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+        // ==========================================
+        // SHARED COMPONENT: Top Header
+        // ==========================================
+        function Header({ title, subtitle, onHome, showHome }) {
+            return (
+                <header className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-md relative">
+                    {showHome && (
+                        <button 
+                            onClick={onHome}
+                            className="absolute top-4 left-4 bg-white/20 hover:bg-white/40 px-4 py-2 rounded-xl backdrop-blur-sm transition-all font-bold flex items-center gap-2"
+                        >
+                            <span>🏠</span> <span className="hidden sm:inline">Main Menu</span>
+                        </button>
+                    )}
+                    <div className="max-w-4xl mx-auto px-4 py-8 text-center">
+                        <h1 className="text-3xl md:text-5xl font-extrabold mb-3 drop-shadow-md">
+                            {title}
+                        </h1>
+                        <p className="text-lg md:text-xl font-medium opacity-90">
+                            {subtitle}
+                        </p>
+                    </div>
+                </header>
+            );
+        }
+
+        // ==========================================
+        // MODULE 1: ONE WORD SUBSTITUTION APP
+        // ==========================================
+        function OneWordApp({ onBack }) {
+            const [activeTab, setActiveTab] = useState('study');
+
+            return (
+                <div className="animate-fade-in pb-12">
+                    <Header 
+                        title="अनेक शब्दों के लिए एक शब्द" 
+                        subtitle="One Word Substitution" 
+                        onHome={onBack} 
+                        showHome={true} 
+                    />
+                    
+                    <nav className="max-w-4xl mx-auto px-4 mt-6">
+                        <div className="flex bg-white rounded-2xl shadow-sm overflow-hidden p-1 border border-slate-200">
+                            <button onClick={() => setActiveTab('study')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'study' ? 'bg-orange-100 text-orange-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">📖</span> Study List
+                            </button>
+                            <button onClick={() => setActiveTab('flashcards')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'flashcards' ? 'bg-blue-100 text-blue-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">🗂️</span> Flashcards
+                            </button>
+                            <button onClick={() => setActiveTab('quiz')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'quiz' ? 'bg-green-100 text-green-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">🎮</span> Quiz Game
+                            </button>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-4xl mx-auto px-4 mt-8">
+                        {activeTab === 'study' && <OneWordStudyTab data={hindiWordsData} />}
+                        {activeTab === 'flashcards' && <OneWordFlashcards data={hindiWordsData} />}
+                        {activeTab === 'quiz' && <OneWordQuiz data={hindiWordsData} />}
+                    </main>
+                </div>
+            );
+        }
+
+        function OneWordStudyTab({ data }) {
+            const [searchTerm, setSearchTerm] = useState('');
+            const filteredData = data.filter(item => item.phrase.includes(searchTerm) || item.word.includes(searchTerm));
+            
+            return (
+                <div className="animate-fade-in">
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6 flex items-center gap-3">
+                        <span className="text-slate-400 text-xl">🔍</span>
+                        <input 
+                            type="text" placeholder="Search for a phrase or word..."
+                            className="w-full outline-none text-slate-700 text-lg"
+                            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {filteredData.map((item) => (
+                            <div key={item.id} className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow relative overflow-hidden group">
+                                <div className="absolute top-0 left-0 w-2 h-full bg-orange-400"></div>
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="text-lg font-bold text-slate-800 pr-4">{item.phrase}</h3>
+                                    <span className="bg-green-100 text-green-800 font-bold px-3 py-1 rounded-full text-lg shadow-sm">{item.word}</span>
+                                </div>
+                                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-slate-600 text-sm">
+                                    <span className="font-semibold text-slate-500 mr-2">Example:</span>{item.sentence}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function OneWordFlashcards({ data }) {
+            const [shuffledData, setShuffledData] = useState(() => shuffleArray(data));
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [isFlipped, setIsFlipped] = useState(false);
+
+            const handleNav = (dir) => {
+                setIsFlipped(false);
+                setTimeout(() => setCurrentIndex((prev) => (prev + dir + shuffledData.length) % shuffledData.length), 150);
+            };
+
+            const currentCard = shuffledData[currentIndex];
+
+            return (
+                <div className="flex flex-col items-center py-8">
+                    <div className="w-full max-w-lg flex justify-between items-center mb-6 px-2">
+                        <button onClick={() => { setIsFlipped(false); setTimeout(() => {setShuffledData(shuffleArray(data)); setCurrentIndex(0);}, 150);}} className="text-sm font-bold bg-white text-blue-600 px-4 py-2 rounded-xl shadow-sm border border-slate-200 hover:bg-slate-50 flex items-center gap-2"><span>🔀</span> Shuffle</button>
+                        <div className="text-slate-500 font-semibold bg-white px-4 py-2 rounded-full shadow-sm">Card {currentIndex + 1} of {shuffledData.length}</div>
+                    </div>
+                    <div className="relative w-full max-w-lg aspect-[4/3] perspective-1000 cursor-pointer" onClick={() => setIsFlipped(!isFlipped)}>
+                        <div className={`w-full h-full transition-transform duration-500 transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
+                            <div className="absolute w-full h-full backface-hidden bg-white border-2 border-blue-100 rounded-3xl shadow-lg flex flex-col items-center justify-center p-8 text-center">
+                                <span className="text-blue-400 text-5xl mb-6">🤔</span>
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-800">{currentCard.phrase}</h2>
+                                <p className="absolute bottom-6 text-slate-400 text-sm animate-pulse">Click to flip</p>
+                            </div>
+                            <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl shadow-lg flex flex-col items-center justify-center p-8 text-center text-white">
+                                <h2 className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-md">{currentCard.word}</h2>
+                                <div className="bg-white/20 p-4 rounded-xl backdrop-blur-sm w-full"><p className="text-lg font-medium">"{currentCard.sentence}"</p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex gap-6 mt-10">
+                        <button onClick={() => handleNav(-1)} className="bg-white text-slate-700 px-6 py-3 rounded-xl shadow-sm border border-slate-200 font-bold flex gap-2"><span>⬅️</span> Prev</button>
+                        <button onClick={() => handleNav(1)} className="bg-blue-500 text-white px-8 py-3 rounded-xl shadow-md font-bold flex gap-2">Next <span>➡️</span></button>
+                    </div>
+                </div>
+            );
+        }
+
+        function OneWordQuiz({ data }) {
+            const [gameState, setGameState] = useState('start');
+            const [questions, setQuestions] = useState([]);
+            const [qIndex, setQIndex] = useState(0);
+            const [score, setScore] = useState(0);
+            const [selected, setSelected] = useState(null);
+
+            const startQuiz = () => {
+                const selectedQs = shuffleArray(data).slice(0, 10).map(q => {
+                    const distractors = shuffleArray(data.filter(i => i.id !== q.id)).slice(0, 3).map(i => i.word);
+                    return { ...q, options: shuffleArray([q.word, ...distractors]) };
+                });
+                setQuestions(selectedQs); setQIndex(0); setScore(0); setSelected(null); setGameState('playing');
+            };
+
+            if (gameState === 'start') return (
+                <div className="bg-white rounded-3xl p-10 text-center shadow-sm border border-slate-200">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <h2 className="text-2xl font-bold mb-4">10 Question Challenge</h2>
+                    <button onClick={startQuiz} className="bg-green-500 text-white text-xl font-bold py-3 px-8 rounded-xl shadow-md">Start Quiz 🚀</button>
+                </div>
+            );
+
+            if (gameState === 'results') return (
+                <div className="bg-white rounded-3xl p-10 text-center shadow-sm border border-slate-200">
+                    <h2 className="text-3xl font-bold mb-6">Quiz Complete!</h2>
+                    <p className="text-6xl font-black text-blue-600 mb-8">{score} <span className="text-3xl text-slate-400">/ 10</span></p>
+                    <button onClick={startQuiz} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-xl">Play Again 🔄</button>
+                </div>
+            );
+
+            const q = questions[qIndex];
+            const isAnswered = selected !== null;
+
+            return (
+                <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-200">
+                    <div className="flex justify-between text-slate-400 text-sm font-bold mb-4">
+                        <span>Question {qIndex + 1}/10</span><span>Score: {score}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-center mb-8">"{q.phrase}"</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {q.options.map((opt, i) => {
+                            let css = "bg-slate-50 text-slate-700 border-slate-200";
+                            if (isAnswered) {
+                                if (opt === q.word) css = "bg-green-100 border-green-500 text-green-800";
+                                else if (opt === selected) css = "bg-red-100 border-red-500 text-red-800";
+                                else css = "opacity-50";
+                            }
+                            return (
+                                <button key={i} disabled={isAnswered} onClick={() => { setSelected(opt); if (opt === q.word) setScore(s => s + 1); }}
+                                    className={`py-4 px-6 rounded-2xl border-2 font-bold text-lg transition-all ${css} ${!isAnswered && 'hover:bg-slate-100'}`}>
+                                    {opt}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {isAnswered && (
+                        <div className="mt-8 flex justify-end animate-fade-in">
+                            <button onClick={() => qIndex < 9 ? setQIndex(qIndex + 1) || setSelected(null) : setGameState('results')}
+                                className="bg-slate-800 text-white font-bold py-3 px-8 rounded-xl">
+                                {qIndex === 9 ? 'Results 📊' : 'Next ➡️'}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // ==========================================
+        // MODULE 2: HOMONYMS APP (श्रुतिसम भिन्नार्थक शब्द)
+        // ==========================================
+        function HomonymsApp({ onBack }) {
+            const [activeTab, setActiveTab] = useState('study');
+
+            return (
+                <div className="animate-fade-in pb-12">
+                    <Header 
+                        title="श्रुतिसम भिन्नार्थक शब्द" 
+                        subtitle="Homonyms (Words that sound similar but mean different things)" 
+                        onHome={onBack} 
+                        showHome={true} 
+                    />
+                    
+                    <nav className="max-w-4xl mx-auto px-4 mt-6">
+                        <div className="flex bg-white rounded-2xl shadow-sm overflow-hidden p-1 border border-slate-200">
+                            <button onClick={() => setActiveTab('study')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'study' ? 'bg-orange-100 text-orange-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">📖</span> Study Pairs
+                            </button>
+                            <button onClick={() => setActiveTab('flashcards')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'flashcards' ? 'bg-purple-100 text-purple-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">🗂️</span> Compare Cards
+                            </button>
+                            <button onClick={() => setActiveTab('quiz')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-2 text-sm md:text-base font-semibold rounded-xl transition-all ${activeTab === 'quiz' ? 'bg-rose-100 text-rose-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <span className="text-xl">🎮</span> Fill Blanks
+                            </button>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-4xl mx-auto px-4 mt-8">
+                        {activeTab === 'study' && <HomonymsStudyTab data={homonymPairsData} />}
+                        {activeTab === 'flashcards' && <HomonymsFlashcards data={homonymPairsData} />}
+                        {activeTab === 'quiz' && <HomonymsQuiz data={homonymQuizData} />}
+                    </main>
+                </div>
+            );
+        }
+
+        function HomonymsStudyTab({ data }) {
+            const [searchTerm, setSearchTerm] = useState('');
+            const filtered = data.filter(item => 
+                item.w1.includes(searchTerm) || item.w2.includes(searchTerm) || item.m1.includes(searchTerm) || item.m2.includes(searchTerm)
+            );
+
+            return (
+                <div className="animate-fade-in">
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6 flex items-center gap-3">
+                        <span className="text-slate-400 text-xl">🔍</span>
+                        <input 
+                            type="text" placeholder="Search for a word or meaning..."
+                            className="w-full outline-none text-slate-700 text-lg"
+                            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-6">
+                        {filtered.map((item) => (
+                            <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 text-center font-bold text-slate-500 text-sm uppercase tracking-widest">
+                                    Pair {item.id}
+                                </div>
+                                <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                                    {/* Word 1 Side */}
+                                    <div className="flex-1 p-6">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="text-2xl font-black text-purple-600">{item.w1}</span>
+                                            <span className="text-slate-400 font-bold">—</span>
+                                            <span className="text-lg font-semibold text-slate-700">{item.m1}</span>
+                                        </div>
+                                        <div className="bg-purple-50 p-3 rounded-lg text-sm text-purple-800 border border-purple-100">
+                                            "{item.s1}"
+                                        </div>
+                                    </div>
+                                    {/* Word 2 Side */}
+                                    <div className="flex-1 p-6">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="text-2xl font-black text-rose-600">{item.w2}</span>
+                                            <span className="text-slate-400 font-bold">—</span>
+                                            <span className="text-lg font-semibold text-slate-700">{item.m2}</span>
+                                        </div>
+                                        <div className="bg-rose-50 p-3 rounded-lg text-sm text-rose-800 border border-rose-100">
+                                            "{item.s2}"
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function HomonymsFlashcards({ data }) {
+            const [shuffledData, setShuffledData] = useState(() => shuffleArray(data));
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [isFlipped, setIsFlipped] = useState(false);
+
+            const handleNav = (dir) => {
+                setIsFlipped(false);
+                setTimeout(() => setCurrentIndex((prev) => (prev + dir + shuffledData.length) % shuffledData.length), 150);
+            };
+
+            const card = shuffledData[currentIndex];
+
+            return (
+                <div className="flex flex-col items-center py-8">
+                    <div className="w-full max-w-lg flex justify-between items-center mb-6 px-2">
+                        <button onClick={() => { setIsFlipped(false); setTimeout(() => {setShuffledData(shuffleArray(data)); setCurrentIndex(0);}, 150);}} className="text-sm font-bold bg-white text-purple-600 px-4 py-2 rounded-xl shadow-sm border border-slate-200 hover:bg-slate-50 flex items-center gap-2"><span>🔀</span> Shuffle</button>
+                        <div className="text-slate-500 font-semibold bg-white px-4 py-2 rounded-full shadow-sm">Pair {currentIndex + 1} of {shuffledData.length}</div>
+                    </div>
+                    
+                    <div className="relative w-full max-w-xl aspect-[4/3] sm:aspect-[3/2] perspective-1000 cursor-pointer" onClick={() => setIsFlipped(!isFlipped)}>
+                        <div className={`w-full h-full transition-transform duration-500 transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
+                            
+                            {/* Front: Just the words */}
+                            <div className="absolute w-full h-full backface-hidden bg-white border-2 border-purple-100 rounded-3xl shadow-lg flex flex-col items-center justify-center p-8 text-center">
+                                <span className="text-purple-300 text-5xl mb-8">⚖️</span>
+                                <div className="flex items-center justify-center gap-6 w-full">
+                                    <h2 className="text-4xl md:text-6xl font-black text-purple-600 w-1/2 text-right">{card.w1}</h2>
+                                    <span className="text-3xl text-slate-300 font-light">vs</span>
+                                    <h2 className="text-4xl md:text-6xl font-black text-rose-600 w-1/2 text-left">{card.w2}</h2>
+                                </div>
+                                <p className="absolute bottom-6 text-slate-400 text-sm animate-pulse">Click to see meanings</p>
+                            </div>
+
+                            {/* Back: Split definitions */}
+                            <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-800 rounded-3xl shadow-lg flex flex-col overflow-hidden">
+                                {/* Top Half - Word 1 */}
+                                <div className="flex-1 bg-purple-600 p-6 flex flex-col justify-center text-white">
+                                    <div className="flex items-end gap-3 mb-2">
+                                        <h3 className="text-3xl font-black">{card.w1}</h3>
+                                        <p className="text-xl font-medium opacity-90">= {card.m1}</p>
+                                    </div>
+                                    <p className="text-sm md:text-base italic opacity-80 bg-black/20 p-2 rounded-lg inline-block self-start">"{card.s1}"</p>
+                                </div>
+                                {/* Bottom Half - Word 2 */}
+                                <div className="flex-1 bg-rose-600 p-6 flex flex-col justify-center text-white">
+                                    <div className="flex items-end gap-3 mb-2">
+                                        <h3 className="text-3xl font-black">{card.w2}</h3>
+                                        <p className="text-xl font-medium opacity-90">= {card.m2}</p>
+                                    </div>
+                                    <p className="text-sm md:text-base italic opacity-80 bg-black/20 p-2 rounded-lg inline-block self-start">"{card.s2}"</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className="flex gap-6 mt-10">
+                        <button onClick={() => handleNav(-1)} className="bg-white text-slate-700 px-6 py-3 rounded-xl shadow-sm border border-slate-200 font-bold flex gap-2"><span>⬅️</span> Prev</button>
+                        <button onClick={() => handleNav(1)} className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl shadow-md font-bold flex gap-2">Next <span>➡️</span></button>
+                    </div>
+                </div>
+            );
+        }
+
+        function HomonymsQuiz({ data }) {
+            const [gameState, setGameState] = useState('start');
+            const [questions, setQuestions] = useState([]);
+            const [qIndex, setQIndex] = useState(0);
+            const [score, setScore] = useState(0);
+            const [selected, setSelected] = useState(null);
+
+            const startQuiz = () => {
+                // Get exactly 10 random questions from the 16 homonym questions
+                const selectedQs = shuffleArray(data).slice(0, 10);
+                setQuestions(selectedQs); setQIndex(0); setScore(0); setSelected(null); setGameState('playing');
+            };
+
+            if (gameState === 'start') return (
+                <div className="bg-white rounded-3xl p-10 text-center shadow-sm border border-slate-200 max-w-2xl mx-auto">
+                    <div className="text-6xl mb-4">✍️</div>
+                    <h2 className="text-2xl font-bold mb-4">Fill in the Blanks!</h2>
+                    <p className="text-slate-500 mb-8">Choose the correct homonym to complete the sentence.</p>
+                    <button onClick={startQuiz} className="bg-rose-500 hover:bg-rose-600 text-white text-xl font-bold py-3 px-8 rounded-xl shadow-md transition-transform hover:scale-105">Start Quiz 🚀</button>
+                </div>
+            );
+
+            if (gameState === 'results') {
+                const perc = (score / 10) * 100;
+                let emoji = perc === 100 ? "🏆" : perc >= 70 ? "🌟" : "📚";
+                return (
+                    <div className="bg-white rounded-3xl p-10 text-center shadow-sm border border-slate-200 max-w-2xl mx-auto">
+                        <div className="text-7xl mb-4">{emoji}</div>
+                        <h2 className="text-3xl font-bold mb-2">Quiz Complete!</h2>
+                        <div className="bg-slate-50 rounded-2xl p-6 mb-8 mt-4 inline-block">
+                            <p className="text-slate-500 font-bold mb-1 uppercase tracking-widest">Score</p>
+                            <p className="text-6xl font-black text-rose-500">{score} <span className="text-3xl text-slate-300">/ 10</span></p>
+                        </div>
+                        <div>
+                            <button onClick={startQuiz} className="bg-slate-800 text-white font-bold py-3 px-8 rounded-xl">Play Again 🔄</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const q = questions[qIndex];
+            const isAnswered = selected !== null;
+
+            // Render sentence with blank replaced if answered
+            const sentenceParts = q.sentence.split('________');
+            
+            return (
+                <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200 max-w-3xl mx-auto">
+                    <div className="flex justify-between text-slate-400 text-sm font-bold mb-8 uppercase tracking-widest">
+                        <span>Q {qIndex + 1} of 10</span>
+                        <span>Score: {score}</span>
+                    </div>
+                    
+                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 mb-10 text-center">
+                        <h3 className="text-2xl md:text-3xl font-medium text-slate-700 leading-relaxed">
+                            {sentenceParts[0]}
+                            <span className={`inline-block px-4 py-1 mx-2 rounded-lg font-bold min-w-[100px] border-b-4 border-slate-300 ${isAnswered ? (selected === q.answer ? 'bg-green-100 text-green-700 border-green-400' : 'bg-red-100 text-red-700 border-red-400') : 'text-slate-300'}`}>
+                                {isAnswered ? selected : " ? "}
+                            </span>
+                            {sentenceParts[1]}
+                        </h3>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row justify-center gap-6">
+                        {q.options.map((opt, i) => {
+                            let btnClass = "bg-white text-slate-700 border-slate-300 hover:border-rose-400 hover:text-rose-600 shadow-sm";
+                            if (isAnswered) {
+                                if (opt === q.answer) btnClass = "bg-green-500 border-green-600 text-white shadow-md";
+                                else if (opt === selected) btnClass = "bg-red-500 border-red-600 text-white";
+                                else btnClass = "bg-slate-100 border-slate-200 text-slate-400 opacity-50";
+                            }
+                            return (
+                                <button key={i} disabled={isAnswered} onClick={() => { setSelected(opt); if (opt === q.answer) setScore(s => s + 1); }}
+                                    className={`flex-1 py-5 px-8 rounded-2xl border-2 font-black text-2xl transition-all ${btnClass} ${!isAnswered && 'transform hover:-translate-y-1'}`}>
+                                    {opt}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {isAnswered && (
+                        <div className="mt-10 flex justify-center animate-fade-in">
+                            <button onClick={() => qIndex < 9 ? setQIndex(qIndex + 1) || setSelected(null) : setGameState('results')}
+                                className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-12 rounded-xl shadow-lg transition-transform active:scale-95 text-lg">
+                                {qIndex === 9 ? 'Show Results 📊' : 'Next Question ➡️'}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+
+        // ==========================================
+        // MAIN APPLICATION ROUTER / MENU
+        // ==========================================
+        function App() {
+            // Views: 'menu', 'oneWord', 'homonyms'
+            const [currentView, setCurrentView] = useState('menu');
+
+            if (currentView === 'oneWord') {
+                return <OneWordApp onBack={() => setCurrentView('menu')} />;
+            }
+
+            if (currentView === 'homonyms') {
+                return <HomonymsApp onBack={() => setCurrentView('menu')} />;
+            }
+
+            // Main Menu View
+            return (
+                <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+                    <div className="text-center mb-12 animate-fade-in">
+                        <span className="text-6xl mb-4 block">📚</span>
+                        <h1 className="text-4xl md:text-6xl font-black text-slate-800 mb-4 tracking-tight">
+                            Primary 5 Hindi
+                        </h1>
+                        <p className="text-xl text-slate-500 font-medium max-w-md mx-auto">
+                            Interactive vocabulary learning hub for exam preparation. Choose a topic to begin!
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full px-4 animate-fade-in" style={{animationDelay: '0.1s'}}>
+                        
+                        {/* Card 1: One Word Substitution */}
+                        <div onClick={() => setCurrentView('oneWord')} 
+                             className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-blue-400 transform hover:-translate-y-2">
+                            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                                🎯
+                            </div>
+                            <h2 className="text-2xl font-bold text-slate-800 mb-2">अनेक शब्दों के लिए एक शब्द</h2>
+                            <h3 className="text-lg text-blue-600 font-semibold mb-4">One Word Substitution</h3>
+                            <p className="text-slate-500 leading-relaxed mb-6">
+                                Learn how to express long phrases using just a single powerful word. Includes 50 essential words with categories and quizzes.
+                            </p>
+                            <div className="flex items-center text-blue-500 font-bold gap-2 group-hover:translate-x-2 transition-transform">
+                                Start Learning <span>→</span>
+                            </div>
+                        </div>
+
+                        {/* Card 2: Homonyms */}
+                        <div onClick={() => setCurrentView('homonyms')} 
+                             className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-purple-400 transform hover:-translate-y-2">
+                            <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                                ⚖️
+                            </div>
+                            <h2 className="text-2xl font-bold text-slate-800 mb-2">श्रुतिसम भिन्नार्थक शब्द</h2>
+                            <h3 className="text-lg text-purple-600 font-semibold mb-4">Homonyms</h3>
+                            <p className="text-slate-500 leading-relaxed mb-6">
+                                Master tricky word pairs that sound almost identical but have completely different meanings. Includes textbook MCQs.
+                            </p>
+                            <div className="flex items-center text-purple-500 font-bold gap-2 group-hover:translate-x-2 transition-transform">
+                                Start Learning <span>→</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
