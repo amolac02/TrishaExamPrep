@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trisha's Math Practice - Set 2 (High Difficulty)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f0fdfa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            background-color: #ffffff;
+            border: 2px dashed #94a3b8;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            touch-action: none; /* Crucial for stylus/touch drawing */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+        .clear-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ef4444;
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+            transition: background-color 0.2s;
+        }
+        .clear-btn:hover {
+            background-color: #dc2626;
+        }
+        .correct-input {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .incorrect-input {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .section-header {
+            background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <header class="mb-6 text-center p-8 bg-blue-50 border-b border-blue-100">
+            <h1 class="text-4xl font-extrabold text-blue-900 mb-3">Math Revision: Set 2</h1>
+            <h2 class="text-xl font-bold text-red-600 mb-2">Difficulty: High | Total Marks: 50</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Use your tab pen to show all your working steps in the grid spaces provided. Type your final answer in the box. 
+                <br><span class="text-sm font-semibold text-blue-700">Format note: Write mixed fractions like "1 1/12" (with a space) or improper fractions like "13/12".</span>
+            </p>
+        </header>
+
+        <div id="quiz-container" class="p-6 md:p-10 pt-0">
+            <!-- Questions injected via JS -->
+        </div>
+
+        <div class="p-10 bg-gray-50 border-t border-gray-200 flex flex-col items-center">
+            <button id="submit-btn" onclick="submitQuiz()" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 text-xl transform hover:scale-105">
+                Submit & Grade Paper
+            </button>
+            
+            <div id="results-display" class="mt-8 text-center hidden w-full p-8 rounded-xl border-4 border-blue-200 bg-white shadow-inner">
+                <h3 class="text-3xl font-black text-gray-800 mb-4">Paper Graded!</h3>
+                <p id="score-text" class="text-5xl font-extrabold mb-4"></p>
+                <p id="feedback-message" class="text-xl font-semibold text-gray-600"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // High Difficulty Question Set (Exactly 50 Marks)
+        const examPaper = [
+            {
+                section: "Section A - Conceptual Understanding (16 Marks)",
+                questions: [
+                    { id: "1a", marks: 2, text: "1a. A fair spinner has the numbers 1 to 12 on it. What is the probability of spinning a multiple of 3? (Write as a simplified fraction)", answers: ["1/3"] },
+                    { id: "1b", marks: 2, text: "1b. What is the probability of spinning a factor of 24? (Write as a simplified fraction)", answers: ["7/12"] },
+                    { id: "2a", marks: 1, text: "2a. The mean of 6 numbers is 8.5. Five of the numbers are 4, 11, 7, 14, and 9. What is the sum of all 6 numbers?", answers: ["51"] },
+                    { id: "2b", marks: 2, text: "2b. What is the 6th number in that set?", answers: ["6"] },
+                    { id: "2c", marks: 2, text: "2c. What is the median of these 6 numbers?", answers: ["8"] },
+                    { id: "3", marks: 4, text: "3. Evaluate the following using the correct order of operations:<br> <b>120 ÷ (4 + 2) × 3 - (8 ÷ 2)</b>", answers: ["56"] },
+                    { id: "4", marks: 3, text: "4. A bag contains only red, blue, and green beads. 3/8 of them are red and 1/6 are blue. What proportion of the beads are green? (Write as a simplified fraction)", answers: ["11/24"] }
+                ]
+            },
+            {
+                section: "Section B - Procedural Fluency (14 Marks)",
+                questions: [
+                    { id: "5a", marks: 2, text: "5a. Multiply the decimals: <b>3.45 × 0.8</b>", answers: ["2.76"] },
+                    { id: "5b", marks: 2, text: "5b. Divide the decimals: <b>71.4 ÷ 0.7</b>", answers: ["102"] },
+                    { id: "6", marks: 3, text: "6. Use short or long division: <b>942 ÷ 6</b>", answers: ["157"] },
+                    { id: "7a", marks: 3, text: "7a. Calculate: <b>5/6 + 3/4 - 1/2</b> (Write answer as an improper fraction or mixed number)", answers: ["13/12", "1 1/12"] },
+                    { id: "7b", marks: 2, text: "7b. Multiply: <b>4/9 × 5</b> (Write as an improper fraction or mixed number)", answers: ["20/9", "2 2/9"] },
+                    { id: "7c", marks: 2, text: "7c. Divide: <b>7/8 ÷ 4</b>", answers: ["7/32"] }
+                ]
+            },
+            {
+                section: "Section C - Competence and Reasoning (20 Marks)",
+                questions: [
+                    { id: "8", marks: 5, text: "8. Trisha has a plank of wood exactly 4.5 meters long. She cuts off exactly 1/3 of the plank. From the remaining piece, she cuts 4 equal smaller pieces. How long is each smaller piece in meters?", answers: ["0.75", "3/4", ".75"] },
+                    { id: "9", marks: 5, text: "9. The median of five different positive whole numbers is 12. The range is 10. The mode is 15. The numbers are ordered from smallest to largest. What is the smallest number?", answers: ["5"] },
+                    { id: "10", marks: 5, text: "10. A spinner has 3 sections: A, B, and C. The probability of landing on A is 0.4. The probability of landing on B is exactly twice the probability of landing on C. If you spin it 400 times, how many times would you expect it to land on B?", answers: ["160"] },
+                    { id: "11", marks: 5, text: "11. Trisha buys 6 notebooks for $3.45 each and 8 pens for $1.65 each. She pays with a $50 note. How much change does she receive?", answers: ["16.10", "16.1", "$16.10", "$16.1"] }
+                ]
+            }
+        ];
+
+        // Render HTML
+        function renderPaper() {
+            const container = document.getElementById('quiz-container');
+            
+            examPaper.forEach((sectionBlock, sIdx) => {
+                // Render Section Header
+                const sectionHTML = `
+                    <div class="mt-12 mb-8 section-header text-white p-4 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold tracking-wide">${sectionBlock.section}</h2>
+                    </div>
+                `;
+                container.innerHTML += sectionHTML;
+
+                // Render Questions in this section
+                sectionBlock.questions.forEach(q => {
+                    const qHTML = `
+                        <div class="mb-10 p-6 bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md" id="qcard-${q.id}">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-bold text-gray-800 pr-4">${q.text}</h3>
+                                <span class="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap border border-blue-200">[${q.marks} Marks]</span>
+                            </div>
+                            
+                            <div class="canvas-container shadow-inner">
+                                <button class="clear-btn" onclick="clearCanvas('canvas-${q.id}')">Clear Ink</button>
+                                <canvas id="canvas-${q.id}"></canvas>
+                            </div>
+                            
+                            <div class="flex items-center mt-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <label for="input-${q.id}" class="font-extrabold text-gray-700 mr-4">Final Answer:</label>
+                                <input type="text" id="input-${q.id}" placeholder="Type here..." autocomplete="off" class="flex-1 max-w-sm border-2 border-gray-300 rounded-lg px-4 py-3 text-lg font-semibold focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all">
+                            </div>
+                            
+                            <div id="feedback-${q.id}" class="mt-4 p-4 rounded-lg text-lg font-bold hidden border"></div>
+                        </div>
+                    `;
+                    container.innerHTML += qHTML;
+                });
+            });
+
+            // Initialize all canvases after elements are added
+            setTimeout(() => {
+                examPaper.forEach(sec => {
+                    sec.questions.forEach(q => initCanvas(`canvas-${q.id}`));
+                });
+            }, 100);
+        }
+
+        // Canvas Logic (Optimized for Touch/Stylus)
+        const canvasContexts = {};
+
+        function initCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#0f172a'; // Very dark blue/black ink
+            ctx.lineWidth = 2.5;
+
+            canvasContexts[canvasId] = ctx;
+
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            function getCoords(e) {
+                const rect = canvas.getBoundingClientRect();
+                let clientX = e.clientX;
+                let clientY = e.clientY;
+                
+                if (e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                }
+                
+                return [clientX - rect.left, clientY - rect.top];
+            }
+
+            function startDraw(e) {
+                isDrawing = true;
+                [lastX, lastY] = getCoords(e);
+            }
+
+            function stopDraw() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                e.preventDefault(); 
+                
+                const [curX, curY] = getCoords(e);
+
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(curX, curY);
+                ctx.stroke();
+
+                lastX = curX;
+                lastY = curY;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseout', stopDraw);
+            canvas.addEventListener('mousemove', draw);
+
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchend', stopDraw);
+            canvas.addEventListener('touchcancel', stopDraw);
+            canvas.addEventListener('touchmove', draw, { passive: false });
+        }
+
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvasContexts[canvasId];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Validation & Grading Logic
+        function normalizeAnswer(str) {
+            // Remove spaces, commas, convert to lowercase
+            return str.replace(/[\s,]/g, '').toLowerCase();
+        }
+
+        function submitQuiz() {
+            let totalMarksObtained = 0;
+            const maxMarks = 50;
+
+            examPaper.forEach(sec => {
+                sec.questions.forEach(q => {
+                    const inputEl = document.getElementById(`input-${q.id}`);
+                    const feedbackEl = document.getElementById(`feedback-${q.id}`);
+                    const cardEl = document.getElementById(`qcard-${q.id}`);
+                    
+                    const userVal = normalizeAnswer(inputEl.value);
+                    // Check if normalized user input matches any of the normalized accepted answers
+                    const isCorrect = q.answers.some(ans => normalizeAnswer(ans) === userVal);
+
+                    inputEl.classList.remove('correct-input', 'incorrect-input');
+                    feedbackEl.classList.remove('hidden', 'bg-green-50', 'text-green-700', 'border-green-200', 'bg-red-50', 'text-red-700', 'border-red-200');
+
+                    if (isCorrect) {
+                        totalMarksObtained += q.marks;
+                        inputEl.classList.add('correct-input');
+                        feedbackEl.innerHTML = `✅ <b>Correct!</b> You earned ${q.marks} / ${q.marks} marks.`;
+                        feedbackEl.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+                        cardEl.style.borderColor = "#4ade80";
+                        cardEl.style.boxShadow = "0 0 10px rgba(74, 222, 128, 0.2)";
+                    } else {
+                        inputEl.classList.add('incorrect-input');
+                        feedbackEl.innerHTML = `❌ <b>Incorrect.</b> Marks earned: 0 / ${q.marks}<br><span class="text-sm mt-1 block text-gray-800">Accepted answer(s): <span class="font-mono bg-white px-2 py-1 rounded border">${q.answers.join(" or ")}</span></span>`;
+                        feedbackEl.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
+                        cardEl.style.borderColor = "#f87171";
+                    }
+                    
+                    // Disable input after submission
+                    inputEl.disabled = true;
+                });
+            });
+
+            // Display Results
+            const resultsBox = document.getElementById('results-display');
+            const scoreText = document.getElementById('score-text');
+            const feedbackMsg = document.getElementById('feedback-message');
+            
+            resultsBox.classList.remove('hidden');
+            document.getElementById('submit-btn').style.display = 'none';
+
+            let colorClass = "text-red-600";
+            let msg = "Keep practicing, Trisha! Review the solutions and try again.";
+            
+            if (totalMarksObtained >= 45) {
+                colorClass = "text-green-600";
+                msg = "A* Grade! Outstanding logic and reasoning, Trisha! 🏆";
+            } else if (totalMarksObtained >= 35) {
+                colorClass = "text-blue-600";
+                msg = "Excellent work! You have a very strong grasp of these concepts! 🌟";
+            } else if (totalMarksObtained >= 25) {
+                colorClass = "text-yellow-600";
+                msg = "Good effort! Check the red boxes to see where you made tiny errors. 👍";
+            }
+
+            scoreText.className = `text-6xl font-extrabold mb-4 ${colorClass}`;
+            scoreText.innerText = `${totalMarksObtained} / ${maxMarks}`;
+            feedbackMsg.innerText = msg;
+
+            // Smooth scroll down to the score
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 300);
+            
+            // Disable canvas clear buttons
+            document.querySelectorAll('.clear-btn').forEach(btn => btn.style.display = 'none');
+        }
+
+        // Execute render
+        window.onload = renderPaper;
+
+    </script>
+</body>
+</html>
+
