@@ -3,47 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index of HTML Pages</title>
+    <title>Trisha Exam Prep - Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .folder-content {
+            border-left: 1px solid #e2e8f0;
+            margin-left: 1rem;
+            padding-left: 0.5rem;
+        }
+        .folder-toggle::before {
+            content: '▶';
+            display: inline-block;
+            margin-right: 0.5rem;
+            transition: transform 0.2s;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+        .folder-toggle.open::before {
+            transform: rotate(90deg);
+        }
+        .file-icon::before { content: '📄'; margin-right: 0.6rem; opacity: 0.7; }
+        .folder-icon::before { content: '📁'; margin-right: 0.6rem; }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-spinner { animation: spin 1s linear infinite; }
+
+        .item-hidden { display: none !important; }
+
+        .folder-content {
+            transition: max-height 0.3s ease-out;
+            overflow: hidden;
+        }
+        .folder-content.closed {
+            max-height: 0;
+        }
+    </style>
 </head>
-<body>
-    <h1>Index of HTML Pages</h1>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-900 font-sans">
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-indigo-700 text-white p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Trisha Exam Prep
+                    </h1>
+                    <p id="repoPathLabel" class="text-indigo-100 mt-2 text-sm font-medium opacity-90 tracking-wide">
+                        amolac02.github.io / TrishaExamPrep
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="expandAll" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded font-bold border border-indigo-400 transition-colors">EXPAND ALL</button>
+                    <a href="https://github.com/amolac02/TrishaExamPrep" target="_blank" class="bg-white text-indigo-700 px-4 py-2 rounded-lg text-sm font-bold transition-transform active:scale-95 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
 
-    <h2>Grade 5</h2>
-    <h3>Math</h3>
-    <ul>
-        <li><a href="Angles_grade5.html">Angles (Grade 5)</a></li>
-        <li><a href="P5_Maths_T4_Practice_1.html">Maths Practice 1 (Grade 5)</a></li>
-        <li><a href="P5_Maths_T4_parctice_2.html">Maths Practice 2 (Grade 5)</a></li>
-<li><a href="P5_Maths_Term_4_Practice_3.html">Maths Practice 3 (Grade 5)</a></li>
-        <li><a href="Math blaster.html">Math Blaster</a></li>
-    </ul>
+        <!-- Toolbar -->
+        <div class="p-4 border-b border-slate-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="relative w-full sm:w-80">
+                <input type="text" id="searchInput" placeholder="Search across all folders..." class="w-full pl-10 pr-4 py-2.5 bg-slate-100 border-2 border-transparent rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                <svg class="absolute left-3 top-3 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <div id="stats" class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-50 px-4 py-2 rounded-full">
+                <span id="folderCount">0</span> folders • <span id="fileCount">0</span> files
+            </div>
+        </div>
 
-    <h3>Science</h3>
-    <ul>
-        <li><a href="grade5_science_unit_5.html">Science Unit 5 (Grade 5)</a></li>
-        <li><a href="P5_Science_Unit2_Unit5.html">Science Unit 2 & 5 (Grade 5)</a></li>
-        <li><a href="Reflection refraction.html">Reflection and Refraction</a></li>
-    </ul>
+        <!-- Content Area -->
+        <div id="treeContainer" class="p-4 md:p-8 min-h-[500px]">
+            <div id="loader" class="h-full flex flex-col items-center justify-center text-slate-400 py-32">
+                <svg class="loading-spinner w-12 h-12 mb-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="font-medium animate-pulse">Scanning repository contents...</p>
+            </div>
 
-    <h3>English</h3>
-    <ul>
-        <li><a href="P5_Eng_Grammar_t4.html">English Grammar (Grade 5)</a></li>
-        <li><a href="P5_Voices.html">Voices (Grade 5)</a></li>
-    </ul>
+            <div id="treeRoot" class="space-y-1"></div>
 
-    <h3>Hindi</h3>
-    <ul>
-        <li><a href="P5_Hindi_Kaarak.html">Hindi Kaarak (Grade 5)</a></li>
-        <li><a href="P5_Hindi_Kaarak_Quiz.html">Hindi Kaarak Quiz (Grade 5)</a></li>
-        <li><a href="P5_Hindi_Kaarak_Worksheets.html">Hindi Kaarak Worksheets (Grade 5)</a></li>
-        <li><a href="P5_Hindi_T4_v2.html">Hindi Practice (Grade 5)</a></li>
-        <li><a href="P5_Hindi_Vilom_t4.html">Hindi Vilom (Grade 5)</a></li>
-        <li><a href="P5_Hindi_wordMeanings_t4.html">Hindi Word Meanings (Grade 5)</a></li>
-    </ul>
+            <div id="errorView" class="hidden text-center py-24">
+                <div class="bg-red-50 text-red-600 p-4 rounded-full inline-block mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">Connection Error</h3>
+                <p class="text-slate-500 text-sm max-w-xs mx-auto mt-2">Could not reach GitHub API. Check your connection or repository visibility.</p>
+            </div>
+        </div>
 
-    <h2>Other</h2>
-    <ul>
-        <li><a href="Demo.html">Demo</a></li>
-    </ul>
+        <!-- Footer -->
+        <div class="p-6 bg-slate-50 border-t border-slate-100 text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+            Dynamically generated from GitHub branch: <span id="branchName">...</span>
+        </div>
+    </div>
+
+    <script>
+        const config = { user: 'amolac02', repo: 'TrishaExamPrep' };
+        const treeRoot = document.getElementById('treeRoot');
+        const loader = document.getElementById('loader');
+        const errorView = document.getElementById('errorView');
+        const folderCountEl = document.getElementById('folderCount');
+        const fileCountEl = document.getElementById('fileCount');
+        const searchInput = document.getElementById('searchInput');
+        const expandAllBtn = document.getElementById('expandAll');
+
+        let foldersTotal = 0;
+        let filesTotal = 0;
+
+        async function init() {
+            try {
+                // Fetch the recursive tree of the repository
+                const response = await fetch(`https://api.github.com/repos/${config.user}/${config.repo}/git/trees/main?recursive=1`);
+                if (!response.ok) throw new Error('API Fail');
+                const data = await response.json();
+                
+                document.getElementById('branchName').textContent = 'main';
+                
+                // Construct a nested tree object from flat paths
+                const tree = {};
+                data.tree.forEach(item => {
+                    // Filter: Skip index.html, hidden files, and non-blob/tree items
+                    if (item.path === 'index.html' || item.path.startsWith('.') || (item.type !== 'blob' && item.type !== 'tree')) return;
+                    
+                    const parts = item.path.split('/');
+                    let current = tree;
+                    parts.forEach((part, index) => {
+                        if (!current[part]) {
+                            current[part] = { 
+                                _type: index === parts.length - 1 ? item.type : 'tree',
+                                _path: item.path,
+                                _name: part
+                            };
+                        }
+                        current = current[part];
+                    });
+                });
+
+                renderTree(tree, treeRoot);
+                loader.classList.add('hidden');
+                folderCountEl.textContent = foldersTotal;
+                fileCountEl.textContent = filesTotal;
+
+                // Auto-expand top level folders for immediate visibility
+                treeRoot.querySelectorAll('.folder-toggle').forEach((f, i) => { if(i < 8) toggleFolder(f) });
+
+            } catch (err) {
+                console.error(err);
+                loader.classList.add('hidden');
+                errorView.classList.remove('hidden');
+            }
+        }
+
+        function renderTree(nodes, container) {
+            // Sort: Folders first, then alphabetically
+            const sortedKeys = Object.keys(nodes).filter(k => !k.startsWith('_')).sort((a, b) => {
+                if (nodes[a]._type !== nodes[b]._type) return nodes[a]._type === 'tree' ? -1 : 1;
+                return a.localeCompare(b);
+            });
+
+            sortedKeys.forEach(key => {
+                const node = nodes[key];
+                const itemEl = document.createElement('div');
+                itemEl.setAttribute('data-search', node._path.toLowerCase());
+                
+                if (node._type === 'tree') {
+                    foldersTotal++;
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'folder-toggle p-2 rounded-lg hover:bg-slate-100 cursor-pointer flex items-center font-bold text-slate-700 transition-colors text-sm';
+                    wrapper.innerHTML = `<span class="folder-icon">${node._name}</span>`;
+                    
+                    const content = document.createElement('div');
+                    content.className = 'folder-content closed';
+                    
+                    wrapper.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleFolder(wrapper);
+                    };
+                    
+                    itemEl.appendChild(wrapper);
+                    itemEl.appendChild(content);
+                    renderTree(node, content);
+                } else {
+                    filesTotal++;
+                    const link = document.createElement('a');
+                    
+                    // The link is simply the relative path of the file
+                    link.href = node._path;
+                    
+                    link.className = 'file-icon block p-2 pl-8 text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg truncate transition-all text-sm font-medium border-l-2 border-transparent hover:border-indigo-200';
+                    link.textContent = node._name;
+                    itemEl.appendChild(link);
+                }
+                container.appendChild(itemEl);
+            });
+        }
+
+        function toggleFolder(el) {
+            el.classList.toggle('open');
+            const content = el.nextElementSibling;
+            if (content) {
+                content.classList.toggle('closed');
+                content.style.maxHeight = content.classList.contains('closed') ? '0' : '5000px';
+            }
+        }
+
+        expandAllBtn.onclick = () => {
+            const isExpanding = expandAllBtn.textContent === 'EXPAND ALL';
+            document.querySelectorAll('.folder-toggle').forEach(f => {
+                const isOpen = f.classList.contains('open');
+                if (isExpanding && !isOpen) toggleFolder(f);
+                if (!isExpanding && isOpen) toggleFolder(f);
+            });
+            expandAllBtn.textContent = isExpanding ? 'COLLAPSE ALL' : 'EXPAND ALL';
+        };
+
+        searchInput.oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            const items = treeRoot.querySelectorAll('[data-search]');
+            
+            items.forEach(item => {
+                const path = item.getAttribute('data-search');
+                if (term === '' || path.includes(term)) {
+                    item.classList.remove('item-hidden');
+                    if (term !== '' && path.includes(term)) {
+                        // Expand parents to show matching item
+                        let p = item.parentElement;
+                        while(p && p !== treeRoot) {
+                            if(p.classList.contains('folder-content')) {
+                                p.classList.remove('closed');
+                                p.style.maxHeight = '5000px';
+                                p.previousElementSibling.classList.add('open');
+                            }
+                            p = p.parentElement;
+                        }
+                    }
+                } else {
+                    item.classList.add('item-hidden');
+                }
+            });
+        };
+
+        init();
+    </script>
 </body>
 </html>
