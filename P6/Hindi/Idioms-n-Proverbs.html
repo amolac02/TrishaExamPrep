@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शब्द-सागर: मुहावरे और लोकोक्तियाँ (Idioms & Proverbs)</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS for 3D Flip Cards */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .flip-card-inner { transition: transform 0.6s; }
+        .group:hover .flip-card-inner { transform: rotateY(180deg); }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-sky-50 font-sans pb-20 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2 cursor-pointer" onclick="navigateTo('dashboard')">
+                🎭 मुहावरे और लोकोक्तियाँ
+            </h1>
+            <nav class="flex gap-4">
+                <button onclick="navigateTo('dashboard')" class="hover:text-yellow-300 flex items-center gap-2 font-medium">
+                    <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">डैशबोर्ड</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="app-root" class="max-w-4xl mx-auto mt-6 px-4">
+        <!-- Content will be injected here by JS -->
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. DATA & GLOBAL STATE (UPDATED AS PER SYLLABUS + STORIES)
+        // ==========================================
+        const fallbackData = [
+            { 
+                id: 1, type: "मुहावरा", phrase: "अंगूठा दिखाना", meaning: "साफ़ इनकार करना", 
+                sentence: "बुरे वक्त में जब मैंने अपने मित्र से सहायता माँगी तो उसने अंगूठा दिखा दिया।",
+                story: "रोहन ने हमेशा वादा किया था कि वह विज्ञान के प्रोजेक्ट में मेरी मदद करेगा। लेकिन जब प्रोजेक्ट जमा करने का दिन आया और मैंने उससे मदद माँगी, तो उसने मुझे अंगूठा दिखा दिया और मुझे अकेले ही सब करना पड़ा।"
+            },
+            { 
+                id: 2, type: "मुहावरा", phrase: "अंधे की लकड़ी", meaning: "एकमात्र सहारा", 
+                sentence: "बुढ़ापे में बच्चे ही अपने माता-पिता के लिए अंधे की लकड़ी होते हैं।",
+                story: "श्रवण कुमार अपने बूढ़े और नेत्रहीन माता-पिता के लिए अंधे की लकड़ी था। उनके सारे काम श्रवण ही करता था और उसके बिना वे एक कदम भी नहीं चल सकते थे।"
+            },
+            { 
+                id: 3, type: "मुहावरा", phrase: "अक्ल का दुश्मन", meaning: "मूर्ख", 
+                sentence: "मनोहर को कुछ भी समझाना व्यर्थ है; वह तो पूरा अक्ल का दुश्मन है।",
+                story: "बारिश हो रही थी, फिर भी सोहन ने अपनी सारी किताबें छत पर खुली छोड़ दीं। वह तो बिल्कुल अक्ल का दुश्मन है, उसे कुछ समझ ही नहीं आता!"
+            },
+            { 
+                id: 4, type: "मुहावरा", phrase: "अपने मुँह मियाँ मिट्ठू बनना", meaning: "अपनी प्रशंसा स्वयं करना", 
+                sentence: "रोहित जब से प्रथम आया है, तब से अपने मुँह मियाँ मिट्ठू बना घूम रहा है।",
+                story: "जब भी राहुल दोस्तों के साथ बैठता है, तो बस अपनी ही बातों को बढ़ा-चढ़ाकर बताता रहता है। उसे अपने मुँह मियाँ मिट्ठू बनना बहुत पसंद है, जबकि असल में वह खेल में इतना अच्छा नहीं है।"
+            },
+            { 
+                id: 5, type: "मुहावरा", phrase: "अक्ल पर पत्थर पड़ना", meaning: "बुद्धि से काम न करना", 
+                sentence: "सुधा की अक्ल पर पत्थर पड़ गए थे, जो विमला से झगड़ पड़ी।",
+                story: "राधिका को पता था कि परीक्षा में नकल करना गलत है, फिर भी उसने पर्ची बनाई। पता नहीं उस समय उसकी अक्ल पर पत्थर पड़ गए थे क्या, जो उसने ऐसा गलत काम किया!"
+            },
+            { 
+                id: 6, type: "मुहावरा", phrase: "अपने पाँव पर आप कुल्हाड़ी मारना", meaning: "अपनी हानि स्वयं करना", 
+                sentence: "बेईमान मुकुल को रुपए देकर रोशन ने अपने पाँव पर आप ही कुल्हाड़ी मार ली।",
+                story: "मोहन ने साल भर पढ़ाई नहीं की और सिर्फ वीडियो गेम खेलता रहा। अब परीक्षा में फेल होकर उसने अपने पाँव पर आप कुल्हाड़ी मार ली।"
+            },
+            { 
+                id: 7, type: "मुहावरा", phrase: "आँखें चुराना", meaning: "बचकर निकलना", 
+                sentence: "अनुभा, राधा से आँखें चुराती फिर रही है क्योंकि उसने अनुभा की पुस्तक नहीं लौटाई।",
+                story: "जब राजू से गलती से माँ का पसंदीदा फूलदान टूट गया, तो वह माँ के सामने जाने से आँखें चुराने लगा ताकि उसे डांट न पड़े।"
+            },
+            { 
+                id: 8, type: "मुहावरा", phrase: "आँखों में खटकना", meaning: "बुरा लगना", 
+                sentence: "नटवर अपनी शरारतों के कारण सबकी आँखों में खटकता है।",
+                story: "श्याम हमेशा कक्षा में दूसरे बच्चों को बिना वजह परेशान करता है। अपनी इन्ही बुरी आदतों के कारण वह सभी शिक्षकों की आँखों में खटकता है।"
+            },
+            { 
+                id: 9, type: "मुहावरा", phrase: "आँखें दिखाना", meaning: "क्रोध प्रकट करना", 
+                sentence: "कक्षा में शैतानी करते देख मेरी अध्यापिका निशा को आँखें दिखाने लगीं।",
+                story: "जब मैं बाजार में बहुत सारे खिलौने लेने की जिद करने लगी, तो माँ ने मुझे आँखें दिखाईं। माँ का गुस्सा देखकर मैं चुपचाप उनके पीछे-पीछे चलने लगी।"
+            },
+            { 
+                id: 10, type: "मुहावरा", phrase: "आग में घी डालना", meaning: "क्रोध को और बढ़ाना", 
+                sentence: "पिताजी पुत्र से परेशान थे ही, अध्यापक ने शिकायत करके आग में घी डाल दिया।",
+                story: "राम और श्याम पहले से ही किसी बात पर लड़ रहे थे, तभी राहुल ने आकर श्याम की एक पुरानी झूठी शिकायत कर दी। राहुल की बात ने आग में घी डालने का काम किया और दोनों की लड़ाई और बढ़ गई।"
+            },
+            { 
+                id: 11, type: "मुहावरा", phrase: "आग बबूला होना", meaning: "क्रोध से भर जाना", 
+                sentence: "मंत्री पद न मिलने पर नेताजी आग बबूला हो गए।",
+                story: "जब कक्षा में किसी भी बच्चे ने अपना गणित का होमवर्क पूरा करके नहीं दिखाया, तो अध्यापक महोदय गुस्से से आग बबूला हो गए।"
+            },
+            { 
+                id: 12, type: "मुहावरा", phrase: "आकाश-पाताल एक करना", meaning: "बहुत प्रयास करना", 
+                sentence: "नौकरी पाने के लिए मानवी ने आकाश-पाताल एक कर दिया।",
+                story: "अपनी छठी कक्षा की अंतिम परीक्षा में प्रथम आने के लिए त्रिशा ने आकाश-पाताल एक कर दिया। वह दिन-रात खूब मन लगाकर पढ़ती रही और आखिर में वह कक्षा में प्रथम आई।"
+            },
+            { 
+                id: 13, type: "मुहावरा", phrase: "आपे से बाहर होना", meaning: "बहुत गुस्सा होना", 
+                sentence: "दादा जी छोटी-छोटी बातों पर आपे से बाहर हो जाते हैं।",
+                story: "जब रमेश ने देखा कि कुछ शैतान लड़के गली के छोटे से पिल्ले को पत्थर मार रहे हैं, तो वह गुस्से से आपे से बाहर हो गया और उसने उन लड़कों को खूब डांट लगाई।"
+            },
+            { 
+                id: 14, type: "मुहावरा", phrase: "ईद का चाँद होना", meaning: "बहुत दिनों में दिखाई देना", 
+                sentence: "जब से मनीष की नौकरी लगी है, वह तो ईद का चाँद हो गया है।",
+                story: "जब से मेरा दोस्त आर्यन दूसरे शहर में पढ़ने गया है, वह तो जैसे ईद का चाँद हो गया है; छुट्टियों में कभी-कभार ही उससे मिलना हो पाता है।"
+            },
+            { 
+                id: 15, type: "मुहावरा", phrase: "ईंट का जवाब पत्थर से देना", meaning: "दुष्ट का जवाब दुष्टता से देना", 
+                sentence: "कारगिल के युद्ध में भारतीय सैनिकों ने पाकिस्तानी सैनिकों को ईंट का जवाब पत्थर से दिया।",
+                story: "जब क्रिकेट मैच में दूसरी टीम के खिलाड़ियों ने बेईमानी करने की कोशिश की, तो हमारी टीम ने अपने शानदार खेल से उन्हें ईंट का जवाब पत्थर से दिया और ट्रॉफी जीत ली।"
+            }
+        ];
+
+        let state = {
+            currentView: 'loading',
+            data: [],
+            
+            // Arcade State 
+            arcade: { wordQueue: [], targetItem: null, options: [], score: 0, feedback: "", showPopup: false },
+            
+            // Exam State
+            exam: { currentQIndex: 0, score: 0, showResults: false, selectedOption: null, isAnswered: false, questions: [], showPopup: false }
+        };
+
+        // ==========================================
+        // 2. CORE APP LOGIC
+        // ==========================================
+        window.onload = async () => {
+            render();
+            try {
+                const jsonUrl = './idioms_proverbs.json';
+                let res = await fetch(jsonUrl);
+                
+                if (res.ok) {
+                    const jsonData = await res.json();
+                    state.data = jsonData.length > 0 ? jsonData : fallbackData;
+                } else {
+                    throw new Error('Load failed');
+                }
+            } catch (error) {
+                console.log("Using fallback syllabus data for Idioms & Proverbs.");
+                state.data = fallbackData;
+            }
+            state.currentView = 'dashboard';
+            render();
+        };
+
+        function navigateTo(view) {
+            window.scrollTo(0, 0);
+            state.currentView = view;
+            if (view === 'arcade') startArcadeRound(true); 
+            if (view === 'exam') restartExam();
+            render();
+        }
+
+        function render() {
+            const root = document.getElementById('app-root');
+            switch (state.currentView) {
+                case 'loading': root.innerHTML = renderLoading(); break;
+                case 'dashboard': root.innerHTML = renderDashboard(); break;
+                case 'study': root.innerHTML = renderStudyZone(); break;
+                case 'arcade': root.innerHTML = renderArcadeZone(); break;
+                case 'exam': root.innerHTML = renderExamZone(); break;
+            }
+        }
+
+        // ==========================================
+        // 3. VIEW RENDERERS
+        // ==========================================
+        function renderLoading() {
+            return `<div class="flex h-[60vh] items-center justify-center text-2xl font-bold text-blue-600">लोड हो रहा है... (Loading...)</div>`;
+        }
+
+        function renderDashboard() {
+            return `
+            <div class="space-y-8 animate-fade-in text-center">
+                <div class="bg-white rounded-3xl p-8 shadow-lg border-t-4 border-blue-500">
+                    <h2 class="text-3xl font-extrabold text-blue-800 mb-4">नमस्ते त्रिशा! 👋</h2>
+                    <p class="text-xl text-gray-700 mb-6">मुहावरे और लोकोक्तियों (Idioms & Proverbs) की मज़ेदार दुनिया में आपका स्वागत है। आप आज क्या करना चाहेंगी?</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <button onclick="navigateTo('study')" class="group flex flex-col items-center p-6 bg-gradient-to-b from-green-100 to-green-50 rounded-2xl border-2 border-green-200 hover:border-green-400 hover:shadow-xl transition-all">
+                            <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-md text-3xl">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-green-800 mb-2">सीखें</h3>
+                            <p class="text-green-700">मुहावरों की कहानियाँ और अर्थ पढ़ें (Study Zone)</p>
+                        </button>
+
+                        <button onclick="navigateTo('arcade')" class="group flex flex-col items-center p-6 bg-gradient-to-b from-purple-100 to-purple-50 rounded-2xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl transition-all">
+                            <div class="w-20 h-20 bg-purple-500 text-white rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-md text-3xl">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-purple-800 mb-2">खेलें</h3>
+                            <p class="text-purple-700">सही अर्थ पहचानने का गेम खेलें (Arcade Zone)</p>
+                        </button>
+
+                        <button onclick="navigateTo('exam')" class="group flex flex-col items-center p-6 bg-gradient-to-b from-orange-100 to-orange-50 rounded-2xl border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl transition-all">
+                            <div class="w-20 h-20 bg-orange-500 text-white rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-md text-3xl">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-orange-800 mb-2">परखें</h3>
+                            <p class="text-orange-700">मुहावरों का मेगा-क्विज़ दें (Exam Zone)</p>
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderStudyZone() {
+            // Group Data Dynamically
+            let groupedData = {};
+            state.data.forEach(item => {
+                let cat = item.type || 'अन्य';
+                if(!groupedData[cat]) groupedData[cat] = [];
+                groupedData[cat].push(item);
+            });
+
+            // Generate HTML for grouped items
+            let dynamicListHtml = Object.keys(groupedData).map(cat => {
+                let listHtml = groupedData[cat].map(item => {
+                    return `
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col sm:flex-row items-baseline gap-2 mb-3 border-b pb-3">
+                            <h4 class="text-xl md:text-2xl font-extrabold text-blue-600">${item.id}. ${item.phrase}</h4>
+                        </div>
+                        <div class="space-y-2 text-gray-700">
+                            <p><i class="fa-solid fa-circle-info text-blue-400 w-5"></i> <strong>अर्थ:</strong> <span class="text-lg font-medium text-purple-800">${item.meaning}</span></p>
+                            <p><i class="fa-solid fa-pen text-green-500 w-5"></i> <strong>वाक्य:</strong> <span class="italic text-gray-600">${item.sentence}</span></p>
+                            ${item.story ? `
+                            <div class="mt-4 bg-orange-50 p-4 rounded-xl border border-orange-200 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 opacity-10 text-6xl"><i class="fa-solid fa-book-open"></i></div>
+                                <p class="relative z-10"><i class="fa-solid fa-book-open-reader text-orange-500 w-5"></i> <strong class="text-orange-800">कहानी:</strong> <span class="text-gray-800 leading-relaxed">${item.story}</span></p>
+                            </div>` : ''}
+                        </div>
+                    </div>`;
+                }).join('');
+
+                return `
+                <div class="${cat === 'मुहावरा' ? 'bg-blue-50 border-blue-100' : 'bg-pink-50 border-pink-100'} p-6 rounded-2xl border mb-6">
+                    <h3 class="text-2xl font-bold ${cat === 'मुहावरा' ? 'text-blue-900 border-blue-200' : 'text-pink-900 border-pink-200'} mb-6 border-b-2 pb-2 inline-block">
+                        ${cat === 'मुहावरा' ? '📝 मुहावरों के अर्थ, वाक्य और कहानियाँ' : '📜 लोकोक्तियाँ (Proverbs)'}
+                    </h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${listHtml}
+                    </div>
+                </div>`;
+            }).join('');
+
+            // Flashcards
+            let flashcardsHtml = state.data.map(item => `
+                <div class="group perspective-1000 w-full h-48 cursor-pointer">
+                    <div class="relative w-full h-full transform-style-3d flip-card-inner shadow-lg rounded-2xl">
+                        <!-- Front -->
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl border-2 border-blue-200 flex flex-col items-center justify-center p-4 text-center">
+                            <span class="text-xl mb-2 text-blue-600 font-bold leading-tight">${item.phrase}</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">${item.type}</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-600 text-white rounded-2xl flex flex-col items-center justify-center p-4 shadow-inner text-center">
+                            <span class="text-sm text-blue-200 mb-2 border-b border-blue-400 pb-1">अर्थ (Meaning)</span>
+                            <span class="block text-xl font-medium leading-tight">${item.meaning}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+            <div class="space-y-8 animate-fade-in pb-10">
+                <!-- 1. Intro -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-md border-l-8 border-green-500">
+                    <h2 class="text-2xl md:text-3xl font-bold text-green-800 mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-book-open"></i> पाठ 21: मुहावरे और लोकोक्तियाँ
+                    </h2>
+                    
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
+                        <h3 class="text-xl font-bold text-blue-900 mb-3">मुहावरे क्या हैं? (What are Idioms?)</h3>
+                        <p class="text-gray-800 leading-relaxed text-lg mb-4">
+                            चित्रों के साथ दिए गए वाक्यों में एक ही बात को दो प्रकार से कहा गया है। जैसे 'भटकता रहता है' के स्थान पर <strong>'खाक छानता रहता है'</strong> तथा 'बहुत प्यारे' के स्थान पर <strong>'गले का हार'</strong> का प्रयोग किया गया।<br><br>
+                            इन वाक्यों में <i>खाक छानना</i> का अर्थ मिट्टी छानना नहीं बल्कि भटकना है; उसी तरह <i>गले का हार</i> का अर्थ गले का हार बनाकर पहनना नहीं, बल्कि बहुत प्यारे होना है। ये कथन विशेष अर्थ दे रहे हैं। ये कथन मुहावरे हैं।
+                        </p>
+                        <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-400 shadow-sm">
+                            <p class="text-lg text-gray-900">
+                                <span class="font-bold text-orange-800 bg-yellow-300 px-2 py-1 rounded mr-2">परिभाषा:</span> 
+                                <strong>अपने प्रचलित अर्थ को छोड़कर विशेष अर्थ में प्रयोग किया जाने वाला वाक्यांश मुहावरा कहलाता है।</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Dynamic List -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-md border-t-8 border-blue-500">
+                    <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> सीखने के लिए 15 मुहावरे</h2>
+                    <p class="text-lg text-gray-700 mb-6">यहाँ आपकी किताब के अनुसार अर्थ, वाक्य प्रयोग और त्रिशा के लिए आसान कहानियाँ दी गई हैं। इन्हें ध्यान से पढ़ें!</p>
+
+                    ${dynamicListHtml}
+                </div>
+
+                <!-- 3. Flashcards -->
+                <div class="pt-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">👇 अंत में फ्लैशकार्ड्स के साथ प्रैक्टिस करें! (Hover)</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        ${flashcardsHtml}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // --- Arcade Logic (Match Phrase to Meaning) ---
+        function startArcadeRound(isHardReset = false) {
+            if (!state.data.length) return;
+            
+            if (isHardReset || state.arcade.wordQueue.length === 0) {
+                state.arcade.wordQueue = [...state.data].sort(() => 0.5 - Math.random());
+                if (isHardReset) state.arcade.score = 0;
+            }
+
+            // Pop next item from queue
+            const currentItem = state.arcade.wordQueue.pop();
+            state.arcade.targetItem = currentItem;
+            
+            // Get correct meaning
+            let correctOption = currentItem.meaning;
+            
+            // Get 3 wrong meanings (distractors)
+            let distractors = [];
+            state.data.forEach(item => {
+                if (item.id !== currentItem.id) {
+                    distractors.push(item.meaning);
+                }
+            });
+            const selectedDistractors = distractors.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+            // Combine and shuffle (Total 4 options)
+            let roundOptions = [
+                { text: correctOption, isCorrect: true, status: 'idle' },
+                ...selectedDistractors.map(text => ({ text, isCorrect: false, status: 'idle' }))
+            ].sort(() => 0.5 - Math.random());
+
+            state.arcade.options = roundOptions;
+            state.arcade.feedback = "सही अर्थ चुनें!";
+            render();
+        }
+
+        function handleArcadeOption(idx) {
+            const opt = state.arcade.options[idx];
+            if (opt.status !== 'idle') return;
+
+            // Mark all options to show the correct one
+            state.arcade.options.forEach(o => {
+                if(o.isCorrect) o.status = 'correct';
+                else if (o === opt) o.status = 'wrong'; 
+            });
+
+            if (opt.isCorrect) {
+                state.arcade.score += 10;
+                
+                if(state.arcade.wordQueue.length === 0) {
+                     state.arcade.feedback = "🎉 अद्भुत! आपने सभी अर्थों को मास्टर कर लिया! (Game Complete)";
+                     setTimeout(() => startArcadeRound(true), 3000); 
+                } else {
+                     state.arcade.feedback = "✅ बिल्कुल सही! (Next loading...)";
+                     setTimeout(() => startArcadeRound(false), 1500);
+                }
+            } else {
+                state.arcade.score -= 5; // Negative Marking
+                state.arcade.feedback = "❌ गलत उत्तर! (-5 अंक)";
+                state.arcade.showPopup = true; // Show Reference Popup
+            }
+            render();
+        }
+
+        function closeArcadePopup() {
+            state.arcade.showPopup = false;
+            startArcadeRound(false); // Move to next round automatically after studying the popup
+        }
+
+        function renderArcadeZone() {
+            if (!state.arcade.targetItem) return '';
+
+            let optionsHtml = state.arcade.options.map((opt, idx) => {
+                let classes = "p-4 rounded-2xl text-lg font-bold transition-all shadow-sm border-2 h-full flex items-center justify-center text-center ";
+                if (opt.status === 'idle') classes += "bg-white text-purple-700 border-purple-200 hover:bg-purple-100 hover:-translate-y-1 cursor-pointer";
+                if (opt.status === 'correct') classes += "bg-green-500 text-white border-green-600 scale-105";
+                if (opt.status === 'wrong') classes += "bg-red-200 text-red-800 border-red-300 opacity-50";
+
+                return `<button onclick="handleArcadeOption(${idx})" class="${classes}">${opt.text}</button>`;
+            }).join('');
+
+            return `
+            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-purple-200 animate-fade-in relative">
+                <div class="bg-purple-600 p-6 text-center text-white relative">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><i class="fa-solid fa-gamepad"></i> आर्केड गेम: सही अर्थ पहचानें</h2>
+                    <p class="text-purple-200">नीचे दिए गए मुहावरे का <strong>सही अर्थ</strong> चुनें:</p>
+                    
+                    <div class="mt-6 bg-white text-purple-800 text-2xl md:text-3xl font-extrabold py-5 px-8 rounded-2xl inline-block shadow-lg border-4 border-purple-300 w-4/5">
+                        "${state.arcade.targetItem.phrase}"
+                    </div>
+                    
+                    <div class="absolute top-4 right-4 bg-yellow-400 text-purple-900 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-star"></i> ${state.arcade.score}
+                    </div>
+                    <div class="absolute top-4 left-4 bg-purple-800 text-purple-100 font-bold px-3 py-1 rounded-xl text-sm shadow">
+                        प्रश्न: ${state.data.length - state.arcade.wordQueue.length}/${state.data.length}
+                    </div>
+                </div>
+
+                <div class="p-8 bg-purple-50">
+                    <div class="text-center h-8 mb-4 font-bold text-lg text-purple-700 animate-pulse">${state.arcade.feedback}</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${optionsHtml}
+                    </div>
+                    ${state.arcade.options[0].status === 'idle' ? `
+                    <button onclick="startArcadeRound(false)" class="mt-8 w-full py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold transition-colors">
+                        🔄 यह छोड़ें (Skip)
+                    </button>
+                    ` : ''}
+                </div>
+
+                <!-- Reference Popup for Wrong Answer -->
+                ${state.arcade.showPopup ? `
+                <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 px-4 animate-fade-in rounded-3xl">
+                    <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl border-t-8 border-red-500">
+                        <h3 class="text-2xl font-bold text-red-600 mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation"></i> गलत उत्तर!</h3>
+                        <p class="text-gray-700 mb-4 font-bold text-lg">नेगेटिव मार्किंग: <span class="text-red-500">-5 अंक</span></p>
+                        
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-200 mb-6 text-left">
+                            <p class="text-xl font-bold text-blue-900 mb-3">${state.arcade.targetItem.phrase}</p>
+                            <p class="text-gray-800 mb-2"><strong>सही अर्थ:</strong> <span class="text-green-700 font-bold text-lg">${state.arcade.targetItem.meaning}</span></p>
+                            <p class="text-gray-600 italic"><strong>वाक्य:</strong> ${state.arcade.targetItem.sentence}</p>
+                        </div>
+                        
+                        <button onclick="closeArcadePopup()" class="w-full py-3 bg-red-500 hover:bg-red-600 text-white text-lg font-bold rounded-xl transition-colors shadow-md">
+                            समझ गया (Got it!)
+                        </button>
+                    </div>
+                </div>
+                ` : ''}
+            </div>`;
+        }
+
+        // --- Exam Logic (Dynamically generating questions) ---
+        function generateExamQuestions(data) {
+            let questions = [];
+            
+            data.forEach(item => {
+                // Type 1: Find meaning for a phrase
+                let distractorsMeanings = data.filter(d => d.id !== item.id).map(d => d.meaning).sort(() => 0.5 - Math.random()).slice(0, 3);
+                let opts1 = [item.meaning, ...distractorsMeanings].sort(() => 0.5 - Math.random());
+                questions.push({
+                    q: `'${item.phrase}' का सही अर्थ क्या है?`,
+                    options: opts1,
+                    ans: item.meaning,
+                    ref: item // Storing item for popup reference
+                });
+                
+                // Type 2: Find phrase for a meaning
+                let distractorsPhrases = data.filter(d => d.id !== item.id).map(d => d.phrase).sort(() => 0.5 - Math.random()).slice(0, 3);
+                let opts2 = [item.phrase, ...distractorsPhrases].sort(() => 0.5 - Math.random());
+                questions.push({
+                    q: `अर्थ: '${item.meaning}' — यह किस ${item.type} का अर्थ है?`,
+                    options: opts2,
+                    ans: item.phrase,
+                    ref: item // Storing item for popup reference
+                });
+            });
+
+            return questions.sort(() => 0.5 - Math.random());
+        }
+
+        function restartExam() {
+            state.exam.currentQIndex = 0;
+            state.exam.score = 0;
+            state.exam.showResults = false;
+            state.exam.selectedOption = null;
+            state.exam.isAnswered = false;
+            state.exam.showPopup = false;
+            state.exam.questions = generateExamQuestions(state.data); 
+            render();
+        }
+
+        function handleExamAnswer(selectedAns) {
+            if (state.exam.isAnswered) return;
+            state.exam.selectedOption = selectedAns;
+            state.exam.isAnswered = true;
+            
+            const q = state.exam.questions[state.exam.currentQIndex];
+            if (selectedAns === q.ans) {
+                state.exam.score += 1;
+            } else {
+                state.exam.score -= 1; // Negative Marking
+                state.exam.showPopup = true; // Show Reference Popup
+            }
+            render();
+        }
+
+        function closeExamPopup() {
+            state.exam.showPopup = false;
+            render(); // Close popup, keep question visible so they can hit "Next"
+        }
+
+        function nextExamQuestion() {
+            if (state.exam.currentQIndex + 1 < state.exam.questions.length) {
+                state.exam.currentQIndex += 1;
+                state.exam.selectedOption = null;
+                state.exam.isAnswered = false;
+            } else {
+                state.exam.showResults = true;
+            }
+            render();
+        }
+
+        function renderExamZone() {
+            if (state.exam.showResults) {
+                const total = state.exam.questions.length;
+                let message = state.exam.score > (total * 0.8) ? "अद्भुत! आप मुहावरों के मास्टर बन गए हैं! 🌟" : "अच्छा प्रयास! थोड़ी और प्रैक्टिस करें! 👍";
+
+                return `
+                <div class="max-w-xl mx-auto bg-white rounded-3xl p-8 shadow-lg text-center border-t-8 border-orange-500 animate-fade-in">
+                    <h2 class="text-3xl font-bold mb-4 text-orange-600">मेगा-क्विज़ परिणाम (Results)</h2>
+                    <div class="text-6xl font-extrabold text-blue-600 mb-6">
+                        ${state.exam.score} <span class="text-3xl text-gray-400">/ ${total}</span>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">${message}</p>
+                    <button onclick="restartExam()" class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-full transition-colors shadow-md">
+                        फिर से क्विज़ दें (Restart Exam)
+                    </button>
+                </div>`;
+            }
+
+            const q = state.exam.questions[state.exam.currentQIndex];
+            if (!q) return '';
+
+            let optionsHtml = q.options.map(opt => {
+                let btnClass = "w-full text-left px-6 py-4 rounded-xl border-2 font-medium text-lg transition-all flex justify-between items-center ";
+                let iconHtml = "";
+
+                if (!state.exam.isAnswered) {
+                    btnClass += "border-gray-200 hover:border-orange-400 hover:bg-orange-50 bg-white text-gray-700 cursor-pointer";
+                } else {
+                    btnClass += "cursor-default ";
+                    if (opt === q.ans) {
+                        btnClass += "border-green-500 bg-green-100 text-green-800";
+                        iconHtml = `<i class="fa-solid fa-circle-check text-green-600"></i>`;
+                    } else if (opt === state.exam.selectedOption) {
+                        btnClass += "border-red-500 bg-red-100 text-red-800";
+                        iconHtml = `<i class="fa-solid fa-circle-xmark text-red-600"></i>`;
+                    } else {
+                        btnClass += "border-gray-200 bg-gray-50 text-gray-400 opacity-50";
+                    }
+                }
+
+                return `<button onclick="handleExamAnswer('${opt}')" class="${btnClass}">
+                            <span>${opt}</span> ${iconHtml}
+                        </button>`;
+            }).join('');
+
+            let nextBtnHtml = state.exam.isAnswered ? `
+                <div class="mt-8 text-right animate-fade-in">
+                    <button onclick="nextExamQuestion()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-colors">
+                        अगला प्रश्न (Next) <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>` : '';
+
+            return `
+            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg border-2 border-orange-200 overflow-hidden animate-fade-in relative">
+                <div class="bg-orange-100 px-6 py-4 border-b border-orange-200 flex justify-between items-center text-orange-800 font-bold">
+                    <span>प्रश्न ${state.exam.currentQIndex + 1} / ${state.exam.questions.length}</span>
+                    <span>स्कोर: ${state.exam.score}</span>
+                </div>
+                
+                <div class="p-8">
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 leading-snug">${q.q}</h3>
+                    <div class="space-y-4">
+                        ${optionsHtml}
+                    </div>
+                    ${nextBtnHtml}
+                </div>
+
+                <!-- Reference Popup for Wrong Answer -->
+                ${state.exam.showPopup ? `
+                <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 px-4 animate-fade-in rounded-3xl">
+                    <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl border-t-8 border-red-500">
+                        <h3 class="text-2xl font-bold text-red-600 mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation"></i> गलत उत्तर!</h3>
+                        <p class="text-gray-700 mb-4 font-bold text-lg">नेगेटिव मार्किंग: <span class="text-red-500">-1 अंक</span></p>
+                        
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-200 mb-6 text-left">
+                            <p class="text-xl font-bold text-blue-900 mb-3">${q.ref.phrase}</p>
+                            <p class="text-gray-800 mb-2"><strong>सही अर्थ:</strong> <span class="text-green-700 font-bold text-lg">${q.ref.meaning}</span></p>
+                            <p class="text-gray-600 italic"><strong>वाक्य:</strong> ${q.ref.sentence}</p>
+                        </div>
+                        
+                        <button onclick="closeExamPopup()" class="w-full py-3 bg-red-500 hover:bg-red-600 text-white text-lg font-bold rounded-xl transition-colors shadow-md">
+                            समझ गया (Got it!)
+                        </button>
+                    </div>
+                </div>
+                ` : ''}
+            </div>`;
+        }
+    </script>
+</body>
+</html>
