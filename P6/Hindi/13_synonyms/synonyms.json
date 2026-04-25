@@ -1,0 +1,13 @@
+[
+  { id: 1, rootWord: "अंधकार", synonyms: ["अँधेरा", "तम", "तिमिर", "तमस"], category: "Abstract" },
+  { id: 2, rootWord: "अमृत", synonyms: ["सुधा", "अमिय", "सोम", "पीयूष"], category: "Divine" },
+  { id: 3, rootWord: "आँख", synonyms: ["नेत्र", "नयन", "दृग", "चक्षु", "लोचन"], category: "Body" },
+  { id: 4, rootWord: "आकाश", synonyms: ["आसमान", "नभ", "व्योम", "अंबर", "गगन"], category: "Nature" },
+  { id: 5, rootWord: "आग", synonyms: ["अग्नि", "अनल", "पावक", "ज्वाला"], category: "Nature" },
+  { id: 6, rootWord: "आनंद", synonyms: ["हर्ष", "खुशी", "आमोद", "उल्लास"], category: "Abstract" },
+  { id: 7, rootWord: "इच्छा", synonyms: ["कामना", "लालसा", "अभिलाषा"], category: "Abstract" },
+  { id: 8, rootWord: "ईश्वर", synonyms: ["परमात्मा", "भगवान", "परमेश्वर", "प्रभु"], category: "Divine" },
+  { id: 9, rootWord: "कमल", synonyms: ["पंकज", "पद्म", "सरोज", "राजीव", "अरविंद"], category: "Nature" },
+  { id: 10, rootWord: "किनारा", synonyms: ["तीर", "कूल", "तट"], category: "Nature" },
+  { id: 11, rootWord: "किरण", synonyms: ["रश्मि", "मयूख", "अंश", "कर"], category: "Nature" }
+]
