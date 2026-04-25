@@ -69,24 +69,31 @@
             { id: 11, rootWord: "किरण", synonyms: ["रश्मि", "मयूख", "अंश", "कर"], category: "Nature" }
         ];
 
+        // Detailed dictionary to map meanings and sentences to words dynamically
+        const wordDetailsMap = {
+            "अंधकार": { meaning: "जहाँ बिल्कुल रोशनी न हो (Darkness)", sentence: "रात होते ही चारों ओर अंधकार छा गया।" },
+            "अमृत": { meaning: "देवताओं का पेय जिससे अमरता मिलती है (Nectar)", sentence: "देवताओं ने समुद्र मंथन से अमृत प्राप्त किया।" },
+            "आँख": { meaning: "शरीर का वह अंग जिससे हम देखते हैं (Eye)", sentence: "धूल उड़ने से मेरी आँख में कुछ चला गया है।" },
+            "आकाश": { meaning: "धरती के ऊपर का नीला आसमान (Sky)", sentence: "आकाश में काले बादल छाए हुए हैं।" },
+            "आग": { meaning: "जो जलती है और हमें गर्मी व रोशनी देती है (Fire)", sentence: "सर्दियों में हमने हाथ तापने के लिए आग जलाई।" },
+            "आनंद": { meaning: "बहुत अधिक खुशी या मज़ा (Joy)", sentence: "दिवाली के त्यौहार पर सबके मन में आनंद छा जाता है।" },
+            "इच्छा": { meaning: "कुछ पाने या करने की चाह (Desire)", sentence: "मेरी इच्छा है कि मैं एक बड़ा डॉक्टर बनूँ।" },
+            "ईश्वर": { meaning: "भगवान या सर्वशक्तिमान (God)", sentence: "हमें रोज़ सच्चे मन से ईश्वर की प्रार्थना करनी चाहिए।" },
+            "कमल": { meaning: "पानी या कीचड़ में खिलने वाला सुंदर फूल (Lotus)", sentence: "तालाब में गुलाबी रंग का बहुत सुंदर कमल खिला है।" },
+            "किनारा": { meaning: "नदी या समुद्र के पास की ज़मीन (Bank/Edge)", sentence: "हम नदी के किनारे बैठकर बहता हुआ पानी देख रहे थे।" },
+            "किरण": { meaning: "सूरज या चाँद की रोशनी की पतली रेखा (Ray)", sentence: "सुबह-सुबह सूरज की पहली किरण बहुत सुनहरी लगती है।" }
+        };
+
         let state = {
             currentView: 'loading',
             data: [],
             
-            // Arcade State
-            arcade: { targetWord: null, options: [], score: 0, feedback: "" },
+            // Arcade State (Queue added for full coverage)
+            arcade: { wordQueue: [], targetWord: null, options: [], score: 0, feedback: "" },
             
             // Exam State
             exam: { currentQIndex: 0, score: 0, showResults: false, selectedOption: null, isAnswered: false, questions: [] }
         };
-
-        const examQuestionsDB = [
-            { type: 'fill', q: "रात होते ही चारों ओर _______ छा गया।", options: ["अंधकार", "सूर्य", "अमृत", "कमल"], ans: "अंधकार" },
-            { type: 'odd', q: "इनमें से कौन सा शब्द 'आकाश' का पर्यायवाची नहीं है?", options: ["आसमान", "नभ", "पक्षी", "गगन"], ans: "पक्षी" },
-            { type: 'fill', q: "तालाब में सुंदर गुलाबी _______ खिला है।", options: ["किनारा", "कमल", "तीर", "आग"], ans: "कमल" },
-            { type: 'odd', q: "इनमें से कौन सा शब्द 'आँख' का पर्यायवाची नहीं है?", options: ["नेत्र", "हाथ", "नयन", "लोचन"], ans: "हाथ" },
-            { type: 'fill', q: "सूरज की पहली _______ धरती पर पड़ी।", options: ["किरण", "किनारा", "इच्छा", "आनंद"], ans: "किरण" }
-        ];
 
         // ==========================================
         // 2. CORE APP LOGIC
@@ -115,7 +122,7 @@
         function navigateTo(view) {
             window.scrollTo(0, 0);
             state.currentView = view;
-            if (view === 'arcade') startArcadeRound();
+            if (view === 'arcade') startArcadeRound(true); // true = hard reset
             if (view === 'exam') restartExam();
             render();
         }
@@ -151,7 +158,7 @@
                                 <i class="fa-solid fa-book-open"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-green-800 mb-2">सीखें</h3>
-                            <p class="text-green-700">थ्योरी पढ़ें और वीडियो देखें (Study Zone)</p>
+                            <p class="text-green-700">शब्दों के अर्थ समझें और वीडियो देखें (Study Zone)</p>
                         </button>
 
                         <button onclick="navigateTo('arcade')" class="group flex flex-col items-center p-6 bg-gradient-to-b from-purple-100 to-purple-50 rounded-2xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl transition-all">
@@ -159,7 +166,7 @@
                                 <i class="fa-solid fa-gamepad"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-purple-800 mb-2">खेलें</h3>
-                            <p class="text-purple-700">मज़ेदार गेम्स खेलें (Arcade Zone)</p>
+                            <p class="text-purple-700">सभी शब्दों को ढूँढने का गेम खेलें (Arcade Zone)</p>
                         </button>
 
                         <button onclick="navigateTo('exam')" class="group flex flex-col items-center p-6 bg-gradient-to-b from-orange-100 to-orange-50 rounded-2xl border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl transition-all">
@@ -167,7 +174,7 @@
                                 <i class="fa-solid fa-graduation-cap"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-orange-800 mb-2">परखें</h3>
-                            <p class="text-orange-700">क्विज़ देकर खुद को परखें (Exam Zone)</p>
+                            <p class="text-orange-700">22 सवालों वाला मेगा-क्विज़ दें (Exam Zone)</p>
                         </button>
                     </div>
                 </div>
@@ -175,6 +182,43 @@
         }
 
         function renderStudyZone() {
+            // Group Data Dynamically
+            let groupedData = {};
+            state.data.forEach(item => {
+                let cat = item.category || 'Other';
+                if(!groupedData[cat]) groupedData[cat] = [];
+                groupedData[cat].push(item);
+            });
+
+            // Generate HTML for grouped target words
+            let dynamicWordsListHtml = Object.keys(groupedData).map(cat => {
+                let catTitle = cat === 'Nature' ? 'प्रकृति (Nature)' : cat === 'Abstract' ? 'भावनाएँ और विचार (Feelings and Thoughts)' : cat === 'Divine' ? 'ईश्वर और जीवन (God and Life)' : cat === 'Body' ? 'शरीर (Body)' : cat;
+                
+                let listHtml = groupedData[cat].map(item => {
+                    let details = wordDetailsMap[item.rootWord] || { meaning: "(अर्थ उपलब्ध नहीं)", sentence: "(वाक्य उपलब्ध नहीं)" };
+                    return `
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col sm:flex-row items-baseline gap-2 mb-3 border-b pb-3">
+                            <h4 class="text-2xl font-extrabold text-blue-600">${item.rootWord}</h4>
+                            <span class="text-lg text-gray-700 font-medium">👉 ${item.synonyms.join(', ')}</span>
+                        </div>
+                        <div class="space-y-2 text-gray-700">
+                            <p><i class="fa-solid fa-circle-info text-blue-400 w-5"></i> <strong>अर्थ (Meaning):</strong> ${details.meaning}</p>
+                            <p><i class="fa-solid fa-pen text-green-500 w-5"></i> <strong>वाक्य (Sentence):</strong> <span class="italic text-gray-600">${details.sentence}</span></p>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                return `
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-6">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-blue-200 pb-2 inline-block">${catTitle}</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${listHtml}
+                    </div>
+                </div>`;
+            }).join('');
+
+            // Flashcards
             let flashcardsHtml = state.data.map(item => `
                 <div class="group perspective-1000 w-full h-48 cursor-pointer">
                     <div class="relative w-full h-full transform-style-3d flip-card-inner shadow-lg rounded-2xl">
@@ -210,93 +254,24 @@
                         <p class="text-lg leading-relaxed"><strong class="text-blue-900">परिभाषा (Definition):</strong> <span class="text-blue-800">ऐसे शब्द जिनके अर्थों (meanings) में लगभग समानता (similarity) होती है, उन्हें पर्यायवाची शब्द कहते हैं।</span></p>
                         <p class="text-lg leading-relaxed"><strong class="text-blue-900">आसान मतलब (Simple Meaning):</strong> <span class="text-blue-800">जिन शब्दों का मतलब बिल्कुल एक जैसा होता है, उन्हें पर्यायवाची शब्द (Synonyms) कहते हैं।</span></p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">हमें इनकी ज़रूरत क्यों है? (Why do we need them?)</h3>
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        अगर हम कहानी लिखते समय एक ही शब्द को बार-बार बोलेंगे, तो हमारी कहानी बहुत उबाऊ (boring) हो जाएगी। पर्यायवाची शब्द हमारी भाषा (language) को और भी मज़ेदार (interesting) और सुंदर बनाते हैं।
-                    </p>
                 </div>
 
-                <!-- 2. Visual Examples -->
-                <div class="bg-yellow-50 rounded-2xl p-6 md:p-8 shadow-md border-2 border-yellow-200">
-                    <h2 class="text-2xl font-bold text-yellow-800 mb-4">🖼️ चित्रों के साथ उदाहरण (Visual Examples)</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-yellow-100 transition-transform hover:-translate-y-1">
-                            <h3 class="font-bold text-lg text-yellow-700 mb-3">चित्र 1: पहाड़ के पीछे से निकलता हुआ एक चमकता सूरज <br/><span class="text-sm text-yellow-600 font-normal">(A glowing sun rising from behind a mountain)</span></h3>
-                            <p class="text-gray-800 mb-2"><strong>मुख्य शब्द (Main Word):</strong> सूर्य</p>
-                            <p class="text-gray-800 mb-4"><strong>पर्यायवाची शब्द:</strong> सूरज, रवि</p>
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <p class="font-bold text-gray-700 mb-2">वाक्यों में प्रयोग (Use in sentences):</p>
-                                <ul class="list-disc pl-5 text-gray-800 mb-3 space-y-1">
-                                    <li><strong>सूर्य</strong> निकल आया है।</li>
-                                    <li><strong>सूरज</strong> निकल आया है।</li>
-                                    <li><strong>रवि</strong> निकल आया है।</li>
-                                </ul>
-                                <p class="text-sm text-gray-500 italic">(इन तीनों वाक्यों का मतलब बिल्कुल एक है - "The sun has come out.")</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-yellow-100 transition-transform hover:-translate-y-1">
-                            <h3 class="font-bold text-lg text-pink-600 mb-3">चित्र 2: बगीचे में खिले हुए रंग-बिरंगे फूल <br/><span class="text-sm text-pink-500 font-normal">(Colorful flowers blooming in a garden)</span></h3>
-                            <p class="text-gray-800 mb-2"><strong>मुख्य शब्द (Main Word):</strong> फूल</p>
-                            <p class="text-gray-800 mb-4"><strong>पर्यायवाची शब्द:</strong> पुष्प, सुमन</p>
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <p class="font-bold text-gray-700 mb-2">वाक्यों में प्रयोग (Use in sentences):</p>
-                                <ul class="list-disc pl-5 text-gray-800 mb-3 space-y-1">
-                                    <li><strong>फूल</strong> खिल गए।</li>
-                                    <li><strong>पुष्प</strong> खिल गए।</li>
-                                    <li><strong>सुमन</strong> खिल गए।</li>
-                                </ul>
-                                <p class="text-sm text-gray-500 italic">(इन तीनों वाक्यों का मतलब भी बिल्कुल एक है - "The flowers have bloomed.")</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Target Words List -->
+                <!-- 2. Target Words List (Dynamic) -->
                 <div class="bg-white rounded-2xl p-6 md:p-8 shadow-md border-t-8 border-blue-500">
-                    <h2 class="text-2xl font-bold text-blue-800 mb-4">सीखने के लिए 11 मुख्य शब्द (Your 11 Target Words)</h2>
-                    <p class="text-lg text-gray-700 mb-6">इन्हें याद करना आसान बनाने के लिए, हमने इन्हें 3 हिस्सों (groups) में बाँट दिया है:</p>
+                    <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> सीखने के लिए मुख्य शब्द (Target Words)</h2>
+                    <p class="text-lg text-gray-700 mb-6">यहाँ शब्दों के अर्थ (Meaning) और उनका वाक्यों में प्रयोग (Sentences) दिया गया है। इन्हें ध्यान से पढ़ें!</p>
 
-                    <div class="space-y-6">
-                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
-                            <h3 class="text-xl font-bold text-blue-700 mb-4 border-b border-blue-200 pb-2">समूह 1: प्रकृति (Nature)</h3>
-                            <ul class="space-y-4 text-lg text-gray-800">
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>आकाश (Sky):</strong> <span>आसमान, नभ, गगन, अंबर <span class="text-gray-500 text-base italic block sm:inline">(वह नीली जगह जहाँ पक्षी उड़ते हैं)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>आग (Fire):</strong> <span>अग्नि, अनल, पावक, ज्वाला <span class="text-gray-500 text-base italic block sm:inline">(जिससे हमें गर्मी और रोशनी मिलती है)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>कमल (Lotus):</strong> <span>पंकज, पद्म, सरोज, राजीव <span class="text-gray-500 text-base italic block sm:inline">(एक बहुत सुंदर फूल जो पानी में खिलता है)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>किनारा (Bank/Edge):</strong> <span>तीर, कूल, तट <span class="text-gray-500 text-base italic block sm:inline">(नदी या समुद्र के पास की ज़मीन)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>किरण (Ray):</strong> <span>रश्मि, मयूख, अंश, कर <span class="text-gray-500 text-base italic block sm:inline">(सूरज की रोशनी की एक पतली लाइन)</span></span></li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-pink-50 p-5 rounded-xl border border-pink-100">
-                            <h3 class="text-xl font-bold text-pink-700 mb-4 border-b border-pink-200 pb-2">समूह 2: भावनाएँ और विचार (Feelings and Thoughts)</h3>
-                            <ul class="space-y-4 text-lg text-gray-800">
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>6. अंधकार (Darkness):</strong> <span>अँधेरा, तम, तिमिर, तमस <span class="text-gray-500 text-base italic block sm:inline">(जब बिल्कुल रोशनी नहीं होती, जैसे रात में)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>7. आनंद (Joy):</strong> <span>हर्ष, खुशी, आमोद, उल्लास <span class="text-gray-500 text-base italic block sm:inline">(जब हम बहुत खुश होते हैं या मज़ा करते हैं)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>8. इच्छा (Desire/Wish):</strong> <span>कामना, लालसा, अभिलाषा <span class="text-gray-500 text-base italic block sm:inline">(जब हम कुछ पाना चाहते हैं)</span></span></li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100">
-                            <h3 class="text-xl font-bold text-indigo-700 mb-4 border-b border-indigo-200 pb-2">समूह 3: जीवन और भगवान (Life and God)</h3>
-                            <ul class="space-y-4 text-lg text-gray-800">
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>9. अमृत (Nectar):</strong> <span>सुधा, अमिय, सोम, पीयूष <span class="text-gray-500 text-base italic block sm:inline">(एक जादुई ड्रिंक - जिसे पीने से लोग अमर हो जाते हैं)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>10. आँख (Eye):</strong> <span>नेत्र, नयन, दृग, चक्षु, लोचन <span class="text-gray-500 text-base italic block sm:inline">(जिससे हम यह सुंदर दुनिया देखते हैं)</span></span></li>
-                                <li class="flex flex-col sm:flex-row gap-1 sm:gap-2"><strong>11. ईश्वर (God):</strong> <span>परमात्मा, भगवान, परमेश्वर, प्रभु <span class="text-gray-500 text-base italic block sm:inline">(जिन्होंने इस पूरी दुनिया को बनाया है)</span></span></li>
-                            </ul>
-                        </div>
-                    </div>
+                    ${dynamicWordsListHtml}
                 </div>
 
-                <!-- 4. Pro-Tip Section -->
+                <!-- 3. Pro-Tip Section -->
                 <div class="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl p-6 md:p-8 shadow-md border-l-8 border-orange-500">
                     <h2 class="text-2xl font-bold text-orange-800 mb-4 flex items-center gap-2">💡 याद रखने वाली ज़रूरी बात! (Pro-Tip!)</h2>
                     <p class="text-lg text-gray-800 mb-3 leading-relaxed">पर्यायवाची शब्दों का मतलब एक होता है, लेकिन उनका इस्तेमाल (use) अलग-अलग जगह (situations) में होता है。</p>
                     <p class="text-lg text-gray-800 mb-4 leading-relaxed"><strong>जैसे:</strong> हम रोज़ पीने के लिए <strong>"पानी" (Water)</strong> कहते हैं, लेकिन मंदिर (temple) में भगवान को चढ़ाने के लिए हम उसे <strong>"जल" (Holy Water)</strong> कहते हैं। हम कभी "गंगा पानी" नहीं कहते, हमेशा "गंगा जल" कहते हैं!</p>
                 </div>
 
-                <!-- 5. Videos Section -->
+                <!-- 4. Videos Section -->
                 <div class="bg-purple-50 rounded-2xl p-6 md:p-8 shadow-md border-2 border-purple-200">
                     <h2 class="text-2xl font-bold text-purple-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-play"></i> वीडियो से सीखें (Learn with Videos)</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -315,7 +290,7 @@
                     </div>
                 </div>
 
-                <!-- 6. Flashcards -->
+                <!-- 5. Flashcards -->
                 <div class="pt-6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">👇 अंत में फ्लैशकार्ड्स के साथ प्रैक्टिस करें! (Hover)</h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -325,22 +300,30 @@
             </div>`;
         }
 
-        // --- Arcade Logic ---
-        function startArcadeRound() {
+        // --- Arcade Logic (Updated for 100% Coverage) ---
+        function startArcadeRound(isHardReset = false) {
             if (!state.data.length) return;
-            const randomItem = state.data[Math.floor(Math.random() * state.data.length)];
-            state.arcade.targetWord = randomItem;
             
-            // Get 2 correct synonyms
-            let shuffledSyns = [...randomItem.synonyms].sort(() => 0.5 - Math.random());
-            const correctSynonyms = shuffledSyns.slice(0, 2);
+            if (isHardReset || state.arcade.wordQueue.length === 0) {
+                state.arcade.wordQueue = [...state.data].sort(() => 0.5 - Math.random());
+                if (isHardReset) state.arcade.score = 0;
+            }
+
+            // Pop next word from queue
+            const currentItem = state.arcade.wordQueue.pop();
+            state.arcade.targetWord = currentItem;
             
-            // Get 4 incorrect distractors
+            // Get ALL correct synonyms for this word
+            let correctSynonyms = [...currentItem.synonyms];
+            
+            // Get enough distractors to make 8 options in total
             const distractors = [];
             state.data.forEach(item => {
-                if (item.id !== randomItem.id) distractors.push(item.synonyms[0]);
+                if (item.id !== currentItem.id) {
+                    distractors.push(...item.synonyms); // Collect all synonyms of other words
+                }
             });
-            const selectedDistractors = distractors.sort(() => 0.5 - Math.random()).slice(0, 4);
+            const selectedDistractors = distractors.sort(() => 0.5 - Math.random()).slice(0, 8 - correctSynonyms.length);
 
             // Combine and shuffle
             let roundOptions = [
@@ -349,7 +332,7 @@
             ].sort(() => 0.5 - Math.random());
 
             state.arcade.options = roundOptions;
-            state.arcade.feedback = "";
+            state.arcade.feedback = `सभी ${correctSynonyms.length} सही पर्यायवाची शब्दों को ढूँढें!`;
             render();
         }
 
@@ -360,13 +343,18 @@
             if (opt.isCorrect) {
                 opt.status = 'correct';
                 state.arcade.score += 10;
-                state.arcade.feedback = "✅ बहुत बढ़िया! (Awesome!)";
                 
-                // Check if all correct options found
-                const allFound = state.arcade.options.filter(o => o.isCorrect).every(o => o.status === 'correct');
-                if (allFound) {
-                    state.arcade.feedback = "🎉 शाबाश! आपने सभी ढूँढ लिए! (Next word loading...)";
-                    setTimeout(startArcadeRound, 1500);
+                const remaining = state.arcade.options.filter(o => o.isCorrect && o.status === 'idle').length;
+                if (remaining === 0) {
+                    if(state.arcade.wordQueue.length === 0) {
+                         state.arcade.feedback = "🎉 अद्भुत! आपने सभी शब्दों को मास्टर कर लिया! (Game Complete)";
+                         setTimeout(() => startArcadeRound(true), 3000); // Loop game again
+                    } else {
+                         state.arcade.feedback = "🎉 शाबाश! आपने सभी ढूँढ लिए! (Next word loading...)";
+                         setTimeout(() => startArcadeRound(false), 1500);
+                    }
+                } else {
+                    state.arcade.feedback = `✅ बहुत बढ़िया! ${remaining} और ढूँढें...`;
                 }
             } else {
                 opt.status = 'wrong';
@@ -390,36 +378,76 @@
             return `
             <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-purple-200 animate-fade-in">
                 <div class="bg-purple-600 p-6 text-center text-white relative">
-                    <h2 class="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><i class="fa-solid fa-gamepad"></i> आर्केड गेम: सही शब्द पहचानें</h2>
-                    <p>इस मुख्य शब्द के सही पर्यायवाची शब्दों पर क्लिक करें:</p>
+                    <h2 class="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><i class="fa-solid fa-gamepad"></i> आर्केड गेम: सभी शब्द पहचानें</h2>
+                    <p class="text-purple-200">इस मुख्य शब्द के <strong class="text-white">सभी</strong> पर्यायवाची शब्दों पर क्लिक करें:</p>
                     <div class="mt-4 bg-white text-purple-800 text-4xl font-extrabold py-4 px-8 rounded-full inline-block shadow-lg border-4 border-purple-300">
                         ${state.arcade.targetWord.rootWord}
                     </div>
                     <div class="absolute top-4 right-4 bg-yellow-400 text-purple-900 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow">
                         <i class="fa-solid fa-star"></i> ${state.arcade.score}
                     </div>
+                    <div class="absolute top-4 left-4 bg-purple-800 text-purple-100 font-bold px-3 py-1 rounded-xl text-sm shadow">
+                        शब्द: ${state.data.length - state.arcade.wordQueue.length}/${state.data.length}
+                    </div>
                 </div>
 
                 <div class="p-8 bg-purple-50">
                     <div class="text-center h-8 mb-4 font-bold text-lg text-purple-700 animate-pulse">${state.arcade.feedback}</div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         ${optionsHtml}
                     </div>
-                    <button onclick="startArcadeRound()" class="mt-8 w-full py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold transition-colors">
-                        🔄 नया शब्द (Skip to Next Word)
+                    <button onclick="startArcadeRound(false)" class="mt-8 w-full py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold transition-colors">
+                        🔄 यह छोड़ें (Skip to Next Word)
                     </button>
                 </div>
             </div>`;
         }
 
-        // --- Exam Logic ---
+        // --- Exam Logic (Dynamically generating exhaustive questions) ---
+        function generateExamQuestions(data) {
+            let questions = [];
+            
+            data.forEach(item => {
+                // Shuffle synonyms array for this word
+                let syns = [...item.synonyms].sort(() => 0.5 - Math.random());
+                
+                // Fetch random distractors from other words
+                let distractors = [];
+                data.forEach(other => { if (other.id !== item.id) distractors.push(other.synonyms[0]); });
+                distractors = distractors.sort(() => 0.5 - Math.random());
+                
+                // Question Type 1: Find the correct synonym (Uses 1 synonym, 3 distractors)
+                let correct1 = syns.pop(); 
+                let opts1 = [correct1, ...distractors.slice(0, 3)].sort(() => 0.5 - Math.random());
+                questions.push({
+                    q: `इनमें से कौन सा शब्द '${item.rootWord}' का पर्यायवाची है?`,
+                    options: opts1,
+                    ans: correct1
+                });
+                
+                // Question Type 2: Find the odd one out (Uses up to 3 correct synonyms, 1 distractor)
+                // This guarantees she is exposed to almost all remaining synonyms of the word!
+                let correctGroup = syns.slice(0, 3);
+                let wrong1 = distractors[3]; // take a new distractor
+                let opts2 = [...correctGroup, wrong1].sort(() => 0.5 - Math.random());
+                questions.push({
+                    q: `इनमें से कौन सा शब्द '${item.rootWord}' का पर्यायवाची नहीं है?`,
+                    options: opts2,
+                    ans: wrong1
+                });
+            });
+
+            // Randomize all 22 questions
+            return questions.sort(() => 0.5 - Math.random());
+        }
+
         function restartExam() {
             state.exam.currentQIndex = 0;
             state.exam.score = 0;
             state.exam.showResults = false;
             state.exam.selectedOption = null;
             state.exam.isAnswered = false;
-            state.exam.questions = examQuestionsDB;
+            state.exam.questions = generateExamQuestions(state.data); // Generate a fresh 22-question test
             render();
         }
 
@@ -448,17 +476,18 @@
 
         function renderExamZone() {
             if (state.exam.showResults) {
+                const total = state.exam.questions.length;
+                let message = state.exam.score > 18 ? "अद्भुत! आप पर्यायवाची शब्दों के मास्टर बन गए हैं! 🌟" : "अच्छा प्रयास! थोड़ी और प्रैक्टिस करें! 👍";
+
                 return `
                 <div class="max-w-xl mx-auto bg-white rounded-3xl p-8 shadow-lg text-center border-t-8 border-orange-500 animate-fade-in">
-                    <h2 class="text-3xl font-bold mb-4 text-orange-600">परीक्षा परिणाम (Results)</h2>
+                    <h2 class="text-3xl font-bold mb-4 text-orange-600">मेगा-क्विज़ परिणाम (Results)</h2>
                     <div class="text-6xl font-extrabold text-blue-600 mb-6">
-                        ${state.exam.score} / ${state.exam.questions.length}
+                        ${state.exam.score} <span class="text-3xl text-gray-400">/ ${total}</span>
                     </div>
-                    <p class="text-xl text-gray-700 mb-8">
-                        ${state.exam.score === state.exam.questions.length ? "अद्भुत! आपको सभी शब्द याद हो गए! 🌟" : "अच्छा प्रयास! थोड़ी और प्रैक्टिस करें! 👍"}
-                    </p>
+                    <p class="text-xl text-gray-700 mb-8">${message}</p>
                     <button onclick="restartExam()" class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-full transition-colors shadow-md">
-                        फिर से प्रयास करें (Try Again)
+                        फिर से क्विज़ दें (Restart Exam)
                     </button>
                 </div>`;
             }
@@ -485,7 +514,6 @@
                     }
                 }
 
-                // Note: We escape strings passed to function calls to handle single quotes if any
                 return `<button onclick="handleExamAnswer('${opt}')" class="${btnClass}">
                             <span>${opt}</span> ${iconHtml}
                         </button>`;
