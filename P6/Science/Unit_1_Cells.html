@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Science: Cells Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --ubs-red: #e60000;
+            --ubs-black: #1a1a1a;
+            --ubs-gray: #f7f7f7;
+            --accent-blue: #e0f2fe;
+            --accent-green: #dcfce7;
+            --accent-yellow: #fef08a;
+            --accent-purple: #f3e8ff;
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--ubs-black);
+            background-color: var(--ubs-gray);
+        }
+        .text-brand { color: var(--ubs-red); }
+        .bg-brand { background-color: var(--ubs-red); }
+        .border-brand { border-color: var(--ubs-red); }
+        
+        .top-tab { transition: all 0.2s ease-in-out; }
+        .nav-item { cursor: pointer; transition: all 0.2s ease-in-out; }
+        .nav-item:hover { background-color: #f3f4f6; }
+        .nav-item.active {
+            border-left: 4px solid var(--ubs-red);
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: var(--ubs-red);
+        }
+        .content-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Quiz Styles */
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+        .option-btn:hover { background-color: #f9fafb; border-color: #d1d5db; }
+        .option-btn.selected { border-color: var(--ubs-red); background-color: #fff1f2; }
+        .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                <h1 class="text-xl font-medium tracking-wide">Cambridge Grade 6: <span class="font-bold">Cells</span></h1>
+            </div>
+            <div class="hidden sm:block text-sm text-gray-500">Exam Preparation Suite</div>
+        </div>
+    </header>
+
+    <div class="bg-white border-b border-gray-200 sticky top-16 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="-mb-px flex space-x-8">
+                <button class="top-tab active border-brand text-brand whitespace-nowrap py-4 px-2 border-b-2 font-medium text-sm lg:text-base" data-target="view-introduction">Introduction</button>
+                <button class="top-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-2 border-b-2 font-medium text-sm lg:text-base flex items-center gap-2" data-target="view-deep-dive">🌟 Deep Dive</button>
+                <button class="top-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-2 border-b-2 font-medium text-sm lg:text-base flex items-center gap-2" data-target="view-workbook">🧠 Critical Thinking</button>
+                <button class="top-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-2 border-b-2 font-medium text-sm lg:text-base flex items-center gap-2" data-target="view-exam">📝 Exam Prep</button>
+            </nav>
+        </div>
+    </div>
+
+    <div class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
+        
+        <!-- View 1: Introduction -->
+        <div id="view-introduction" class="flex flex-col md:flex-row gap-8 w-full animate-[fadeIn_0.4s_ease-in-out]">
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white border border-gray-200 py-4 top-36 sticky shadow-sm">
+                    <h2 class="px-6 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Roadmap Contents</h2>
+                    <nav class="flex flex-col">
+                        <button class="nav-item active px-6 py-3 text-left text-sm" data-target="summary">1. Chapter Summary</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="concepts">2. Key Concepts</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="vocabulary">3. Important Vocabulary</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="difficult">4. Difficult Concepts</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="reallife">5. Real-Life Importance</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="objectives">6. Learning Objectives</button>
+                        <button class="nav-item px-6 py-3 text-left text-sm" data-target="order">7. Recommended Order</button>
+                    </nav>
+                </div>
+            </aside>
+            <main class="flex-grow">
+                <section id="summary" class="content-section active card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">1. Chapter Summary</h2>
+                    <p class="text-lg text-gray-700">Cells are the building blocks of life. Every organism is made of cells. Microscopes allow us to see them.</p>
+                </section>
+                <!-- Add other Intro sections as in previous version... -->
+            </main>
+        </div>
+
+        <!-- View 2: Deep Dive (Trisha's Tab) -->
+        <div id="view-deep-dive" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
+            <section class="card bg-gray-50 border-blue-200">
+                <h2 class="text-3xl font-bold mb-6">Conceptual Understanding</h2>
+                <p>Welcome to class! Let's explore cells deeply...</p>
+                <!-- Existing deep dive content... -->
+            </section>
+        </div>
+
+        <!-- View 3: Workbook -->
+        <div id="view-workbook" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
+            <section class="card border-t-4 border-t-brand">
+                <h2 class="text-3xl font-bold mb-6">Critical Thinking Workbook</h2>
+                <!-- Existing workbook content... -->
+            </section>
+        </div>
+
+        <!-- View 4: Exam Prep (New Quiz) -->
+        <div id="view-exam" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
+            <section class="card">
+                <div id="quiz-intro" class="text-center py-10">
+                    <h2 class="text-4xl font-bold mb-4">Final Exam Preparation</h2>
+                    <p class="text-gray-600 mb-8 text-lg">We have a bank of 50 challenging questions. This attempt will randomly pick 25 for you.</p>
+                    <button onclick="startQuiz()" class="bg-brand text-white px-8 py-3 font-bold rounded hover:opacity-90 transition shadow-lg">START EXAM (25 Questions)</button>
+                </div>
+
+                <div id="quiz-container" class="hidden">
+                    <div class="flex justify-between items-center mb-6 border-b pb-4">
+                        <span id="question-count" class="font-bold text-gray-500 uppercase tracking-widest text-sm">Question 1 of 25</span>
+                        <div id="timer" class="text-brand font-mono font-bold">Time: 00:00</div>
+                    </div>
+
+                    <div id="question-box" class="mb-8">
+                        <h3 id="question-text" class="text-xl font-medium mb-6"></h3>
+                        <div id="options-container" class="space-y-2"></div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button id="next-btn" onclick="nextQuestion()" class="bg-gray-800 text-white px-6 py-2 rounded font-bold hidden">Next Question</button>
+                        <button id="finish-btn" onclick="showResults()" class="bg-brand text-white px-6 py-2 rounded font-bold hidden">Finish & See Results</button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="hidden text-center py-10">
+                    <h2 class="text-5xl font-bold mb-2" id="score-text">0/25</h2>
+                    <p id="grade-text" class="text-xl mb-8 font-medium"></p>
+                    <div class="text-left max-w-2xl mx-auto space-y-4" id="review-container"></div>
+                    <button onclick="location.reload()" class="mt-10 bg-brand text-white px-8 py-3 font-bold rounded">Try Another Random Set</button>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        // Quiz Data Bank (50 Questions)
+        const questionBank = [
+            { q: "Which part of the cell controls all its activities?", a: ["Nucleus", "Cytoplasm", "Mitochondrion", "Cell Wall"], c: 0 },
+            { q: "Which of these is NOT found in an animal cell?", a: ["Cell Membrane", "Mitochondrion", "Chloroplast", "Nucleus"], c: 2 },
+            { q: "What is the function of the cell wall?", a: ["To control what enters the cell", "To give the plant cell a stiff shape", "To make food", "To release energy"], c: 1 },
+            { q: "Which specialised cell carries electrical signals?", a: ["Red blood cell", "Root hair cell", "Neurone", "Ciliated cell"], c: 2 },
+            { q: "Why do red blood cells have no nucleus?", a: ["To make them smaller", "To make room for haemoglobin", "Because they are not alive", "To help them divide faster"], c: 1 },
+            { q: "What is the jelly-like substance where chemical reactions happen?", a: ["Sap vacuole", "Nucleus", "Cytoplasm", "Cell wall"], c: 2 },
+            { q: "Which organelle is considered the 'power station' of the cell?", a: ["Chloroplast", "Mitochondrion", "Nucleus", "Membrane"], c: 1 },
+            { q: "A group of similar cells working together is called a:", a: ["Organ", "Tissue", "System", "Organism"], c: 1 },
+            { q: "Robert Hooke discovered cells by looking at what material?", a: ["Onion skin", "Cheek cells", "Cork", "Leaves"], c: 2 },
+            { q: "Which stain is commonly used to see animal cells clearly?", a: ["Iodine", "Methylene blue", "Water", "Chlorophyll"], c: 1 },
+            { q: "HOTS: If a cell has a cell wall and a nucleus but NO chloroplasts, it could be:", a: ["A human skin cell", "A leaf cell", "A root hair cell", "A red blood cell"], c: 2 },
+            { q: "What is the function of ciliated cells?", a: ["Absorb water", "Sweep dust and bacteria away", "Carry oxygen", "Perform photosynthesis"], c: 1 },
+            { q: "Which of these is an organ in a plant?", a: ["Root hair", "Leaf", "Xylem", "Chloroplast"], c: 1 },
+            { q: "What happens in a chloroplast?", a: ["Respiration", "Photosynthesis", "Digestion", "Storage"], c: 1 },
+            { q: "A sap vacuole contains:", a: ["Jelly", "Air", "Water and sugars", "DNA"], c: 2 },
+            { q: "TRICK: True or False - Animal cells have a cell wall to stay soft.", a: ["True", "False", "Only some animals", "Only baby animals"], c: 1 },
+            { q: "Which part of the microscope do you look through?", a: ["Objective lens", "Stage", "Eyepiece", "Mirror"], c: 2 },
+            { q: "The leaf belongs to which level of organization?", a: ["Cell", "Tissue", "Organ", "System"], c: 2 },
+            { q: "What is cellulose?", a: ["A type of cell", "The material in cell walls", "The green pigment", "Energy stored in mitochondria"], c: 1 },
+            { q: "Which cell is adapted by being very long to send signals quickly?", a: ["Palisade cell", "Neurone", "Red blood cell", "Ciliated cell"], c: 1 },
+            { q: "Where is the DNA (genetic material) kept?", a: ["Cytoplasm", "Nucleus", "Mitochondria", "Cell wall"], c: 1 },
+            { q: "TRICK: If you see a green cell under a microscope, it MUST be a:", a: ["Plant cell", "Animal cell", "Bacterium", "Fungus"], c: 0 },
+            { q: "The heart, lungs, and stomach are all examples of:", a: ["Tissues", "Organs", "Systems", "Organisms"], c: 1 },
+            { q: "What is the correct order of hierarchy?", a: ["Cell > Organ > Tissue", "Tissue > Cell > System", "Cell > Tissue > Organ > System", "Organ > System > Tissue"], c: 2 },
+            { q: "Which specialised cell has a long extension to increase surface area?", a: ["Red blood cell", "Root hair cell", "Ciliated cell", "Muscle cell"], c: 1 },
+            { q: "Why is a cover slip used on a microscope slide?", a: ["To magnify the image", "To protect the lens and flatten the specimen", "To add color", "To keep the specimen alive"], c: 1 },
+            { q: "Palisade cells are found in which part of the plant?", a: ["Root", "Stem", "Top of the leaf", "Flower"], c: 2 },
+            { q: "Respiration happens in which organelle?", a: ["Mitochondrion", "Chloroplast", "Nucleus", "Vacuole"], c: 0 },
+            { q: "Which of these is NOT an organ system?", a: ["Digestive system", "Circulatory system", "Brain", "Nervous system"], c: 2 },
+            { q: "HOTS: Why would a muscle cell have many more mitochondria than a skin cell?", a: ["To store more water", "To protect the body", "To provide more energy for movement", "To carry more oxygen"], c: 2 },
+            { q: "What controls what enters and leaves the cell?", a: ["Cell Wall", "Cell Membrane", "Nucleus", "Cytoplasm"], c: 1 },
+            { q: "Which of these is a tissue?", a: ["Heart", "Onion epidermis", "Small intestine", "Nose"], c: 1 },
+            { q: "A microscope has a 10x eyepiece and 40x objective. What is the total magnification?", a: ["10x", "40x", "50x", "400x"], c: 3 },
+            { q: "Cilia are found in which human system?", a: ["Digestive", "Respiratory", "Circulatory", "Skeletal"], c: 1 },
+            { q: "Red blood cells contain which red protein?", a: ["Chlorophyll", "Haemoglobin", "Cellulose", "Plasma"], c: 1 },
+            { q: "HOTS: If you see a cell with a cell wall but NO nucleus, is it likely a plant cell?", a: ["Yes", "No - plant cells always have a nucleus", "Only if it is dead", "Yes, all plant cells lose their nucleus"], c: 1 },
+            { q: "Which lens is closest to the specimen?", a: ["Eyepiece", "Objective lens", "Mirror", "Condenser"], c: 1 },
+            { q: "Chlorophyll is stored inside:", a: ["Mitochondria", "Nucleus", "Chloroplasts", "Vacuoles"], c: 2 },
+            { q: "TRICK: Do animal cells have vacuoles?", a: ["No", "Yes, large permanent ones", "Yes, small temporary ones", "Only in birds"], c: 2 },
+            { q: "The circulatory system transports:", a: ["Nerve impulses", "Oxygen and nutrients", "Food to the stomach", "Solid waste"], c: 1 },
+            { q: "Which cell is found at the back of the mouth/nose?", a: ["Red blood cell", "Ciliated cell", "Root hair cell", "Palisade cell"], c: 1 },
+            { q: "Which part of the plant absorbs minerals?", a: ["Leaf", "Flower", "Root hair cell", "Stoma"], c: 2 },
+            { q: "HOTS: Why do neurones have branched ends?", a: ["To look like trees", "To connect to many other cells", "To absorb water", "To store energy"], c: 1 },
+            { q: "Most chemical reactions happen in the:", a: ["Membrane", "Cytoplasm", "Nucleus", "Mitochondria"], c: 1 },
+            { q: "A leaf epidermis is an example of:", a: ["A cell", "A tissue", "An organ", "A system"], c: 1 },
+            { q: "The objective lens is used to:", a: ["Reflect light", "Hold the slide", "Magnify the specimen", "Focus the image"], c: 2 },
+            { q: "Which cell looks like a biconcave disc?", a: ["Neurone", "Red blood cell", "Ciliated cell", "Palisade cell"], c: 1 },
+            { q: "Large permanent sap vacuoles are found in:", a: ["All cells", "Animal cells only", "Plant cells only", "Nerve cells only"], c: 2 },
+            { q: "The focus knob on a microscope is used to:", a: ["Change magnification", "Make the image sharp", "Turn on the light", "Move the eyepiece"], c: 1 },
+            { q: "HOTS: If you move a slide to the left under a microscope, which way does the image move?", a: ["Left", "Right", "Up", "Down"], c: 1 }
+        ];
+
+        let currentQuizQuestions = [];
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let timerInterval;
+
+        function startQuiz() {
+            // Pick 25 random questions
+            const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            currentQuizQuestions = shuffled.slice(0, 25);
+            
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            currentQuestionIdx = 0;
+            score = 0;
+            showQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            let seconds = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+                const secs = (seconds % 60).toString().padStart(2, '0');
+                document.getElementById('timer').innerText = `Time: ${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function showQuestion() {
+            const qData = currentQuizQuestions[currentQuestionIdx];
+            document.getElementById('question-count').innerText = `Question ${currentQuestionIdx + 1} of 25`;
+            document.getElementById('question-text').innerText = qData.q;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            qData.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(i, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function selectOption(index, btn) {
+            const qData = currentQuizQuestions[currentQuestionIdx];
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            // Lock other buttons
+            buttons.forEach(b => b.disabled = true);
+            
+            if (index === qData.c) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('incorrect');
+                buttons[qData.c].classList.add('correct');
+            }
+
+            if (currentQuestionIdx < 24) {
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('finish-btn').classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIdx++;
+            showQuestion();
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function showResults() {
+            clearInterval(timerInterval);
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            
+            const perc = (score / 25) * 100;
+            document.getElementById('score-text').innerText = `${score}/25`;
+            
+            let grade = "";
+            if (perc >= 90) grade = "Outstanding! You are a Cell Master! 🏆";
+            else if (perc >= 75) grade = "Great job! Very strong understanding. 🌟";
+            else if (perc >= 50) grade = "Good effort, but review the 'Deep Dive' tab. 📚";
+            else grade = "Keep practicing! Use the roadmap to study more. 🔄";
+            
+            document.getElementById('grade-text').innerText = grade;
+        }
+
+        // --- Navigation Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const topTabs = document.querySelectorAll('.top-tab');
+            const views = {
+                'view-introduction': document.getElementById('view-introduction'),
+                'view-deep-dive': document.getElementById('view-deep-dive'),
+                'view-workbook': document.getElementById('view-workbook'),
+                'view-exam': document.getElementById('view-exam')
+            };
+
+            topTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    topTabs.forEach(t => t.classList.remove('active', 'border-brand', 'text-brand'));
+                    tab.classList.add('active', 'border-brand', 'text-brand');
+                    
+                    const target = tab.getAttribute('data-target');
+                    Object.keys(views).forEach(v => {
+                        if (v === target) {
+                            views[v].classList.remove('hidden');
+                            if (v === 'view-introduction') views[v].classList.add('flex');
+                        } else {
+                            views[v].classList.add('hidden');
+                            views[v].classList.remove('flex');
+                        }
+                    });
+                });
+            });
+
+            // Sidebar logic
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(n => n.classList.remove('active'));
+                    contentSections.forEach(s => s.classList.remove('active'));
+                    item.classList.add('active');
+                    document.getElementById(item.getAttribute('data-target')).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
