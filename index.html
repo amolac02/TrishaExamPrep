@@ -126,16 +126,21 @@
                 // Construct a nested tree object from flat paths
                 const tree = {};
                 data.tree.forEach(item => {
-                    // Filter: Skip index.html, hidden files, and non-blob/tree items
-                    if (item.path === 'index.html' || item.path.startsWith('.') || (item.type !== 'blob' && item.type !== 'tree')) return;
+                    // Filter: Skip index.html, hidden files, and non-blobs
+                    if (item.path === 'index.html' || item.path.startsWith('.') || item.type !== 'blob') return;
+                    
+                    // Only include .html files
+                    if (!item.path.endsWith('.html')) return;
                     
                     const parts = item.path.split('/');
                     let current = tree;
+                    let currentPath = '';
                     parts.forEach((part, index) => {
+                        currentPath = currentPath ? currentPath + '/' + part : part;
                         if (!current[part]) {
                             current[part] = { 
-                                _type: index === parts.length - 1 ? item.type : 'tree',
-                                _path: item.path,
+                                _type: index === parts.length - 1 ? 'blob' : 'tree',
+                                _path: currentPath,
                                 _name: part
                             };
                         }
