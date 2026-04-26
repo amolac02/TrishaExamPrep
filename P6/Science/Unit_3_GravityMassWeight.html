@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Science Academy</title>
+    <style>
+        /* --- UBS-Inspired Clean Style --- */
+        :root {
+            --primary-red: #e60000;
+            --primary-red-hover: #cc0000;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --bg-main: #ffffff;
+            --bg-muted: #f7f7f7;
+            --border-color: #e5e5e5;
+            --success-green: #2a7a3e;
+            --error-red: #d92626;
+            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-main);
+            background-color: var(--bg-muted);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5 {
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            line-height: 1.2;
+        }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; border-bottom: 2px solid var(--text-main); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; }
+        p { margin-bottom: 1rem; }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        header {
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-accent {
+            color: var(--primary-red);
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 10px 5px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-btn:hover {
+            color: var(--text-main);
+        }
+        .nav-btn.active {
+            color: var(--text-main);
+            border-bottom-color: var(--primary-red);
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 40px 0;
+        }
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Containers */
+        .card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-red-hover);
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background-color: var(--text-main);
+            color: white;
+        }
+
+        /* Learn View (Grid) */
+        .learn-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        @media(min-width: 768px) {
+            .learn-layout { flex-direction: row; }
+            .learn-sidebar { width: 30%; }
+            .learn-content { width: 70%; }
+        }
+        .concept-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        .concept-btn:hover {
+            color: var(--text-main);
+            background: var(--bg-muted);
+        }
+        .concept-btn.active {
+            color: var(--text-main);
+            border-left-color: var(--primary-red);
+            background: var(--bg-muted);
+            font-weight: bold;
+        }
+        .concept-block {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 2px solid var(--border-color);
+        }
+        .concept-block h4 { color: var(--primary-red); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;}
+
+        /* Flashcards */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .flashcard-container {
+            perspective: 1000px;
+            height: 200px;
+            cursor: pointer;
+        }
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+        }
+        .flashcard-front {
+            flex-direction: column;
+        }
+        .flashcard-front span {
+            font-size: 0.8rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background: var(--text-main);
+            color: white;
+        }
+
+        /* Quiz */
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover:not(:disabled) {
+            border-color: var(--text-main);
+            background: var(--bg-muted);
+        }
+        .quiz-option:disabled { cursor: default; }
+        .quiz-option.correct {
+            border-color: var(--success-green);
+            background-color: #f0fdf4;
+            color: var(--success-green);
+            font-weight: bold;
+        }
+        .quiz-option.wrong {
+            border-color: var(--error-red);
+            background-color: #fef2f2;
+            color: var(--error-red);
+        }
+        .quiz-option.dimmed { opacity: 0.5; }
+        
+        .explanation-box {
+            background: var(--bg-muted);
+            border-left: 4px solid var(--primary-red);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Challenges */
+        .challenge-accordion {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+        .challenge-q {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            background: var(--bg-main);
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        .challenge-q:hover { background: var(--bg-muted); }
+        .challenge-a {
+            padding: 0 20px 20px 20px;
+            display: none;
+            color: var(--text-muted);
+        }
+        .challenge-a.open { display: block; animation: fadeIn 0.3s; }
+        .challenge-icon { color: var(--primary-red); font-size: 1.5rem; transition: transform 0.3s; }
+        .open .challenge-icon { transform: rotate(45deg); }
+
+        /* Checklist */
+        .checklist { list-style: none; }
+        .checklist li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checklist li:before {
+            content: '✓';
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-accent">Cosmic</span> Science Academy
+            </div>
+            <nav id="mainNav">
+                <button class="nav-btn active" data-target="home">Briefing</button>
+                <button class="nav-btn" data-target="learn">Knowledge Hub</button>
+                <button class="nav-btn" data-target="vocab">Dictionary</button>
+                <button class="nav-btn" data-target="lab">The Lab</button>
+                <button class="nav-btn" data-target="quiz">Quiz Zone</button>
+                <button class="nav-btn" data-target="challenge">Critical Thinking</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- HOME VIEW -->
+        <section id="home" class="view-section active">
+            <div class="card" style="border-top: 4px solid var(--primary-red);">
+                <h1>Welcome aboard, Trisha.</h1>
+                <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin-bottom: 30px;">
+                    Get ready to unlock the invisible rules that control the universe. We will explore everything from why apples fall to the ground, to how stars are born in giant space clouds, to the hidden energy that powers the world around us.
+                </p>
+                <button class="btn-primary" onclick="switchTab('learn')">Start the Mission</button>
+            </div>
+
+            <h2>Mission Objectives</h2>
+            <div class="card">
+                <ul class="checklist">
+                    <li>Describe the difference between weight & mass (N vs kg).</li>
+                    <li>Use the equation: weight = mass × 10.</li>
+                    <li>Explain how stars/planets form from dust via gravity.</li>
+                    <li>Know why closer planets orbit the Sun faster.</li>
+                    <li>Explain how the Moon and Sun cause ocean tides.</li>
+                    <li>Give examples of Energy Stores and Transfers.</li>
+                    <li>Draw arrows to show how energy changes forms.</li>
+                    <li>Explain what 'dissipate' means for wasted energy.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- LEARN VIEW -->
+        <section id="learn" class="view-section">
+            <h2>Knowledge Hub</h2>
+            <div class="learn-layout">
+                <div class="learn-sidebar" id="learnSidebar">
+                    <!-- Concept buttons injected here -->
+                </div>
+                <div class="learn-content card" id="learnContent">
+                    <!-- Concept content injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VOCAB VIEW -->
+        <section id="vocab" class="view-section">
+            <h2>Scientific Dictionary</h2>
+            <p style="margin-bottom: 20px;">Click on the cards to reveal definitions.</p>
+            <div class="vocab-grid" id="vocabGrid">
+                <!-- Flashcards injected here -->
+            </div>
+        </section>
+
+        <!-- LAB VIEW -->
+        <section id="lab" class="view-section">
+            <h2>The Science Lab</h2>
+            <div id="labContainer">
+                <!-- Lab experiments injected here -->
+            </div>
+        </section>
+
+        <!-- QUIZ VIEW -->
+        <section id="quiz" class="view-section">
+            <h2>Quiz Zone</h2>
+            <div id="quizContainer" class="card">
+                <!-- Quiz injected here -->
+            </div>
+        </section>
+
+        <!-- CHALLENGE VIEW -->
+        <section id="challenge" class="view-section">
+            <h2>Critical Thinking Challenges</h2>
+            <p style="margin-bottom: 20px;">Analyze the scenarios and click to reveal the answers.</p>
+            <div id="challengeContainer">
+                <!-- Challenges injected here -->
+            </div>
+        </section>
+
+    </main>
+
+<script>
+// --- DATA LAYER ---
+
+const VOCABULARY = [
+  { term: "Mass", def: "The quantity of matter in an object, measured in kilograms (kg). It never changes!" },
+  { term: "Weight", def: "The downward force of gravity on an object, measured in newtons (N)." },
+  { term: "Contact Force", def: "The upward push from a surface that perfectly balances the downward weight of an object resting on it." },
+  { term: "Nebula", def: "A giant cloud of dust and gas in space where stars and planets are born." },
+  { term: "Vacuum", def: "A space where there are completely zero particles (no air). No air resistance!" },
+  { term: "Tidal Force", def: "The pull of gravity from the Moon and Sun that affects the Earth's oceans." },
+  { term: "Joule (J)", def: "The standard unit for measuring energy." },
+  { term: "Dissipated", def: "When wasted energy spreads out into the surroundings and becomes less useful; it cannot be recovered." }
+];
+
+const CONCEPTS = [
+  {
+    id: 1,
+    title: "1. Gravity, Weight, and Mass",
+    simple: "Mass is the actual quantity of matter that makes up an object (kg). Gravity is an invisible force pulling objects together. Weight is the actual force of this gravity pulling down on an object (N).",
+    why: "Objects with massive amounts of mass, like Earth, create strong gravity pulling everything toward their center.",
+    visual: "Imagine you are made of tiny Lego bricks (Mass). Earth has invisible bungee cords pulling your bricks down. The strength of that pull is your Weight. On the Moon, the bungee cords are weaker!",
+    everyday: "A 1kg bag of apples has a mass of 1kg. The downward pull you feel in your muscles holding it is its weight (about 10N).",
+    misconception: "People say 'I weigh 40 kg.' Wrong! Kilograms measure mass. You should say 'My mass is 40 kg'.",
+    trick: "Mass is your Matter (kg). Weight is the World pulling you down (N). Formula: W = m × 10."
+  },
+  {
+    id: 2,
+    title: "2. Formation of the Solar System",
+    simple: "Our Solar System started as a giant, dark, freezing cloud of space dust and gas called a nebula. Over millions of years, it clumped together to build the Sun and planets.",
+    why: "Gravity! Tiny dust particles pulled on each other. As they stuck together, their mass increased. More mass = stronger gravity. It acted like a vacuum cleaner until the center ignited into the Sun.",
+    visual: "Imagine rolling a tiny snowball down a hill. It grabs more snow, gets heavier, and crushes down a wider path until it's a massive boulder. That's how planets grew from dust!",
+    everyday: "Like sweeping a dusty floor. Tiny scattered specks clump together into a giant dust bunny in the center of the room.",
+    misconception: "Since no human saw it, is it a guess? No! Scientists use computer models programmed with physics to fast-forward millions of years and prove it.",
+    trick: "NEBULA: New Earths Begin Under Large Attractions! Gravity Growth Loop: Dust sticks -> Mass Increases -> Gravity Increases."
+  },
+  {
+    id: 3,
+    title: "3. Movement in Space",
+    simple: "Planets zoom around the Sun in near-perfect circles called orbits. They never slow down and never need gas!",
+    why: "Space is a vacuum (no air). Without air particles, there's no air resistance (friction) to slow things down. The Sun's gravity acts like an invisible leash keeping them in a circle instead of flying away.",
+    visual: "Tie a key to a string and swing it. The string is gravity pulling inward. The key's speed wants to fly away. Balanced, it makes a circle. Let go, and it flies straight away!",
+    everyday: "Imagine ice skating on perfectly smooth ice with no wind. One push, and you glide forever. Space is that perfect ice rink.",
+    misconception: "Do heavy planets move slowest? No! Speed depends on distance to the Sun. Mercury is closest, feels the strongest pull, and must orbit fastest to not get sucked in.",
+    trick: "Vacuum = Vacant (empty of air). Closer = Crazier! (Closer planets orbit faster)."
+  },
+  {
+    id: 4,
+    title: "4. Tides",
+    simple: "Tides are the regular changes in the depth of the ocean. The difference between high and low tide is the tidal range.",
+    why: "The Moon's gravity pulls on Earth's liquid oceans (tidal force), creating a water bulge on the side facing the Moon, AND the side opposite to it! As Earth spins, beaches pass through these bulges every 12 hours.",
+    visual: "Imagine Earth is a water balloon and the Moon is a vacuum cleaner. The vacuum stretches the balloon toward it. As the balloon spins, different parts pass through the stretched bulge.",
+    everyday: "Harbours can only be used at certain times. At low tide, boats might crash into the mud. Birds use low tides to eat hidden shellfish.",
+    misconception: "Only the Moon causes tides? False! The Sun does too. When Sun, Moon, and Earth line up, they create massive tides.",
+    trick: "Rule of 6 and 12: High to High = 12 hours. High to Low = 6 hours. Line Up = Larger Tides!"
+  },
+  {
+    id: 5,
+    title: "5. Energy Stores & Transfers",
+    simple: "Energy is the secret ingredient that makes ANYTHING happen. Measured in Joules (J). It exists in Stores (waiting) and Transfers (moving).",
+    why: "Energy loves to change. A battery (chemical store) transfers to electrical energy, which transfers to light energy in a bulb.",
+    visual: "Imagine a magical backpack. Eating pasta puts green 'chemical' blocks in it. When you run, your body pulls them out and turns them into red 'kinetic' (movement) blocks.",
+    everyday: "A TV transfers electrical energy into light and sound. A water tower stores massive gravitational potential energy.",
+    misconception: "Still objects have no energy? False! A book on a high shelf has huge Gravitational Potential Energy waiting to become kinetic.",
+    trick: "Draw an Arrow of Action! [Starting Store] -> [Event/Transfer] -> [New Energy]"
+  },
+  {
+    id: 6,
+    title: "6. Wasted Energy",
+    simple: "Every time energy changes forms, some of it 'crumbles' away and becomes useless to us. This is wasted energy.",
+    why: "Friction! Moving parts rub together, creating Heat (thermal) and Sound. This energy dissipates (spreads out) into the air and can't be recovered.",
+    visual: "Carrying a handful of fine glitter. No matter how tight you squeeze, specks fall into the carpet. You can't pick them all up. The energy isn't gone, just lost in the 'carpet'.",
+    everyday: "Playing a heavy game on a phone makes it hot. The battery meant to make light/sound accidentally makes wasted thermal energy.",
+    misconception: "Energy gets destroyed? NEVER! Law of Conservation of Energy: It can't be destroyed, it only dissipates.",
+    trick: "Heat and Hearing (Thermal and Sound) are the biggest thieves. Dissipated energy Disappears into the Distance."
+  }
+];
+
+const LAB_EXPERIMENTS = [
+  {
+    title: "The Dissolving Bouncer",
+    materials: "A rubber bouncy ball, a hard floor, your ears.",
+    steps: "Hold ball at shoulder height. Drop it and let it bounce until it stops completely. Do not catch it.",
+    science: "Notice each bounce gets lower? Energy wasn't destroyed. Every hit makes a *smack* (sound energy) and warms the rubber (thermal energy). Kinetic energy dissipated into the room until none was left to bounce."
+  },
+  {
+    title: "The Air Resistance Race",
+    materials: "Two identical pieces of paper.",
+    steps: "Crumple one into a tight ball. Keep the other flat. Drop them from the exact same height at the same time.",
+    science: "Gravity pulls them equally (same mass). But the flat paper has more surface area, crashing into more air particles (air resistance). The crumpled ball slices through the air and wins!"
+  },
+  {
+    title: "The Energy Detective",
+    materials: "A notebook.",
+    steps: "Walk through your house. Find 3 Energy Stores (e.g., food, batteries, heavy objects up high) and 3 Energy Transfers (things moving, glowing, or making noise).",
+    science: "Draw an arrow diagram for one! Example: Toaster: Electrical -> Thermal + Light."
+  }
+];
+
+const ALL_MCQS = [
+  // Topic 3.1
+  { q: "1. What is the definition of mass?", options: ["The downward force on an object", "The quantity of matter in an object", "The amount of energy in an object", "The upward push from a table"], ans: 1, exp: "Mass is the quantity of matter in an object. It never changes!" },
+  { q: "2. What is the definition of weight?", options: ["The quantity of matter in an object", "The force of gravity acting on an object", "The speed at which an object falls", "The amount of space an object takes up"], ans: 1, exp: "Weight is the force of gravity acting on an object." },
+  { q: "3. What is the correct unit of measurement for mass?", options: ["Newtons (N)", "Joules (J)", "Kilograms (kg)", "Meters (m)"], ans: 2, exp: "Mass is measured in kilograms (kg)." },
+  { q: "4. What is the correct unit of measurement for weight?", options: ["Newtons (N)", "Joules (J)", "Kilograms (kg)", "Watts (W)"], ans: 0, exp: "Because weight is a force, it is measured in Newtons (N)." },
+  { q: "5. In which direction does Earth's gravity pull objects?", options: ["Towards the magnetic North Pole", "Towards the Moon", "Towards the centre of the Earth", "Towards the equator"], ans: 2, exp: "Gravity pulls everything toward the very center of the Earth." },
+  { q: "6. What is the formula used to calculate weight on Earth?", options: ["Weight = mass ÷ 10", "Weight = mass + 10", "Weight = mass × 100", "Weight = mass × 10"], ans: 3, exp: "On Earth, gravity pulls with 10 N for every 1 kg of mass." },
+  { q: "7. If a student has a mass of 45 kg, what is their weight on Earth?", options: ["4.5 N", "45 N", "450 N", "4500 N"], ans: 2, exp: "45 kg × 10 = 450 N." },
+  { q: "8. If a heavy box weighs 200 N on Earth, what is its mass?", options: ["20 kg", "2 kg", "2000 kg", "200 kg"], ans: 0, exp: "Rearrange the formula: Mass = Weight ÷ 10. 200 ÷ 10 = 20 kg." },
+  { q: "9. When an astronaut travels to the Moon, what happens to their mass?", options: ["It increases", "It decreases", "It becomes zero", "It stays exactly the same"], ans: 3, exp: "You don't lose any of your matter when you go to space. Mass is permanent." },
+  { q: "10. When an astronaut travels to the Moon, what happens to their weight?", options: ["It increases", "It decreases", "It becomes zero", "It stays exactly the same"], ans: 1, exp: "The Moon has less mass than Earth, so its gravitational pull (weight) is weaker." },
+  { q: "11. Why does an object weigh less on the Moon than on Earth?", options: ["The Moon has no atmosphere.", "The Moon has a smaller mass, so its gravitational pull is weaker.", "The Moon has a larger mass, pushing objects away.", "The Moon is further from the Sun."], ans: 1, exp: "Smaller mass = weaker gravity = less weight." },
+  { q: "12. What is a 'contact force'?", options: ["The force that pulls objects towards the Earth.", "The force of the Moon pulling on the oceans.", "The upward push of a surface balancing the weight of an object on it.", "The friction between a moving car and the air."], ans: 2, exp: "It's the surface pushing back up so the object doesn't fall through!" },
+  { q: "13. A 50 N block is resting perfectly still on a desk. What is the size of the contact force pushing back up?", options: ["0 N", "5 N", "50 N", "500 N"], ans: 2, exp: "To stay perfectly still, the upward contact force must equal the downward weight (50 N)." },
+  // Topic 3.2
+  { q: "14. What is a nebula?", options: ["A dying star", "A giant cloud of dust and gas in space", "The vacuum between planets", "A rocky planet"], ans: 1, exp: "It's the beautiful, dusty birthplace of stars and planets." },
+  { q: "15. What force caused the dust and gas in the nebula to clump together?", options: ["Magnetic force", "Contact force", "Gravity", "Air resistance"], ans: 2, exp: "Even tiny dust particles have weak gravity that pulls them together over time." },
+  { q: "16. As dust clumps gathered more matter, their mass increased. How did this affect their gravity?", options: ["Their gravity became weaker.", "Their gravity disappeared.", "Their gravity stayed the same.", "Their gravity became stronger."], ans: 3, exp: "Golden Rule: More mass = stronger gravity." },
+  { q: "17. What formed at the very center of our Solar System's nebula due to intense heat and pressure?", options: ["The Earth", "The Sun", "Jupiter", "The Moon"], ans: 1, exp: "The massive clump in the center grew so hot and dense it ignited into our Sun." },
+  { q: "18. Why do scientists use computer models to study the formation of the Solar System?", options: ["Because the events took millions of years and no humans were there to observe it.", "Because space is a vacuum.", "Because computers are the only things with enough mass.", "Because they can't use telescopes."], ans: 0, exp: "They fast-forward time using the laws of physics programmed into computers." },
+  { q: "19. How do all the planets orbit the Sun?", options: ["In completely random directions.", "In the same direction, sitting on roughly the same flat plane.", "Half go clockwise, half go counter-clockwise.", "In straight lines away from the Sun."], ans: 1, exp: "Because of how the original dust cloud spun, everything orbits on roughly the same flat disc." },
+  // Topic 3.3
+  { q: "20. Space is considered a vacuum. What does this mean?", options: ["It acts like a giant magnet.", "It contains absolutely no particles or air.", "It pulls everything into black holes.", "It is filled with dense gas."], ans: 1, exp: "A vacuum is totally empty. No air at all." },
+  { q: "21. On Earth, moving objects eventually slow down due to:", options: ["Contact forces", "Mass", "Air resistance", "Vacuum pressure"], ans: 2, exp: "Objects crash into air particles, creating friction (air resistance) that slows them down." },
+  { q: "22. Why do planets and space probes never slow down?", options: ["They have their own engines.", "There is no air resistance in the vacuum of space to slow them down.", "Gravity pushes them forward.", "Light from the Sun powers them."], ans: 1, exp: "Without air particles to crash into, there is no friction to slow them down." },
+  { q: "23. What force keeps the planets locked in a circular orbit around the Sun?", options: ["The Sun's gravity", "The planets' gravity", "The vacuum of space", "Magnetic force"], ans: 0, exp: "The Sun's massive gravity acts as an inward leash keeping them from flying away." },
+  { q: "24. If the Sun suddenly disappeared, what would happen to the planets?", options: ["They would stop moving immediately.", "They would fall towards each other.", "They would fly off into space in straight lines.", "They would start orbiting the Moon."], ans: 2, exp: "Without the Sun's inward pull, their forward speed would carry them straight into deep space." },
+  { q: "25. Which planet must travel the fastest in its orbit?", options: ["Neptune", "Jupiter", "Mercury", "Earth"], ans: 2, exp: "Mercury is closest to the Sun's massive gravity, so it must travel fastest to avoid being pulled in." },
+  { q: "26. As you move further away from the Sun, what happens to the strength of its gravity?", options: ["It gets stronger.", "It gets weaker.", "It stays exactly the same.", "It changes randomly."], ans: 1, exp: "Gravity's pull gets weaker the further away you travel from the mass." },
+  // Topic 3.4
+  { q: "27. What is a tide?", options: ["A giant wave caused by earthquakes.", "The regular change in the depth of the ocean.", "The spinning of the Earth.", "The movement of rivers into the sea."], ans: 1, exp: "Tides are the daily rising and falling of ocean water levels." },
+  { q: "28. What is the primary cause of tides on Earth?", options: ["The wind blowing across the ocean.", "Earthquakes underwater.", "The gravitational pull of the Moon on Earth's oceans.", "The heat of the Sun expanding the water."], ans: 2, exp: "The Moon's gravity acts as a magnet, pulling the liquid oceans towards it." },
+  { q: "29. The specific gravitational pull that creates tides is known as a:", options: ["Tidal force", "Contact force", "Vacuum force", "Solar force"], ans: 0, exp: "The pull that stretches oceans into a bulge is called the tidal force." },
+  { q: "30. How many high tides does a typical beach experience in one 24-hour day?", options: ["One", "Two", "Three", "Four"], ans: 1, exp: "Earth spins through two water bulges every 24 hours." },
+  { q: "31. What is the approximate time gap between a high tide and the next high tide?", options: ["6 hours", "12 hours", "24 hours", "1 month"], ans: 1, exp: "It takes about 12 hours to rotate from one high tide bulge to the other." },
+  { q: "32. What is the approximate time gap between a high tide and the very next low tide?", options: ["6 hours", "12 hours", "24 hours", "48 hours"], ans: 0, exp: "High to High is 12 hours. High to Low is half of that: 6 hours." },
+  { q: "33. What is the 'tidal range'?", options: ["The distance between the Earth and the Moon.", "The length of a beach.", "The difference in water depth between high tide and low tide.", "The time it takes for a tide to come in."], ans: 2, exp: "It's the vertical difference between the highest and lowest water levels." },
+  { q: "34. Does the Sun affect the tides on Earth?", options: ["No, it is too far away.", "Yes, its gravity also pulls on the oceans, especially when lined up with the Moon.", "Only during the daytime.", "Yes, by boiling the ocean water."], ans: 1, exp: "The Sun is huge, so it also creates a tidal force despite being far away." },
+  { q: "35. What is an 'earth tide'?", options: ["Mudslides caused by rain.", "The solid land moving slightly up and down due to tidal forces.", "Sand blowing on the beach.", "High tides that reach the grass."], ans: 1, exp: "The Moon's gravity is so strong it actually pulls the solid land up by about 30 cm!" },
+  // Topic 3.5 & 3.6
+  { q: "36. What is the scientific unit for measuring energy?", options: ["Newtons (N)", "Kilograms (kg)", "Joules (J)", "Degrees (°C)"], ans: 2, exp: "Energy is measured in Joules (J)." },
+  { q: "37. Which of the following is an energy 'store'?", options: ["Light", "Sound", "Chemical", "Electrical"], ans: 2, exp: "Chemical energy is a store (like a battery waiting to be used). Light and sound are transfers." },
+  { q: "38. What type of energy is stored in a stretched rubber band?", options: ["Chemical energy", "Kinetic energy", "Gravitational potential energy", "Elastic potential energy"], ans: 3, exp: "Elastic potential energy is stored when objects are stretched or squeezed." },
+  { q: "39. What type of energy is stored in food, batteries, and fuels?", options: ["Kinetic energy", "Thermal energy", "Chemical energy", "Light energy"], ans: 2, exp: "Chemical energy holds energy in the bonds of molecules." },
+  { q: "40. A book sitting perfectly still on a very high shelf has a large store of:", options: ["Kinetic energy", "Gravitational potential energy", "Elastic potential energy", "Thermal energy"], ans: 1, exp: "Because it's lifted against gravity, it has stored energy waiting to fall." },
+  { q: "41. The energy of movement is called:", options: ["Thermal energy", "Sound energy", "Chemical energy", "Kinetic energy"], ans: 3, exp: "Anything moving has kinetic energy." },
+  { q: "42. Which of the following is an energy 'transfer' (energy on the move)?", options: ["Chemical", "Gravitational potential", "Light", "Elastic potential"], ans: 2, exp: "Light energy travels from a source to your eyes. The others are stores." },
+  { q: "43. A television is plugged into the wall. What type of energy transfers into the TV?", options: ["Electrical energy", "Chemical energy", "Elastic potential energy", "Thermal energy"], ans: 0, exp: "Electrical energy travels through wires into the TV." },
+  { q: "44. If you roll a bowling ball down an alley, what kind of energy does it primarily have as it moves?", options: ["Chemical", "Gravitational potential", "Kinetic", "Elastic potential"], ans: 2, exp: "It is moving, so it has Kinetic energy." },
+  { q: "45. When drawing an energy diagram, what does the arrow represent?", options: ["The force of gravity", "A change or transfer of energy", "The weight of the object", "The speed of the object"], ans: 1, exp: "The arrow points from the starting energy to the new energy form." },
+  // Topic 3.7
+  { q: "46. Which law states that energy can never be created from nothing or completely destroyed?", options: ["The Law of Gravity", "The Law of Conservation of Energy", "The Law of Tides", "The Law of Mass"], ans: 1, exp: "Energy only changes form; it never disappears from the universe." },
+  { q: "47. Whenever energy changes forms, some of it is almost always 'wasted'. What are the two most common forms of wasted energy?", options: ["Kinetic and Light", "Chemical and Electrical", "Thermal and Sound", "Gravitational and Elastic"], ans: 2, exp: "Machines almost always waste energy as heat (thermal) and noise (sound)." },
+  { q: "48. Why does a machine's engine get hot when it is running?", options: ["Because it is absorbing heat from the air.", "Because friction causes kinetic energy to be transferred into wasted thermal energy.", "Because all chemical energy turns only into thermal energy.", "Because it is storing thermal energy for later."], ans: 1, exp: "Moving parts rub together (friction), creating unwanted heat." },
+  { q: "49. When wasted energy spreads out into the surrounding air and becomes useless, it is said to have:", options: ["Dissolved", "Multiplied", "Dissipated", "Evaporated"], ans: 2, exp: "Dissipated means it spread out too thinly to ever be captured and used again." },
+  { q: "50. Once energy has dissipated, what happens to it?", options: ["It can easily be collected and put back into a battery.", "It is permanently destroyed.", "It spreads out so much that it cannot be recovered or stored again.", "It turns into matter."], ans: 2, exp: "It is still in the universe, but completely useless to us." }
+];
+
+const CRITICAL_CHALLENGES = [
+  { q: "The Mars Drop: A space rover with a mass of 200 kg is dropped onto Mars (gravity = 3.7 N/kg). It falls, hits the ground, bounces once, and stops. A) What is its weight on Mars? B) Track its energy journey.", a: "A) Weight = 200 kg × 3.7 = 740 N. (Mass stays 200 kg). \nB) Hovering: Gravitational Potential Energy. Falling: Kinetic Energy. Bouncing: Elastic Potential. Stopped: Wasted Sound & Thermal Energy (dissipated)." },
+  { q: "The Silent Meteor: A meteor travels deep space at 50,000 km/h and hits the Moon. A) Why doesn't it need fuel? B) How will its impact differ from hitting Earth?", a: "A) Space is a vacuum with no air resistance/friction to slow it down. \nB) On Earth, air friction wastes kinetic energy as heat/light before impact. On the Moon (no air), 100% of its kinetic energy hits the surface, transferring violently into massive heat, sound (vibrations), and kinetic energy (throwing rocks)." },
+  { q: "The Expanding Sun: If the Sun doubled its mass, A) How would its gravity change? B) What must happen to Earth's orbital speed to survive?", a: "A) The gravitational pull would increase significantly. \nB) Earth must travel much faster. If the inward pull gets stronger, Earth must increase its forward kinetic speed to balance it, or be dragged into the Sun." },
+  { q: "The Tides of Jupiter: If Earth captured Jupiter to orbit us like the Moon. A) How would tides change? B) What wasted energy would massive waves create?", a: "A) Jupiter's huge mass creates a massive tidal force, causing unimaginably huge tidal ranges. \nB) Thermal energy (friction of water scraping land) and Sound energy (deafening roars)." },
+  { q: "The Nebula's Heat: When the Solar System formed, dust clumps pulled in matter at high speeds. Track the energy change: Store -> Transfer -> Final Energy.", a: "Floating dust held Gravitational Potential Energy. As gravity pulled it inward, it transferred to Kinetic Energy. Smashing together transferred it into intense Thermal Energy, igniting the Sun." },
+  { q: "The Space Station's Engines: The ISS fires engines to speed up. A) Name the starting store, useful transfer, and wasted transfers. B) Why can't we reuse the wasted heat?", a: "A) Store: Chemical (fuel). Useful: Kinetic (speed). Wasted: Thermal (heat) & Light (flame). \nB) Wasted heat dissipates into the vastness of space. It spreads out too thin to ever be collected and used to do work again." },
+  { q: "The Double Gravity Puzzle: Planet A gravity = 5 N/kg. Planet B = 20 N/kg. You hold a 10 kg rock 2 meters high on both. A) Which is heavier? B) Which stores more energy?", a: "A) Planet B (200 N) is heavier than Planet A (50 N). \nB) The rock on Planet B stores more Gravitational Potential Energy because holding it up requires fighting a stronger downward force." },
+  { q: "The Sun's Tidal Secret: A) Why does Earth orbit in a circle instead of a straight line? B) If Earth orbited further away, how would the Sun's tidal force change?", a: "A) Earth's forward speed wants to carry it straight. The Sun's gravity is an inward leash. The balance creates a circle. \nB) If further away, the Sun's tidal force would be much weaker, as gravity weakens over distance." },
+  { q: "The Energy Bank of the Universe: A student says 'The Sun will use up its gravitational energy and it will be destroyed.' Correct their mistake.", a: "Energy cannot be destroyed (Conservation of Energy). Gravity is a force based on mass, not a consumable energy store (like fuel). The Sun's mass isn't disappearing, so its gravity remains." },
+  { q: "The Ultimate Chain Reaction: Moon causes a tidal wave. Wave crosses ocean, crashes on beach, moves sand, warms up. A) What force started it? B) Primary energy moving? C) Wasted energy at crash?", a: "A) The Moon's gravity (tidal force). \nB) Kinetic Energy (movement). \nC) Thermal Energy (friction with sand) and Sound Energy (noise)." }
+];
+
+// --- NAVIGATION LOGIC ---
+const navButtons = document.querySelectorAll('.nav-btn');
+const views = document.querySelectorAll('.view-section');
+
+navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        switchTab(btn.dataset.target);
+    });
+});
+
+function switchTab(targetId) {
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-target="${targetId}"]`).classList.add('active');
+
+    views.forEach(view => view.classList.remove('active'));
+    document.getElementById(targetId).classList.add('active');
+    window.scrollTo(0, 0);
+
+    if(targetId === 'quiz' && currentQuizSet.length === 0) {
+        startQuiz();
+    }
+}
+
+// --- LEARN VIEW LOGIC ---
+const learnSidebar = document.getElementById('learnSidebar');
+const learnContent = document.getElementById('learnContent');
+
+function renderLearnHub() {
+    learnSidebar.innerHTML = '';
+    CONCEPTS.forEach((concept, index) => {
+        const btn = document.createElement('button');
+        btn.className = `concept-btn ${index === 0 ? 'active' : ''}`;
+        btn.innerText = concept.title;
+        btn.onclick = () => selectConcept(index, btn);
+        learnSidebar.appendChild(btn);
+    });
+    selectConcept(0, learnSidebar.firstChild);
+}
+
+function selectConcept(index, btnElement) {
+    document.querySelectorAll('.concept-btn').forEach(btn => btn.classList.remove('active'));
+    if(btnElement) btnElement.classList.add('active');
+    
+    const concept = CONCEPTS[index];
+    learnContent.innerHTML = `
+        <h3 style="font-size: 2rem; margin-bottom: 30px;">${concept.title}</h3>
+        <div class="concept-block">
+            <h4>Simple Explanation</h4>
+            <p>${concept.simple}</p>
+        </div>
+        <div class="concept-block">
+            <h4>Why It Happens</h4>
+            <p>${concept.why}</p>
+        </div>
+        <div class="concept-block">
+            <h4>Visual Imagination</h4>
+            <p><i>"${concept.visual}"</i></p>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+            <div class="card" style="margin: 0;">
+                <h4 style="color: var(--text-main);">Everyday Example</h4>
+                <p style="font-size: 0.9rem;">${concept.everyday}</p>
+            </div>
+            <div class="card" style="margin: 0; border-color: var(--error-red);">
+                <h4 style="color: var(--error-red);">Common Trap</h4>
+                <p style="font-size: 0.9rem;">${concept.misconception}</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 20px; background: var(--text-main); color: white;">
+            <h4 style="color: white; margin-bottom: 10px;">Memory Trick</h4>
+            <p style="margin: 0;">${concept.trick}</p>
+        </div>
+    `;
+}
+
+// --- VOCAB LOGIC ---
+const vocabGrid = document.getElementById('vocabGrid');
+function renderVocab() {
+    VOCABULARY.forEach(item => {
+        const container = document.createElement('div');
+        container.className = 'flashcard-container';
+        container.innerHTML = `
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-front">
+                    <h3>${item.term}</h3>
+                    <span>Tap to Reveal</span>
+                </div>
+                <div class="flashcard-back">
+                    <p>${item.def}</p>
+                </div>
+            </div>
+        `;
+        vocabGrid.appendChild(container);
+    });
+}
+
+// --- LAB LOGIC ---
+const labContainer = document.getElementById('labContainer');
+function renderLab() {
+    LAB_EXPERIMENTS.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h3 style="color: var(--primary-red);">${exp.title}</h3>
+            <p><strong>Materials:</strong> ${exp.materials}</p>
+            <p><strong>Action:</strong> ${exp.steps}</p>
+            <div style="background: var(--bg-muted); padding: 15px; margin-top: 15px; border-left: 4px solid var(--text-main);">
+                <strong>The Science:</strong> ${exp.science}
+            </div>
+        `;
+        labContainer.appendChild(card);
+    });
+}
+
+// --- QUIZ LOGIC ---
+const quizContainer = document.getElementById('quizContainer');
+let currentQuizSet = [];
+let currentQIndex = 0;
+let score = 0;
+let explanationShown = false;
+
+function startQuiz() {
+    // Shuffle and pick 25
+    currentQuizSet = [...ALL_MCQS].sort(() => 0.5 - Math.random()).slice(0, 25);
+    currentQIndex = 0;
+    score = 0;
+    explanationShown = false;
+    renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+    if (currentQIndex >= currentQuizSet.length) {
+        renderQuizResults();
+        return;
+    }
+
+    const q = currentQuizSet[currentQIndex];
+    let html = `
+        <div class="quiz-header">
+            <span>Question ${currentQIndex + 1} of ${currentQuizSet.length}</span>
+            <span>Score: ${score}</span>
+        </div>
+        <h3 style="margin-bottom: 20px; font-size: 1.3rem;">${q.q}</h3>
+        <div id="optionsContainer">
+    `;
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, idx) => {
+        html += `<button class="quiz-option" onclick="handleOptionClick(${idx})"><strong>${labels[idx]}</strong> &nbsp; ${opt}</button>`;
+    });
+
+    html += `</div><div id="explanationContainer"></div>`;
+    quizContainer.innerHTML = html;
+}
+
+function handleOptionClick(selectedIndex) {
+    if (explanationShown) return;
+    explanationShown = true;
+
+    const q = currentQuizSet[currentQIndex];
+    const options = document.querySelectorAll('.quiz-option');
+    
+    if (selectedIndex === q.ans) score++;
+
+    options.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.ans) {
+            btn.classList.add('correct');
+        } else if (idx === selectedIndex) {
+            btn.classList.add('wrong');
+        } else {
+            btn.classList.add('dimmed');
+        }
+    });
+
+    const expContainer = document.getElementById('explanationContainer');
+    expContainer.innerHTML = `
+        <div class="explanation-box">
+            <h4 style="color: var(--primary-red);">Scientific Explanation</h4>
+            <p>${q.exp}</p>
+            <button class="btn-primary" onclick="nextQuestion()" style="margin-top: 15px;">
+                ${currentQIndex < currentQuizSet.length - 1 ? 'Next Question' : 'View Results'}
+            </button>
+        </div>
+    `;
+}
+
+function nextQuestion() {
+    currentQIndex++;
+    explanationShown = false;
+    renderQuizQuestion();
+}
+
+function renderQuizResults() {
+    const percentage = (score / currentQuizSet.length) * 100;
+    let msg = "Review the materials and try again.";
+    if (percentage >= 80) msg = "Outstanding performance!";
+    else if (percentage >= 60) msg = "Good solid effort.";
+
+    quizContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px 0;">
+            <h2 style="border:none; margin-bottom: 10px;">Mission Complete</h2>
+            <h1 style="color: var(--primary-red); font-size: 4rem; margin-bottom: 10px;">${score} / ${currentQuizSet.length}</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">${msg}</p>
+            <button class="btn-primary" onclick="startQuiz()">Restart Simulator</button>
+        </div>
+    `;
+}
+
+// --- CHALLENGE LOGIC ---
+const challengeContainer = document.getElementById('challengeContainer');
+function renderChallenges() {
+    CRITICAL_CHALLENGES.forEach((chal, idx) => {
+        const item = document.createElement('div');
+        item.className = 'challenge-accordion';
+        item.innerHTML = `
+            <button class="challenge-q" onclick="toggleChallenge(this)">
+                <span><span style="color: var(--primary-red);">Challenge ${idx + 1}:</span> ${chal.q}</span>
+                <span class="challenge-icon">+</span>
+            </button>
+            <div class="challenge-a">
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin-bottom: 15px;">
+                <p><strong>Answer:</strong> <br>${chal.a}</p>
+            </div>
+        `;
+        challengeContainer.appendChild(item);
+    });
+}
+
+function toggleChallenge(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    
+    // Close all
+    document.querySelectorAll('.challenge-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.challenge-q').forEach(q => q.classList.remove('open'));
+
+    // Open clicked if it wasn't open
+    if (!isOpen) {
+        answer.classList.add('open');
+        btn.classList.add('open');
+    }
+}
+
+// --- INITIALIZATION ---
+window.onload = () => {
+    renderLearnHub();
+    renderVocab();
+    renderLab();
+    renderChallenges();
+};
+
+</script>
+</body>
+</html>
