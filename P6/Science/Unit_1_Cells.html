@@ -87,12 +87,16 @@
 
     <div class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
         
-        <!-- View 1: Introduction -->
+        <!-- ========================================== -->
+        <!-- VIEW 1: INTRODUCTION (Roadmap 1 to 7)      -->
+        <!-- ========================================== -->
         <div id="view-introduction" class="flex flex-col md:flex-row gap-8 w-full animate-[fadeIn_0.4s_ease-in-out]">
+            
+            <!-- Sidebar Navigation (Only for Introduction) -->
             <aside class="w-full md:w-64 flex-shrink-0">
                 <div class="bg-white border border-gray-200 py-4 top-36 sticky shadow-sm">
                     <h2 class="px-6 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Roadmap Contents</h2>
-                    <nav class="flex flex-col">
+                    <nav id="nav-menu" class="flex flex-col">
                         <button class="nav-item active px-6 py-3 text-left text-sm" data-target="summary">1. Chapter Summary</button>
                         <button class="nav-item px-6 py-3 text-left text-sm" data-target="concepts">2. Key Concepts</button>
                         <button class="nav-item px-6 py-3 text-left text-sm" data-target="vocabulary">3. Important Vocabulary</button>
@@ -103,31 +107,622 @@
                     </nav>
                 </div>
             </aside>
+
+            <!-- Content Area for Introduction -->
             <main class="flex-grow">
+                
+                <!-- 1. Chapter Summary -->
                 <section id="summary" class="content-section active card">
-                    <h2 class="text-3xl font-light mb-6 border-b pb-4">1. Chapter Summary</h2>
-                    <p class="text-lg text-gray-700">Cells are the building blocks of life. Every organism is made of cells. Microscopes allow us to see them.</p>
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">1. Chapter Summary in Simple Words</h2>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p class="text-lg">Welcome to the fascinating world of biology! Imagine trying to build a giant LEGO castle. To do that, you need hundreds of tiny LEGO bricks.</p>
+                        <p>In biology, <strong>cells</strong> are those tiny building blocks. Every living organism, from the tallest tree outside your window to your own body, is made up of these tiny units called cells.</p>
+                        <p>Because they are so incredibly small (there are about 100 trillion in your body alone!), we cannot see them with our eyes. We need a special tool called a <strong>microscope</strong> to magnify them. In this chapter, you will learn what these cells look like inside, how plant and animal cells are slightly different, and how cells team up to keep living things alive.</p>
+                    </div>
                 </section>
-                <!-- Add other Intro sections as in previous version... -->
+
+                <!-- 2. Key Concepts -->
+                <section id="concepts" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">2. Key Concepts to Learn</h2>
+                    <div class="space-y-8">
+                        
+                        <div>
+                            <h3 class="text-xl font-medium mb-2 text-brand">The Parts of a Cell</h3>
+                            <p class="text-gray-700 mb-4">Just like a body has different organs, a cell has different parts that do specific jobs (like the nucleus, cytoplasm, and cell membrane).</p>
+                            
+                            <!-- Image representation using inline SVG -->
+                            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center p-6 bg-gray-50 border border-gray-100 mt-4">
+                                <!-- Animal Cell Diagram -->
+                                <div class="text-center">
+                                    <svg width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="100" cy="100" r="90" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                                        <circle cx="130" cy="110" r="25" fill="#a855f7" /> <!-- Nucleus -->
+                                        <ellipse cx="60" cy="80" rx="15" ry="8" fill="#f97316" /> <!-- Mitochondria -->
+                                        <ellipse cx="100" cy="160" rx="12" ry="6" fill="#f97316" /> <!-- Mitochondria -->
+                                        <text x="100" y="105" font-family="Arial" font-size="12" text-anchor="middle" fill="#581c87">Nucleus</text>
+                                        <text x="100" y="30" font-family="Arial" font-size="12" text-anchor="middle" fill="#0284c7">Cell Membrane</text>
+                                    </svg>
+                                    <p class="text-sm font-bold mt-2">Animal Cell</p>
+                                </div>
+                                
+                                <!-- Plant Cell Diagram -->
+                                <div class="text-center">
+                                    <svg width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="20" y="20" width="160" height="160" rx="10" fill="#dcfce7" stroke="#166534" stroke-width="6"/> <!-- Cell Wall -->
+                                        <rect x="28" y="28" width="144" height="144" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2"/> <!-- Membrane -->
+                                        <circle cx="140" cy="140" r="20" fill="#a855f7" /> <!-- Nucleus -->
+                                        <rect x="50" y="50" width="60" height="100" rx="20" fill="#bae6fd" /> <!-- Vacuole -->
+                                        <ellipse cx="140" cy="50" rx="15" ry="8" fill="#22c55e" /> <!-- Chloroplast -->
+                                        <ellipse cx="40" cy="160" rx="15" ry="8" fill="#22c55e" /> <!-- Chloroplast -->
+                                        <text x="80" y="100" font-family="Arial" font-size="12" text-anchor="middle" fill="#0369a1">Sap Vacuole</text>
+                                        <text x="100" y="15" font-family="Arial" font-size="12" text-anchor="middle" fill="#166534">Cell Wall</text>
+                                    </svg>
+                                    <p class="text-sm font-bold mt-2">Plant Cell</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-4 border border-gray-200 bg-gray-50">
+                                <h3 class="font-bold mb-2">Plant vs. Animal Cells</h3>
+                                <p class="text-sm text-gray-700">Plant cells have extra parts like a stiff <strong>cell wall</strong> for support and green <strong>chloroplasts</strong> to make food from sunlight.</p>
+                            </div>
+                            <div class="p-4 border border-gray-200 bg-gray-50">
+                                <h3 class="font-bold mb-2">Using a Microscope</h3>
+                                <p class="text-sm text-gray-700">You will learn the parts of a microscope (eyepiece, objective lenses, focusing knobs) and how to safely view specimens on slides.</p>
+                            </div>
+                            <div class="p-4 border border-gray-200 bg-gray-50">
+                                <h3 class="font-bold mb-2">Specialised Cells</h3>
+                                <p class="text-sm text-gray-700">Cells change their shape to do specific jobs. (e.g., Root hair cells have long extensions to absorb water).</p>
+                            </div>
+                            <div class="p-4 border border-gray-200 bg-gray-50">
+                                <h3 class="font-bold mb-2">Teamwork (Hierarchy)</h3>
+                                <p class="text-sm text-gray-700">Cells group to form <strong>tissues</strong>, tissues form <strong>organs</strong>, and organs work together in <strong>organ systems</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Vocabulary -->
+                <section id="vocabulary" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">3. Important Vocabulary Words</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border-l-4 border-brand pl-4 py-2">
+                            <span class="font-bold text-gray-900 block">Cell</span>
+                            <span class="text-sm text-gray-600">The basic unit of all living organisms.</span>
+                        </div>
+                        <div class="border-l-4 border-brand pl-4 py-2">
+                            <span class="font-bold text-gray-900 block">Cell Membrane</span>
+                            <span class="text-sm text-gray-600">The thin skin that controls what goes in and out of the cell.</span>
+                        </div>
+                        <div class="border-l-4 border-brand pl-4 py-2">
+                            <span class="font-bold text-gray-900 block">Cytoplasm</span>
+                            <span class="text-sm text-gray-600">The clear, jelly-like substance where chemical reactions happen.</span>
+                        </div>
+                        <div class="border-l-4 border-brand pl-4 py-2">
+                            <span class="font-bold text-gray-900 block">Nucleus</span>
+                            <span class="text-sm text-gray-600">The "boss" of the cell that controls all its activities.</span>
+                        </div>
+                        <div class="border-l-4 border-brand pl-4 py-2">
+                            <span class="font-bold text-gray-900 block">Mitochondrion</span>
+                            <span class="text-sm text-gray-600">The power station where energy is released from food.</span>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4 py-2 bg-green-50">
+                            <span class="font-bold text-green-900 block">Cell Wall (Plants only)</span>
+                            <span class="text-sm text-green-800">A stiff outer layer made of cellulose that holds shape.</span>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4 py-2 bg-green-50">
+                            <span class="font-bold text-green-900 block">Chloroplast (Plants only)</span>
+                            <span class="text-sm text-green-800">Green parts containing chlorophyll where plants make food.</span>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4 py-2 bg-green-50">
+                            <span class="font-bold text-green-900 block">Sap Vacuole (Mainly Plants)</span>
+                            <span class="text-sm text-green-800">A large space storing liquids and sugars.</span>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4 py-2 mt-4 md:col-span-2">
+                            <span class="font-bold text-gray-900 block">Tissue & Organ</span>
+                            <span class="text-sm text-gray-600"><strong>Tissue:</strong> A group of similar cells working together. <strong>Organ:</strong> A structure made of several tissues working together.</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Difficult Concepts -->
+                <section id="difficult" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">4. Concepts Students Usually Find Difficult</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-lg flex items-center text-brand">
+                                <span class="mr-2">⚠️</span> Mixing up Cell Wall vs. Cell Membrane
+                            </h4>
+                            <p class="text-gray-700 ml-7 mt-1">Remember, <em>all</em> cells have a membrane (like a water balloon), but only <em>plant</em> cells have the extra, hard outer Cell Wall (like putting that balloon inside a cardboard box).</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg flex items-center text-brand">
+                                <span class="mr-2">🧩</span> Understanding "Specialised" Cells
+                            </h4>
+                            <p class="text-gray-700 ml-7 mt-1">It can be tricky to remember how structure relates to function. Think of them as superheroes with specific powers. For example, red blood cells actually have NO nucleus so they have more room to pack in haemoglobin to carry oxygen!</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg flex items-center text-brand">
+                                <span class="mr-2">🏢</span> The Hierarchy Order
+                            </h4>
+                            <p class="text-gray-700 ml-7 mt-1">Remembering the order from smallest to largest can be confusing. Use this memory trick: <strong>C</strong>ells → <strong>T</strong>issues → <strong>O</strong>rgans → <strong>S</strong>ystems → <strong>O</strong>rganism (CTOSO).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Real-Life Importance -->
+                <section id="reallife" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">5. Real-Life Importance</h2>
+                    <div class="flex items-start gap-6">
+                        <div class="text-6xl">🌍</div>
+                        <div>
+                            <p class="text-lg text-gray-700 mb-4">Why do we care about cells? Because understanding cells is the secret to understanding life itself!</p>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                                <li><strong>Medicine:</strong> Doctors use cell biology to cure diseases. They need to know how viruses enter cell membranes to make medicines that stop them.</li>
+                                <li><strong>Agriculture:</strong> Farmers use knowledge of plant cells (like chloroplasts and root hair cells) to grow better, healthier food for the world.</li>
+                                <li><strong>Yourself:</strong> When you understand how a single cell breathes, eats, and works, you understand how <em>you</em> function every single day.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Learning Objectives -->
+                <section id="objectives" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">6. Learning Objectives</h2>
+                    <p class="text-gray-500 mb-4 uppercase tracking-wider text-sm font-bold">By the end of this chapter, you should be able to:</p>
+                    <div class="bg-gray-50 p-6 border border-gray-200">
+                        <ul class="space-y-4">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-brand mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Name the parts of plant and animal cells and describe what they do.
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-brand mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Make a model of a cell and understand its strengths and weaknesses.
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-brand mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Use a microscope safely to look at real plant and animal cells.
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-brand mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Explain how the unique structures of specialised cells help them do their jobs.
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-brand mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Recognise and name human organs and understand the biological hierarchy.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 7. Recommended Order -->
+                <section id="order" class="content-section card">
+                    <h2 class="text-3xl font-light mb-6 border-b pb-4">7. Recommended Order to Study</h2>
+                    <div class="relative border-l-2 border-brand ml-4 space-y-8 pb-4">
+                        
+                        <div class="relative pl-8">
+                            <div class="absolute w-6 h-6 bg-brand rounded-full text-white flex items-center justify-center font-bold text-xs -left-[13px] top-0 border-4 border-white">1</div>
+                            <h3 class="font-bold text-lg">Topic 1.1: Plant Cells & Microscopes</h3>
+                            <p class="text-gray-600 mt-1">Start by learning the main parts of a plant cell and how scientists use microscopes to see them.</p>
+                        </div>
+                        
+                        <div class="relative pl-8">
+                            <div class="absolute w-6 h-6 bg-brand rounded-full text-white flex items-center justify-center font-bold text-xs -left-[13px] top-0 border-4 border-white">2</div>
+                            <h3 class="font-bold text-lg">Topic 1.2: Animal Cells</h3>
+                            <p class="text-gray-600 mt-1">Next, look at animal cells. Create a list comparing what plant cells have that animal cells do not.</p>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute w-6 h-6 bg-brand rounded-full text-white flex items-center justify-center font-bold text-xs -left-[13px] top-0 border-4 border-white">3</div>
+                            <h3 class="font-bold text-lg">Topic 1.3: Specialised Cells</h3>
+                            <p class="text-gray-600 mt-1">Now that you know what a "normal" cell looks like, learn about the "superheroes" of the cell world (neurones, root hair cells) and their special adaptations.</p>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute w-6 h-6 bg-brand rounded-full text-white flex items-center justify-center font-bold text-xs -left-[13px] top-0 border-4 border-white">4</div>
+                            <h3 class="font-bold text-lg">Topic 1.4: Cells, Tissues, and Organs</h3>
+                            <p class="text-gray-600 mt-1">Finally, zoom out. Look at how these individual cells group together to build tissues, organs, and entire organ systems.</p>
+                        </div>
+
+                    </div>
+                </section>
+
             </main>
         </div>
 
-        <!-- View 2: Deep Dive (Trisha's Tab) -->
+        <!-- ========================================== -->
+        <!-- VIEW 2: DEEP DIVE WITH TEACHER             -->
+        <!-- ========================================== -->
         <div id="view-deep-dive" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
             <section class="card bg-gray-50 border-blue-200">
-                <h2 class="text-3xl font-bold mb-6">Conceptual Understanding</h2>
-                <p>Welcome to class! Let's explore cells deeply...</p>
-                <!-- Existing deep dive content... -->
+                <div class="flex items-center mb-6 border-b pb-4">
+                    <div class="text-5xl mr-4">👩‍🏫</div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Conceptual Understanding</h2>
+                        <p class="text-lg text-blue-600">Welcome to class, Trisha! Let's master these concepts together.</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-700 leading-relaxed space-y-12">
+                    <p class="text-lg italic">"Hi Trisha! Grab a seat. Today we are going to shrink down to a size smaller than a grain of sand, smaller than a dust mite, and explore the hidden universe inside of YOU. Are you ready? Let's dive into our five main concepts!"</p>
+
+                    <!-- Concept 1 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-brand mb-4">Concept 1: What on Earth is a Cell?</h3>
+                        
+                        <div class="space-y-4">
+                            <p><strong>1. Simple Explanation:</strong> Cells are tiny, microscopic living boxes. If you are a giant puzzle, cells are the millions of tiny puzzle pieces that snap together to make you.</p>
+                            
+                            <p><strong>2. Why it happens:</strong> Big living things need structure. Just like a house can't just be a pile of sand (it needs sturdy bricks), your body needs sturdy, organized little units to grow, repair cuts, and stay alive.</p>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400">
+                                <p><strong>3. Visual Imagination:</strong> Close your eyes, Trisha. Imagine looking at your arm with magical super-glasses. You keep zooming in, closer and closer, until your skin stops looking flat and starts looking like a massive, 3D honeycomb made of squishy water balloons! Those are your skin cells!</p>
+                            </div>
+                            
+                            <p><strong>4. Everyday Life Example:</strong> Think of a giant LEGO Death Star. From far away, it looks like a smooth, grey space station. But when you look closely, you see it's actually built out of thousands of individual, tiny 1-dot LEGO bricks. Cells are the biological LEGO bricks of life.</p>
+                            
+                            <p class="text-red-600"><strong>5. Common Misconception:</strong> <em>"Cells are flat like the drawings in my textbook."</em> Nope! They are 3D! They have depth, just like a ball or a box.</p>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p><strong>6. Memory Trick:</strong> The word "Cell" sounds like a tiny jail "cell." But instead of locking things up, a biological cell holds the magical jelly of life inside it!</p>
+                            </div>
+                            
+                            <p class="font-bold text-blue-700 bg-blue-50 p-2 rounded">7. Mini Recap: Every single living thing, Trisha—your dog, the grass, and YOU—is made of microscopic building blocks called cells.</p>
+                        </div>
+                    </div>
+
+                    <!-- Concept 2 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-green-600 mb-4">Concept 2: The Plant Cell Factory</h3>
+                        
+                        <div class="space-y-4">
+                            <p><strong>1. Simple Explanation:</strong> Plant cells are like tiny, self-sufficient factories wrapped in a strong cardboard box. They have special parts (organelles) to make their own food.</p>
+                            
+                            <p><strong>2. Why it happens:</strong> Trisha, have you ever seen a tree walk to the fridge for a snack? No! Plants can't run away from wind, and they can't hunt for food. So, their cells need a stiff outer wall to stand tall against gravity, and built-in solar panels to cook food using sunlight!</p>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-400">
+                                <p><strong>3. Visual Imagination:</strong> Imagine a squishy water balloon (the Cell Membrane) placed inside a stiff, clear cardboard box (the Cell Wall). Inside the balloon, there is clear jelly (Cytoplasm), a giant water pool in the center (Sap Vacuole), a big boss sitting in a chair (Nucleus), and little green jelly beans floating around catching sunlight (Chloroplasts).</p>
+                            </div>
+                            
+                            <p><strong>4. Everyday Life Example:</strong> A plant cell is like a tough Tupperware container filled with jelly, where the Tupperware keeps everything perfectly in shape even if you stack them high.</p>
+                            
+                            <p class="text-red-600"><strong>5. Common Misconception:</strong> <em>"The cell wall and cell membrane are the same thing."</em> Not at all! The Wall is the stiff cardboard box on the <em>outside</em>. The Membrane is the flexible bag on the <em>inside</em>.</p>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p><strong>6. Memory Trick:</strong> <br>• <strong>Chloro</strong>plasts catch the sun to make a <em>blast</em> of food! <br>• <strong>Mito</strong>chondria are the <em>mighty</em> powerhouses that release energy!</p>
+                            </div>
+                            
+                            <p class="font-bold text-blue-700 bg-blue-50 p-2 rounded">7. Mini Recap: Plant cells have special armor (Cell Wall) and solar panels (Chloroplasts) to help them survive while standing perfectly still.</p>
+                        </div>
+                    </div>
+
+                    <!-- Concept 3 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-red-500 mb-4">Concept 3: The Animal Cell Blob</h3>
+                        
+                        <div class="space-y-4">
+                            <p><strong>1. Simple Explanation:</strong> Animal cells are squishier and simpler than plant cells. They don't have stiff walls or green food-makers. You are made of these!</p>
+                            
+                            <p><strong>2. Why it happens:</strong> Animals need to run, dance, and bend! If we had stiff wooden cell walls like plants, we would be as stiff as tree trunks! Also, we eat our food (like pizza!), so we don't need chloroplasts to make food from the sun.</p>
+                            
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-400">
+                                <p><strong>3. Visual Imagination:</strong> Picture a wobbly, clear ziplock bag (Cell Membrane). Inside, it's filled with clear slime (Cytoplasm). Floating in the slime is a dark, heavy golf ball that gives orders (Nucleus), and tiny battery packs providing energy (Mitochondria).</p>
+                            </div>
+                            
+                            <p><strong>4. Everyday Life Example:</strong> Imagine a water-balloon filled with jelly. If you poke it, it squishes and changes shape. That's why you can pinch your cheeks and they bounce back!</p>
+                            
+                            <p class="text-red-600"><strong>5. Common Misconception:</strong> <em>"Animal cells don't have an outer skin because they don't have a wall."</em> They absolutely do have a skin! It's called the Cell Membrane. It controls what goes in and out, it's just flexible instead of stiff.</p>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p><strong>6. Memory Trick:</strong> Remember the word "ANIMAL": <br><strong>A</strong>lways <br><strong>N</strong>eed <br><strong>I</strong>nside <br><strong>M</strong>embrane, <br><strong>A</strong>bsolutely <br><strong>L</strong>ack walls!</p>
+                            </div>
+                            
+                            <p class="font-bold text-blue-700 bg-blue-50 p-2 rounded">7. Mini Recap: Animal cells are flexible and squishy. They have a membrane, cytoplasm, a nucleus, and mitochondria, but NO cell wall and NO chloroplasts.</p>
+                        </div>
+                    </div>
+
+                    <!-- Concept 4 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-indigo-500 mb-4">Concept 4: Specialised Cells (The Superheroes)</h3>
+                        
+                        <div class="space-y-4">
+                            <p><strong>1. Simple Explanation:</strong> Trisha, not all cells look like standard round blobs. Many cells "shape-shift" to do one very specific, important job in your body or in a plant.</p>
+                            
+                            <p><strong>2. Why it happens:</strong> If every cell was the exact same round blob, we wouldn't be able to see, think, or pump blood. We need specialized workers. Structure always matches function!</p>
+                            
+                            <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-400">
+                                <p><strong>3. Visual Imagination:</strong> <br>• <em>Root Hair Cell:</em> Imagine a cell stretching out one super-long, skinny arm like "Mr. Fantastic" to reach deep into the soil and grab water.<br>• <em>Red Blood Cell:</em> Imagine a squished, red jelly doughnut sliding through tiny water slides (your veins) at high speeds.<br>• <em>Neurone:</em> Imagine an alien tree with super-long electrical wires zapping messages to your brain.</p>
+                            </div>
+                            
+                            <p><strong>4. Everyday Life Example:</strong> Think of a toolbox. You can't use a hammer to screw in a screw, and you can't use a screwdriver to pound a nail. Every tool has a special shape for its special job. Cells are the body's tools!</p>
+                            
+                            <p class="text-red-600"><strong>5. Common Misconception:</strong> <em>"Red blood cells are just normal cells that happen to be red."</em> Nope! They are extreme shape-shifters. They actually throw out their own Nucleus (their brain!) just to make more room inside their "backpack" to carry oxygen for you!</p>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p><strong>6. Memory Trick:</strong> <br>• <strong>Cilia</strong>ted cells have tiny hairs (cilia) that act like a broom sweeping dust. <em>"Cilia sweeps it sillia!"</em></p>
+                            </div>
+                            
+                            <p class="font-bold text-blue-700 bg-blue-50 p-2 rounded">7. Mini Recap: Cells change their structure to become experts at their specific jobs, like carrying oxygen, grabbing water, or sending electric messages.</p>
+                        </div>
+                    </div>
+
+                    <!-- Concept 5 -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-orange-500 mb-4">Concept 5: The Grand Teamwork (Hierarchy)</h3>
+                        
+                        <div class="space-y-4">
+                            <p><strong>1. Simple Explanation:</strong> Cells don't like to work alone. They team up in groups to build bigger and bigger things: Cells ➔ Tissues ➔ Organs ➔ Organ Systems ➔ Organism.</p>
+                            
+                            <p><strong>2. Why it happens:</strong> One single muscle cell is too weak to lift your arm. But millions of muscle cells holding hands and pulling together can lift a heavy backpack! Teamwork allows complex life to exist.</p>
+                            
+                            <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
+                                <p><strong>3. Visual Imagination:</strong> <br>• <strong>Cell:</strong> One single singer.<br>• <strong>Tissue:</strong> A whole choir of singers holding hands.<br>• <strong>Organ:</strong> The choir joins a rock band, a lighting crew, and dancers (different tissues teaming up).<br>• <strong>Organ System:</strong> A massive stadium concert tour!</p>
+                            </div>
+                            
+                            <p><strong>4. Everyday Life Example:</strong> Think of writing an essay, Trisha. Letters (Cells) group together to make Words (Tissues). Words group together to make Sentences (Organs). Sentences make Paragraphs (Organ Systems), which make the whole Story (Organism)!</p>
+                            
+                            <p class="text-red-600"><strong>5. Common Misconception:</strong> <em>"Tissues are what I use to blow my nose."</em> In everyday life, yes! But in science class, a tissue is a group of identical cells glued together doing the same job (like onion epidermis or muscle tissue).</p>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                <p><strong>6. Memory Trick:</strong> To remember the order from smallest to biggest, use this funny sentence:<br><strong>C</strong>ats <strong>T</strong>each <strong>O</strong>wls <strong>S</strong>illy <strong>O</strong>bjects.<br>(<strong>C</strong>ells ➔ <strong>T</strong>issues ➔ <strong>O</strong>rgans ➔ <strong>S</strong>ystems ➔ <strong>O</strong>rganism)</p>
+                            </div>
+                            
+                            <p class="font-bold text-blue-700 bg-blue-50 p-2 rounded">7. Mini Recap: It’s all about teamwork! Cells group into tissues, tissues build organs (like your heart), organs form systems (like your circulatory system), making YOU!</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xl font-bold text-center mt-8 text-brand">"Great job, Trisha! You are now officially a cell expert! Keep reviewing these concepts and you will ace your Cambridge science class." 🌟</p>
+
+                </div>
             </section>
         </div>
 
-        <!-- View 3: Workbook -->
+        <!-- ========================================== -->
+        <!-- VIEW 3: CRITICAL THINKING WORKBOOK         -->
+        <!-- ========================================== -->
         <div id="view-workbook" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
             <section class="card border-t-4 border-t-brand">
-                <h2 class="text-3xl font-bold mb-6">Critical Thinking Workbook</h2>
-                <!-- Existing workbook content... -->
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Critical Thinking Workbook</h2>
+                    <p class="text-gray-600">Challenge your brain, Trisha! These questions start out easy and gradually increase in difficulty. Think carefully, and click <strong>"Show Answer & Explanation"</strong> when you are ready to check your work.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Q1: Why/How -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-green-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>1. Why & How?</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 1 ⭐</span>
+                        </h3>
+                        <p class="text-gray-700 font-medium">How do root hair cells manage to absorb water from the soil so much faster than a regular, round plant cell?</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded transition-all">
+                                <strong>Answer:</strong> They have a long, thin extension.<br><br>
+                                <strong>Explanation:</strong> This specialized structure greatly increases the cell's surface area. Think of it like a sponge—the more sponge that touches the water, the faster it soaks it up!
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q2: Compare and Contrast -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-blue-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>2. Compare & Contrast</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 2 ⭐⭐</span>
+                        </h3>
+                        <p class="text-gray-700 font-medium">What are the similarities and differences between a plant's <em>palisade cell</em> and a human <em>cheek cell</em>?</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Similarities:</strong> Both have a cell membrane, cytoplasm, a nucleus, and mitochondria.<br><br>
+                                <strong>Differences:</strong> The palisade cell is a plant cell, so it has three things the cheek cell lacks: a stiff <em>cell wall</em>, a large <em>sap vacuole</em>, and green <em>chloroplasts</em> (for photosynthesis).
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q3: Predict -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>3. Predict what happens if...</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 3 ⭐⭐⭐</span>
+                        </h3>
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-32 object-contain mb-4 bg-green-50 rounded border border-green-200">
+                            <!-- Cell Wall -->
+                            <rect x="20" y="20" width="260" height="160" rx="15" fill="#dcfce7" stroke="#166534" stroke-width="8"/>
+                            <!-- Cell Membrane -->
+                            <rect x="30" y="30" width="240" height="140" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+                            <!-- Vacuole -->
+                            <rect x="70" y="50" width="160" height="80" rx="30" fill="#bae6fd" stroke="#38bdf8" stroke-width="2"/>
+                            <!-- Nucleus -->
+                            <circle cx="240" cy="140" r="25" fill="#a855f7" />
+                            <circle cx="240" cy="140" r="10" fill="#7e22ce" />
+                            <!-- Chloroplasts -->
+                            <ellipse cx="50" cy="60" rx="15" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+                            <ellipse cx="50" cy="140" rx="15" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+                            <ellipse cx="250" cy="60" rx="15" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+                            <ellipse cx="150" cy="150" rx="15" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+                        </svg>
+                        <p class="text-gray-700 font-medium">Predict what would happen to a plant if a mysterious disease suddenly destroyed all of its chloroplasts.</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Answer:</strong> The plant would eventually starve and die.<br><br>
+                                <strong>Explanation:</strong> Chloroplasts contain chlorophyll, which absorbs sunlight to make food for the plant (photosynthesis). Without them, the plant loses its only way to feed itself!
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q4: Find the Mistake -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-red-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>4. Find the Mistakes</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 4 ⭐⭐⭐</span>
+                        </h3>
+                        <svg width="100%" height="100%" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" class="w-full h-32 object-contain mb-4 bg-red-50 rounded border border-red-200">
+                            <defs>
+                                <radialGradient id="rbc" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#fca5a5" />
+                                    <stop offset="70%" stop-color="#ef4444" />
+                                    <stop offset="100%" stop-color="#b91c1c" />
+                                </radialGradient>
+                            </defs>
+                            <circle cx="100" cy="75" r="40" fill="url(#rbc)" />
+                            <circle cx="180" cy="50" r="35" fill="url(#rbc)" />
+                            <circle cx="220" cy="100" r="45" fill="url(#rbc)" />
+                            <circle cx="50" cy="110" r="30" fill="url(#rbc)" />
+                        </svg>
+                        <p class="text-gray-700 font-medium">A younger student says: <em>"I looked at a red blood cell under the microscope and clearly saw its large nucleus and its thick cell wall."</em> Find the TWO mistakes in their statement.</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Mistake 1:</strong> Red blood cells do <em>not</em> have a nucleus. They get rid of it to make more room to carry oxygen using haemoglobin.<br><br>
+                                <strong>Mistake 2:</strong> Red blood cells are animal cells, which means they do <em>not</em> have a cell wall. They only have a flexible cell membrane.
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q5: Reasoning Puzzle -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-purple-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>5. Reasoning Puzzle</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 5 ⭐⭐⭐⭐</span>
+                        </h3>
+                        <p class="text-gray-700 font-medium italic">"I am a protective layer, but I am not found in you. I act like a knight's rigid armor, ensuring my host stands tall without a skeleton. I am made of tough cellulose. What am I, and what type of cell do I belong to?"</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Answer:</strong> The Cell Wall.<br><br>
+                                <strong>Explanation:</strong> Humans (animals) have skeletons to keep them upright, but plants rely on the rigid <em>cell wall</em> made of cellulose to keep their cells stiff and hold the plant in shape.
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q6: Multi-Step Problem -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-indigo-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>6. Multi-Step Problem Solving</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 6 ⭐⭐⭐⭐</span>
+                        </h3>
+                        <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-32 object-contain mb-4 bg-gray-50 rounded border border-gray-200">
+                            <!-- Base -->
+                            <rect x="50" y="160" width="100" height="20" rx="5" fill="#4b5563" />
+                            <!-- Arm -->
+                            <path d="M 130 160 C 170 160, 170 60, 130 60 L 100 60" fill="none" stroke="#374151" stroke-width="20" stroke-linecap="round" />
+                            <!-- Stage -->
+                            <rect x="60" y="120" width="70" height="8" rx="2" fill="#1f2937" />
+                            <!-- Body Tube -->
+                            <rect x="80" y="40" width="30" height="60" fill="#9ca3af" stroke="#4b5563" stroke-width="4"/>
+                            <!-- Eyepiece -->
+                            <rect x="85" y="20" width="20" height="20" fill="#1f2937" />
+                            <!-- Objective Lens -->
+                            <polygon points="90,100 100,100 105,115 85,115" fill="#d1d5db" stroke="#4b5563" stroke-width="2"/>
+                            <!-- Focus Knob -->
+                            <circle cx="140" cy="100" r="15" fill="#6b7280" stroke="#374151" stroke-width="3"/>
+                            <!-- Slide -->
+                            <rect x="85" y="117" width="20" height="3" fill="#38bdf8" />
+                        </svg>
+                        <p class="text-gray-700 font-medium">A scientist wants to observe a cheek cell. She rubs a cotton bud on her cheek (Step 1), rubs it on a glass slide (Step 2), and looks straight through the microscope (Step 3). She sees absolutely nothing! What <strong>two critical steps</strong> did she forget?</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Missing Step 1:</strong> She forgot to add a <em>stain</em> (like methylene blue). Animal cells are mostly transparent, so a dye is needed to make the nucleus and cytoplasm visible.<br><br>
+                                <strong>Missing Step 2:</strong> She forgot to place a <em>cover slip</em> over the drop. This tiny piece of glass protects the microscope lens and flattens the cells so they can be focused clearly.
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q7: Data Interpretation -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative md:col-span-2">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-teal-400 rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>7. Data Interpretation</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 7 ⭐⭐⭐⭐⭐</span>
+                        </h3>
+                        <p class="text-gray-700 font-medium mb-4">A biologist analyzed three mystery cells and recorded the organelles present. Using the table below, correctly identify which cell is an <strong>Animal cell</strong>, which is a <strong>Leaf Palisade cell</strong>, and which is a <strong>Root Hair cell</strong>.</p>
+                        
+                        <div class="overflow-x-auto mb-4">
+                            <table class="min-w-full bg-white border border-gray-200">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Cell</th>
+                                        <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Nucleus?</th>
+                                        <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Cell Wall?</th>
+                                        <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Chloroplasts?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-4 border-b text-sm font-bold">Cell A</td>
+                                        <td class="py-2 px-4 border-b text-sm">Yes</td>
+                                        <td class="py-2 px-4 border-b text-sm text-green-600 font-bold">Yes</td>
+                                        <td class="py-2 px-4 border-b text-sm text-green-600 font-bold">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4 border-b text-sm font-bold">Cell B</td>
+                                        <td class="py-2 px-4 border-b text-sm">Yes</td>
+                                        <td class="py-2 px-4 border-b text-sm text-red-600 font-bold">No</td>
+                                        <td class="py-2 px-4 border-b text-sm text-red-600 font-bold">No</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4 border-b text-sm font-bold">Cell C</td>
+                                        <td class="py-2 px-4 border-b text-sm">Yes</td>
+                                        <td class="py-2 px-4 border-b text-sm text-green-600 font-bold">Yes</td>
+                                        <td class="py-2 px-4 border-b text-sm text-red-600 font-bold">No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Answer & Explanation</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded">
+                                <strong>Cell A is the Leaf Palisade Cell:</strong> It has a cell wall and chloroplasts, meaning it is a plant cell that makes food from sunlight.<br><br>
+                                <strong>Cell B is the Animal Cell:</strong> It lacks both a cell wall and chloroplasts, which is the standard structure for animal cells.<br><br>
+                                <strong>Cell C is the Root Hair Cell:</strong> It has a cell wall (so it's a plant cell), but <em>no chloroplasts</em>. Why? Because root hair cells live underground in the dark! Sunlight can't reach them, so they don't need chloroplasts to do photosynthesis.
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Q8: Open-ended -->
+                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-lg relative md:col-span-2">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-brand rounded-l-lg"></div>
+                        <h3 class="text-lg font-bold text-gray-800 flex justify-between items-center mb-4">
+                            <span>8. Open-Ended Engineer Challenge</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">Level 8 🏆</span>
+                        </h3>
+                        <p class="text-gray-700 font-medium">Imagine you are a master genetic engineer. You need to invent a brand new, specialised human cell to help humans survive easily <em>underwater</em> in the ocean. <br><br>Describe what this cell would look like. What specific organelles (parts) would it have an abundance of? How would its structure be perfectly adapted to its function?</p>
+                        
+                        <details class="mt-4 group cursor-pointer">
+                            <summary class="text-brand font-medium text-sm hover:underline outline-none">Show Example Answer</summary>
+                            <div class="mt-3 p-4 bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded italic">
+                                <strong>Teacher's Note:</strong> There is no single correct answer here, but here is a great example of critical thinking:<br><br>
+                                "I would design an 'Aqua-Lung Cell'. It would be shaped like a massive net or sponge to absorb as much dissolved oxygen from the water as possible. It would have thousands of tiny moving hairs (<strong>cilia</strong>) to constantly fan fresh ocean water over the membrane. Inside, it would be completely packed with <strong>haemoglobin</strong> (like a red blood cell) to store massive amounts of oxygen, and it would have extra <strong>mitochondria</strong> to give the cell enough energy to keep the cilia moving constantly in the cold ocean currents!"
+                            </div>
+                        </details>
+                    </div>
+
+                </div>
             </section>
         </div>
+    </div>
 
         <!-- View 4: Exam Prep (New Quiz) -->
         <div id="view-exam" class="hidden animate-[fadeIn_0.4s_ease-in-out]">
