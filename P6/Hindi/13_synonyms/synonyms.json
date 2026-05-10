@@ -1,5 +1,5 @@
 [
-  { id: 1, rootWord: "अंधकार", synonyms: ["अँधेरा", "तम", "तमिर", "तमस"], category: "Abstract" },
+  { id: 1, rootWord: "अंधकार", synonyms: ["अँधेरा", "तम", "तिमिर", "तमस"], category: "Abstract" },
   { id: 2, rootWord: "अमृत", synonyms: ["सुधा", "अमिय", "सोम", "पीयूष"], category: "Divine" },
   { id: 3, rootWord: "आँख", synonyms: ["नेत्र", "नयन", "दृग", "चक्षु", "लोचन"], category: "Body" },
   { id: 4, rootWord: "आकाश", synonyms: ["आसमान", "नभ", "व्योम", "अंबर", "गगन"], category: "Nature" },
