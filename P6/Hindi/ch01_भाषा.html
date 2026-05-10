@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अध्याय 1: भाषा, लिपि और व्याकरण</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for better Hindi Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons for modern UI icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Devanagari"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e40af', // Deep Blue
+                        secondary: '#3b82f6', // Light Blue
+                        accent: '#f59e0b', // Amber
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="ph-fill ph-books text-primary text-3xl"></i>
+                    <span class="font-bold text-xl text-primary">हिंदी व्याकरण ज्ञान</span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-medium">
+                    <a href="#intro" class="hover:text-primary transition-colors">परिचय</a>
+                    <a href="#forms" class="hover:text-primary transition-colors">भाषा के रूप</a>
+                    <a href="#diverse" class="hover:text-primary transition-colors">विविध स्वरूप</a>
+                    <a href="#dialect" class="hover:text-primary transition-colors">बोली और साहित्य</a>
+                    <a href="#question-bank" class="hover:text-primary transition-colors">प्रश्न बैंक</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-800 to-primary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="bg-blue-900 text-blue-200 py-1 px-3 rounded-full text-sm font-semibold tracking-wide uppercase mb-4 inline-block shadow-sm">अध्याय 1</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">भाषा, लिपि और व्याकरण</h1>
+            <p class="text-xl md:text-2xl text-blue-100 font-light max-w-3xl mx-auto">भाग 1: भाषा और उसके विविध रूप</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- Introduction Section -->
+        <section id="intro" class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-chats-circle text-secondary"></i> भाषा क्या है?
+            </h2>
+            <div class="prose max-w-none text-lg text-slate-700 leading-relaxed">
+                <p>बिल्कुल, आइए भाषा (Language) और उसके भेदों को विस्तार से समझते हैं।</p>
+                <p class="text-xl font-medium text-slate-900 bg-blue-50 p-4 rounded-lg border-l-4 border-primary my-6 shadow-inner">
+                    "भाषा वह साधन है जिसके द्वारा मनुष्य बोलकर या लिखकर अपने मन के विचार दूसरों के सामने प्रकट करता है।" 
+                    <br><span class="text-base text-slate-600 font-normal mt-2 inline-block">सरल शब्दों में कहें तो, यह आपसी संवाद का एक पुल है।</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Forms of Language -->
+        <section id="forms">
+            <h2 class="text-3xl font-bold text-slate-900 mb-8 text-center">भाषा के मुख्य रूप (Forms of Language)</h2>
+            <p class="text-center text-slate-600 mb-8 max-w-2xl mx-auto text-lg">छात्रों की बेहतर समझ के लिए, आइए भाषा के इन रूपों का गहराई से विश्लेषण करें। यह संदर्भ सामग्री आपको इन अवधारणाओं को स्पष्ट रूप से समझने में मदद करेगी।</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Oral Language Card -->
+                <div class="bg-white rounded-2xl shadow-md p-8 border-t-4 border-green-500 hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph-fill ph-microphone-stage text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-slate-800">1. मौखिक भाषा (Oral Language)</h3>
+                    <p class="text-slate-700 mb-4">जब हम अपने विचारों को मुख से बोलकर प्रकट करते हैं और दूसरा व्यक्ति उसे सुनकर समझता है, तो उसे मौखिक भाषा कहते हैं। यह मानव सभ्यता के विकास का प्राचीनतम रूप है।</p>
+                    <ul class="space-y-2 mb-6 text-slate-600 list-disc pl-5">
+                        <li><strong class="text-slate-800">स्वाभाविक प्रक्रिया:</strong> इसे सीखने के लिए विशेष प्रयास नहीं करना पड़ता।</li>
+                        <li><strong class="text-slate-800">अस्थायी रूप:</strong> बोले गए शब्द हवा में विलीन हो जाते हैं।</li>
+                        <li><strong class="text-slate-800">परिवर्तनशील:</strong> क्षेत्र के अनुसार जल्दी बदलाव आते हैं।</li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                        <strong class="text-slate-800 block mb-2"><i class="ph-fill ph-lightbulb text-yellow-500"></i> उदाहरण:</strong>
+                        <p class="text-sm text-slate-600">बातचीत करना, टेलीफोन पर बात करना, वाद-विवाद (Debate), भाषण देना या रेडियो सुनना।</p>
+                    </div>
+                </div>
+
+                <!-- Written Language Card -->
+                <div class="bg-white rounded-2xl shadow-md p-8 border-t-4 border-blue-500 hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph-fill ph-pen-nib text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-slate-800">2. लिखित भाषा (Written Language)</h3>
+                    <p class="text-slate-700 mb-4">जब हम अपने मन के विचारों को लिखकर प्रकट करते हैं और दूसरा उसे पढ़कर समझता है, तो उसे लिखित भाषा कहते हैं।</p>
+                    <ul class="space-y-2 mb-6 text-slate-600 list-disc pl-5">
+                        <li><strong class="text-slate-800">प्रयास और अभ्यास:</strong> इसे सीखने के लिए व्याकरण का विधिवत ज्ञान चाहिए।</li>
+                        <li><strong class="text-slate-800">स्थायी रूप:</strong> इसके द्वारा हम ज्ञान को पीढ़ियों के लिए सुरक्षित रख सकते हैं।</li>
+                        <li><strong class="text-slate-800">मानक रूप:</strong> यह शुद्ध और व्याकरण-सम्मत रूप होता है।</li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                        <strong class="text-slate-800 block mb-2"><i class="ph-fill ph-lightbulb text-yellow-500"></i> उदाहरण:</strong>
+                        <p class="text-sm text-slate-600">पत्र लिखना, समाचार पत्र पढ़ना, परीक्षा में उत्तर लिखना, या ई-मेल (SMS) लिखना।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign Language & Quick Revision -->
+            <div class="mt-8 grid md:grid-cols-5 gap-8">
+                <!-- Sign Language -->
+                <div class="md:col-span-3 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold mb-4 text-slate-800 flex items-center gap-2">
+                        <i class="ph-fill ph-hand-waving text-purple-500 text-2xl"></i> एक अन्य रूप: सांकेतिक भाषा (Sign Language)
+                    </h3>
+                    <p class="text-slate-700 mb-4">कभी-कभी हम अपने हाथ, चेहरे के हाव-भाव या संकेतों के माध्यम से भी अपनी बात समझाते हैं।</p>
+                    <ul class="list-disc pl-5 text-slate-600 space-y-1 mb-6">
+                        <li>ट्रैफिक पुलिस का इशारा।</li>
+                        <li>मूक-बधिर (Deaf and Dumb) व्यक्तियों द्वारा किया गया संवाद।</li>
+                        <li>मैदान में अंपायर का इशारा।</li>
+                    </ul>
+                    <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-400">
+                        <strong class="text-red-800">व्याकरण में स्थान क्यों नहीं?</strong>
+                        <p class="text-red-700 text-sm mt-1">चूँकि संकेतों के माध्यम से हम हर बात (जटिल विचार या भावनाएँ) को पूरी तरह स्पष्ट रूप से व्यक्त नहीं कर सकते, इसलिए व्याकरण में सांकेतिक भाषा का अध्ययन नहीं किया जाता है।</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Revision Box -->
+                <div class="md:col-span-2 bg-gradient-to-br from-yellow-100 to-orange-100 p-8 rounded-2xl shadow-sm flex flex-col justify-center">
+                    <h3 class="text-xl font-bold mb-4 text-orange-800 flex items-center gap-2">
+                        <i class="ph-fill ph-lightning text-2xl"></i> याद रखने योग्य बिंदु (Quick Revision)
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="bg-white/60 p-3 rounded-lg flex justify-between font-medium text-slate-800">
+                            <span>बोलना और सुनना</span> <span>= मौखिक रूप</span>
+                        </div>
+                        <div class="bg-white/60 p-3 rounded-lg flex justify-between font-medium text-slate-800">
+                            <span>लिखना और पढ़ना</span> <span>= लिखित रूप</span>
+                        </div>
+                        <div class="bg-white/60 p-3 rounded-lg flex justify-between font-medium text-slate-800">
+                            <span>संकेत करना</span> <span>= सांकेतिक रूप</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Differences Table -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-800 px-6 py-4">
+                <h2 class="text-2xl font-bold text-white">3. मौखिक और लिखित भाषा में अंतर (Differences)</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase text-sm tracking-wider">
+                            <th class="px-6 py-4 border-b">अंतर का आधार</th>
+                            <th class="px-6 py-4 border-b font-bold text-green-700">मौखिक भाषा (Maukhik)</th>
+                            <th class="px-6 py-4 border-b font-bold text-blue-700">लिखित भाषा (Likhit)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-700">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 border-b font-medium text-slate-900">मूल इकाई</td>
+                            <td class="px-6 py-4 border-b">इसकी मूल इकाई <strong>ध्वनि (Sound)</strong> है।</td>
+                            <td class="px-6 py-4 border-b">इसकी मूल इकाई <strong>वर्ण (Letter/Script)</strong> है।</td>
+                        </tr>
+                        <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
+                            <td class="px-6 py-4 border-b font-medium text-slate-900">स्थायित्व</td>
+                            <td class="px-6 py-4 border-b">अस्थायी रूप है (कही गई बात समाप्त हो जाती है)।</td>
+                            <td class="px-6 py-4 border-b">स्थायी रूप है (लिखी गई बात सदियों तक रहती है)।</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 border-b font-medium text-slate-900">सीखने की प्रक्रिया</td>
+                            <td class="px-6 py-4 border-b">अनुकरण (नकल करने) और परिवेश से सहजता से सीखी जाती है।</td>
+                            <td class="px-6 py-4 border-b">सीखने के लिए विद्यालय, शिक्षक और सचेत प्रयास की आवश्यकता होती है।</td>
+                        </tr>
+                        <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
+                            <td class="px-6 py-4 border-b font-medium text-slate-900">क्षेत्र और दूरी</td>
+                            <td class="px-6 py-4 border-b">प्रयोग प्रायः आमने-सामने या सीधे संपर्क में होता है।</td>
+                            <td class="px-6 py-4 border-b">विचार सात समंदर पार और आने वाली पीढ़ियों तक पहुँचाए जा सकते हैं।</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 font-medium text-slate-900">व्याकरण का बंधन</td>
+                            <td class="px-6 py-4">व्याकरण के नियमों का बहुत कड़ाई से पालन नहीं होता।</td>
+                            <td class="px-6 py-4">व्याकरण और वर्तनी (Spelling) की शुद्धता अनिवार्य होती है।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Diverse Forms of Language -->
+        <section id="diverse">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <i class="ph-fill ph-globe-hemisphere-east text-primary"></i> भाषा के विविध स्वरूप
+            </h2>
+            <p class="text-slate-600 mb-8 text-lg">समाज, राज्य और देश के स्तर पर भाषा का प्रयोग किन-किन रूपों में होता है, आइए जानें:</p>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Form 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-pink-500 pb-2 inline-block">1. मातृभाषा (Mother Tongue)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> वह भाषा जिसे बालक अपने जन्म के बाद अपने परिवार, विशेषकर अपनी माँ से सबसे पहले सीखता है।</p>
+                    <p class="text-xs bg-slate-50 p-2 rounded text-slate-500"><strong>उदाहरण:</strong> पंजाबी परिवार में जन्मे बच्चे की मातृभाषा पंजाबी होगी।</p>
+                </div>
+                <!-- Form 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-teal-500 pb-2 inline-block">2. प्रादेशिक भाषा (Regional)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> जब कोई भाषा किसी एक विशेष प्रदेश या राज्य में बोली जाती है।</p>
+                    <p class="text-xs bg-slate-50 p-2 rounded text-slate-500"><strong>उदाहरण:</strong> महाराष्ट्र-मराठी, गुजरात-गुजराती, पश्चिम बंगाल-बांग्ला।</p>
+                </div>
+                <!-- Form 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-blue-600 pb-2 inline-block">3. राजभाषा (Official)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> वह भाषा जिसका प्रयोग देश के सरकारी कार्यालयों (Govt. Offices) में कामकाज के लिए किया जाता है।</p>
+                    <div class="text-xs bg-blue-50 text-blue-800 p-2 rounded border border-blue-100">
+                        <strong>तथ्य:</strong> 14 सितंबर 1949 को हिंदी को राजभाषा स्वीकारा गया (हिंदी दिवस)।
+                    </div>
+                </div>
+                <!-- Form 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-orange-500 pb-2 inline-block">4. राष्ट्रभाषा (National)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> देश के अधिकांश नागरिकों द्वारा बोली जाने वाली भाषा जो राष्ट्र को एक सूत्र में बांधती है।</p>
+                    <p class="text-xs bg-slate-50 p-2 rounded text-slate-500"><strong>संदर्भ:</strong> भारत की 70% आबादी हिंदी समझती है, अतः सैद्धांतिक रूप से यह राष्ट्रभाषा है।</p>
+                </div>
+                <!-- Form 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-indigo-500 pb-2 inline-block">5. संपर्क भाषा (Lingua Franca)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> दो अलग-अलग भाषा बोलने वाले लोगों के बीच संवाद का माध्यम बनने वाली भाषा।</p>
+                    <p class="text-xs bg-slate-50 p-2 rounded text-slate-500"><strong>उदाहरण:</strong> भारत में हिंदी और अंग्रेजी प्रमुख संपर्क भाषाएँ हैं।</p>
+                </div>
+                <!-- Form 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 border-b-2 border-green-500 pb-2 inline-block">6. मानक भाषा (Standard)</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong class="text-slate-800">परिभाषा:</strong> भाषा के जिस शुद्ध रूप को विद्वानों द्वारा स्वीकृति दी जाती है (एकरूपता लाने के लिए)।</p>
+                    <p class="text-xs bg-slate-50 p-2 rounded text-slate-500"><strong>प्रयोग:</strong> पाठ्यपुस्तकें, समाचार पत्र, टीवी न्यूज़।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dialect and Literature Section -->
+        <section id="dialect" class="space-y-8">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-book-open-text text-secondary"></i> बोली और साहित्य (Dialect & Literature)
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Boli -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-primary">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">क. बोली (Dialect)</h3>
+                    <p class="text-slate-700 mb-4"><strong class="text-slate-900">परिभाषा:</strong> भाषा के क्षेत्रीय (Regional) या स्थानीय रूप को बोली कहते हैं। जो भाषा किसी एक सीमित क्षेत्र में आम बोलचाल के लिए प्रयोग होती है।</p>
+                    <div class="bg-slate-100 p-4 rounded-lg italic text-slate-700 mb-4 text-center">
+                        "कोस-कोस पर बदले पानी, चार कोस पर बानी (बोली)।"
+                    </div>
+                    <ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
+                        <li>क्षेत्र बहुत छोटा या सीमित होता है।</li>
+                        <li>केवल मौखिक रूप में अधिक प्रयोग होती है।</li>
+                        <li><strong>उदाहरण:</strong> भोजपुरी, अवधी, हरियाणवी, मारवाड़ी।</li>
+                    </ul>
+                </div>
+
+                <!-- Sahitya -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-accent">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">ग. साहित्य (Literature)</h3>
+                    <p class="text-slate-700 mb-4"><strong class="text-slate-900">परिभाषा:</strong> ज्ञान के संचित कोष (Accumulated treasury of knowledge) को साहित्य कहते हैं।</p>
+                    
+                    <div class="space-y-4 mt-6">
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-orange-800">1. गद्य साहित्य (Prose)</h4>
+                            <p class="text-sm text-orange-900 mt-1">साधारण वाक्यों या अनुच्छेदों में विचार प्रकट करना। (कोई लय नहीं)।</p>
+                            <p class="text-xs mt-2 text-orange-700"><strong>उदाहरण:</strong> कहानी, निबंध, नाटक। (मुंशी प्रेमचंद)</p>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-indigo-800">2. पद्य साहित्य (Poetry)</h4>
+                            <p class="text-sm text-indigo-900 mt-1">विचारों को लय, ताल, तुकबंदी के साथ पिरोकर लिखना (जिसे गाया जा सके)।</p>
+                            <p class="text-xs mt-2 text-indigo-700"><strong>उदाहरण:</strong> कविता, दोहे, गीत। (कबीरदास, तुलसीदास)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table: Bhasha vs Boli -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 mt-8">
+                <div class="bg-primary px-6 py-4">
+                    <h3 class="text-xl font-bold text-white">ख. भाषा और बोली में अंतर</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 text-sm">
+                                <th class="px-6 py-3 border-b font-semibold">आधार</th>
+                                <th class="px-6 py-3 border-b font-semibold">भाषा (Language)</th>
+                                <th class="px-6 py-3 border-b font-semibold">बोली (Dialect)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-700">
+                            <tr>
+                                <td class="px-6 py-3 border-b font-medium">1. क्षेत्र</td>
+                                <td class="px-6 py-3 border-b">क्षेत्र बहुत विस्तृत (बड़ा) होता है।</td>
+                                <td class="px-6 py-3 border-b">क्षेत्र सीमित (छोटा) होता है।</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="px-6 py-3 border-b font-medium">2. व्याकरण</td>
+                                <td class="px-6 py-3 border-b">निश्चित और कठोर व्याकरण होता है।</td>
+                                <td class="px-6 py-3 border-b">अपना कोई लिखित व्याकरण नहीं होता।</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-3 border-b font-medium">3. साहित्य</td>
+                                <td class="px-6 py-3 border-b">प्रचुर मात्रा में उच्च कोटि का साहित्य लिखा जाता है।</td>
+                                <td class="px-6 py-3 border-b">साहित्य रचना कम होती है (मुख्यतः लोकगीत)।</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="px-6 py-3 font-medium">4. प्रयोग</td>
+                                <td class="px-6 py-3">शिक्षा, सरकारी कामकाज आदि में।</td>
+                                <td class="px-6 py-3">केवल स्थानीय लोगों द्वारा बोलचाल में।</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teacher's Note & 22 Languages -->
+        <section class="bg-slate-800 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+            <!-- Decorative icon -->
+            <i class="ph-fill ph-certificate text-slate-700/50 text-9xl absolute -bottom-4 -right-4"></i>
+            
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-slate-900 text-2xl">
+                        <i class="ph-fill ph-chalkboard-teacher"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-yellow-400">शिक्षक का विशेष नोट</h2>
+                </div>
+                
+                <p class="text-slate-300 text-lg mb-6 max-w-3xl">
+                    भारतीय संविधान की <strong class="text-white">'आठवीं अनुसूची' (Eighth Schedule)</strong> में कुल 
+                    <strong class="bg-yellow-400 text-slate-900 px-2 py-0.5 rounded">22 भारतीय भाषाओं</strong> 
+                    को आधिकारिक मान्यता प्रदान की गई है।
+                </p>
+
+                <!-- Languages Tags -->
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">हिंदी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">संस्कृत</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">मराठी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">गुजराती</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">पंजाबी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">बंगाली</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">असमिया</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">ओड़िया</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">उर्दू</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">कन्नड़</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">कश्मीरी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">कोंकणी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">डोगरी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">तमिल</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">तेलुगु</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">नेपाली</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">बोडो</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">मणिपुरी</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">मलयालम</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">मैथिली</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">संथाली</span>
+                    <span class="px-4 py-2 bg-slate-700/80 hover:bg-slate-600 rounded-full text-sm font-medium border border-slate-600 transition-colors cursor-default">सिंधी</span>
+                </div>
+                <p class="text-sm text-slate-400 mt-6 pt-4 border-t border-slate-700">
+                    <i class="ph-fill ph-info text-yellow-400"></i> इसका मतलब है कि कोई भी नागरिक इन 22 भाषाओं में से किसी में भी राष्ट्रीय स्तर की सरकारी परीक्षाएँ (जैसे UPSC) दे सकता है।
+                </p>
+            </div>
+        </section>
+
+        <!-- Question Bank Section -->
+        <section id="question-bank" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10">
+            <div class="mb-10 text-center md:text-left">
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold tracking-wide mb-3 inline-block">भाग ङ</span>
+                <h2 class="text-3xl font-bold text-slate-900 flex items-center justify-center md:justify-start gap-2 mb-3">
+                    <i class="ph-fill ph-question text-primary"></i> विस्तृत लघु उत्तरीय प्रश्न-उत्तर
+                </h2>
+                <p class="text-slate-600 text-lg">कक्षा 6 के पाठ्यक्रम की रूपरेखा के आधार पर यहाँ प्रश्नों का संपूर्ण संग्रह दिया गया है। उत्तर देखने के लिए प्रश्न पर क्लिक करें।</p>
+            </div>
+
+            <div class="space-y-10">
+                
+                <!-- Category 1 -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-primary/20 pb-2 flex items-center gap-2">
+                        <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span> 
+                        भाषा का परिचय (Introduction to Language)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 1:</strong> भाषा किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जिस साधन के द्वारा हम अपने मन के भावों और विचारों का आदान-प्रदान करते हैं, उसे भाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 2:</strong> मानव समाज में विचारों के आदान-प्रदान का मुख्य साधन क्या है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> मानव समाज में विचारों के आदान-प्रदान का मुख्य साधन 'भाषा' है।
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-primary/20 pb-2 flex items-center gap-2">
+                        <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span> 
+                        भाषा के रूप (Forms of Language)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 3:</strong> व्याकरण के आधार पर भाषा के मुख्य कितने रूप होते हैं? उनके नाम लिखिए।</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> व्याकरण के आधार पर भाषा के मुख्य दो रूप होते हैं— (1) मौखिक भाषा और (2) लिखित भाषा।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 4:</strong> मौखिक भाषा किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जब हम मुख से बोलकर अपनी बात कहते हैं और दूसरा उसे सुनकर समझता है, तो उसे मौखिक भाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 5:</strong> लिखित भाषा किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जब हम लिखकर अपने विचार व्यक्त करते हैं और दूसरा उसे पढ़कर समझता है, तो उसे लिखित भाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 6:</strong> टेलीफोन पर बात करना भाषा का कौन-सा रूप है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> टेलीफोन पर बात करना भाषा का मौखिक रूप है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 7:</strong> परीक्षा में उत्तर लिखना भाषा का कौन-सा रूप है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> परीक्षा में उत्तर लिखना भाषा का लिखित रूप है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 8:</strong> भाषा का कौन-सा रूप अस्थायी (Temporary) होता है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भाषा का मौखिक रूप अस्थायी होता है, क्योंकि बोले गए शब्द हवा में समाप्त हो जाते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 9:</strong> भाषा का कौन-सा रूप स्थायी (Permanent) होता है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भाषा का लिखित रूप स्थायी होता है, क्योंकि इसे लंबे समय तक सुरक्षित रखा जा सकता है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 10:</strong> मौखिक भाषा की मूल इकाई क्या है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> मौखिक भाषा की मूल इकाई 'ध्वनि' (Sound) है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 11:</strong> लिखित भाषा की मूल इकाई क्या है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> लिखित भाषा की मूल इकाई 'वर्ण' या 'अक्षर' (Letter) है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 12:</strong> ज्ञान को सदियों तक सुरक्षित रखने के लिए भाषा के किस रूप की आवश्यकता होती है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> ज्ञान को सुरक्षित रखने के लिए भाषा के 'लिखित' रूप की आवश्यकता होती है।
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-primary/20 pb-2 flex items-center gap-2">
+                        <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span> 
+                        सांकेतिक भाषा (Sign Language)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 13:</strong> सांकेतिक भाषा किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जब हम इशारों या शारीरिक हाव-भाव द्वारा अपने विचार प्रकट करते हैं, तो उसे सांकेतिक भाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 14:</strong> अंपायर द्वारा उंगली उठाकर 'आउट' देना किस भाषा का उदाहरण है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> यह 'सांकेतिक भाषा' का उदाहरण है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 15:</strong> व्याकरण में सांकेतिक भाषा का अध्ययन क्यों नहीं किया जाता?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> क्योंकि इशारों के माध्यम से विचारों को पूरी तरह और स्पष्टता से व्यक्त नहीं किया जा सकता, इसलिए इसे व्याकरण में स्थान नहीं मिला है।
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Category 4 -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-primary/20 pb-2 flex items-center gap-2">
+                        <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span> 
+                        भाषा के विविध स्वरूप (Various Forms of Language)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 16:</strong> मातृभाषा (Mother Tongue) किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> वह भाषा जिसे बच्चा सबसे पहले अपने परिवार और अपनी माँ से सीखता है, उसे मातृभाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 17:</strong> प्रादेशिक भाषा से आप क्या समझते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> किसी विशेष प्रदेश या राज्य में बोली जाने वाली भाषा को प्रादेशिक भाषा कहते हैं (जैसे- महाराष्ट्र में मराठी)।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 18:</strong> राजभाषा (Official Language) का क्या अर्थ है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> देश के सरकारी कार्यालयों (कामकाज) में जिस भाषा का प्रयोग किया जाता है, उसे राजभाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 19:</strong> भारत की राजभाषा क्या है और इसे कब स्वीकार किया गया?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भारत की राजभाषा 'हिंदी' है और इसे 14 सितंबर 1949 को स्वीकार किया गया था।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 20:</strong> 'हिंदी दिवस' कब मनाया जाता है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> प्रतिवर्ष 14 सितंबर को 'हिंदी दिवस' मनाया जाता है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 21:</strong> राष्ट्रभाषा (National Language) किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जो भाषा देश के अधिकांश नागरिकों द्वारा बोली और समझी जाती है, उसे राष्ट्रभाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 22:</strong> संपर्क भाषा (Lingua Franca) का क्या कार्य है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> जब दो अलग-अलग भाषा बोलने वाले लोग आपस में बातचीत करने के लिए किसी एक समान भाषा का प्रयोग करते हैं, तो उसे संपर्क भाषा कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 23:</strong> मानक भाषा (Standard Language) क्या होती है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> विद्वानों द्वारा स्वीकृत भाषा का शुद्ध और एकरूप (Uniform) स्वरूप मानक भाषा कहलाता है।
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Category 5 -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-primary/20 pb-2 flex items-center gap-2">
+                        <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span> 
+                        बोली, साहित्य और संविधान (Dialect, Literature & Constitution)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 24:</strong> बोली (Dialect) किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भाषा के क्षेत्रीय या स्थानीय (सीमित) रूप को बोली कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 25:</strong> किन्हीं दो बोलियों के नाम लिखिए।</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भोजपुरी और हरियाणवी।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 26:</strong> भाषा और बोली में मुख्य अंतर क्या है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भाषा का क्षेत्र बहुत बड़ा (विस्तृत) होता है, जबकि बोली का क्षेत्र सीमित (छोटा) होता है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 27:</strong> साहित्य (Literature) किसे कहते हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> किसी भाषा के संचित ज्ञान-भंडार (ज्ञान के संचित कोष) को साहित्य कहते हैं।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 28:</strong> साहित्य के दो मुख्य प्रकार कौन-से हैं?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> साहित्य के दो मुख्य प्रकार हैं— (1) गद्य साहित्य और (2) पद्य साहित्य।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 29:</strong> गद्य साहित्य के दो उदाहरण लिखिए।</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> कहानी और निबंध।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 30:</strong> पद्य साहित्य के दो उदाहरण लिखिए।</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> कविता और गीत।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 31:</strong> भारत के संविधान की किस अनुसूची में भाषाओं को मान्यता दी गई है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भारत के संविधान की '8वीं अनुसूची' में भाषाओं को मान्यता दी गई है।
+                            </div>
+                        </details>
+                        <details class="group bg-slate-50 border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center justify-between p-4 font-medium cursor-pointer text-slate-800 hover:bg-blue-50 transition-colors">
+                                <span class="pr-4"><strong>प्र 32:</strong> भारतीय संविधान में कितनी भाषाओं को मान्यता प्राप्त है?</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full group-open:hidden border border-blue-200 hover:bg-blue-200 transition-colors">उत्तर देखें</span>
+                                <span class="shrink-0 text-xs md:text-sm bg-slate-200 text-slate-600 px-3 py-1 rounded-full hidden group-open:inline-block border border-slate-300">बंद करें</span>
+                            </summary>
+                            <div class="p-4 border-t border-slate-200 text-slate-700 bg-white rounded-b-lg leading-relaxed">
+                                <strong class="text-green-700">उ:</strong> भारतीय संविधान में 22 भाषाओं को मान्यता प्राप्त है।
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
+        <p>© 2026 हिंदी व्याकरण पाठ्य सामग्री। सभी अधिकार सुरक्षित।</p>
+    </footer>
+
+</body>
+</html>
