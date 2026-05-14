@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हिंदी व्याकरण - वर्ण और वर्णमाला (UBS Style)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ubs-navy: #002147;
+            --ubs-red: #d10000;
+            --ubs-gray-light: #f4f4f4;
+            --ubs-border: #d5d5d5;
+            --ubs-text: #333333;
+        }
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background-color: var(--ubs-gray-light);
+            color: var(--ubs-text);
+            scroll-behavior: smooth;
+        }
+        .ubs-header {
+            background-color: var(--ubs-navy);
+            border-bottom: 8px solid var(--ubs-red);
+        }
+        .ubs-card {
+            background: white;
+            border: 1px solid var(--ubs-border);
+            border-radius: 0;
+            margin-bottom: 24px;
+        }
+        /* Tab Styles */
+        .tab-btn {
+            padding: 14px 20px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            color: #555;
+            background: white;
+            border-right: 1px solid #eee;
+        }
+        .tab-btn:hover {
+            color: var(--ubs-navy);
+            background: #fafafa;
+        }
+        .tab-btn.active {
+            border-bottom-color: var(--ubs-red);
+            color: var(--ubs-navy);
+            font-weight: 700;
+            background: #fff;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Components */
+        .answer-box {
+            display: none;
+            background-color: #f0fdf4;
+            border-left: 4px solid #166534;
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #166534;
+        }
+        .ubs-button-secondary {
+            background-color: white;
+            color: var(--ubs-navy);
+            border: 1px solid var(--ubs-navy);
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .ubs-button-secondary:hover {
+            background-color: var(--ubs-navy);
+            color: white;
+        }
+        .highlight-r { color: var(--ubs-red); font-weight: bold; }
+        .vv-eqn { font-family: monospace; background: #eee; padding: 2px 6px; border-radius: 2px; border: 1px solid #ccc; font-size: 1.1em;}
+        .teacher-tip { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 1rem; }
+        .section-title { border-bottom: 2px solid var(--ubs-navy); display: inline-block; padding-bottom: 0.2rem; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
+        
+        /* AI Styles */
+        .ai-glow { box-shadow: 0 0 15px rgba(0, 33, 71, 0.1); border-top: 4px solid var(--ubs-navy); }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--ubs-navy); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px;}
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="ubs-header text-white py-12 px-6 shadow-sm">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end">
+            <div>
+                <p class="text-sm font-light tracking-widest uppercase mb-1">Education Division | Secondary Language</p>
+                <h1 class="text-4xl md:text-5xl font-bold uppercase">वर्ण विचार (Phonology)</h1>
+                <p class="text-lg text-slate-300 mt-2">कक्षा 6: सम्पूर्ण मार्गदर्शिका एवं महा-प्रश्न बैंक</p>
+            </div>
+            <div class="hidden md:block text-right pb-1">
+                <p class="text-xs uppercase opacity-70">Standard</p>
+                <p class="text-2xl font-bold">Grade 6</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white sticky top-0 z-50 shadow-md border-b">
+        <div class="max-w-6xl mx-auto overflow-x-auto flex">
+            <button onclick="openTab(event, 'basics')" class="tab-btn active">1-2: बुनियादी बातें</button>
+            <button onclick="openTab(event, 'swar')" class="tab-btn">3-4: स्वर & चिह्न</button>
+            <button onclick="openTab(event, 'vyanjan')" class="tab-btn">5: व्यंजन (शब्द-कोश)</button>
+            <button onclick="openTab(event, 'special')" class="tab-btn">6-7: विशेष व्यंजन & 'र'</button>
+            <button onclick="openTab(event, 'vicched')" class="tab-btn">8: वर्ण-विच्छेद</button>
+            <button onclick="openTab(event, 'quiz')" class="tab-btn bg-slate-50 font-bold">📝 महा-प्रश्न बैंक</button>
+            <button onclick="openTab(event, 'ai-assistant')" class="tab-btn bg-blue-50 text-blue-900 font-bold border-l-2 border-blue-200">✨ एआई सहायक</button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-6 md:p-10">
+        
+        <!-- ========================================== -->
+        <!-- TAB 1: BASICS (Sections 1 & 2)             -->
+        <!-- ========================================== -->
+        <div id="basics" class="tab-content active space-y-8">
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">प्रस्तावना</h2>
+                <p class="text-lg leading-relaxed mb-6">
+                    नमस्ते! द्वितीय भाषा (Second Language) के रूप में हिंदी सीखने वाले कक्षा 6 के छात्रों के लिए 'वर्ण और वर्णमाला' को समझना बहुत ही आसान और मज़ेदार हो सकता है।
+                    इसे एक <strong>'घर बनाने'</strong> के उदाहरण से समझते हैं—जैसे ईंटों को जोड़कर घर बनता है, वैसे ही छोटी-छोटी ध्वनियों (Sounds) को जोड़कर भाषा बनती है।
+                </p>
+            </div>
+
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">1. वर्ण और वर्णमाला (Letter and Alphabet)</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Varn -->
+                    <div class="border p-6 bg-slate-50">
+                        <h3 class="font-bold text-xl mb-3 text-blue-900">क. वर्ण (Varn / Letter)</h3>
+                        <p class="text-slate-700 italic mb-2">भाषा की सबसे छोटी इकाई</p>
+                        <p class="text-slate-700 mb-3">जब हम कुछ बोलते हैं, तो हमारे मुँह से कुछ ध्वनियाँ (Sounds) निकलती हैं। भाषा की वह सबसे छोटी ध्वनि जिसके हम और टुकड़े नहीं कर सकते, उसे 'वर्ण' कहते हैं।</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-600 mb-4">
+                            <li><strong>अंग्रेजी से तुलना:</strong> जैसे अंग्रेजी में A, B, C, D सबसे छोटी ध्वनियाँ हैं।</li>
+                            <li><strong>उदाहरण:</strong> अ, इ, उ, क्, ख्, च् आदि।</li>
+                        </ul>
+                        <div class="teacher-tip">
+                            <h4 class="font-bold text-amber-900 mb-1">👨‍🏫 शिक्षक की टिप: हलंत ( ् )</h4>
+                            <p class="text-sm">क्, ख्, च् के नीचे एक तिरछी लाइन लगी है। इसे 'हलंत' कहते हैं। इसका मतलब है कि यह व्यंजन अभी 'आधा' है। बिना हलंत वाला 'क' = <strong>क् + अ</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Varnamala -->
+                    <div class="border p-6 bg-slate-50">
+                        <h3 class="font-bold text-xl mb-3 text-blue-900">ख. वर्णमाला (Varnamala)</h3>
+                        <p class="text-slate-700 italic mb-2">वर्णों की माला</p>
+                        <p class="text-slate-700 mb-3">जैसे फूलों को एक धागे में क्रम से पिरोने पर 'माला' बनती है, वैसे ही वर्णों के व्यवस्थित और क्रमबद्ध समूह को 'वर्णमाला' कहते हैं।</p>
+                        <div class="bg-white border p-4 mt-4">
+                            <h4 class="font-bold mb-2 border-b pb-1">हिंदी और अंग्रेजी में अंतर:</h4>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-slate-600">English Alphabet</span>
+                                <span class="font-bold">26 Letters</span>
+                            </div>
+                            <div class="flex justify-between items-center text-blue-900">
+                                <span>मानक हिंदी वर्णमाला</span>
+                                <span class="font-bold text-lg">52 वर्ण</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">2. वर्णों के भेद (Types of Letters)</h2>
+                <p class="mb-6 text-slate-700">उच्चारण (Pronunciation) के आधार पर 52 वर्णों को मुख्य रूप से दो परिवारों में बाँटा गया है:</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="p-6 border-l-4 border-blue-900 bg-white shadow-sm">
+                        <h3 class="font-bold text-xl mb-1">1. स्वर (Swar - Vowels)</h3>
+                        <p class="text-sm text-blue-800 mb-3 italic">स्वतंत्र वर्ण (Independent)</p>
+                        <p class="text-slate-700 mb-3">वे वर्ण जिन्हें बोलने के लिए किसी दूसरे वर्ण की मदद नहीं लेनी पड़ती। हवा सीधे बाहर निकलती है।</p>
+                        <p class="font-bold text-sm bg-slate-100 p-2">हिंदी में 11 स्वर हैं: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ</p>
+                    </div>
+                    <div class="p-6 border-l-4 border-red-600 bg-white shadow-sm">
+                        <h3 class="font-bold text-xl mb-1">2. व्यंजन (Vyanjan)</h3>
+                        <p class="text-sm text-red-800 mb-3 italic">आश्रित वर्ण (Dependent)</p>
+                        <p class="text-slate-700 mb-3">वे वर्ण जिन्हें बोलने के लिए 'स्वरों' की मदद लेनी पड़ती है। (जैसे क = क् + अ)।</p>
+                        <p class="font-bold text-sm bg-slate-100 p-2">हिंदी में मूल रूप से 33 व्यंजन होते हैं।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: SWAR & MATRA (Sections 3 & 4)       -->
+        <!-- ========================================== -->
+        <div id="swar" class="tab-content space-y-8">
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">3. स्वर (Swar - Vowels) विस्तार से</h2>
+                <p class="mb-6">हिंदी में कुल 11 स्वर होते हैं। इन्हें बोलने में लगने वाले समय के आधार पर तीन परिवारों में बाँटा गया है (स्टॉपवॉच का उदाहरण):</p>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8 text-sm">
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-blue-900 text-base mb-1">क. ह्रस्व स्वर (Short)</h4>
+                        <p class="text-slate-600 mb-2">सबसे कम समय (1 सेकंड)। ये 4 हैं।</p>
+                        <p class="font-bold">अ, इ, उ, ऋ</p>
+                    </div>
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-blue-900 text-base mb-1">ख. दीर्घ स्वर (Long)</h4>
+                        <p class="text-slate-600 mb-2">दोगुना समय (2 सेकंड)। ये 7 हैं।</p>
+                        <p class="font-bold">आ, ई, ऊ, ए, ऐ, ओ, औ</p>
+                    </div>
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-blue-900 text-base mb-1">ग. प्लुत स्वर (Pluta)</h4>
+                        <p class="text-slate-600 mb-2">तिगुना समय (पुकारने में)। चिह्न: 'ऽ'</p>
+                        <p class="font-bold">ओऽम्, रामऽऽ!</p>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-xl mb-4 mt-8">👗 स्वरों की मात्राएँ (Matras / Vowel Symbols)</h3>
+                <p class="mb-4">जब स्वर व्यंजन के साथ जुड़ते हैं, तो वे अपना रूप बदल लेते हैं, जिसे 'मात्रा' कहते हैं। <strong class="text-red-600">रहस्य: 'अ' स्वर की अपनी कोई मात्रा नहीं होती।</strong></p>
+                
+                <div class="overflow-x-auto border">
+                    <table class="min-w-full text-sm text-left">
+                        <thead class="bg-slate-900 text-white">
+                            <tr>
+                                <th class="p-3">स्वर</th><th class="p-3">मात्रा का चिह्न</th><th class="p-3">व्यंजन के साथ ('क')</th><th class="p-3">शब्द (Word)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y bg-white">
+                            <tr><td class="p-3 font-bold text-lg">अ</td><td class="p-3 text-slate-500">कोई मात्रा नहीं</td><td class="p-3">क् + अ = क</td><td class="p-3 font-medium">कमल</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">आ</td><td class="p-3 text-red-600 text-xl font-bold">ा</td><td class="p-3">क् + आ = का</td><td class="p-3 font-medium">कान</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">इ</td><td class="p-3 text-red-600 text-xl font-bold">ि <span class="text-xs font-normal text-slate-500">(अक्षर से पहले)</span></td><td class="p-3">क् + इ = कि</td><td class="p-3 font-medium">किताब</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ई</td><td class="p-3 text-red-600 text-xl font-bold">ी <span class="text-xs font-normal text-slate-500">(अक्षर के बाद)</span></td><td class="p-3">क् + ई = की</td><td class="p-3 font-medium">कील</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">उ</td><td class="p-3 text-red-600 text-xl font-bold">ु <span class="text-xs font-normal text-slate-500">(पैरों में)</span></td><td class="p-3">क् + उ = कु</td><td class="p-3 font-medium">कुत्ता</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ऊ</td><td class="p-3 text-red-600 text-xl font-bold">ू <span class="text-xs font-normal text-slate-500">(पैरों में)</span></td><td class="p-3">क् + ऊ = कू</td><td class="p-3 font-medium">कूड़ा</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ऋ</td><td class="p-3 text-red-600 text-xl font-bold">ृ <span class="text-xs font-normal text-slate-500">('c' जैसा)</span></td><td class="p-3">क् + ऋ = कृ</td><td class="p-3 font-medium">कृषक</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ए</td><td class="p-3 text-red-600 text-xl font-bold">े <span class="text-xs font-normal text-slate-500">(सिर पर 1)</span></td><td class="p-3">क् + ए = के</td><td class="p-3 font-medium">केला</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ऐ</td><td class="p-3 text-red-600 text-xl font-bold">ै <span class="text-xs font-normal text-slate-500">(सिर पर 2)</span></td><td class="p-3">क् + ऐ = कै</td><td class="p-3 font-medium">कैमरा</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">ओ</td><td class="p-3 text-red-600 text-xl font-bold">ो <span class="text-xs font-normal text-slate-500">(डंडे के साथ 1)</span></td><td class="p-3">क् + ओ = को</td><td class="p-3 font-medium">कोयल</td></tr>
+                            <tr><td class="p-3 font-bold text-lg">औ</td><td class="p-3 text-red-600 text-xl font-bold">ौ <span class="text-xs font-normal text-slate-500">(डंडे के साथ 2)</span></td><td class="p-3">क् + औ = कौ</td><td class="p-3 font-medium">कौआ</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">4. अयोगवाह तथा अन्य चिह्न</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 border bg-white">
+                        <h4 class="font-bold mb-1">1. अनुस्वार ➔ बिंदु <span class="text-red-600 text-xl">( ं )</span></h4>
+                        <p class="text-sm text-slate-600">आवाज़ केवल नाक से (अंग्रेजी 'n' या 'm').</p>
+                        <p class="text-sm font-bold mt-1">उदाहरण: हंस, रंग, पतंग</p>
+                    </div>
+                    <div class="p-4 border bg-white">
+                        <h4 class="font-bold mb-1">2. अनुनासिक ➔ चंद्रबिंदु <span class="text-red-600 text-xl">( ँ )</span></h4>
+                        <p class="text-sm text-slate-600">आवाज़ नाक और गले दोनों से।</p>
+                        <p class="text-sm font-bold mt-1">उदाहरण: आँख, चाँद, माँ</p>
+                    </div>
+                    <div class="p-4 border bg-white">
+                        <h4 class="font-bold mb-1">3. विसर्ग ➔ दो बिंदु <span class="text-red-600 text-xl">( ः )</span></h4>
+                        <p class="text-sm text-slate-600">हल्के 'ह' की तरह (संस्कृत शब्दों में)।</p>
+                        <p class="text-sm font-bold mt-1">उदाहरण: प्रातः, अतः</p>
+                    </div>
+                    <div class="p-4 border bg-white">
+                        <h4 class="font-bold mb-1">4. आगत ध्वनियाँ (Loan Sounds)</h4>
+                        <p class="text-sm text-slate-600">विदेशी भाषाओं से आए शब्द।</p>
+                        <p class="text-sm font-bold mt-1">ऑ (डॉक्टर), ज़ (ज़मीन), फ़ (साफ़)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: VYANJAN VOCAB (Section 5)           -->
+        <!-- ========================================== -->
+        <div id="vyanjan" class="tab-content space-y-8">
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">5. व्यंजन (Vyanjan - Consonants) विस्तृत शब्द भंडार</h2>
+                <p class="text-slate-700 mb-6">हिंदी वर्णमाला में मूल रूप से 33 व्यंजन हैं। उच्चारण के आधार पर इन्हें तीन मुख्य प्रकारों में बाँटा गया है। परीक्षाओं में अक्सर "दिए गए वर्णों से दो-दो शब्द बनाइए" जैसे प्रश्न पूछे जाते हैं।</p>
+
+                <h3 class="font-bold text-lg mb-4 text-blue-900 border-b pb-2">क. स्पर्श व्यंजन (Sparsh Vyanjan - 25)</h3>
+                <p class="text-sm text-slate-600 mb-4">'स्पर्श' मतलब 'छूना'। जीभ मुँह के अलग-अलग हिस्सों को छूती है। इन्हें 5-5 के 'वर्ग' में बाँटा गया है:</p>
+
+                <div class="space-y-4">
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-red-700 mb-2">1. क-वर्ग (गले से):</h4>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">क:</span> कमल (Lotus), कलम (Pen), कान (Ear), किताब (Book)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ख:</span> खरगोश (Rabbit), खत (Letter), खिड़की (Window), खेल (Game)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ग:</span> गमला (Flower pot), गाय (Cow), गीत (Song), गुलाब (Rose)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">घ:</span> घर (House), घड़ी (Watch), घास (Grass), घोंसला (Nest)</p>
+                        <p class="text-sm italic text-slate-500">ङ: (इससे कोई शब्द शुरू नहीं होता)</p>
+                    </div>
+                    
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-red-700 mb-2">2. च-वर्ग (तालु से):</h4>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">च:</span> चम्मच (Spoon), चाँद (Moon), चींटी (Ant), चश्मा (Spectacles)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">छ:</span> छतरी (Umbrella), छत (Roof), छिलका (Peel), छात्र (Student)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ज:</span> जग (Jug), जल (Water), जहाज (Ship), जानवर (Animal)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">झ:</span> झंडा (Flag), झाड़ू (Broom), झरना (Waterfall), झूला (Swing)</p>
+                        <p class="text-sm italic text-slate-500">ञ: (इससे कोई शब्द शुरू नहीं होता)</p>
+                    </div>
+
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-red-700 mb-2">3. ट-वर्ग (मूर्धा/कठोर तालु से):</h4>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ट:</span> टमाटर (Tomato), टोकरी (Basket), टोपी (Cap), ट्रेन (Train)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ठ:</span> ठठेरा (Coppersmith), ठंडा (Cold), ठेला (Cart), ठीक (Right)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ड:</span> डमरू (Small drum), डाल (Branch), डिब्बा (Box), डर (Fear)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ढ:</span> ढक्कन (Lid), ढोलक (Drum), ढाल (Shield)</p>
+                        <p class="text-sm italic text-slate-500">ण: (शब्दों के अंत/बीच में, जैसे- बाण, गुण)</p>
+                    </div>
+
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-red-700 mb-2">4. त-वर्ग (दाँतों को छूकर):</h4>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">त:</span> तरबूज (Watermelon), तारा (Star), ताला (Lock), तितली (Butterfly)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">थ:</span> थर्मस (Thermos), थाली (Plate), थैला (Bag), थकान (Tiredness)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">द:</span> दवात (Inkpot), दूध (Milk), दादा (Grandfather), देश (Country)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ध:</span> धनुष (Bow), धागा (Thread), धरती (Earth), धोबी (Washerman)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">न:</span> नल (Tap), नदी (River), नाव (Boat), नीला (Blue)</p>
+                    </div>
+
+                    <div class="border p-4 bg-slate-50">
+                        <h4 class="font-bold text-red-700 mb-2">5. प-वर्ग (होंठों को मिलाकर):</h4>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">प:</span> पतंग (Kite), पानी (Water), पिता (Father), पेड़ (Tree)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">फ:</span> फल (Fruit), फूल (Flower), फसल (Crop), फायदा (Benefit)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ब:</span> बकरी (Goat), बादल (Cloud), बिल्ली (Cat), बच्चा (Child)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">भ:</span> भालू (Bear), भाई (Brother), भोजन (Food), भारत (India)</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">म:</span> मछली (Fish), माता (Mother), मिठाई (Sweets), मोर (Peacock)</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="border p-5 bg-white shadow-sm">
+                        <h3 class="font-bold text-lg mb-2 text-blue-900 border-b pb-2">ख. अंतस्थ व्यंजन (4)</h3>
+                        <p class="text-sm text-slate-600 mb-3">आवाज़ स्वर और व्यंजन के बीच की होती है।</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">य:</span> यज्ञ, यात्री, याद, योग</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">र:</span> रथ, राजा, रोटी, रंग</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ल:</span> लड़का, लाल, लकड़ी, लोमड़ी</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">व:</span> वन, वर्षा, विद्यालय, वाहन</p>
+                    </div>
+                    <div class="border p-5 bg-white shadow-sm">
+                        <h3 class="font-bold text-lg mb-2 text-blue-900 border-b pb-2">ग. ऊष्म व्यंजन (4)</h3>
+                        <p class="text-sm text-slate-600 mb-3">हवा मुँह में रगड़ खाती है, जिससे गर्मी पैदा होती है।</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">श:</span> शलगम, शेर, शहद, शांति</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ष:</span> षट्कोण, षड्यंत्र</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">स:</span> सपेरा, सेब, सूरज, सड़क</p>
+                        <p class="mb-1"><span class="font-bold w-6 inline-block">ह:</span> हाथी, हाथ, हवा, हिरण</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: SPECIAL & 'R' (Sections 6 & 7)      -->
+        <!-- ========================================== -->
+        <div id="special" class="tab-content space-y-8">
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">6. विशेष व्यंजन (Special Consonants)</h2>
+                <p class="text-slate-700 mb-6">जब दो व्यंजन आपस में जुड़ते हैं, तो वे अलग-अलग रूप ले सकते हैं। स्पेलिंग की गलतियों से बचने के लिए इन्हें समझना ज़रूरी है।</p>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Sanyukt -->
+                    <div class="border p-5 bg-white shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-900 mb-3">क. संयुक्त व्यंजन (Joint - नया रूप)</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong class="text-lg">क्ष (क्+ष):</strong> कक्षा, क्षमा, पक्षी, रक्षा</li>
+                            <li><strong class="text-lg">त्र (त्+र):</strong> पत्र, चित्र, मित्र, त्रिशूल</li>
+                            <li><strong class="text-lg">ज्ञ (ज्+ञ):</strong> ज्ञान, ज्ञानी, विज्ञान, आज्ञा</li>
+                            <li><strong class="text-lg">श्र (श्+र):</strong> श्रम, श्रमिक, आश्रम, विश्राम</li>
+                        </ul>
+                    </div>
+
+                    <!-- Dvitva -->
+                    <div class="border p-5 bg-white shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-900 mb-3">ख. द्वित्व व्यंजन (Twin - एक ही दो बार)</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong class="text-lg">च्च (च्+च):</strong> बच्चा, सच्चा, कच्चा</li>
+                            <li><strong class="text-lg">क्क (क्+क):</strong> पक्का, मक्का, चक्का</li>
+                            <li><strong class="text-lg">ल्ल (ल्+ल):</strong> बिल्ली, दिल्ली, पिल्ला</li>
+                            <li><strong class="text-lg">न्न (न्+न):</strong> पन्ना, गन्ना, अन्न</li>
+                            <li><strong class="text-lg">ट्ट (ट्+ट):</strong> मिट्टी, खट्टा, पट्टी</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Sanyuktakshar -->
+                    <div class="border p-5 bg-white shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-900 mb-3">ग. संयुक्ताक्षर (Joined - आधा+पूरा)</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong class="text-lg">स्त (स्+त):</strong> पुस्तक, रास्ता, दोस्त</li>
+                            <li><strong class="text-lg">क्ख (क्+ख):</strong> मक्खी, मक्खन</li>
+                            <li><strong class="text-lg">च्छ (च्+छ):</strong> मच्छर, अच्छा, गुच्छा</li>
+                            <li><strong class="text-lg">स्व (स्+व):</strong> स्वाद, स्वामी, स्वच्छ</li>
+                        </ul>
+                    </div>
+
+                    <!-- Atirikt -->
+                    <div class="border p-5 bg-white shadow-sm border-l-4 border-l-orange-500">
+                        <h3 class="font-bold text-lg text-orange-700 mb-3">घ. अतिरिक्त व्यंजन (ड़, ढ़)</h3>
+                        <p class="text-sm font-bold text-orange-900 mb-2">नियम: इनसे कभी कोई शब्द शुरू नहीं होता।</p>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong class="text-lg text-orange-600">ड़:</strong> पेड़, सड़क, लड़का, घड़ी, लकड़ी</li>
+                            <li><strong class="text-lg text-orange-600">ढ़:</strong> पढ़ना, सीढ़ी, बूढ़ा, बढ़ई</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ubs-card p-8 border-t-8 border-t-red-600">
+                <h2 class="section-title text-xl">7. 'र' के विभिन्न रूप (Different Forms of 'R')</h2>
+                <p class="text-slate-700 mb-6">'र' सबसे नटखट व्यंजन है। इसके मुख्य 3 रूप होते हैं:</p>
+
+                <div class="space-y-6">
+                    <div class="border p-5 bg-slate-50">
+                        <h3 class="font-bold text-lg mb-2">1. सामान्य 'र' (Normal 'R')</h3>
+                        <p class="text-slate-700 mb-2 text-sm">पूरा 'र' (अ स्वर के साथ)।</p>
+                        <p><strong>शब्द:</strong> राम, रात, राजा, रंग, रथ</p>
+                    </div>
+
+                    <div class="border border-red-200 p-5 bg-red-50 relative">
+                        <h3 class="font-bold text-lg text-red-800 mb-2">2. रेफ - र् (The Flying 'R') ➔ चिह्न: ( र् )</h3>
+                        <p class="text-slate-700 mb-2 text-sm">जब 'र' आधा होता है, तो वह अगले अक्षर के सिर पर बैठ जाता है।</p>
+                        <p class="mb-1"><strong>कर्म (Karma)</strong> ➔ क + <span class="text-red-600 font-bold">र्</span> + म</p>
+                        <p><strong>अन्य शब्द:</strong> धर्म, सूर्य, सर्प, पार्क</p>
+                    </div>
+
+                    <div class="border border-blue-200 p-5 bg-blue-50 relative">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">3. पदेन - ्र और ्र (The 'R' at the Feet)</h3>
+                        <p class="text-slate-700 mb-3 text-sm">जब पहले वाला अक्षर आधा हो, तो 'र' उसके पैरों में लग जाता है।</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 border rounded">
+                                <h4 class="font-bold mb-1 border-b">पहला रूप ( ्र ) - तिरछी रेखा</h4>
+                                <p class="text-xs text-slate-500 mb-2">खड़ी लाइन वाले व्यंजनों में (क, प)</p>
+                                <p><strong>चक्र</strong> (च+क्+र), ग्राम, प्रकाश, उम्र</p>
+                            </div>
+                            <div class="bg-white p-4 border rounded">
+                                <h4 class="font-bold mb-1 border-b">दूसरा रूप (ट्र) - उल्टा V</h4>
+                                <p class="text-xs text-slate-500 mb-2">नीचे से गोल व्यंजनों में (ट, ड)</p>
+                                <p><strong>ट्रक</strong> (ट्+र+क), ट्रेन, ड्रम, ड्रामा</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: VICCHED (Section 8)                 -->
+        <!-- ========================================== -->
+        <div id="vicched" class="tab-content space-y-8">
+            <div class="ubs-card p-8">
+                <h2 class="section-title text-xl">8. वर्ण-विच्छेद (Phonetic Dissection)</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    यह विषय बिल्कुल <strong>किसी खिलौने को खोलकर उसके पुर्जे अलग-अलग करने जैसा है!</strong> शब्द के सभी स्वरों और व्यंजनों को अलग-अलग करके लिखना वर्ण-विच्छेद कहलाता है।
+                </p>
+
+                <!-- Golden Rules -->
+                <div class="bg-amber-50 border border-amber-200 p-6 mb-8 shadow-sm">
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">🌟 4 स्वर्णिम नियम (Golden Rules)</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 border text-sm"><strong class="text-amber-700">1. हलंत ( ् ):</strong> व्यंजन से स्वर अलग होने पर हलंत ज़रूर लगाएँ (क = क् + अ)।</div>
+                        <div class="bg-white p-4 border text-sm"><strong class="text-amber-700">2. स्वर नहीं टूटते:</strong> स्वर पूर्ण हैं, उनके टुकड़े/हलंत नहीं होते।</div>
+                        <div class="bg-white p-4 border text-sm"><strong class="text-amber-700">3. मात्रा का मूल रूप:</strong> मात्रा हटाकर असली स्वर लिखें ('कि' ➔ क् + इ)।</div>
+                        <div class="bg-white p-4 border text-sm"><strong class="text-amber-700">4. आधे अक्षर:</strong> जो पहले से आधे हैं, उनमें 'अ' नहीं निकलेगा ('मक्खी' ➔ क्)।</div>
+                    </div>
+                </div>
+
+                <!-- Word Bank Levels -->
+                <h3 class="font-bold text-xl mb-4">📚 अभ्यास के लिए उदाहरण (Levels)</h3>
+                <div class="space-y-6">
+                    <div class="border-l-4 border-l-green-600 bg-white p-5 shadow-sm border">
+                        <h4 class="font-bold text-green-700 mb-2">स्तर 1: बिना मात्रा वाले शब्द</h4>
+                        <ul class="space-y-2 font-mono bg-slate-50 p-3">
+                            <li>कमल = क् + अ + म् + अ + ल् + अ</li>
+                            <li>मटर = म् + अ + ट् + अ + र् + अ</li>
+                            <li>अदरक = अ + द् + अ + र् + अ + क् + अ (अ स्वर है)</li>
+                            <li>घर = घ् + अ + र् + अ</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-l-blue-600 bg-white p-5 shadow-sm border">
+                        <h4 class="font-bold text-blue-700 mb-2">स्तर 2: मात्राओं वाले शब्द</h4>
+                        <ul class="space-y-2 font-mono bg-slate-50 p-3">
+                            <li>किताब = क् + इ + त् + आ + ब् + अ</li>
+                            <li>सूरज = स् + ऊ + र् + अ + ज् + अ</li>
+                            <li>गुलाब = ग् + उ + ल् + आ + ब् + अ</li>
+                            <li>पौधा = प् + औ + ध् + आ</li>
+                            <li>शेर = श् + ए + र् + अ</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-l-indigo-600 bg-white p-5 shadow-sm border">
+                        <h4 class="font-bold text-indigo-700 mb-2">स्तर 3: आधे अक्षर/द्वित्व व्यंजन</h4>
+                        <ul class="space-y-2 font-mono bg-slate-50 p-3">
+                            <li>बच्चा = ब् + अ + च् + च् + आ</li>
+                            <li>मक्खन = म् + अ + क् + ख् + अ + न् + अ</li>
+                            <li>पुस्तक = प् + उ + स् + त् + अ + क् + अ</li>
+                            <li>बिल्ली = ब् + इ + ल् + ल् + ई</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-l-purple-600 bg-white p-5 shadow-sm border">
+                        <h4 class="font-bold text-purple-700 mb-2">स्तर 4: संयुक्त व्यंजन वाले शब्द (क्ष, त्र, ज्ञ, श्र)</h4>
+                        <ul class="space-y-2 font-mono bg-slate-50 p-3">
+                            <li>कक्षा = क् + अ + क् + ष् + आ</li>
+                            <li>मित्र = म् + इ + त् + र् + अ</li>
+                            <li>ज्ञान = ज् + ञ् + आ + न् + अ</li>
+                            <li>श्रमिक = श् + र् + अ + म् + इ + क् + अ</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-l-red-600 bg-white p-5 shadow-sm border">
+                        <h4 class="font-bold text-red-700 mb-2">स्तर 5: 'र' के रूपों वाले शब्द</h4>
+                        <ul class="space-y-2 font-mono bg-slate-50 p-3">
+                            <li>कर्म = क् + अ + र् + म् + अ (रेफ के बाद 'अ' नहीं)</li>
+                            <li>पार्क = प् + आ + र् + क् + अ</li>
+                            <li>चक्र = च् + अ + क् + र् + अ (क आधा, र पूरा)</li>
+                            <li>ट्रेन = ट् + र् + ए + न् + अ</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-blue-50 border p-6 text-center shadow-sm">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-2">🎉 शिक्षक का संदेश</h3>
+                    <p class="text-blue-800">बधाई हो! आपने कक्षा 6 के हिंदी व्याकरण का एक बहुत ही महत्वपूर्ण अध्याय <strong>'वर्ण विचार'</strong> सफलतापूर्वक पूरा कर लिया है।</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 6: AI ASSISTANT                        -->
+        <!-- ========================================== -->
+        <div id="ai-assistant" class="tab-content space-y-8">
+            <div class="ubs-card p-8 ai-glow">
+                <h2 class="section-title text-xl text-blue-900 border-blue-900">✨ एआई व्याकरण सहायक</h2>
+                <p class="text-slate-600 mb-6">क्या आपको किसी शब्द का वर्ण-विच्छेद करने में परेशानी हो रही है? या व्याकरण से जुड़ा कोई सवाल है? एआई से पूछें!</p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Varn Vicched -->
+                    <div class="p-6 border bg-slate-50">
+                        <h3 class="font-bold text-lg mb-4 text-blue-900">1. ✨ वर्ण-विच्छेद करें</h3>
+                        <div class="space-y-4">
+                            <input type="text" id="ai-word-input" placeholder="शब्द लिखें (उदा: विद्यालय)" class="w-full p-3 border border-slate-300 focus:outline-none focus:border-blue-900">
+                            <button onclick="aiVarnVicched()" id="vicched-btn" class="w-full bg-blue-900 text-white py-3 font-bold hover:bg-blue-800 transition">
+                                विच्छेद करें
+                            </button>
+                            <div id="vicched-result" class="mt-4 p-4 bg-white border border-slate-200 hidden min-h-[50px] font-mono text-lg text-center"></div>
+                        </div>
+                    </div>
+
+                    <!-- Grammar QA -->
+                    <div class="p-6 border bg-slate-50">
+                        <h3 class="font-bold text-lg mb-4 text-blue-900">2. ✨ व्याकरण प्रश्नोत्तरी</h3>
+                        <div class="space-y-4">
+                            <input type="text" id="ai-query-input" placeholder="अपना सवाल पूछें..." class="w-full p-3 border border-slate-300 focus:outline-none focus:border-blue-900">
+                            <button onclick="aiGrammarQA()" id="qa-btn" class="w-full bg-blue-900 text-white py-3 font-bold hover:bg-blue-800 transition">
+                                पूछें
+                            </button>
+                            <div id="qa-result" class="mt-4 p-4 bg-white border border-slate-200 hidden min-h-[50px] text-sm leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 7: MEGA QUIZ (Complete Question Bank)  -->
+        <!-- ========================================== -->
+        <div id="quiz" class="tab-content space-y-8">
+            <div class="ubs-card p-8 shadow-md border-t-8 border-t-red-600">
+                <div class="text-center mb-10 border-b pb-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-2 uppercase">📝 महा-प्रश्न बैंक</h2>
+                    <p class="text-slate-500 italic">अध्याय 2 - वर्ण विचार (नवीन हिंदी व्यावहारिक व्याकरण तथा रचना)</p>
+                    <p class="text-sm mt-4 text-blue-800 font-bold">यदि आप इसे हल कर लेते हैं, तो परीक्षा में कोई प्रश्न नया नहीं होगा!</p>
+                </div>
+
+                <!-- Part A: MCQs (All 14) -->
+                <div class="mb-12">
+                    <h3 class="font-bold text-xl bg-slate-900 text-white p-3 mb-6 uppercase tracking-widest">भाग क: बहुविकल्पीय प्रश्न (MCQs)</h3>
+                    <div class="space-y-6">
+                        <!-- Q1-Q14 generated below -->
+                        <script>
+                            const mcqs = [
+                                {q: "भाषा की सबसे छोटी इकाई या ध्वनि जिसके टुकड़े नहीं किए जा सकते, क्या कहलाती है?", o: ["(क) शब्द", "(ख) वाक्य", "(ग) वर्ण", "(घ) लिपि"], a: "(ग) वर्ण"},
+                                {q: "वर्णों के व्यवस्थित और क्रमबद्ध समूह को क्या कहते हैं?", o: ["(क) वर्णमाला", "(ख) शब्दमाला", "(ग) स्वरमाला", "(घ) व्यंजनमाला"], a: "(क) वर्णमाला"},
+                                {q: "मानक हिंदी वर्णमाला में कुल कितने मान्यता प्राप्त वर्ण हैं?", o: ["(क) 44", "(ख) 11", "(ग) 33", "(घ) 52"], a: "(घ) 52"},
+                                {q: "जिन वर्णों का उच्चारण किसी अन्य वर्ण की सहायता के बिना होता है, उन्हें क्या कहते हैं?", o: ["(क) व्यंजन", "(ख) अयोगवाह", "(ग) स्वर", "(घ) संयुक्त व्यंजन"], a: "(ग) स्वर"},
+                                {q: "हिंदी वर्णमाला में स्वरों की कुल संख्या कितनी है?", o: ["(क) 10", "(ख) 11", "(ग) 13", "(घ) 33"], a: "(ख) 11"},
+                                {q: "जिन स्वरों के उच्चारण में सबसे कम समय लगता है, वे क्या कहलाते हैं?", o: ["(क) ह्रस्व स्वर", "(ख) दीर्घ स्वर", "(ग) प्लुत स्वर", "(घ) संयुक्त स्वर"], a: "(क) ह्रस्व स्वर"},
+                                {q: "किस स्वर की कोई मात्रा नहीं होती है?", o: ["(क) आ", "(ख) इ", "(ग) उ", "(घ) अ"], a: "(घ) अ"},
+                                {q: "व्यंजनों का उच्चारण किसकी सहायता से होता है?", o: ["(क) अनुस्वार", "(ख) विसर्ग", "(ग) स्वरों", "(घ) व्यंजनों"], a: "(ग) स्वरों"},
+                                {q: "हिंदी वर्णमाला में कुल कितने मूल व्यंजन हैं?", o: ["(क) 25", "(ख) 33", "(ग) 4", "(घ) 11"], a: "(ख) 33"},
+                                {q: "क-वर्ग से प-वर्ग तक के 25 व्यंजनों को क्या कहा जाता है?", o: ["(क) ऊष्म व्यंजन", "(ख) अंतस्थ व्यंजन", "(ग) स्पर्श व्यंजन", "(घ) संयुक्त व्यंजन"], a: "(ग) स्पर्श व्यंजन"},
+                                {q: "'य, र, ल, व' किस प्रकार के व्यंजन हैं?", o: ["(क) अंतस्थ", "(ख) ऊष्म", "(ग) स्पर्श", "(घ) आगत"], a: "(क) अंतस्थ"},
+                                {q: "'क्ष, त्र, ज्ञ, श्र' कौन-से व्यंजन कहलाते हैं?", o: ["(क) द्वित्व व्यंजन", "(ख) संयुक्त व्यंजन", "(ग) अतिरिक्त व्यंजन", "(घ) ऊष्म व्यंजन"], a: "(ख) संयुक्त व्यंजन"},
+                                {q: "'ट्रक' शब्द में 'र' के किस रूप का प्रयोग हुआ है?", o: ["(क) सामान्य र", "(ख) रेफ (र्)", "(ग) पदेन (्र)", "(घ) ऋ की मात्रा"], a: "(ग) पदेन (्र)"},
+                                {q: "अनुनासिक का उच्चारण कहाँ से होता है?", o: ["(क) केवल नाक से", "(ख) केवल गले से", "(ग) नाक और गले दोनों से", "(घ) तालु से"], a: "(ग) नाक और गले दोनों से"}
+                            ];
+                            
+                            mcqs.forEach((item, index) => {
+                                document.write(`
+                                    <div class="p-4 border border-slate-200 bg-white shadow-sm rounded-sm">
+                                        <p class="font-bold text-lg text-slate-800 mb-3">${index + 1}. ${item.q}</p>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-slate-700 mb-3">
+                                            ${item.o.map(opt => `<div>${opt}</div>`).join('')}
+                                        </div>
+                                        <button onclick="toggleAns('mcq_ans_${index}')" class="ubs-button-secondary">उत्तर देखें</button>
+                                        <div id="mcq_ans_${index}" class="answer-box font-bold">सही उत्तर: ${item.a}</div>
+                                    </div>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <!-- Part B: Fill in the Blanks (All 7) -->
+                <div class="mb-12 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-2 border-l-4 border-slate-900">भाग ख: रिक्त स्थान भरिए</h3>
+                    <p class="text-sm text-slate-500 mb-6 italic">(सहायक शब्द: ह्रस्व, अ, मात्रा, हलंत, ड़ ढ़, चार, 33, ओऽम्)</p>
+                    <div class="space-y-4">
+                        <script>
+                            const fibs = [
+                                {q: "व्यंजनों के साथ जुड़ते समय स्वर का रूप बदल जाता है, जिसे _________ कहते हैं।", a: "मात्रा"},
+                                {q: "हिंदी में मूल रूप से _________ व्यंजन हैं।", a: "33"},
+                                {q: "श, ष, स, ह को ऊष्म व्यंजन कहा जाता है, और इनकी संख्या _________ है।", a: "चार"},
+                                {q: "अ, इ, उ, ऋ _________ स्वर के उदाहरण हैं।", a: "ह्रस्व"},
+                                {q: "प्लुत स्वर का एक प्रमुख उदाहरण _________ है।", a: "ओऽम्"},
+                                {q: "जब व्यंजन बिना स्वर के (आधा) लिखा जाता है, तो उसके नीचे _________ लगाया जाता है।", a: "हलंत"},
+                                {q: "अतिरिक्त व्यंजन _________ और _________ से कभी कोई शब्द शुरू नहीं होता।", a: "ड़ और ढ़"}
+                            ];
+                            fibs.forEach((item, index) => {
+                                document.write(`
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-3">
+                                        <p class="text-slate-800 mb-2 md:mb-0"><span class="font-bold">${index+1}.</span> ${item.q}</p>
+                                        <div>
+                                            <button onclick="toggleAns('fib_ans_${index}')" class="ubs-button-secondary whitespace-nowrap">उत्तर</button>
+                                            <span id="fib_ans_${index}" class="hidden ml-3 font-bold text-green-700 bg-green-50 px-2 py-1 border">${item.a}</span>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <!-- Part C: True False (All 6) -->
+                <div class="mb-12 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-6 border-l-4 border-slate-900">भाग ग: सही (True) या गलत (False)</h3>
+                    <div class="space-y-4">
+                        <script>
+                            const tfs = [
+                                {q: "स्वर को बोलने के लिए व्यंजन की मदद लेनी पड़ती है।", a: "गलत (स्वर स्वतंत्र होते हैं)"},
+                                {q: "विसर्ग (ः) का उच्चारण 'ह' की तरह होता है।", a: "सही"},
+                                {q: "'पक्का' शब्द द्वित्व व्यंजन का उदाहरण है।", a: "सही"},
+                                {q: "'र' जब आधा होता है (र्), तो वह अक्षर के पैरों में लगता है।", a: "गलत (आधा 'र' सिर पर (रेफ) लगता है)"},
+                                {q: "'डॉक्टर' शब्द में प्रयुक्त 'ऑ' एक आगत ध्वनि है।", a: "सही"},
+                                {q: "'ज्ञ' वर्ण क् और ष से मिलकर बना है।", a: "गलत (ज्ञ = ज् + ञ)"}
+                            ];
+                            tfs.forEach((item, index) => {
+                                document.write(`
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-3">
+                                        <p class="text-slate-800 mb-2 md:mb-0"><span class="font-bold">${index+1}.</span> ${item.q}</p>
+                                        <div>
+                                            <button onclick="toggleAns('tf_ans_${index}')" class="ubs-button-secondary whitespace-nowrap">उत्तर</button>
+                                            <span id="tf_ans_${index}" class="hidden ml-3 font-bold text-green-700 bg-green-50 px-2 py-1 border">${item.a}</span>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <!-- Part D: Match the Following -->
+                <div class="mb-12 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-6 border-l-4 border-slate-900">भाग घ: मिलान कीजिए (Match the Following)</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="border p-4 bg-white shadow-sm">
+                            <h4 class="font-bold text-center border-b pb-2 mb-4">सेट 1 (चिह्न और उनके नाम)</h4>
+                            <div class="flex justify-between mb-4">
+                                <div class="space-y-2">
+                                    <p>1. बिंदु ( ं )</p>
+                                    <p>2. चंद्रबिंदु ( ँ )</p>
+                                    <p>3. दो बिंदु ( ः )</p>
+                                    <p>4. तिरछी रेखा ( ् )</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p>(क) हलंत</p>
+                                    <p>(ख) विसर्ग</p>
+                                    <p>(ग) अनुनासिक</p>
+                                    <p>(घ) अनुस्वार</p>
+                                </div>
+                            </div>
+                            <button onclick="toggleAns('match1')" class="ubs-button-secondary w-full">उत्तर देखें</button>
+                            <div id="match1" class="answer-box text-center font-bold">1-घ, 2-ग, 3-ख, 4-क</div>
+                        </div>
+                        <div class="border p-4 bg-white shadow-sm">
+                            <h4 class="font-bold text-center border-b pb-2 mb-4">सेट 2 (व्यंजनों के प्रकार)</h4>
+                            <div class="flex justify-between mb-4">
+                                <div class="space-y-2">
+                                    <p>1. श, ष, स, ह</p>
+                                    <p>2. य, र, ल, व</p>
+                                    <p>3. क्ष, त्र, ज्ञ, श्र</p>
+                                    <p>4. क से म तक (25)</p>
+                                </div>
+                                <div class="space-y-2 text-right">
+                                    <p>(क) संयुक्त व्यंजन</p>
+                                    <p>(ख) स्पर्श व्यंजन</p>
+                                    <p>(ग) ऊष्म व्यंजन</p>
+                                    <p>(घ) अंतस्थ व्यंजन</p>
+                                </div>
+                            </div>
+                            <button onclick="toggleAns('match2')" class="ubs-button-secondary w-full">उत्तर देखें</button>
+                            <div id="match2" class="answer-box text-center font-bold">1-ग, 2-घ, 3-क, 4-ख</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part E: Practical Application -->
+                <div class="mb-12 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-6 border-l-4 border-slate-900">भाग ङ: व्यावहारिक व्याकरण</h3>
+                    <p class="text-sm text-slate-500 mb-6 italic">(यह खंड स्पेलिंग सुधारने के लिए सबसे महत्वपूर्ण है)</p>
+                    
+                    <div class="space-y-6">
+                        <div class="p-4 border bg-white">
+                            <p class="font-bold mb-2">1. सही स्थान पर अनुस्वार ( ं ) या अनुनासिक ( ँ ) लगाइए:</p>
+                            <p class="mb-3 text-slate-700">(क) चाद (ख) रग (ग) आख (घ) दात (ङ) पतग (च) हस</p>
+                            <button onclick="toggleAns('prac1')" class="ubs-button-secondary">उत्तर देखें</button>
+                            <div id="prac1" class="answer-box">(क) चाँद, (ख) रंग, (ग) आँख, (घ) दाँत, (ङ) पतंग, (च) हँस</div>
+                        </div>
+                        <div class="p-4 border bg-white">
+                            <p class="font-bold mb-2">2. 'र' के उचित रूप — रेफ (र्) या पदेन (्र / ट्र) का प्रयोग करें:</p>
+                            <p class="mb-3 text-slate-700">(क) कम (Karma) (ख) चक (Chakra) (ग) ट्क (Truck) (घ) सूय (Surya) (ङ) पकाश (Prakash)</p>
+                            <button onclick="toggleAns('prac2')" class="ubs-button-secondary">उत्तर देखें</button>
+                            <div id="prac2" class="answer-box">(क) कर्म, (ख) चक्र, (ग) ट्रक, (घ) सूर्य, (ङ) प्रकाश</div>
+                        </div>
+                        <div class="p-4 border bg-white">
+                            <p class="font-bold mb-2">3. दिए गए संयुक्त और द्वित्व व्यंजनों से शब्द बनाइए:</p>
+                            <p class="mb-3 text-slate-700">संयुक्त: क्ष, त्र, ज्ञ, श्र <br>द्वित्व: च्च, क्क, ल्ल</p>
+                            <button onclick="toggleAns('prac3')" class="ubs-button-secondary">उत्तर देखें</button>
+                            <div id="prac3" class="answer-box">
+                                संयुक्त: कक्षा, पत्र, ज्ञान, श्रम<br>
+                                द्वित्व: बच्चा, पक्का, बिल्ली
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part F: Phonetic Dissection -->
+                <div class="mb-12 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-6 border-l-4 border-slate-900">भाग च: वर्ण-विच्छेद कीजिए</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <script>
+                            const viccheds = [
+                                {q: "पानी", a: "प् + आ + न् + ई"},
+                                {q: "किताब", a: "क् + इ + त् + आ + ब् + अ"},
+                                {q: "सूरज", a: "स् + ऊ + र् + अ + ज् + अ"},
+                                {q: "मित्र", a: "म् + इ + त् + र् + अ"},
+                                {q: "कक्षा", a: "क् + अ + क् + ष् + आ"},
+                                {q: "कर्म", a: "क् + अ + र् + म् + अ"},
+                                {q: "विज्ञान", a: "व् + इ + ज् + ञ् + आ + न् + अ"}
+                            ];
+                            viccheds.forEach((item, index) => {
+                                document.write(`
+                                    <div class="p-3 border bg-white flex justify-between items-center">
+                                        <span class="font-bold">${item.q} = </span>
+                                        <div>
+                                            <button onclick="toggleAns('vich_${index}')" class="ubs-button-secondary">उत्तर</button>
+                                        </div>
+                                    </div>
+                                    <div id="vich_${index}" class="answer-box w-full font-mono mt-0 mb-2">${item.a}</div>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <!-- Part G: Long Answers -->
+                <div class="mb-8 border-t pt-8">
+                    <h3 class="font-bold text-xl bg-slate-100 p-3 mb-6 border-l-4 border-slate-900">भाग छ: लघु और विस्तृत उत्तरीय प्रश्न</h3>
+                    <div class="space-y-4">
+                        <script>
+                            const longs = [
+                                {q: "वर्ण किसे कहते हैं? उदाहरण दीजिए।", a: "भाषा की सबसे छोटी ध्वनि जिसके टुकड़े नहीं किए जा सकते। (जैसे- अ, क्)।"},
+                                {q: "स्वर और व्यंजन में मुख्य अंतर क्या है?", a: "स्वर स्वतंत्र होते हैं (बिना मदद के बोले जाते हैं), जबकि व्यंजन स्वरों की मदद से बोले जाते हैं।"},
+                                {q: "ह्रस्व स्वर और दीर्घ स्वर में क्या अंतर है?", a: "ह्रस्व में सबसे कम समय (अ, इ) लगता है, दीर्घ में दोगुना समय (आ, ई) लगता है।"},
+                                {q: "मात्रा किसे कहते हैं? किस स्वर की कोई मात्रा नहीं होती?", a: "व्यंजन के साथ जुड़ने पर स्वर का बदला हुआ रूप मात्रा है। 'अ' की कोई मात्रा नहीं होती।"},
+                                {q: "अनुस्वार और अनुनासिक में क्या अंतर है?", a: "अनुस्वार की आवाज़ केवल नाक से (रंग), अनुनासिक की नाक+गले से (चाँद) आती है।"},
+                                {q: "संयुक्त व्यंजन किसे कहते हैं? हिंदी में कितने हैं?", a: "दो अलग व्यंजनों से बने नए अक्षर (क्ष, त्र, ज्ञ, श्र)। संख्या 4 है।"},
+                                {q: "द्वित्व व्यंजन और संयुक्ताक्षर में क्या अंतर है?", a: "द्वित्व में एक ही व्यंजन दो बार आता है (बच्चा), संयुक्ताक्षर में दो अलग-अलग व्यंजन जुड़ते हैं (मक्खी)।"}
+                            ];
+                            longs.forEach((item, index) => {
+                                document.write(`
+                                    <div class="p-4 bg-white border">
+                                        <p class="font-bold text-slate-800 mb-2">प्रश्न ${index+1}: ${item.q}</p>
+                                        <button onclick="toggleAns('long_${index}')" class="ubs-button-secondary mt-1">संकेत उत्तर देखें</button>
+                                        <div id="long_${index}" class="answer-box italic text-sm mt-2">${item.a}</div>
+                                    </div>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <!-- Final Message -->
+                <div class="mt-12 bg-slate-900 text-white p-8 text-center font-bold">
+                    <div class="text-3xl mb-2">🎓</div>
+                    <div class="text-xl uppercase tracking-widest">बधाई हो! अध्याय सफलतापूर्वक समाप्त।</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-slate-500 text-xs uppercase tracking-widest">
+            <p>© 2024 हिंदी व्याकरण पाठशाला | UBS Compliance Standards</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <span>Grade 6</span>
+                <span>Secondary Language</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Navigation
+        function openTab(evt, tabId) {
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+
+        // Answer Toggle
+        function toggleAns(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+            }
+        }
+
+        // --- GEMINI API INTEGRATION ---
+        const apiKey = ""; // API key is provided at runtime
+
+        async function callGemini(prompt, systemInstruction) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            let delay = 1000;
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error('API request failed');
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "माफ़ी चाहते हैं, जवाब नहीं मिल पाया।";
+                } catch (error) {
+                    if (i === 4) return "क्षमा करें, नेटवर्क में समस्या है। कृपया बाद में प्रयास करें।";
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Feature 1: Phonetic Dissection
+        async function aiVarnVicched() {
+            const input = document.getElementById('ai-word-input');
+            const resultDiv = document.getElementById('vicched-result');
+            const btn = document.getElementById('vicched-btn');
+            const word = input.value.trim();
+
+            if (!word) return;
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '<div class="loader"></div> प्रोसेसिंग...';
+            btn.disabled = true;
+
+            const systemPrompt = `You are a Grade 6 Hindi grammar teacher. Perform "Varn-Vicched" (phonetic dissection) for the provided word. 
+            Output ONLY the dissected varns separated by plus signs. Do not add any conversational text.
+            Rules:
+            1. Consonants must have a halant ( ् ) if separated from a vowel (e.g. क = क् + अ).
+            2. Vowels do not have halant.
+            3. Follow standard Hindi grammar rules.
+            Example input: किताब
+            Example output: क् + इ + त् + आ + ब् + अ`;
+
+            const response = await callGemini(`Word: ${word}`, systemPrompt);
+            resultDiv.innerHTML = response;
+            btn.disabled = false;
+        }
+
+        // Feature 2: Grammar QA
+        async function aiGrammarQA() {
+            const input = document.getElementById('ai-query-input');
+            const resultDiv = document.getElementById('qa-result');
+            const btn = document.getElementById('qa-btn');
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '<div class="loader"></div> जवाब खोज रहे हैं...';
+            btn.disabled = true;
+
+            const systemPrompt = `You are an expert Hindi Grammar teacher for Grade 6 students learning Hindi as a second language. 
+            Explain concepts clearly, simply, and exclusively in Hindi. 
+            Keep your answers brief (max 3-4 sentences). 
+            Focus strictly on Chapter 2 topics: Varn, Varnamala, Swar, Vyanjan, Matras, and Varn-Vicched. 
+            If the query is outside of Hindi grammar, politely guide them back to the subject.`;
+
+            const response = await callGemini(query, systemPrompt);
+            resultDiv.innerHTML = response;
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>
