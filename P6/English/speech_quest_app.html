@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Quest - Cambridge Stage 6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom animations to replicate the smooth React feel */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .zoom-in { animation: zoomIn 0.3s ease-out forwards; }
+        
+        /* Utility classes for dynamic colors injected by JS */
+        .border-indigo-500 { border-color: #6366f1; }
+        .bg-indigo-50 { background-color: #eef2ff; }
+        .border-indigo-100 { border-color: #e0e7ff; }
+        .bg-indigo-500 { background-color: #6366f1; }
+        
+        .border-blue-500 { border-color: #3b82f6; }
+        .bg-blue-50 { background-color: #eff6ff; }
+        .border-blue-100 { border-color: #dbeafe; }
+        .bg-blue-500 { background-color: #3b82f6; }
+        
+        .border-purple-500 { border-color: #a855f7; }
+        .bg-purple-50 { background-color: #faf5ff; }
+        .border-purple-100 { border-color: #f3e8ff; }
+        .bg-purple-500 { background-color: #a855f7; }
+        
+        .border-amber-500 { border-color: #f59e0b; }
+        .bg-amber-50 { background-color: #fffbeb; }
+        .border-amber-100 { border-color: #fef3c7; }
+        .bg-amber-500 { background-color: #f59e0b; }
+
+        .btn-option:disabled { cursor: not-allowed; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 font-sans p-4 sm:p-8 selection:bg-indigo-200 text-gray-800">
+
+    <!-- MAIN MENU VIEW -->
+    <div id="menu-view" class="max-w-5xl mx-auto fade-in block">
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center p-3 bg-indigo-100 text-indigo-600 rounded-2xl mb-4 shadow-sm">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-4">
+                Speech <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Quest</span>
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Master Direct and Indirect Speech for the Cambridge Stage 6 Syllabus. Complete the modules to unlock your full linguistic potential!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+            <!-- Module 1 -->
+            <button onclick="startModule('detective')" class="group text-left bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-indigo-100 transform hover:-translate-y-1">
+                <div class="flex items-start space-x-4">
+                    <div class="p-4 bg-indigo-100 text-indigo-600 rounded-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors shadow-inner">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">The Punctuation Detective</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-4">Analyze corrupted crime scene transcripts. Apply speech marks, capitals, and commas perfectly.</p>
+                        <span class="inline-flex items-center text-indigo-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                            Start Mission <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            </button>
+
+            <!-- Module 2 -->
+            <button onclick="startModule('chrono')" class="group text-left bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-blue-100 transform hover:-translate-y-1">
+                <div class="flex items-start space-x-4">
+                    <div class="p-4 bg-blue-100 text-blue-600 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-inner">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">The Chrono-Shift Engine</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-4">Operate the time machine to push direct quotes into the past. Master tense backshifting.</p>
+                        <span class="inline-flex items-center text-blue-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                            Start Mission <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            </button>
+
+            <!-- Module 3 -->
+            <button onclick="startModule('shifter')" class="group text-left bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-purple-100 transform hover:-translate-y-1">
+                <div class="flex items-start space-x-4">
+                    <div class="p-4 bg-purple-100 text-purple-600 rounded-2xl group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-inner">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Shape-Shifter Matrix</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-4">Translate alien communications. Flawlessly execute pronominal shifts and spatial/temporal markers.</p>
+                        <span class="inline-flex items-center text-purple-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                            Start Mission <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            </button>
+
+            <!-- Module 4 -->
+            <button onclick="startModule('vault')" class="group text-left bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-amber-100 transform hover:-translate-y-1">
+                <div class="flex items-start space-x-4">
+                    <div class="p-4 bg-amber-100 text-amber-600 rounded-2xl group-hover:bg-amber-600 group-hover:text-white transition-colors shadow-inner">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">The Verb Vault</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-4">Expand your vocabulary. Unlock advanced reporting verbs using their exact grammatical patterns.</p>
+                        <span class="inline-flex items-center text-amber-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                            Start Mission <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view" class="max-w-3xl mx-auto zoom-in hidden">
+        <button onclick="showView('menu-view')" class="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> 
+            Back to Base
+        </button>
+
+        <div id="quiz-container" class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4">
+            <!-- Header injected via JS -->
+            <div id="quiz-header" class="p-6 border-b flex items-center justify-between"></div>
+
+            <div class="p-6 sm:p-8">
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6 overflow-hidden">
+                    <div id="progress-bar" class="h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%;"></div>
+                </div>
+
+                <!-- Dynamic Content injected via JS -->
+                <div id="quiz-content"></div>
+
+                <!-- Options injected via JS -->
+                <div id="quiz-options" class="space-y-3 mt-8"></div>
+
+                <!-- Feedback injected via JS -->
+                <div id="quiz-feedback" class="mt-6 hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTS VIEW -->
+    <div id="results-view" class="max-w-md mx-auto mt-12 p-8 bg-white rounded-3xl shadow-2xl text-center zoom-in hidden">
+        <div class="w-24 h-24 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+        </div>
+        <h2 class="text-3xl font-black text-gray-800 mb-2">Mission Complete!</h2>
+        <p class="text-gray-500 mb-6">Cambridge Stage 6 Syntactic Training</p>
+        
+        <div class="text-5xl font-black text-indigo-600 mb-8">
+            <span id="final-score">0</span> <span class="text-2xl text-gray-400">/ <span id="total-score">0</span></span>
+        </div>
+        
+        <button onclick="showView('menu-view')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-indigo-200">
+            Return to Main Menu
+        </button>
+    </div>
+
+    <script>
+        // --- DATA STRUCTURES ---
+        const moduleData = {
+            detective: {
+                title: "Punctuation Detective",
+                color: "indigo",
+                icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>',
+                questions: [
+                    {
+                        context: "where were you on the night of the robbery asked the detective",
+                        options: [
+                            '"Where were you on the night of the robbery?" asked the detective.',
+                            '"where were you on the night of the robbery"? asked the detective.',
+                            'Where were you on the night of the robbery, asked the detective.'
+                        ],
+                        correct: 0,
+                        explanation: "Direct speech must start with a capital letter, and the question mark goes inside the closing speech marks."
+                    },
+                    {
+                        context: "i was at home baking a cake replied the suspect furiously",
+                        options: [
+                            '"I was at home baking a cake", replied the suspect furiously.',
+                            '"I was at home baking a cake," replied the suspect furiously.',
+                            '"I was at home baking a cake." replied the suspect furiously.'
+                        ],
+                        correct: 1,
+                        explanation: "A comma is needed to separate the spoken words from the reporting clause, and it must go inside the closing speech marks."
+                    },
+                    {
+                        context: "that is a complete lie shouted the witness i saw you running",
+                        options: [
+                            '"That is a complete lie!" shouted the witness, "I saw you running."',
+                            '"That is a complete lie!" shouted the witness. "I saw you running."',
+                            '"That is a complete lie" shouted the witness "I saw you running".'
+                        ],
+                        correct: 1,
+                        explanation: "Avoid comma splicing! These are two independent clauses of dialogue, so they must be separated by a full stop after the reporting clause."
+                    }
+                ]
+            },
+            chrono: {
+                title: "Chrono-Shift Engine",
+                color: "blue",
+                icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                questions: [
+                    {
+                        direct: '"I am building a robot in my garage," said Dr. Vance.',
+                        rule: "Present Continuous ➔ Past Continuous",
+                        options: [
+                            "Dr. Vance said that he is building a robot in his garage.",
+                            "Dr. Vance said that he was building a robot in his garage.",
+                            "Dr. Vance said that he had built a robot in his garage."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        direct: '"I wrote the secret code," whispered the spy.',
+                        rule: "Past Simple ➔ Past Perfect",
+                        options: [
+                            "The spy whispered that he wrote the secret code.",
+                            "The spy whispered that he had written the secret code.",
+                            "The spy whispered that he has written the secret code."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        direct: '"Water boils at 100 degrees Celsius," the scientist noted.',
+                        rule: "Universal Truth Exception! No Backshift.",
+                        options: [
+                            "The scientist noted that water boils at 100 degrees Celsius.",
+                            "The scientist noted that water boiled at 100 degrees Celsius.",
+                            "The scientist noted that water had boiled at 100 degrees Celsius."
+                        ],
+                        correct: 0
+                    },
+                    {
+                        direct: '"I will help you," he promised.',
+                        rule: "Modal Shift: Will ➔ Would",
+                        options: [
+                            "He promised that he will help me.",
+                            "He promised that he would help me.",
+                            "He promised that he can help me."
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            shifter: {
+                title: "Shape-Shifter Matrix",
+                color: "purple",
+                icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                questions: [
+                    { alienWord: "TODAY", options: ["Yesterday", "That day", "The next day"], correct: 1 },
+                    { alienWord: "TOMORROW", options: ["The previous day", "That day", "The following day"], correct: 2 },
+                    { alienWord: "HERE", options: ["There", "Now", "Then"], correct: 0 },
+                    { alienWord: "NOW", options: ["Later", "At that moment", "Today"], correct: 1 },
+                    { alienWord: "YESTERDAY", options: ["The previous day", "That day", "The next day"], correct: 0 },
+                ]
+            },
+            vault: {
+                title: "The Verb Vault",
+                color: "amber",
+                icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>',
+                questions: [
+                    {
+                        quote: '"I won\'t do my homework!" she yelled.',
+                        sentenceStart: "She adamantly",
+                        sentenceEnd: "to do her homework.",
+                        options: ["refused", "agreed", "apologized"],
+                        correct: 0,
+                        pattern: "Verb + To-Infinitive Pattern"
+                    },
+                    {
+                        quote: '"I am undeniably the smartest person in this entire school!" he yelled.',
+                        sentenceStart: "He",
+                        sentenceEnd: "that he was the smartest person in the school.",
+                        options: ["complained", "boasted", "inquired"],
+                        correct: 1,
+                        pattern: "Verb + That Clause Pattern"
+                    },
+                    {
+                        quote: '"Don\'t walk near the dangerous river," the guide said.',
+                        sentenceStart: "The guide",
+                        sentenceEnd: "the tourists not to walk near the river.",
+                        options: ["begged", "promised", "warned"],
+                        correct: 2,
+                        pattern: "Verb + Object + To-Infinitive Pattern"
+                    },
+                    {
+                        quote: '"Where is the police station?" the civilian asked frantically.',
+                        sentenceStart: "The civilian frantically",
+                        sentenceEnd: "where the police station was.",
+                        options: ["told", "inquired", "ordered"],
+                        correct: 1,
+                        pattern: "Interrogative Reporting Verb"
+                    }
+                ]
+            }
+        };
+
+        // --- APP STATE ---
+        let currentModuleKey = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswering = false;
+
+        // --- DOM ELEMENTS ---
+        const views = {
+            menu: document.getElementById('menu-view'),
+            quiz: document.getElementById('quiz-view'),
+            results: document.getElementById('results-view')
+        };
+        const quizContainer = document.getElementById('quiz-container');
+        const quizHeader = document.getElementById('quiz-header');
+        const progressBar = document.getElementById('progress-bar');
+        const quizContent = document.getElementById('quiz-content');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizFeedback = document.getElementById('quiz-feedback');
+        
+        // --- LOGIC ---
+        function showView(viewName) {
+            Object.values(views).forEach(v => {
+                v.classList.remove('block');
+                v.classList.add('hidden');
+            });
+            const target = document.getElementById(viewName);
+            target.classList.remove('hidden');
+            target.classList.add('block');
+            
+            // Re-trigger animation
+            target.classList.remove('zoom-in', 'fade-in');
+            void target.offsetWidth; 
+            target.classList.add(viewName === 'menu-view' ? 'fade-in' : 'zoom-in');
+        }
+
+        function startModule(modKey) {
+            currentModuleKey = modKey;
+            currentQuestionIndex = 0;
+            score = 0;
+            isAnswering = false;
+            
+            const mod = moduleData[modKey];
+            
+            // Setup Colors
+            quizContainer.className = `bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-${mod.color}-500`;
+            quizHeader.className = `p-6 border-b border-${mod.color}-100 flex items-center justify-between bg-${mod.color}-50`;
+            progressBar.className = `h-2.5 rounded-full transition-all duration-500 ease-out bg-${mod.color}-600`;
+            
+            renderQuestion();
+            showView('quiz-view');
+        }
+
+        function renderQuestion() {
+            isAnswering = false;
+            const mod = moduleData[currentModuleKey];
+            const q = mod.questions[currentQuestionIndex];
+            
+            // Render Header
+            quizHeader.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bg-${mod.color}-500 text-white rounded-xl shadow-md">
+                        ${mod.icon}
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">${mod.title}</h2>
+                </div>
+                <div class="text-sm font-semibold text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm">
+                    Case ${currentQuestionIndex + 1} / ${mod.questions.length}
+                </div>
+            `;
+
+            // Progress bar
+            const progress = ((currentQuestionIndex) / mod.questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Render Module Specific Content
+            let contentHtml = '';
+            if (currentModuleKey === 'detective') {
+                contentHtml = `
+                    <div class="mb-8 text-center fade-in">
+                        <p class="text-sm text-gray-500 uppercase tracking-widest font-bold mb-2">Raw Transcript</p>
+                        <p class="text-xl font-mono bg-gray-100 p-4 rounded-lg text-gray-700 shadow-inner">${q.context}</p>
+                        <p class="mt-4 text-indigo-700 font-medium">Select the perfectly punctuated evidence:</p>
+                    </div>
+                `;
+            } else if (currentModuleKey === 'chrono') {
+                contentHtml = `
+                    <div class="mb-8 text-center fade-in">
+                        <p class="text-sm text-blue-500 uppercase tracking-widest font-bold mb-2">Direct Speech Artifact</p>
+                        <p class="text-2xl font-serif italic text-gray-800 mb-4">${q.direct}</p>
+                        <div class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-bold shadow-sm mb-4">
+                            Engine Target: ${q.rule}
+                        </div>
+                    </div>
+                `;
+            } else if (currentModuleKey === 'shifter') {
+                contentHtml = `
+                    <div class="mb-8 text-center fade-in">
+                        <p class="text-sm text-purple-500 uppercase tracking-widest font-bold mb-2">Alien Deictic Marker</p>
+                        <p class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 mb-4 tracking-widest">
+                            ${q.alienWord}
+                        </p>
+                        <p class="text-gray-600 font-medium">Translate to third-person neutral record:</p>
+                    </div>
+                `;
+            } else if (currentModuleKey === 'vault') {
+                contentHtml = `
+                    <div class="mb-8 text-center fade-in">
+                        <p class="text-sm text-amber-500 uppercase tracking-widest font-bold mb-2">Original Utterance</p>
+                        <p class="text-xl font-serif italic text-gray-700 mb-6 bg-amber-50 p-4 rounded-lg">
+                            ${q.quote}
+                        </p>
+                        <div class="text-lg font-medium text-gray-800 flex items-center justify-center flex-wrap gap-2">
+                            <span>${q.sentenceStart}</span>
+                            <span class="inline-block border-b-2 border-dashed border-gray-400 w-32 mx-2"></span>
+                            <span>${q.sentenceEnd}</span>
+                        </div>
+                        <p class="mt-4 text-sm font-bold text-amber-600">${q.pattern}</p>
+                    </div>
+                `;
+            }
+            quizContent.innerHTML = contentHtml;
+
+            // Render Options
+            quizOptions.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-option w-full text-left p-4 rounded-xl border-2 transition-all duration-200 font-medium text-gray-700 hover:shadow-md border-gray-200 hover:border-gray-400";
+                btn.innerHTML = `<div class="flex justify-between items-center">
+                    <span>${opt}</span>
+                    <span class="icon-placeholder"></span>
+                </div>`;
+                btn.onclick = () => handleAnswer(idx, btn);
+                quizOptions.appendChild(btn);
+            });
+
+            // Hide feedback
+            quizFeedback.className = "mt-6 hidden";
+            quizFeedback.innerHTML = '';
+        }
+
+        function handleAnswer(selectedIndex, btnElement) {
+            if (isAnswering) return;
+            isAnswering = true;
+
+            const mod = moduleData[currentModuleKey];
+            const q = mod.questions[currentQuestionIndex];
+            const buttons = quizOptions.querySelectorAll('.btn-option');
+            
+            const checkIcon = '<svg class="text-green-500 w-6 h-6 fade-in" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            const xIcon = '<svg class="text-red-500 w-6 h-6 fade-in" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+
+            buttons.forEach((b, idx) => {
+                b.disabled = true;
+                b.className = "btn-option w-full text-left p-4 rounded-xl border-2 font-medium text-gray-700 transition-all duration-200 ";
+                const iconSpan = b.querySelector('.icon-placeholder');
+                
+                if (idx === q.correct) {
+                    b.className += "border-green-500 bg-green-50 text-green-800";
+                    iconSpan.innerHTML = checkIcon;
+                } else if (idx === selectedIndex) {
+                    b.className += "border-red-500 bg-red-50 text-red-800";
+                    iconSpan.innerHTML = xIcon;
+                } else {
+                    b.className += "border-gray-200 opacity-50";
+                }
+            });
+
+            if (selectedIndex === q.correct) {
+                score++;
+            }
+
+            if (q.explanation) {
+                quizFeedback.className = "mt-6 p-4 bg-blue-50 text-blue-800 rounded-lg text-sm border border-blue-200 fade-in block";
+                quizFeedback.innerHTML = `<span class="font-bold">Cambridge Checkpoint Tip: </span>${q.explanation}`;
+            }
+
+            setTimeout(() => {
+                if (currentQuestionIndex < mod.questions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                } else {
+                    showResults();
+                }
+            }, 2500);
+        }
+
+        function showResults() {
+            const mod = moduleData[currentModuleKey];
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('total-score').innerText = mod.questions.length;
+            progressBar.style.width = '100%';
+            
+            setTimeout(() => {
+                showView('results-view');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
