@@ -206,7 +206,254 @@
             </div>
         </section>
 
+        <!-- Concept 5: The Time Shift Challenge (25 MCQ) -->
+        <section class="mt-16 pt-12 border-t border-gray-200" id="challenge-section">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center p-3 bg-red-100 text-red-700 rounded-2xl mb-4 shadow-sm">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                </div>
+                <h3 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-3">The Time Shift Challenge</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Test your understanding of tense backshifting, universal truths, deictic markers, and modal verbs with this 25-question quiz.</p>
+            </div>
+
+            <!-- Quiz UI Container -->
+            <div id="quiz-container" class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden max-w-3xl mx-auto">
+                <!-- Header -->
+                <div class="bg-slate-50 border-b border-gray-200 p-6 flex justify-between items-center">
+                    <div class="font-bold text-gray-700">Question <span id="current-question-num" class="text-indigo-600">1</span> of 25</div>
+                    <div class="text-sm font-semibold text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border border-gray-200">
+                        Score: <span id="current-score" class="text-green-600">0</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-100 h-1.5">
+                    <div id="progress-bar" class="bg-indigo-500 h-1.5 transition-all duration-300" style="width: 4%;"></div>
+                </div>
+
+                <!-- Question Area -->
+                <div class="p-6 sm:p-8">
+                    <div id="question-text" class="text-xl font-medium text-gray-900 mb-6 italic border-l-4 border-indigo-400 pl-4">
+                        Loading question...
+                    </div>
+                    
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options injected here -->
+                    </div>
+
+                    <div id="feedback-area" class="mt-6 hidden p-4 rounded-xl text-sm font-medium transition-all duration-200">
+                        <!-- Feedback injected here -->
+                    </div>
+                </div>
+
+                <!-- Footer/Actions -->
+                <div class="bg-slate-50 border-t border-gray-200 p-4 sm:p-6 flex justify-end">
+                    <button id="next-btn" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-xl transition-colors shadow-sm flex items-center gap-2">
+                        Next Question <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button id="finish-btn" class="hidden bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-6 rounded-xl transition-colors shadow-sm flex items-center gap-2">
+                        See Final Score <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="results-view" class="hidden bg-white rounded-2xl shadow-lg border-t-8 border-indigo-500 p-8 text-center max-w-2xl mx-auto">
+                <h3 class="text-3xl font-black text-gray-900 mb-2">Challenge Complete!</h3>
+                <p class="text-gray-500 mb-8">Time Shift Mastery Assessment</p>
+                
+                <div class="inline-block p-6 rounded-full bg-indigo-50 mb-6">
+                    <div class="text-6xl font-black text-indigo-600 mb-2">
+                        <span id="final-score-display">0</span> <span class="text-3xl text-gray-400">/ 25</span>
+                    </div>
+                </div>
+                
+                <p id="result-message" class="text-lg text-gray-700 font-medium mb-8"></p>
+                
+                <button onclick="resetQuiz()" class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-sm">
+                    Retake Challenge
+                </button>
+            </div>
+        </section>
+
     </div>
 
+    <!-- Quiz Logic -->
+    <script>
+        const quizData = [
+            // Standard Backshifts
+            { q: '"I eat apples," he said.', options: ["He said that he eat apples.", "He said that he ate apples.", "He said that he had eaten apples."], correct: 1, explanation: "Present Simple shifts to Past Simple." },
+            { q: '"I am running fast," she said.', options: ["She said that she is running fast.", "She said that she ran fast.", "She said that she was running fast."], correct: 2, explanation: "Present Continuous shifts to Past Continuous." },
+            { q: '"I won the race," he shouted.', options: ["He shouted that he had won the race.", "He shouted that he won the race.", "He shouted that he was winning the race."], correct: 0, explanation: "Past Simple shifts to Past Perfect (The tricky one!)." },
+            { q: '"We have finished the project," they announced.', options: ["They announced that they finished the project.", "They announced that they had finished the project.", "They announced that they were finishing the project."], correct: 1, explanation: "Present Perfect shifts to Past Perfect." },
+            { q: '"I was walking to school," he mentioned.', options: ["He mentioned that he walked to school.", "He mentioned that he was walking to school.", "He mentioned that he had been walking to school."], correct: 2, explanation: "Past Continuous shifts to Past Perfect Continuous." },
+            
+            // Modals
+            { q: '"I will go to the store," she promised.', options: ["She promised that she would go to the store.", "She promised that she will go to the store.", "She promised to go to the store."], correct: 0, explanation: "'Will' shifts to 'Would'." },
+            { q: '"I can fix the car," the mechanic said.', options: ["The mechanic said he can fix the car.", "The mechanic said he could fix the car.", "The mechanic said he would fix the car."], correct: 1, explanation: "'Can' shifts to 'Could'." },
+            { q: '"It may rain later," the weather forecaster stated.', options: ["He stated that it might rain later.", "He stated that it may rain later.", "He stated that it could rain later."], correct: 0, explanation: "'May' (possibility) shifts to 'Might'." },
+            { q: '"You must pay the fee," the official declared.', options: ["The official declared that we must pay the fee.", "The official declared that we had to pay the fee.", "The official declared that we should pay the fee."], correct: 1, explanation: "'Must' (obligation) shifts to 'Had to'." },
+            { q: '"We shall overcome," the leader proclaimed.', options: ["The leader proclaimed that they should overcome.", "The leader proclaimed that they shall overcome.", "The leader proclaimed that they would overcome."], correct: 2, explanation: "While 'shall' can shift to 'should', it often shifts to 'would' in modern reported speech regarding future intent." },
+
+            // Deictic Markers (Time)
+            { q: '"I am leaving now," he said.', options: ["He said that he was leaving now.", "He said that he was leaving then.", "He said that he had left then."], correct: 1, explanation: "'Now' shifts to 'Then'." },
+            { q: '"I will see you tomorrow," she told him.', options: ["She told him she would see him tomorrow.", "She told him she would see him the previous day.", "She told him she would see him the next day."], correct: 2, explanation: "'Tomorrow' shifts to 'The next day' or 'The following day'." },
+            { q: '"I saw her yesterday," he admitted.', options: ["He admitted that he had seen her yesterday.", "He admitted that he had seen her the day before.", "He admitted that he saw her the day before."], correct: 1, explanation: "'Yesterday' shifts to 'The day before' AND Past Simple shifts to Past Perfect." },
+            { q: '"We are having a party today," they announced.', options: ["They announced that they were having a party that day.", "They announced that they are having a party that day.", "They announced that they were having a party today."], correct: 0, explanation: "'Today' shifts to 'That day'." },
+            { q: '"I finished the book tonight," she said.', options: ["She said she had finished the book that night.", "She said she finished the book that night.", "She said she had finished the book tonight."], correct: 0, explanation: "'Tonight' shifts to 'That night' AND Past Simple shifts to Past Perfect." },
+
+            // Deictic Markers (Space/Demonstrative)
+            { q: '"Put the box here," the manager ordered.', options: ["The manager ordered him to put the box here.", "The manager ordered him to put the box there.", "The manager ordered him putting the box there."], correct: 1, explanation: "'Here' shifts to 'There'." },
+            { q: '"I like this painting," she remarked.', options: ["She remarked that she liked this painting.", "She remarked that she had liked that painting.", "She remarked that she liked that painting."], correct: 2, explanation: "'This' shifts to 'That'." },
+            { q: '"These shoes are tight," he complained.', options: ["He complained that those shoes were tight.", "He complained that these shoes were tight.", "He complained that those shoes had been tight."], correct: 0, explanation: "'These' shifts to 'Those'." },
+            { q: '"I moved to London three years ago," she said.', options: ["She said she had moved to London three years ago.", "She said she moved to London three years before.", "She said she had moved to London three years before."], correct: 2, explanation: "'Ago' shifts to 'Before' AND Past Simple to Past Perfect." },
+            
+            // Universal Truths (Exceptions)
+            { q: '"The sun rises in the east," the teacher taught us.', options: ["The teacher taught us that the sun rose in the east.", "The teacher taught us that the sun rises in the east.", "The teacher taught us that the sun had risen in the east."], correct: 1, explanation: "Universal truth! No tense backshift." },
+            { q: '"Ice melts at 0 degrees," the scientist confirmed.', options: ["The scientist confirmed that ice melted at 0 degrees.", "The scientist confirmed that ice had melted at 0 degrees.", "The scientist confirmed that ice melts at 0 degrees."], correct: 2, explanation: "Scientific fact! No tense backshift." },
+            
+            // Mixed/Complex
+            { q: '"I didn\'t know you were here today!" she exclaimed.', options: ["She exclaimed that she hadn't known I was there that day.", "She exclaimed that she didn't know I was there that day.", "She exclaimed that she hadn't known I had been here today."], correct: 0, explanation: "Three shifts needed: didn't know -> hadn't known, here -> there, today -> that day." },
+            { q: '"I must finish this assignment tomorrow," he stressed.', options: ["He stressed that he had to finish that assignment the next day.", "He stressed that he must finish that assignment the next day.", "He stressed that he had to finish this assignment tomorrow."], correct: 0, explanation: "Three shifts: must -> had to, this -> that, tomorrow -> the next day." },
+            { q: '"Did you see the news yesterday?" she asked me.', options: ["She asked me if I saw the news the day before.", "She asked me if I had seen the news the day before.", "She asked me if I had seen the news yesterday."], correct: 1, explanation: "Past Simple to Past Perfect (had seen), and yesterday to the day before." },
+            { q: '"I am working on it now, but I will need help later," he confessed.', options: ["He confessed that he was working on it then, but he would need help later.", "He confessed that he is working on it then, but he will need help later.", "He confessed that he had been working on it then, but he would need help later."], correct: 0, explanation: "Present Continuous to Past Continuous (was working), now to then, will to would." }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswering = false;
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackArea = document.getElementById('feedback-area');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const currentQNum = document.getElementById('current-question-num');
+        const currentScoreDisplay = document.getElementById('current-score');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsView = document.getElementById('results-view');
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScoreDisplay();
+            quizContainer.classList.remove('hidden');
+            resultsView.classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            isAnswering = false;
+            const qData = quizData[currentQuestionIndex];
+            
+            // Update UI
+            currentQNum.innerText = currentQuestionIndex + 1;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / quizData.length) * 100}%`;
+            questionText.innerText = qData.q;
+            
+            // Reset areas
+            feedbackArea.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            finishBtn.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+
+            // Generate options
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all duration-200 font-medium text-gray-700 option-btn flex justify-between items-center group";
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="icon-placeholder opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
+                `;
+                btn.onclick = () => handleAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex, selectedBtn) {
+            if (isAnswering) return;
+            isAnswering = true;
+
+            const qData = quizData[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                const iconPlaceholder = btn.querySelector('.icon-placeholder');
+                iconPlaceholder.classList.remove('opacity-0', 'group-hover:opacity-100');
+                
+                if (index === qData.correct) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-50 text-green-800 font-medium flex justify-between items-center";
+                    iconPlaceholder.innerHTML = '<svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+                } else if (index === selectedIndex) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-800 font-medium flex justify-between items-center";
+                    iconPlaceholder.innerHTML = '<svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-gray-200 text-gray-400 font-medium flex justify-between items-center opacity-50";
+                    iconPlaceholder.innerHTML = '';
+                }
+            });
+
+            if (selectedIndex === qData.correct) {
+                score++;
+                updateScoreDisplay();
+                feedbackArea.innerHTML = `<span class="font-bold block mb-1 text-green-700">Correct!</span><span class="text-green-800">${qData.explanation}</span>`;
+                feedbackArea.className = "mt-6 p-4 rounded-xl text-sm font-medium bg-green-100 border border-green-200 block";
+            } else {
+                feedbackArea.innerHTML = `<span class="font-bold block mb-1 text-red-700">Incorrect.</span><span class="text-red-800">${qData.explanation}</span>`;
+                feedbackArea.className = "mt-6 p-4 rounded-xl text-sm font-medium bg-red-100 border border-red-200 block";
+            }
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextBtn.classList.remove('hidden');
+            } else {
+                finishBtn.classList.remove('hidden');
+            }
+        }
+
+        function updateScoreDisplay() {
+            currentScoreDisplay.innerText = score;
+        }
+
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+            
+            document.getElementById('final-score-display').innerText = score;
+            
+            const msgEl = document.getElementById('result-message');
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage >= 90) {
+                msgEl.innerText = "Exceptional! You have mastered the Time Shift and Deictic markers.";
+            } else if (percentage >= 70) {
+                msgEl.innerText = "Great job! You have a solid grasp of backshifting principles.";
+            } else if (percentage >= 50) {
+                msgEl.innerText = "Good effort. Review the specific exceptions and deictic markers.";
+            } else {
+                msgEl.innerText = "Keep practicing! Review the rules above and try again.";
+            }
+        }
+
+        function resetQuiz() {
+            initQuiz();
+            // scroll back to top of quiz
+            document.getElementById('challenge-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event Listeners
+        nextBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        finishBtn.addEventListener('click', showResults);
+
+        // Start
+        initQuiz();
+    </script>
 </body>
 </html>
