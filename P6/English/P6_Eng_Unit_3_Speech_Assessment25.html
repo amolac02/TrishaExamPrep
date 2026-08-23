@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 6 Practice: Direct & Indirect Speech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .feedback-visible { display: block !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 font-sans min-h-screen p-4 sm:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 mb-8 text-center fade-in">
+            <div class="inline-flex items-center justify-center p-4 bg-teal-100 text-teal-700 rounded-2xl mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">25-Question Practice Set</h1>
+            <h2 class="text-xl text-gray-500 font-medium mb-6">Direct & Indirect Speech (Cambridge Stage 6)</h2>
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-semibold">
+                <span class="bg-teal-100 text-teal-800 px-4 py-2 rounded-full">Self-Paced Practice</span>
+                <span class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full">Difficulty: Medium - High</span>
+            </div>
+            <p class="mt-6 text-gray-600 max-w-2xl mx-auto">
+                Test your mastery of tense backshifting, pronoun adjustments, deictic markers, interrogative inversions, and advanced reporting verbs. Check your answers individually or export the entire set.
+            </p>
+        </header>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-4 mb-6 fade-in" style="animation-delay: 0.1s;">
+            <button onclick="revealAllAnswers()" class="px-6 py-2.5 bg-white border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
+                Reveal All Answers
+            </button>
+            <button onclick="exportToHTML()" class="flex items-center px-6 py-2.5 bg-teal-600 text-white font-medium rounded-xl hover:bg-teal-700 transition-colors shadow-sm">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Export Study Sheet
+            </button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questions-container" class="space-y-6">
+            <!-- Questions injected via JS -->
+        </div>
+
+    </div>
+
+    <script>
+        const practiceData = [
+            // Standard Conversions (Tense Backshifts)
+            {
+                type: "Direct to Indirect",
+                question: 'The teacher said, "I am evaluating the essays right now."',
+                answer: 'The teacher said that she/he was evaluating the essays at that moment.',
+                tip: 'Present Continuous to Past Continuous. "Right now" shifts to "at that moment".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'Sarah whispered, "I found the hidden key yesterday."',
+                answer: 'Sarah whispered that she had found the hidden key the day before (or the previous day).',
+                tip: 'Past Simple to Past Perfect. "Yesterday" shifts to "the day before".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'He said, "I have never seen such a beautiful painting before."',
+                answer: 'He said that he had never seen such a beautiful painting before.',
+                tip: 'Present Perfect to Past Perfect.'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'The captain shouted, "We were sailing through a terrible storm!"',
+                answer: 'The captain shouted that they had been sailing through a terrible storm.',
+                tip: 'Past Continuous to Past Perfect Continuous.'
+            },
+            
+            // Universal Truth Exceptions
+            {
+                type: "Direct to Indirect (Exception)",
+                question: 'The professor stated, "The speed of light is a constant in a vacuum."',
+                answer: 'The professor stated that the speed of light is a constant in a vacuum.',
+                tip: 'Universal truth exception! The tense remains in Present Simple.'
+            },
+            {
+                type: "Direct to Indirect (Exception)",
+                question: 'My mother always says, "Honesty is the best policy."',
+                answer: 'My mother always says that honesty is the best policy.',
+                tip: 'Because the reporting verb is in the present tense ("says"), there is no tense backshift.'
+            },
+
+            // Modal Shifts
+            {
+                type: "Direct to Indirect",
+                question: 'The mechanic told me, "I will repair your engine tomorrow."',
+                answer: 'The mechanic told me that he would repair my engine the next day (or the following day).',
+                tip: 'Modal shift: "will" becomes "would". "Tomorrow" becomes "the next day".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'She asked, "Shall I open the window for some fresh air?"',
+                answer: 'She asked if she should open the window for some fresh air.',
+                tip: 'Modal shift: "shall" (when asking for advice/offer) becomes "should".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'The guard commanded, "You must leave this restricted area immediately!"',
+                answer: 'The guard commanded that we/they had to leave that restricted area immediately.',
+                tip: 'Modal shift: "must" (obligation) becomes "had to". "This" becomes "that".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'The detective muttered, "The suspect might be hiding nearby."',
+                answer: 'The detective muttered that the suspect might be hiding nearby.',
+                tip: 'Modal shift: "might" remains unchanged.'
+            },
+
+            // Interrogative Inversions (Questions)
+            {
+                type: "Direct to Indirect (Question)",
+                question: 'The tourist asked the guide, "Where is the nearest subway station?"',
+                answer: 'The tourist asked the guide where the nearest subway station was.',
+                tip: 'Remove question mark. Revert to declarative word order (Subject + Verb). Do not use "where was the station".'
+            },
+            {
+                type: "Direct to Indirect (Question)",
+                question: 'The interviewer asked, "Did you complete your degree at Cambridge?"',
+                answer: 'The interviewer asked if/whether I/he/she had completed my/his/her degree at Cambridge.',
+                tip: 'Yes/No question requires "if/whether". The auxiliary "did" is removed, and Past Simple becomes Past Perfect ("had completed").'
+            },
+            {
+                type: "Direct to Indirect (Question)",
+                question: 'My friend asked me, "Why are you looking so upset today?"',
+                answer: 'My friend asked me why I was looking so upset that day.',
+                tip: 'Keep the "wh-" word. Revert word order. "Today" becomes "that day".'
+            },
+            {
+                type: "Direct to Indirect (Question)",
+                question: 'She asked him, "Have you ever traveled to Japan?"',
+                answer: 'She asked him if/whether he had ever traveled to Japan.',
+                tip: 'Yes/No question requires "if/whether". Present Perfect becomes Past Perfect.'
+            },
+
+            // Imperatives (Commands/Requests)
+            {
+                type: "Direct to Indirect (Command)",
+                question: 'The doctor advised the patient, "Do not eat any sugary foods for a week."',
+                answer: 'The doctor advised the patient not to eat any sugary foods for a week.',
+                tip: 'Imperative uses infinitive pattern. Negative command becomes "not to + verb".'
+            },
+            {
+                type: "Direct to Indirect (Request)",
+                question: 'The child said to his father, "Please buy me that toy car."',
+                answer: 'The child begged/requested his father to buy him that toy car.',
+                tip: 'Remove "please" and use a reporting verb like requested/begged + to-infinitive.'
+            },
+
+            // Advanced Reporting Verbs
+            {
+                type: "Direct to Indirect (Advanced Verb)",
+                question: 'Rewrite using "refused": The prisoner yelled, "I will not confess to a crime I didn\'t commit!"',
+                answer: 'The prisoner refused to confess to a crime he hadn\'t committed.',
+                tip: 'Use the pattern: Refused + to-infinitive.'
+            },
+            {
+                type: "Direct to Indirect (Advanced Verb)",
+                question: 'Rewrite using "apologized": John said, "I am so sorry I broke your favorite vase yesterday."',
+                answer: 'John apologized for breaking my/his favorite vase the day before.',
+                tip: 'Use the pattern: Apologized + for + gerund (-ing). "Yesterday" shifts to "the day before".'
+            },
+            {
+                type: "Direct to Indirect (Advanced Verb)",
+                question: 'Rewrite using "accused": The manager said, "You stole the funds from the register!"',
+                answer: 'The manager accused him/her/me of stealing the funds from the register.',
+                tip: 'Use the pattern: Accused + object + of + gerund (-ing).'
+            },
+            {
+                type: "Direct to Indirect (Advanced Verb)",
+                question: 'Rewrite using "boasted": "I am undeniably the fastest runner in the entire school," he declared.',
+                answer: 'He boasted that he was undeniably the fastest runner in the entire school.',
+                tip: 'Use the pattern: Boasted + that clause.'
+            },
+
+            // Reverse Engineering (Indirect to Direct)
+            {
+                type: "Indirect to Direct",
+                question: 'The librarian told the students that they had to be quiet in the reading room.',
+                answer: 'The librarian said to the students, "You must be quiet in the reading room."',
+                tip: 'Reverse "had to" back to "must". Change pronouns back to 2nd person ("they" to "you").'
+            },
+            {
+                type: "Indirect to Direct",
+                question: 'He asked her whether she would accompany him to the theatre the following night.',
+                answer: 'He said to her, "Will you accompany me to the theatre tomorrow night?"',
+                tip: 'Reverse "if/whether" back to a direct question. "Would" becomes "will". "The following night" becomes "tomorrow night".'
+            },
+            {
+                type: "Indirect to Direct",
+                question: 'The officer ordered the civilian to step out of the vehicle immediately.',
+                answer: 'The officer said/shouted, "Step out of the vehicle immediately!"',
+                tip: 'Reverse the infinitive command back into a direct imperative.'
+            },
+            
+            // Complex Mixed Sentences
+            {
+                type: "Direct to Indirect",
+                question: '"I have lost my passport," he cried, "and I don\'t know what to do now!"',
+                answer: 'He cried that he had lost his passport and (that) he didn\'t know what to do then.',
+                tip: 'Handle two clauses. Present Perfect to Past Perfect. Present Simple to Past Simple. "Now" becomes "then".'
+            },
+            {
+                type: "Direct to Indirect",
+                question: 'The old man sighed, "I used to live here many years ago, but everything has changed."',
+                answer: 'The old man sighed that he had used to live there many years before, but everything had changed.',
+                tip: '"Here" becomes "there". "Ago" becomes "before".'
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        practiceData.forEach((item, index) => {
+            const delay = index * 0.05;
+            
+            const card = document.createElement('div');
+            card.className = `bg-white rounded-2xl shadow-sm border border-gray-200 p-6 fade-in`;
+            card.style.animationDelay = `${delay}s`;
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-700 font-bold text-sm">
+                            ${index + 1}
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400 border border-gray-200 px-2 py-1 rounded-md">
+                            ${item.type}
+                        </span>
+                    </div>
+                </div>
+                
+                <p class="text-lg font-medium text-gray-900 mb-6 italic pl-11">
+                    ${item.question}
+                </p>
+                
+                <div class="pl-11">
+                    <button onclick="toggleAnswer(${index})" id="btn-${index}" class="text-sm font-semibold text-teal-600 hover:text-teal-800 transition-colors flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        Show Answer
+                    </button>
+                    
+                    <div id="answer-${index}" class="hidden mt-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <p class="text-gray-800 font-medium mb-3"><span class="text-green-600 mr-2">✓</span> ${item.answer}</p>
+                        <p class="text-sm text-gray-500 flex items-start">
+                            <svg class="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            ${item.tip}
+                        </p>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        function toggleAnswer(index) {
+            const answerDiv = document.getElementById(`answer-${index}`);
+            const btn = document.getElementById(`btn-${index}`);
+            
+            if (answerDiv.classList.contains('hidden')) {
+                answerDiv.classList.remove('hidden');
+                answerDiv.classList.add('fade-in');
+                btn.innerHTML = '<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg> Hide Answer';
+            } else {
+                answerDiv.classList.add('hidden');
+                answerDiv.classList.remove('fade-in');
+                btn.innerHTML = '<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Show Answer';
+            }
+        }
+
+        function revealAllAnswers() {
+            practiceData.forEach((_, index) => {
+                const answerDiv = document.getElementById(`answer-${index}`);
+                const btn = document.getElementById(`btn-${index}`);
+                answerDiv.classList.remove('hidden');
+                btn.innerHTML = '<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg> Hide Answer';
+            });
+        }
+
+        function exportToHTML() {
+            let htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Direct & Indirect Speech - Study Guide</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 2rem; background: #f8fafc; }
+        h1 { color: #0f172a; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; }
+        .question-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .type-badge { display: inline-block; background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .q-text { font-size: 1.1rem; font-style: italic; font-weight: 500; margin-bottom: 15px; }
+        .a-text { color: #166534; font-weight: 600; margin-bottom: 10px; }
+        .tip-text { color: #64748b; font-size: 0.9rem; background: #f1f5f9; padding: 10px; border-radius: 6px; border-left: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+    <h1>Stage 6: Direct & Indirect Speech Study Guide</h1>
+    <p>A comprehensive 25-question review set focusing on tense backshifts, pronouns, dejctic markers, and advanced verbs.</p>
+`;
+
+            practiceData.forEach((item, index) => {
+                htmlContent += `
+    <div class="question-card">
+        <span class="type-badge">Q${index + 1} | ${item.type}</span>
+        <div class="q-text">${item.question}</div>
+        <div class="a-text">Answer: ${item.answer}</div>
+        <div class="tip-text">Tip: ${item.tip}</div>
+    </div>
+`;
+            });
+
+            htmlContent += `
+</body>
+</html>`;
+
+            // Create a Blob and trigger download
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Speech_Practice_Guide.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
