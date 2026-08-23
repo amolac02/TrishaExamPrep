@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering the Time Shift: Stage 6 Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .timeline-line {
+            width: 2px;
+            background: #e2e8f0;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+            .timeline-line { left: 24px; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 font-sans min-h-screen">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-8">
+        
+        <!-- Header -->
+        <header class="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 sm:p-12 mb-8 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
+            
+            <div class="inline-flex items-center justify-center p-4 bg-indigo-100 text-indigo-700 rounded-2xl mb-6 shadow-sm">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">Mastering the Time Shift</h1>
+            <h2 class="text-xl text-gray-600 font-medium max-w-2xl mx-auto">
+                Understanding Tense Backshifting and Deictic Amnesia in Reported Speech
+            </h2>
+        </header>
+
+        <!-- Concept 1: Tense Backshifting -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xl">1</div>
+                <h3 class="text-2xl font-bold text-gray-900">The Backshift Principle</h3>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    When we report what someone said, we are usually doing it <em>after</em> they said it. Because the "reporting" happens in the past, the grammar of the original sentence must be pushed one step backward in time. We call this <strong>The Backshift Principle</strong>.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                    <!-- Rule 1 -->
+                    <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                        <div class="text-sm font-bold text-blue-600 mb-1">Rule 1</div>
+                        <div class="font-bold text-gray-900 mb-3">Present Simple &rarr; Past Simple</div>
+                        <div class="text-gray-600 italic mb-2">"I <strong>eat</strong> apples," he said.</div>
+                        <div class="text-gray-900 bg-white p-3 rounded shadow-sm border border-gray-100">He said that he <strong>ate</strong> apples.</div>
+                    </div>
+                    <!-- Rule 2 -->
+                    <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                        <div class="text-sm font-bold text-blue-600 mb-1">Rule 2</div>
+                        <div class="font-bold text-gray-900 mb-3">Present Continuous &rarr; Past Continuous</div>
+                        <div class="text-gray-600 italic mb-2">"I <strong>am running</strong>," she said.</div>
+                        <div class="text-gray-900 bg-white p-3 rounded shadow-sm border border-gray-100">She said that she <strong>was running</strong>.</div>
+                    </div>
+                    <!-- Rule 3 -->
+                    <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                        <div class="text-sm font-bold text-purple-600 mb-1">Rule 3 (The tricky one!)</div>
+                        <div class="font-bold text-gray-900 mb-3">Past Simple &rarr; Past Perfect</div>
+                        <div class="text-gray-600 italic mb-2">"I <strong>won</strong> the race," he said.</div>
+                        <div class="text-gray-900 bg-white p-3 rounded shadow-sm border border-gray-100">He said that he <strong>had won</strong> the race.</div>
+                    </div>
+                    <!-- Rule 4 -->
+                    <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                        <div class="text-sm font-bold text-purple-600 mb-1">Rule 4</div>
+                        <div class="font-bold text-gray-900 mb-3">Present Perfect &rarr; Past Perfect</div>
+                        <div class="text-gray-600 italic mb-2">"I <strong>have finished</strong>," she said.</div>
+                        <div class="text-gray-900 bg-white p-3 rounded shadow-sm border border-gray-100">She said that she <strong>had finished</strong>.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept 2: The Universal Truth Exception -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl">2</div>
+                <h3 class="text-2xl font-bold text-gray-900">The Universal Truth Shield</h3>
+            </div>
+
+            <div class="bg-amber-50 rounded-2xl p-6 sm:p-8 border border-amber-200 shadow-sm relative overflow-hidden">
+                <div class="absolute right-0 top-0 opacity-10 translate-x-1/4 -translate-y-1/4">
+                    <svg class="w-48 h-48 text-amber-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"></path></svg>
+                </div>
+                
+                <p class="text-amber-900 font-medium text-lg mb-4 relative z-10">
+                    Warning: Do not backshift everything!
+                </p>
+                <p class="text-amber-800 leading-relaxed mb-6 relative z-10">
+                    If the original statement expresses a universal truth, a scientific fact, or a situation that remains demonstrably true at the exact moment of reporting, <strong>the tense remains anchored in the present</strong>.
+                </p>
+                
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-amber-100 relative z-10">
+                    <div class="flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="flex-1 w-full">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Direct Speech</span>
+                            <span class="italic text-gray-700 font-medium">"Water boils at 100 degrees Celsius," the scientist noted.</span>
+                        </div>
+                        <svg class="w-6 h-6 text-amber-400 transform rotate-90 sm:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        <div class="flex-1 w-full">
+                            <span class="text-xs font-bold text-green-500 uppercase tracking-wider block mb-1">Correct Indirect Speech</span>
+                            <span class="text-gray-900 font-bold">The scientist noted that water boils at 100 degrees Celsius.</span>
+                            <p class="text-xs text-gray-500 mt-2">(Water still boils at 100 degrees, so we don't say it 'boiled'.)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept 3: Deictic Markers -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xl">3</div>
+                <h3 class="text-2xl font-bold text-gray-900">Curing "Deictic Amnesia"</h3>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    "Deictic markers" are words that point to a specific time or place (like <em>here</em>, <em>today</em>, <em>tomorrow</em>). If you report a speech days later, saying "tomorrow" creates a temporal paradox! You must translate these markers to reflect the new time.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-indigo-50 text-indigo-900">
+                                <th class="p-4 border-b border-indigo-100 font-bold w-1/2">Direct Speech (The Utterance)</th>
+                                <th class="p-4 border-b border-indigo-100 font-bold w-1/2">Indirect Speech (The Record)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700 divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4">Now</td>
+                                <td class="p-4 font-semibold text-indigo-600">Then / At that moment</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4">Today</td>
+                                <td class="p-4 font-semibold text-indigo-600">That day</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4">Tonight</td>
+                                <td class="p-4 font-semibold text-indigo-600">That night</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-l-4 border-red-400">Yesterday</td>
+                                <td class="p-4 font-semibold text-indigo-600">The day before / The previous day</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-l-4 border-green-400">Tomorrow</td>
+                                <td class="p-4 font-semibold text-indigo-600">The next day / The following day</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4">This / These</td>
+                                <td class="p-4 font-semibold text-indigo-600">That / Those</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4">Here</td>
+                                <td class="p-4 font-semibold text-indigo-600">There</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept 4: Modal Shifts -->
+        <section class="mb-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xl">4</div>
+                <h3 class="text-2xl font-bold text-gray-900">Modal Verb Transformations</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm text-center">
+                    <div class="text-gray-500 font-bold mb-2 uppercase text-sm tracking-wider">Will</div>
+                    <svg class="w-5 h-5 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <div class="text-teal-600 font-black text-lg">Would</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm text-center">
+                    <div class="text-gray-500 font-bold mb-2 uppercase text-sm tracking-wider">Can</div>
+                    <svg class="w-5 h-5 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <div class="text-teal-600 font-black text-lg">Could</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm text-center">
+                    <div class="text-gray-500 font-bold mb-2 uppercase text-sm tracking-wider">May (Possibility)</div>
+                    <svg class="w-5 h-5 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <div class="text-teal-600 font-black text-lg">Might</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border-l-4 border-teal-500 border-y border-r border-gray-200 shadow-sm text-center">
+                    <div class="text-gray-500 font-bold mb-2 uppercase text-sm tracking-wider">Must (Obligation)</div>
+                    <svg class="w-5 h-5 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <div class="text-teal-600 font-black text-lg">Had to</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
