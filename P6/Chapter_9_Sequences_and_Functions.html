@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 9 Study Guide: Sequences and Functions</title>
+<style>
+  :root {
+    --ink: #1f2937; --muted: #6b7280; --line: #e5e7eb; --bg: #f8fafc; --card: #ffffff;
+    --brand: #b91c1c; --brand-soft: #fee2e2; --teal: #0f766e; --teal-soft: #ccfbf1;
+    --amber: #b45309; --amber-soft: #fef3c7; --blue: #1d4ed8; --blue-soft: #dbeafe;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; }
+  header.hero { background: linear-gradient(135deg, #7f1d1d, #b91c1c); color: #fff; padding: 36px 20px 28px; }
+  header.hero .inner, main, nav.toc .inner { max-width: 960px; margin: 0 auto; }
+  header.hero h1 { margin: 0 0 6px; font-size: 2rem; }
+  header.hero p { margin: 0; opacity: .92; }
+  nav.toc { position: sticky; top: 0; z-index: 10; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 1px 4px rgba(0,0,0,.05); }
+  nav.toc .inner { display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 8px 20px; }
+  nav.toc a { text-decoration: none; color: var(--ink); font-size: .88rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); }
+  nav.toc a:hover { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); }
+  main { padding: 20px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin: 22px 0; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  section > h2 { margin: 0 0 4px; font-size: 1.5rem; color: var(--brand); border-bottom: 3px solid var(--brand-soft); padding-bottom: 8px; }
+  h3 { margin: 24px 0 8px; font-size: 1.15rem; color: #111827; }
+  .goal { background: var(--blue-soft); border-left: 5px solid var(--blue); padding: 10px 14px; border-radius: 8px; margin: 14px 0; }
+  .tip { background: var(--amber-soft); border-left: 5px solid var(--amber); padding: 10px 14px; border-radius: 8px; margin: 14px 0; }
+  .example { background: var(--teal-soft); border-left: 5px solid var(--teal); padding: 10px 14px; border-radius: 8px; margin: 14px 0; }
+  .example h4, .tip h4 { margin: 0 0 4px; }
+  .example h4 { color: var(--teal); } .tip h4 { color: var(--amber); }
+  .rule { font-size: 1.1rem; font-weight: 600; text-align: center; background: var(--brand-soft); border-radius: 10px; padding: 10px; margin: 12px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; }
+  td.num, th.num { text-align: center; }
+  .seq { font-family: Consolas, "Courier New", monospace; font-size: 1.05rem; }
+  .practice { background: #fffaf0; border: 1px dashed #f59e0b; border-radius: 10px; padding: 8px 18px 14px; margin-top: 22px; }
+  .practice h3 { margin-top: 12px; color: var(--amber); }
+  .practice ol { padding-left: 22px; }
+  .practice li { margin: 10px 0; }
+  .practice ul.sub { list-style: none; padding-left: 4px; margin: 4px 0; }
+  .toolbox { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px 16px; margin: 18px 0; }
+  .toolbox h4 { margin: 0 0 8px; color: var(--blue); }
+  .toolbox label { margin-right: 8px; font-size: .92rem; }
+  .toolbox input, .toolbox select { font-size: 1rem; padding: 5px 8px; border: 1px solid #94a3b8; border-radius: 6px; width: 90px; }
+  .toolbox select { width: auto; }
+  .toolbox button { font-size: .95rem; padding: 6px 14px; background: var(--blue); color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+  .toolbox button:hover { background: #1e40af; }
+  .out { margin-top: 10px; font-weight: 600; }
+  .machine { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .machine .chip { min-width: 56px; text-align: center; border: 2px solid #94a3b8; border-radius: 10px; padding: 8px 14px; background: #fff; font-size: 1.2rem; }
+  .machine .box { border: 3px solid var(--brand); background: var(--brand-soft); border-radius: 12px; padding: 18px 26px; font-weight: 700; text-align: center; }
+  .machine .box small { display: block; font-weight: 400; color: var(--muted); font-size: .75rem; }
+  .machine .arrow { font-size: 1.6rem; color: #64748b; }
+  details { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin: 12px 0; background: #fff; }
+  details > summary { cursor: pointer; font-weight: 600; color: var(--teal); }
+  ul.check { list-style: none; padding-left: 4px; }
+  ul.check li { margin: 6px 0; }
+  .progress { height: 10px; background: #e5e7eb; border-radius: 999px; overflow: hidden; margin: 8px 0 14px; }
+  .progress div { height: 100%; width: 0; background: var(--teal); transition: width .3s; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 20px; }
+  @media (max-width: 600px) { section { padding: 16px; } header.hero h1 { font-size: 1.5rem; } }
+  @media print { nav.toc, .toolbox { display: none; } section { break-inside: avoid; box-shadow: none; } details { display: block; } details > * { display: block; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <h1>Chapter 9 Study Guide: Sequences and Functions</h1>
+    <p>Cambridge Lower Secondary Mathematics &middot; Grade 6 revision &middot; Lessons 9.1 to 9.4 and Project 4</p>
+  </div>
+</header>
+
+<nav class="toc"><div class="inner">
+  <a href="#start">How to use</a>
+  <a href="#warmup">Warm-up</a>
+  <a href="#l91">9.1 Sequences (1)</a>
+  <a href="#l92">9.2 Sequences (2)</a>
+  <a href="#l93">9.3 nth term</a>
+  <a href="#l94">9.4 Functions</a>
+  <a href="#review">Review &amp; Project 4</a>
+  <a href="#answers">Answers</a>
+  <a href="#sheet">Revision sheet</a>
+</div></nav>
+
+<main>
+
+<!-- HOW TO USE -->
+<section id="start">
+  <h2>How to use this guide</h2>
+  <p>Chapter 9 teaches you to spot number patterns, describe them with rules, and use simple function machines. Work through the sections in order, try each practice question before opening the answers, and finish with the revision sheet.</p>
+
+  <table>
+    <tr><th>Lesson</th><th>Big idea</th><th>You will be able to</th></tr>
+    <tr><td>9.1 Generating sequences (1)</td><td>A sequence follows a rule</td><td>Find the term-to-term rule and the next terms of a number sequence</td></tr>
+    <tr><td>9.2 Generating sequences (2)</td><td>Patterns make sequences</td><td>Count shapes or dots in a pattern and continue it</td></tr>
+    <tr><td>9.3 Using the nth term</td><td>Any term has a position</td><td>Use a rule such as 3n to find any term without listing them all</td></tr>
+    <tr><td>9.4 Representing simple functions</td><td>A machine changes numbers</td><td>Find outputs and inputs of function machines and mapping diagrams</td></tr>
+  </table>
+
+  <h3>Suggested 5-day study plan</h3>
+  <table>
+    <tr><th>Day</th><th>Do this</th><th>Time</th></tr>
+    <tr><td>1</td><td>Warm-up, then read 9.1 and do its practice</td><td>30 min</td></tr>
+    <tr><td>2</td><td>Read 9.2 and do its practice</td><td>30 min</td></tr>
+    <tr><td>3</td><td>Read 9.3 and do its practice</td><td>40 min</td></tr>
+    <tr><td>4</td><td>Read 9.4 and do its practice</td><td>30 min</td></tr>
+    <tr><td>5</td><td>Mixed review, Project 4, then the revision sheet</td><td>45 min</td></tr>
+  </table>
+
+  <h3>Key words</h3>
+  <p>Type in the box to filter the list, or cover the meaning column and test yourself.</p>
+  <p><input id="gloSearch" type="search" placeholder="Search a key word..." style="width:100%;max-width:340px;padding:7px 10px;border:1px solid #94a3b8;border-radius:6px;font-size:1rem"></p>
+  <table id="gloTable">
+    <tr><th>Word</th><th>Meaning</th></tr>
+    <tr><td>Sequence</td><td>A list of numbers that follow a rule, for example 3, 6, 9, 12</td></tr>
+    <tr><td>Term</td><td>One number in a sequence</td></tr>
+    <tr><td>Consecutive terms</td><td>Terms that come right after each other</td></tr>
+    <tr><td>Term-to-term rule</td><td>The rule that tells you how to get from one term to the next, for example Add 3</td></tr>
+    <tr><td>Infinite sequence</td><td>A sequence that goes on forever (it ends with three dots)</td></tr>
+    <tr><td>Finite sequence</td><td>A sequence that stops (no three dots at the end)</td></tr>
+    <tr><td>Sequence of patterns</td><td>Patterns made from dots or shapes that grow in steps</td></tr>
+    <tr><td>Position number</td><td>Where a term sits in the sequence: 1st, 2nd, 3rd and so on</td></tr>
+    <tr><td>nth term</td><td>A rule using n (the position number) that gives any term, for example 3n</td></tr>
+    <tr><td>Function</td><td>A rule that changes an input number into an output number</td></tr>
+    <tr><td>Function machine</td><td>A diagram showing the operation done to each input</td></tr>
+    <tr><td>Input / Output</td><td>The number that goes into the machine / the number that comes out</td></tr>
+    <tr><td>Maps to</td><td>Shows what an input turns into, for example 2 maps to 5</td></tr>
+    <tr><td>Mapping diagram</td><td>Arrows joining each input to its output</td></tr>
+    <tr><td>Inverse operation</td><td>The operation that undoes another (add and subtract, multiply and divide)</td></tr>
+  </table>
+</section>
+
+<!-- WARM UP -->
+<section id="warmup">
+  <h2>Warm-up: skills you need first</h2>
+  <p>Sequences use adding, subtracting, multiplying and dividing, sometimes with negative numbers. Check these skills before you start. Answers are in the Answers section.</p>
+
+  <div class="practice">
+    <h3>1. Negative numbers</h3>
+    <p>Work out: a) 8 + 6 &nbsp; b) 17 &minus; 5 &nbsp; c) &minus;2 + 6 &nbsp; d) 9 &minus; 12 &nbsp; e) 5 &times; 7 &nbsp; f) 24 &divide; 6 &nbsp; g) &minus;3 &times; 6 &nbsp; h) 35 &divide; &minus;7</p>
+    <div class="tip"><h4>Remember</h4>A negative times a positive gives a negative. Two negatives multiplied or divided give a positive. For 9 &minus; 12, start at 9 on a number line and move 12 steps left.</div>
+
+    <h3>2. Missing numbers</h3>
+    <p>Find the missing number: a) 4 + &#9633; = 11 &nbsp; b) 23 &minus; &#9633; = 18 &nbsp; c) &#9633; + 3 = 12 &nbsp; d) &minus;3 + &#9633; = 3 &nbsp; e) &#9633; &minus; 8 = &minus;5 &nbsp; f) 10 &minus; &#9633; = &minus;4 &nbsp; g) 3 &times; &#9633; = 12 &nbsp; h) &#9633; &times; 12 = 96</p>
+    <div class="tip"><h4>Tip</h4>Use the inverse operation. If &#9633; + 3 = 12, then &#9633; = 12 &minus; 3.</div>
+
+    <h3>3. Order of operations</h3>
+    <p>Brackets first, then multiplication and division, then addition and subtraction. a) 5 + 4 &times; 3 &nbsp; b) (5 + 4) &times; 3 &nbsp; c) 6 + 4 &divide; 2 &nbsp; d) (6 + 4) &divide; 2 &nbsp; e) &minus;2 &times; 3 + 10</p>
+    <div class="example"><h4>Worked example</h4>5 + 4 &times; 3: multiply first, 4 &times; 3 = 12, then add, 5 + 12 = 17. With brackets, (5 + 4) &times; 3 = 9 &times; 3 = 27.</div>
+
+    <h3>4. Substitution</h3>
+    <p>Replace the letter with the number. a) n + 4 when n = 6 &nbsp; b) 6n when n = 3 &nbsp; c) n &minus; 9 when n = 20 &nbsp; d) n &minus; 10 when n = 8</p>
+    <div class="tip"><h4>Remember</h4>6n means 6 &times; n. When n = 3, 6n = 6 &times; 3 = 18.</div>
+  </div>
+
+  <h3>Fun fact: the Fibonacci sequence</h3>
+  <p>Leonardo Pisano, known as Fibonacci (about 1170 to 1250), wrote about this sequence in 1202:</p>
+  <p class="seq">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, &hellip;</p>
+  <p>Add the two terms before to get the next one (13 + 21 = 34). Sunflowers can have 34 spirals one way and 21 the other, and pine cones can have 8 and 13.</p>
+</section>
+
+<!-- 9.1 -->
+<section id="l91">
+  <h2>9.1 Generating sequences (1)</h2>
+  <div class="goal"><strong>Goal:</strong> find and use term-to-term rules for number sequences.</div>
+
+  <h3>What is a sequence?</h3>
+  <p>A sequence is a list of numbers that follows a rule. Each number is called a <strong>term</strong>.</p>
+  <p class="seq">3, 6, 9, 12, 15, &hellip;</p>
+  <p>The first term is 3, the second is 6, the third is 9. Terms next to each other, like 6 and 9, are <strong>consecutive terms</strong>.</p>
+
+  <h3>The term-to-term rule</h3>
+  <p>It tells you how to get from one term to the next. In 3, 6, 9, 12, 15, &hellip; each term is 3 more than the one before, so the rule is <strong>Add 3</strong>.</p>
+  <table>
+    <tr><th>Sequence</th><th>What happens</th><th>Term-to-term rule</th></tr>
+    <tr><td class="seq">3, 6, 9, 12, &hellip;</td><td>Each term is 3 more</td><td>Add 3</td></tr>
+    <tr><td class="seq">20, 17, 14, 11, &hellip;</td><td>Each term is 3 less</td><td>Subtract 3</td></tr>
+    <tr><td class="seq">2, 4, 8, 16, &hellip;</td><td>Each term is 2 times the one before</td><td>Multiply by 2</td></tr>
+    <tr><td class="seq">80, 40, 20, 10, &hellip;</td><td>Each term is half the one before</td><td>Divide by 2</td></tr>
+  </table>
+  <p>The lesson focuses on adding and subtracting rules. Multiplying and dividing rules are a good extension.</p>
+
+  <h3>Finite and infinite sequences</h3>
+  <ul>
+    <li>Three dots (an ellipsis) at the end mean the sequence goes on forever: an <strong>infinite sequence</strong>, for example 3, 6, 9, 12, &hellip;</li>
+    <li>No dots means it stops: a <strong>finite sequence</strong>, for example 3, 6, 9, 12, 15.</li>
+  </ul>
+
+  <h3>How to find a term-to-term rule</h3>
+  <ol>
+    <li>Subtract the first term from the second term.</li>
+    <li>Check that the same change works between the next pair of terms.</li>
+    <li>A positive answer means Add. A negative answer means Subtract.</li>
+  </ol>
+
+  <div class="example">
+    <h4>Worked example A</h4>
+    <p>For the infinite sequence 9, 15, 21, 27, &hellip; find the rule, the next two terms and the 10th term.</p>
+    <p>15 &minus; 9 = 6, 21 &minus; 15 = 6, 27 &minus; 21 = 6. The rule is <strong>Add 6</strong>. The next two terms are 27 + 6 = <strong>33</strong> and <strong>39</strong>. Continuing: 45, 51, 57, 63, so the 10th term is <strong>63</strong>.</p>
+    <p><strong>Shortcut:</strong> 10th term = first term + 9 steps = 9 + 9 &times; 6 = 63. There is always one fewer step than the position number.</p>
+  </div>
+  <div class="example">
+    <h4>Worked example B (decreasing)</h4>
+    <p>28, 25, 22, 19, &hellip; : 25 &minus; 28 = &minus;3, so the rule is <strong>Subtract 3</strong>. Next terms: 16, 13.</p>
+  </div>
+  <div class="example">
+    <h4>Worked example C (missing terms)</h4>
+    <p>5, &#9633;, 17, 23, &#9633; : from 17 to 23 is +6, so the rule is Add 6. The first gap is 5 + 6 = 11 (check: 11 + 6 = 17). The last term is 23 + 6 = 29.</p>
+  </div>
+
+  <div class="toolbox">
+    <h4>Try it: sequence maker</h4>
+    <label>First term <input type="number" id="sqStart" value="3"></label>
+    <label>Add / subtract <input type="number" id="sqStep" value="4"></label>
+    <label>Terms <input type="number" id="sqCount" value="8" min="2" max="30"></label>
+    <button onclick="makeSeq()">Show sequence</button>
+    <div class="out" id="sqOut"></div>
+  </div>
+
+  <div class="practice">
+    <h3>Practice 9.1</h3>
+    <ol>
+      <li>For each infinite sequence write the term-to-term rule, the next two terms and the 10th term.
+        <ul class="sub"><li>a) 6, 8, 10, 12, &hellip;</li><li>b) 5, 10, 15, 20, &hellip;</li><li>c) 31, 28, 25, 22, &hellip;</li><li>d) 100, 93, 86, 79, &hellip;</li></ul></li>
+      <li>Finite or infinite? a) 2, 4, 6, 8, &hellip; &nbsp; b) 1, 3, 5, 7, 9 &nbsp; c) 90, 80, 70, 60, 50, 40 &nbsp; d) 4, 9, 14, 19, &hellip;</li>
+      <li>The first term is 7 and the rule is Add 4. Write the first five terms.</li>
+      <li>Find the missing terms: a) 4, &#9633;, 12, 16, &#9633; &nbsp; b) 50, 44, &#9633;, 32, 26 &nbsp; c) &#9633;, 13, 19, &#9633;, 31</li>
+      <li>A plant is 4 cm tall and grows 2 cm every week. Write the heights for weeks 1 to 5, using 4 cm as the first term. What is the rule?</li>
+      <li><strong>Spot the mistake.</strong> Ali says the rule for 20, 17, 14, 11, &hellip; is &ldquo;Add 3&rdquo;. What did he get wrong?</li>
+      <li><strong>Challenge.</strong> Write the next four terms of 1, 1, 2, 3, 5, 8, &hellip; Why is this not &ldquo;Add a fixed number&rdquo;?</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 9.2 -->
+<section id="l92">
+  <h2>9.2 Generating sequences (2)</h2>
+  <div class="goal"><strong>Goal:</strong> find and use term-to-term rules for number sequences drawn as patterns.</div>
+
+  <h3>Patterns that make sequences</h3>
+  <p>A sequence of patterns is a set of pictures made from dots, matchsticks or tiles. Count the items in each picture to get a number sequence.</p>
+  <table>
+    <tr><th>Pattern number</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th></tr>
+    <tr><td>Number of dots</td><td class="num">3</td><td class="num">5</td><td class="num">7</td><td class="num">9</td></tr>
+  </table>
+  <p>One extra dot is added to each end, so two dots are added each time. The rule is <strong>Add 2</strong>. Pattern 4 has 7 + 2 = 9 dots.</p>
+
+  <h3>How to work with a pattern</h3>
+  <ol>
+    <li>Count the dots (or sticks or tiles) in each pattern.</li>
+    <li>Write the numbers as a sequence.</li>
+    <li>Find what is added or taken away each time. That is the term-to-term rule.</li>
+    <li>Use the rule to continue, then draw the next pattern to check.</li>
+  </ol>
+  <div class="tip"><h4>Tip</h4>Describe the rule in words and in numbers, for example &ldquo;one more dot at each end, so Add 2&rdquo;.</div>
+
+  <div class="example">
+    <h4>Worked example A: matchstick squares</h4>
+    <p>Squares in a row: 1 square uses 4 matchsticks, 2 squares use 7, 3 squares use 10.</p>
+    <table>
+      <tr><th>Pattern number</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th></tr>
+      <tr><td>Matchsticks</td><td class="num">4</td><td class="num">7</td><td class="num">10</td><td class="num">13</td><td class="num">16</td></tr>
+    </table>
+    <p>The rule is <strong>Add 3</strong>: each new square shares one side with the last, so it needs only 3 more matchsticks.</p>
+  </div>
+  <div class="example">
+    <h4>Worked example B: a shrinking pattern</h4>
+    <p>20 counters, then 3 fewer each time: 20, 17, 14, 11, &hellip; The rule is <strong>Subtract 3</strong>. Pattern 5 has 8 counters.</p>
+  </div>
+
+  <div class="toolbox">
+    <h4>Try it: dot pattern</h4>
+    <label>Dots in pattern 1 <input type="number" id="dpStart" value="3"></label>
+    <label>Dots added each time <input type="number" id="dpAdd" value="2"></label>
+    <button onclick="drawDots()">Draw patterns 1 to 5</button>
+    <div id="dpOut" class="out" style="font-weight:400"></div>
+  </div>
+
+  <div class="practice">
+    <h3>Practice 9.2</h3>
+    <ol>
+      <li>Pattern 1 has 2 dots, pattern 2 has 5 dots, pattern 3 has 8 dots. a) Draw patterns 4 and 5. b) Write the sequence. c) Write the rule. d) How many dots in pattern 6?</li>
+      <li>Triangles in a row use 3, 5, 7 matchsticks for 1, 2, 3 triangles. a) Write the sequence for 1 to 6 triangles. b) Explain the rule in words.</li>
+      <li>Complete the tile table: patterns 1 to 3 have 1, 4, 7 tiles. Find patterns 4, 5 and 6.</li>
+      <li>Pattern 1 has 25 stars, pattern 2 has 22, pattern 3 has 19. a) Rule? b) Stars in pattern 6? c) Which pattern has only 1 star?</li>
+      <li>Patterns 1 to 3 have 6, 10, 14 squares. How many squares in pattern 8?</li>
+      <li><strong>Challenge.</strong> In 3, 5, 7, 9, &hellip; which pattern number has 31 dots?</li>
+      <li><strong>Create your own.</strong> Draw the first three patterns of a sequence with the rule Add 4 and write its numbers.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 9.3 -->
+<section id="l93">
+  <h2>9.3 Using the nth term</h2>
+  <div class="goal"><strong>Goal:</strong> use algebra to describe the nth term of a sequence.</div>
+
+  <h3>Why we need the nth term</h3>
+  <p>To find the 100th term of 3, 6, 9, 12, &hellip; with the term-to-term rule you would write 100 terms. The nth term rule jumps straight to any term.</p>
+
+  <h3>Position numbers and terms</h3>
+  <table>
+    <tr><th>Position number</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th></tr>
+    <tr><td>Term</td><td class="num">3</td><td class="num">6</td><td class="num">9</td><td class="num">12</td><td class="num">15</td></tr>
+  </table>
+  <p>These are the 3 times table: 1 &times; 3 = 3, 2 &times; 3 = 6, 3 &times; 3 = 9.</p>
+  <div class="rule">Term = 3 &times; position number &nbsp;&rarr;&nbsp; nth term = 3n</div>
+  <p>We use the letter <strong>n</strong> for the position number. To find the 8th term put n = 8: 3 &times; 8 = 24.</p>
+
+  <h3>Two kinds of rule</h3>
+  <table>
+    <tr><th></th><th>Term-to-term rule</th><th>nth term rule</th></tr>
+    <tr><td>Uses</td><td>The term before</td><td>The position number</td></tr>
+    <tr><td>Example</td><td>Add 3</td><td>3n</td></tr>
+    <tr><td>Good for</td><td>Next few terms</td><td>Any term, even the 100th</td></tr>
+    <tr><td>100th term of 3, 6, 9, &hellip;</td><td>List 100 terms</td><td>3 &times; 100 = 300</td></tr>
+  </table>
+
+  <h3>How to find the nth term</h3>
+  <ol>
+    <li>Make a table with position numbers 1, 2, 3, 4, 5 above the terms.</li>
+    <li>Find the number that multiplies the position number to give the term.</li>
+    <li>Write the rule with n, for example 6n.</li>
+  </ol>
+
+  <div class="example"><h4>Worked example A: find the nth term</h4>6, 12, 18, 24, 30, &hellip; Each term is 6 &times; its position number, so the nth term is <strong>6n</strong>.</div>
+  <div class="example"><h4>Worked example B: use the nth term</h4>nth term = 4n. 10th term: 4 &times; 10 = <strong>40</strong>. 25th term: 4 &times; 25 = <strong>100</strong>.</div>
+  <div class="example"><h4>Worked example C: is it in the sequence?</h4>nth term = 5n. Is 75 in it? 75 &divide; 5 = 15, a whole number, so yes, it is the 15th term. Is 82? 82 &divide; 5 = 16.4, not whole, so no.</div>
+
+  <div class="toolbox">
+    <h4>Try it: nth term explorer</h4>
+    <label>Rule: <input type="number" id="ntMul" value="3" style="width:70px">n</label>
+    <label>Find term number <input type="number" id="ntPos" value="8" style="width:70px"></label>
+    <button onclick="nthTerm()">Work it out</button>
+    <div class="out" id="ntOut"></div>
+  </div>
+
+  <h3>Common mistakes</h3>
+  <ul>
+    <li>Writing 3n as &ldquo;3 + n&rdquo;. It means 3 &times; n.</li>
+    <li>Mixing up the term-to-term rule (Add 3) and the nth term rule (3n).</li>
+    <li>Using the wrong position number: the 8th term uses n = 8.</li>
+  </ul>
+
+  <div class="tip"><h4>Extension (optional)</h4>For 5, 7, 9, 11, &hellip; the terms go up by 2, so start with 2n (2, 4, 6, 8) and add 3: the nth term is <strong>2n + 3</strong>. Check n = 1: 2 + 3 = 5.</div>
+
+  <div class="practice">
+    <h3>Practice 9.3</h3>
+    <ol>
+      <li>Complete the workings for 6, 12, 18, 24, 30: Term = &#9633; &times; position number, so nth term = &#9633;.</li>
+      <li>Write the nth term: a) 2, 4, 6, 8, &hellip; &nbsp; b) 5, 10, 15, 20, &hellip; &nbsp; c) 7, 14, 21, 28, &hellip; &nbsp; d) 10, 20, 30, 40, &hellip;</li>
+      <li>The nth term is 9n. Find the 1st, 2nd, 3rd, 10th and 20th terms.</li>
+      <li>Zara says the nth term of 4, 8, 12, 16, &hellip; is 4 + n. Show she is wrong and give the correct rule.</li>
+      <li>nth term = 8n. a) 7th term? b) Is 64 in the sequence, and which term? c) Is 100 in it? Explain.</li>
+      <li>Pencils come in packs of 12 (nth term 12n). How many pencils in 9 packs?</li>
+      <li>Write the first five terms and the 50th term of 11n.</li>
+      <li>In 3, 6, 9, 12, &hellip; which is the first term more than 100?</li>
+      <li>Match the sequences to 2n, 3n, 10n, 6n: (10, 20, 30, &hellip;) (6, 12, 18, &hellip;) (2, 4, 6, &hellip;) (3, 6, 9, &hellip;).</li>
+      <li><strong>Extension.</strong> Use 2n + 3 to write the first four terms and the 20th term.</li>
+      <li><strong>Challenge.</strong> nth term = 7n. What is the position number of 245?</li>
+      <li>Explain in your own words why the nth term rule is useful.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 9.4 -->
+<section id="l94">
+  <h2>9.4 Representing simple functions</h2>
+  <div class="goal"><strong>Goal:</strong> work out input and output numbers from function machines.</div>
+
+  <h3>What is a function?</h3>
+  <p>A function is a relationship between two sets of numbers. A function machine does the same operation to every number put in.</p>
+  <ul>
+    <li>The numbers you put in are the <strong>input</strong>.</li>
+    <li>The numbers that come out are the <strong>output</strong>.</li>
+    <li>A <strong>one-step function machine</strong> does just one operation, such as add 3.</li>
+  </ul>
+
+  <div class="machine" aria-label="Function machine: input, add 3, output">
+    <div class="chip">2</div><div class="arrow">&rarr;</div>
+    <div class="box">Add 3<small>function machine</small></div>
+    <div class="arrow">&rarr;</div><div class="chip">5</div>
+  </div>
+  <p>The machine &ldquo;add 3&rdquo; changes 2 into 5, 4 into 7 and 5 into 8. We say 2 <strong>maps to</strong> 5.</p>
+  <table>
+    <tr><th>Input</th><th class="num">2</th><th class="num">4</th><th class="num">5</th></tr>
+    <tr><td>Output</td><td class="num">5</td><td class="num">7</td><td class="num">8</td></tr>
+  </table>
+  <p>A <strong>mapping diagram</strong> shows the same function with arrows from each input (left) to its output (right).</p>
+
+  <h3>Finding an output</h3>
+  <p>Put the input through the operation. For &ldquo;multiply by 4&rdquo;, input 6 gives 6 &times; 4 = 24.</p>
+
+  <h3>Finding an input (work backwards)</h3>
+  <p>Use the <strong>inverse operation</strong>, which undoes the machine.</p>
+  <table>
+    <tr><th>Machine does</th><th>Inverse operation</th></tr>
+    <tr><td>Add</td><td>Subtract</td></tr>
+    <tr><td>Subtract</td><td>Add</td></tr>
+    <tr><td>Multiply by</td><td>Divide by</td></tr>
+    <tr><td>Divide by</td><td>Multiply by</td></tr>
+  </table>
+
+  <div class="example"><h4>Worked example A (find the output)</h4>Subtract 4. Inputs 9, 12, 20 give 5, 8, 16.</div>
+  <div class="example"><h4>Worked example B (find the input)</h4>Multiply by 5, output 45. Inverse: 45 &divide; 5 = <strong>9</strong>. Check: 9 &times; 5 = 45.</div>
+  <div class="example"><h4>Worked example C (find the function)</h4>Inputs 1, 2, 3 give outputs 4, 5, 6. Each output is 3 more, so the function is <strong>add 3</strong>. Input 10 gives 13.</div>
+
+  <div class="toolbox">
+    <h4>Try it: function machine</h4>
+    <label>Operation
+      <select id="fmOp">
+        <option value="+">Add</option><option value="-">Subtract</option>
+        <option value="*">Multiply by</option><option value="/">Divide by</option>
+      </select></label>
+    <label>Number <input type="number" id="fmN" value="3" style="width:70px"></label>
+    <label>Input <input type="number" id="fmIn" value="5" style="width:70px"></label>
+    <button onclick="runMachine()">Find output</button>
+    <button onclick="runBackwards()" style="background:#0f766e">Find input from this as output</button>
+    <div class="out" id="fmOut"></div>
+  </div>
+
+  <div class="tip"><h4>Tip</h4>Always check by putting your answer back through the machine. The most common mistake is using the same operation backwards, for example adding when you should subtract.</div>
+
+  <div class="practice">
+    <h3>Practice 9.4</h3>
+    <ol>
+      <li>Find the missing outputs: a) Add 5: inputs 2, 6, 10 &nbsp; b) Multiply by 3: inputs 1, 4, 7 &nbsp; c) Subtract 4: inputs 9, 12, 20 &nbsp; d) Divide by 2: inputs 8, 14, 20</li>
+      <li>Find the missing inputs: a) Add 6: outputs 10, 15, 30 &nbsp; b) Multiply by 5: outputs 20, 45, 100 &nbsp; c) Subtract 3: outputs 7, 12, 0 &nbsp; d) Divide by 4: outputs 3, 6, 10</li>
+      <li>Write the function: a) inputs 2, 4, 5 and outputs 6, 12, 15 &nbsp; b) inputs 10, 20, 30 and outputs 7, 17, 27 &nbsp; c) inputs 6, 8, 10 and outputs 3, 4, 5</li>
+      <li>&ldquo;Add 3&rdquo; maps 2 to 5. What does 10 map to? What input maps to 20?</li>
+      <li>Draw a mapping diagram for &ldquo;multiply by 2&rdquo; with inputs 1, 3, 5, 7.</li>
+      <li><strong>Spot the mistake.</strong> Ben says the machine is multiply by 2, the output is 12, so the input is 24. Correct him.</li>
+      <li>A machine adds 8 to every number. Priya enters her age and gets 19. How old is she? Which operation did you use?</li>
+      <li><strong>Extension.</strong> A machine multiplies by 2 and then adds 1. Find the outputs for inputs 3, 5 and 10.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section id="review">
+  <h2>Mixed review and Project 4</h2>
+  <div class="practice">
+    <h3>Mixed review questions</h3>
+    <ol>
+      <li>Rule and next two terms of 12, 19, 26, 33, &hellip;</li>
+      <li>Rule and next two terms of 100, 85, 70, 55, &hellip;</li>
+      <li>First term 2, rule Add 9. Write the first five terms.</li>
+      <li>nth term 7n. Find the 5th and 12th terms.</li>
+      <li>Write the nth term of 12, 24, 36, 48, &hellip;</li>
+      <li>nth term 6n. Is 90 in the sequence? Is 100? Give a reason for each.</li>
+      <li>A machine multiplies by 8. Find the outputs for inputs 3, 6, 9.</li>
+      <li>A machine adds 9. The output is 17. What is the input?</li>
+      <li>A tile pattern has 5, 9, 13, 17 tiles in patterns 1 to 4. Find the rule and the tiles in pattern 7.</li>
+      <li>Inputs 4, 8, 12 give outputs 1, 2, 3. What is the function?</li>
+      <li>The sequence 4, 8, 12, 16, &hellip; has nth term 4n. How is this like a function machine? What are the input and output?</li>
+      <li>Maya saves $5 in week 1, $10 in total after week 2, $15 after week 3. a) nth term? b) Total after 12 weeks? c) First week she has at least $100?</li>
+    </ol>
+  </div>
+
+  <h3>Project 4: Mole and goose</h3>
+  <p>This is an investigation. There is no single answer: try examples, spot patterns and explain your thinking.</p>
+  <p><strong>The story.</strong> A goose walks along a number line and lays an egg at equal steps, for example 2, 7, 12, 17, 22, &hellip; A mole pokes its head up at equal steps, for example 1, 4, 7, 10, 13, &hellip; At 7 the mole finds an egg.</p>
+  <ul>
+    <li>Where else does the mole find an egg with these two sequences?</li>
+    <li>Choose your own start numbers and step sizes. Does the mole find an egg? More than one?</li>
+    <li>How can you predict how far apart the eggs are that the mole finds?</li>
+    <li>Can you find two sequences where the mole never finds an egg? What is special about the step sizes?</li>
+  </ul>
+  <h3>How to investigate</h3>
+  <ol>
+    <li>Write each animal's sequence out to about 40.</li>
+    <li>Circle the numbers that appear in both lists.</li>
+    <li>Work out the gaps between the circled numbers.</li>
+    <li>Change the start or step, repeat, and look for a pattern.</li>
+  </ol>
+
+  <div class="toolbox">
+    <h4>Try it: mole and goose</h4>
+    <label>Goose start <input type="number" id="gStart" value="2" style="width:70px"></label>
+    <label>Goose step <input type="number" id="gStep" value="5" style="width:70px"></label>
+    <label>Mole start <input type="number" id="mStart" value="1" style="width:70px"></label>
+    <label>Mole step <input type="number" id="mStep" value="3" style="width:70px"></label>
+    <label>Up to <input type="number" id="mMax" value="60" style="width:70px"></label>
+    <button onclick="moleGoose()">Find the eggs</button>
+    <div class="out" id="mgOut" style="font-weight:400"></div>
+  </div>
+
+  <div class="example">
+    <h4>Worked start</h4>
+    <p>Goose: first term 2, Add 5. Mole: first term 1, Add 3. They meet at <strong>7, 22, 37</strong>, which are 15 apart. 15 is the first number in both the 5 times table and the 3 times table, so the eggs the mole finds are spaced by that number.</p>
+    <p><strong>No egg:</strong> goose 1, 3, 5, 7, &hellip; and mole 2, 4, 6, 8, &hellip; The goose lands only on odd numbers and the mole only on even numbers, so they never meet. This can happen when both step sizes share a factor (here both are even).</p>
+  </div>
+</section>
+
+<!-- ANSWERS -->
+<section id="answers">
+  <h2>Answers</h2>
+  <p>Mark your work, then redo any question you got wrong after reading the worked examples again. Open one block at a time.</p>
+
+  <details><summary>Warm-up</summary>
+    <table>
+      <tr><td>1. Negative numbers</td><td>a 14, b 12, c 4, d &minus;3, e 35, f 4, g &minus;18, h &minus;5</td></tr>
+      <tr><td>2. Missing numbers</td><td>a 7, b 5, c 9, d 6, e 3, f 14, g 4, h 8</td></tr>
+      <tr><td>3. Order of operations</td><td>a 17, b 27, c 8, d 5, e 4</td></tr>
+      <tr><td>4. Substitution</td><td>a 10, b 18, c 11, d &minus;2</td></tr>
+    </table>
+  </details>
+
+  <details><summary>Practice 9.1</summary>
+    <table>
+      <tr><td>Q1a</td><td>Add 2; 14, 16; 10th term 24</td></tr>
+      <tr><td>Q1b</td><td>Add 5; 25, 30; 10th term 50</td></tr>
+      <tr><td>Q1c</td><td>Subtract 3; 19, 16; 10th term 4</td></tr>
+      <tr><td>Q1d</td><td>Subtract 7; 72, 65; 10th term 37</td></tr>
+      <tr><td>Q2</td><td>a infinite, b finite, c finite, d infinite</td></tr>
+      <tr><td>Q3</td><td>7, 11, 15, 19, 23</td></tr>
+      <tr><td>Q4</td><td>a 8 and 20, b 38, c 7 and 25</td></tr>
+      <tr><td>Q5</td><td>4, 6, 8, 10, 12 cm; rule Add 2</td></tr>
+      <tr><td>Q6</td><td>The terms go down, so the rule is Subtract 3, not Add 3</td></tr>
+      <tr><td>Q7</td><td>13, 21, 34, 55. The amount added changes each time, because each term is the sum of the two before it</td></tr>
+    </table>
+  </details>
+
+  <details><summary>Practice 9.2</summary>
+    <table>
+      <tr><td>Q1</td><td>a pattern 4 has 11 dots, pattern 5 has 14; b 2, 5, 8, 11, 14; c Add 3; d 17 dots</td></tr>
+      <tr><td>Q2</td><td>a 3, 5, 7, 9, 11, 13; b Add 2 matchsticks, because each new triangle shares one side with the last</td></tr>
+      <tr><td>Q3</td><td>1, 4, 7, 10, 13, 16</td></tr>
+      <tr><td>Q4</td><td>a Subtract 3; b 10 stars; c pattern 9</td></tr>
+      <tr><td>Q5</td><td>Add 4, so pattern 8 has 34 squares</td></tr>
+      <tr><td>Q6</td><td>Pattern 15 (3 + 14 &times; 2 = 31)</td></tr>
+      <tr><td>Q7</td><td>Any pattern that adds 4 each time, for example 1, 5, 9, &hellip;</td></tr>
+    </table>
+  </details>
+
+  <details><summary>Practice 9.3</summary>
+    <table>
+      <tr><td>Q1</td><td>Term = 6 &times; position number, so nth term = 6n</td></tr>
+      <tr><td>Q2</td><td>a 2n, b 5n, c 7n, d 10n</td></tr>
+      <tr><td>Q3</td><td>9, 18, 27, 90, 180</td></tr>
+      <tr><td>Q4</td><td>4 + n gives 5, 6, 7 for n = 1, 2, 3, not 4, 8, 12. The correct rule is 4n</td></tr>
+      <tr><td>Q5</td><td>a 56; b yes, 64 &divide; 8 = 8, the 8th term; c no, 100 &divide; 8 = 12.5</td></tr>
+      <tr><td>Q6</td><td>108 pencils</td></tr>
+      <tr><td>Q7</td><td>11, 22, 33, 44, 55; 50th term 550</td></tr>
+      <tr><td>Q8</td><td>102, the 34th term (33 &times; 3 = 99 is not more than 100)</td></tr>
+      <tr><td>Q9</td><td>10n: 10, 20, 30; 6n: 6, 12, 18; 2n: 2, 4, 6; 3n: 3, 6, 9</td></tr>
+      <tr><td>Q10</td><td>5, 7, 9, 11; the 20th term is 43</td></tr>
+      <tr><td>Q11</td><td>245 &divide; 7 = 35, the 35th term</td></tr>
+      <tr><td>Q12</td><td>It gives any term straight away, so you do not have to write out every term before it</td></tr>
+    </table>
+  </details>
+
+  <details><summary>Practice 9.4</summary>
+    <table>
+      <tr><td>Q1</td><td>a 7, 11, 15; b 3, 12, 21; c 5, 8, 16; d 4, 7, 10</td></tr>
+      <tr><td>Q2</td><td>a 4, 9, 24; b 4, 9, 20; c 10, 15, 3; d 12, 24, 40</td></tr>
+      <tr><td>Q3</td><td>a multiply by 3; b subtract 3; c divide by 2</td></tr>
+      <tr><td>Q4</td><td>10 maps to 13; input 17 gives 20</td></tr>
+      <tr><td>Q5</td><td>1 &rarr; 2, 3 &rarr; 6, 5 &rarr; 10, 7 &rarr; 14</td></tr>
+      <tr><td>Q6</td><td>Ben multiplied instead of using the inverse. The input is 12 &divide; 2 = 6</td></tr>
+      <tr><td>Q7</td><td>Priya is 11. You subtract 8, the inverse of add 8</td></tr>
+      <tr><td>Q8</td><td>7, 11 and 21</td></tr>
+    </table>
+  </details>
+
+  <details><summary>Mixed review</summary>
+    <table>
+      <tr><td>Q1</td><td>Add 7; 40, 47</td></tr>
+      <tr><td>Q2</td><td>Subtract 15; 40, 25</td></tr>
+      <tr><td>Q3</td><td>2, 11, 20, 29, 38</td></tr>
+      <tr><td>Q4</td><td>35 and 84</td></tr>
+      <tr><td>Q5</td><td>12n</td></tr>
+      <tr><td>Q6</td><td>90 is in it (90 &divide; 6 = 15, the 15th term); 100 is not (100 &divide; 6 is not a whole number)</td></tr>
+      <tr><td>Q7</td><td>24, 48, 72</td></tr>
+      <tr><td>Q8</td><td>8</td></tr>
+      <tr><td>Q9</td><td>Add 4; pattern 7 has 29 tiles</td></tr>
+      <tr><td>Q10</td><td>Divide by 4</td></tr>
+      <tr><td>Q11</td><td>The position number n is the input and the term is the output. The machine multiplies by 4</td></tr>
+      <tr><td>Q12</td><td>a 5n; b $60; c week 20</td></tr>
+    </table>
+  </details>
+</section>
+
+<!-- REVISION -->
+<section id="sheet">
+  <h2>Quick revision sheet</h2>
+  <table>
+    <tr><th>Topic</th><th>Remember</th></tr>
+    <tr><td>Term-to-term rule</td><td>How to get from one term to the next. Second minus first: positive means Add, negative means Subtract</td></tr>
+    <tr><td>Finite and infinite</td><td>Three dots at the end means it goes on forever (infinite)</td></tr>
+    <tr><td>Sequence of patterns</td><td>Count the dots, sticks or tiles, write the sequence, find the rule, draw the next pattern</td></tr>
+    <tr><td>nth term</td><td>n is the position number. Term = number &times; position number, for example 3n gives 3, 6, 9, &hellip;</td></tr>
+    <tr><td>Using the nth term</td><td>Replace n with the position: the 8th term of 3n is 3 &times; 8 = 24</td></tr>
+    <tr><td>Is it in the sequence?</td><td>Divide by the multiplier. A whole number means yes, and it is the position</td></tr>
+    <tr><td>Function machine</td><td>Input goes in, the operation is done, output comes out</td></tr>
+    <tr><td>Maps to</td><td>2 maps to 5 means input 2 gives output 5</td></tr>
+    <tr><td>Finding an input</td><td>Use the inverse operation: add and subtract undo each other, and so do multiply and divide</td></tr>
+    <tr><td>Always check</td><td>Put your answer back through the rule</td></tr>
+  </table>
+
+  <h3>Before the test</h3>
+  <div class="progress"><div id="bar"></div></div>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox"> I can say what term, consecutive, finite and infinite mean</label></li>
+    <li><label><input type="checkbox"> I can find a term-to-term rule and the next terms</label></li>
+    <li><label><input type="checkbox"> I can continue a pattern of dots or shapes and describe the rule</label></li>
+    <li><label><input type="checkbox"> I can write and use an nth term such as 5n</label></li>
+    <li><label><input type="checkbox"> I can find inputs and outputs of a function machine</label></li>
+    <li><label><input type="checkbox"> I can explain why the inverse operation finds the input</label></li>
+    <li><label><input type="checkbox"> I have redone the questions I got wrong</label></li>
+  </ul>
+</section>
+
+</main>
+<footer>Chapter 9 study guide &middot; Sequences and Functions &middot; Built with plain HTML, CSS and JavaScript</footer>
+
+<script>
+  function $(id) { return document.getElementById(id); }
+
+  // Glossary filter
+  $('gloSearch').addEventListener('input', function () {
+    var q = this.value.toLowerCase();
+    var rows = $('gloTable').rows;
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(q) === -1 ? 'none' : '';
+    }
+  });
+
+  // 9.1 sequence maker
+  function makeSeq() {
+    var a = Number($('sqStart').value), d = Number($('sqStep').value);
+    var n = Math.min(30, Math.max(2, Math.floor(Number($('sqCount').value) || 8)));
+    var terms = [];
+    for (var i = 0; i < n; i++) terms.push(a + i * d);
+    var rule = d >= 0 ? 'Add ' + d : 'Subtract ' + Math.abs(d);
+    $('sqOut').textContent = terms.join(', ') + ', …   (term-to-term rule: ' + rule + ')';
+  }
+
+  // 9.2 dot pattern
+  function drawDots() {
+    var start = Math.max(0, Math.floor(Number($('dpStart').value) || 0));
+    var add = Math.floor(Number($('dpAdd').value) || 0);
+    var html = '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px">';
+    for (var p = 0; p < 5; p++) {
+      var count = Math.max(0, start + p * add);
+      html += '<div style="border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px;background:#fff;max-width:200px">' +
+              '<div style="font-size:.8rem;color:#6b7280">Pattern ' + (p + 1) + '</div>' +
+              '<div style="line-height:1.3;word-break:break-all">';
+      for (var k = 0; k < Math.min(count, 60); k++) html += '<span style="color:#b91c1c">&#9679;</span> ';
+      html += '</div><div><strong>' + count + ' dots</strong></div></div>';
+    }
+    html += '</div>';
+    $('dpOut').innerHTML = html;
+  }
+
+  // 9.3 nth term explorer
+  function nthTerm() {
+    var m = Number($('ntMul').value), pos = Math.floor(Number($('ntPos').value));
+    if (!isFinite(m) || !isFinite(pos) || pos < 1) { $('ntOut').textContent = 'Enter a whole position number of 1 or more.'; return; }
+    var first = [];
+    for (var i = 1; i <= 6; i++) first.push(m * i);
+    $('ntOut').textContent = 'nth term = ' + m + 'n. First terms: ' + first.join(', ') + ', …   Term ' + pos + ' = ' + m + ' × ' + pos + ' = ' + (m * pos);
+  }
+
+  // 9.4 function machine
+  function runMachine() {
+    var op = $('fmOp').value, n = Number($('fmN').value), x = Number($('fmIn').value), r;
+    if (op === '+') r = x + n; else if (op === '-') r = x - n; else if (op === '*') r = x * n;
+    else { if (n === 0) { $('fmOut').textContent = 'You cannot divide by 0.'; return; } r = x / n; }
+    $('fmOut').textContent = 'Input ' + x + ' goes through the machine and the output is ' + r + '.';
+  }
+  function runBackwards() {
+    var op = $('fmOp').value, n = Number($('fmN').value), y = Number($('fmIn').value), r, inv;
+    if (op === '+') { r = y - n; inv = 'subtract ' + n; }
+    else if (op === '-') { r = y + n; inv = 'add ' + n; }
+    else if (op === '*') { if (n === 0) { $('fmOut').textContent = 'Multiplying by 0 cannot be undone.'; return; } r = y / n; inv = 'divide by ' + n; }
+    else { r = y * n; inv = 'multiply by ' + n; }
+    $('fmOut').textContent = 'If the output is ' + y + ', use the inverse operation (' + inv + '). The input is ' + r + '.';
+  }
+
+  // Project 4: mole and goose
+  function moleGoose() {
+    var gs = Number($('gStart').value), gd = Number($('gStep').value);
+    var ms = Number($('mStart').value), md = Number($('mStep').value);
+    var max = Math.min(500, Math.max(10, Math.floor(Number($('mMax').value) || 60)));
+    if (gd <= 0 || md <= 0) { $('mgOut').textContent = 'Use step sizes above 0.'; return; }
+    var goose = [], mole = [], i;
+    for (i = gs; i <= max; i += gd) goose.push(i);
+    for (i = ms; i <= max; i += md) mole.push(i);
+    var common = goose.filter(function (v) { return mole.indexOf(v) !== -1; });
+    var txt = '<p><strong>Goose:</strong> ' + goose.join(', ') + '</p><p><strong>Mole:</strong> ' + mole.join(', ') + '</p>';
+    if (common.length === 0) txt += '<p><strong>The mole never finds an egg up to ' + max + '.</strong></p>';
+    else {
+      txt += '<p><strong>Eggs found at:</strong> ' + common.join(', ') + '</p>';
+      if (common.length > 1) {
+        var gaps = [];
+        for (i = 1; i < common.length; i++) gaps.push(common[i] - common[i - 1]);
+        txt += '<p>Gaps between eggs found: ' + gaps.join(', ') + '</p>';
+      }
+    }
+    $('mgOut').innerHTML = txt;
+  }
+
+  // Checklist progress (storage is optional)
+  (function () {
+    var boxes = document.querySelectorAll('#checklist input');
+    var key = 'ch9_checklist';
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+    function update() {
+      var done = 0, state = [];
+      boxes.forEach(function (b) { state.push(b.checked); if (b.checked) done++; });
+      $('bar').style.width = (100 * done / boxes.length) + '%';
+      try { localStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+    }
+    boxes.forEach(function (b, i) { b.checked = !!saved[i]; b.addEventListener('change', update); });
+    update();
+  })();
+
+  makeSeq(); drawDots(); nthTerm(); runMachine(); moleGoose();
+</script>
+</body>
+</html>
