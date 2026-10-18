@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 9 Worksheet 7: Investigations and Puzzles (40 marks)</title>
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --line:#d1d5db; --brand:#b91c1c;
+          --low:#15803d; --low-bg:#dcfce7; --med:#b45309; --med-bg:#fef3c7; --hard:#b91c1c; --hard-bg:#fee2e2; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,Arial,sans-serif; color:var(--ink); background:#f3f4f6; line-height:1.55; }
+  .toolbar { background:#fff; border-bottom:1px solid var(--line); padding:10px 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; position:sticky; top:0; z-index:5; }
+  .toolbar button { font-size:.95rem; padding:7px 16px; border:0; border-radius:6px; background:#1d4ed8; color:#fff; cursor:pointer; }
+  .toolbar button.alt { background:#0f766e; }
+  .toolbar span { color:var(--muted); font-size:.88rem; }
+  .page { max-width:820px; margin:18px auto; background:#fff; border:1px solid var(--line); border-radius:6px; padding:30px 38px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  h1 { margin:0; font-size:1.55rem; color:var(--brand); }
+  .sub { color:var(--muted); margin:2px 0 14px; }
+  .idrow { display:flex; flex-wrap:wrap; gap:14px 28px; margin:10px 0 14px; }
+  .idrow div { flex:1 1 200px; border-bottom:1.5px solid var(--ink); padding:4px 0 2px; font-size:.95rem; min-height:30px; }
+  .idrow .score { flex:0 0 150px; border:2px solid var(--ink); border-radius:6px; text-align:center; font-weight:700; }
+  .info { background:#f9fafb; border:1px solid var(--line); border-radius:8px; padding:10px 14px; font-size:.93rem; }
+  .info ul { margin:4px 0 0; padding-left:20px; }
+  table.mix { border-collapse:collapse; width:100%; margin:12px 0; font-size:.92rem; }
+  table.mix th, table.mix td { border:1px solid var(--line); padding:6px 10px; text-align:left; }
+  table.mix th { background:#f3f4f6; }
+  .sec { margin:26px 0 8px; padding:7px 12px; border-radius:6px; font-weight:700; display:flex; justify-content:space-between; }
+  .sec.low { background:var(--low-bg); color:var(--low); } .sec.med { background:var(--med-bg); color:var(--med); } .sec.hard { background:var(--hard-bg); color:var(--hard); }
+  .q { margin:16px 0 4px; display:flex; gap:10px; page-break-inside:avoid; }
+  .q .no { font-weight:700; min-width:30px; }
+  .q .body { flex:1; }
+  .marks { float:right; font-weight:600; font-size:.88rem; border:1px solid var(--ink); border-radius:4px; padding:0 7px; margin-left:12px; white-space:nowrap; }
+  .tag { display:inline-block; font-size:.7rem; font-weight:700; padding:1px 7px; border-radius:999px; vertical-align:middle; margin-left:4px; }
+  .tag.low { background:var(--low-bg); color:var(--low); } .tag.med { background:var(--med-bg); color:var(--med); } .tag.hard { background:var(--hard-bg); color:var(--hard); }
+  .fmt { display:inline-block; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#1d4ed8; background:#dbeafe; padding:1px 8px; border-radius:4px; margin-right:6px; }
+  .parts { list-style:none; padding:0; margin:6px 0; }
+  .parts li { margin:8px 0; }
+  .parts .m { float:right; font-size:.85rem; color:var(--muted); margin-left:10px; }
+  .ans { display:block; border-bottom:1px dotted #6b7280; height:26px; margin:6px 0 0 24px; }
+  .seq { font-family:Consolas,"Courier New",monospace; font-size:1.05rem; }
+  .hint { background:#eff6ff; border-left:4px solid #1d4ed8; padding:4px 10px; border-radius:4px; font-size:.9rem; margin:6px 0; }
+  .opts { display:flex; flex-wrap:wrap; gap:6px 22px; margin:4px 0 0 24px; }
+  .opts span { white-space:nowrap; }
+  .opts span::before { content:"\25CB\00a0"; }
+  .machine { display:inline-flex; align-items:center; gap:8px; margin:4px 0; }
+  .machine .chip { border:1.5px solid #6b7280; border-radius:6px; padding:2px 12px; min-width:44px; text-align:center; background:#fff; }
+  .machine .box { border:2px solid var(--brand); background:#fee2e2; border-radius:8px; padding:4px 14px; font-weight:600; }
+  table.data { border-collapse:collapse; margin:8px 0; font-size:.92rem; }
+  table.data th, table.data td { border:1px solid var(--line); padding:5px 14px; text-align:center; min-width:52px; }
+  table.data th { background:#f3f4f6; }
+  table.data td.blank { background:#fffbeb; }
+  .sets { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; margin:6px 0 6px 24px; }
+  .sets div { border:1px solid var(--line); border-radius:6px; padding:4px 10px; }
+  .scheme { display:none; }
+  .scheme.show { display:block; }
+  table.ms { border-collapse:collapse; width:100%; font-size:.92rem; margin:10px 0; }
+  table.ms th, table.ms td { border:1px solid var(--line); padding:6px 10px; vertical-align:top; text-align:left; }
+  table.ms th { background:#f3f4f6; }
+  table.ms td.mk { text-align:center; width:60px; font-weight:600; }
+  .grid-sum td, .grid-sum th { text-align:center; }
+  .end { text-align:center; color:var(--muted); margin-top:24px; font-size:.9rem; }
+  .meter { display:inline-flex; gap:3px; vertical-align:middle; margin:0 6px; }
+  .meter i { width:12px; height:12px; border-radius:3px; background:#e5e7eb; display:inline-block; }
+  .meter i.on { background:var(--hard); }
+  @media print {
+    body { background:#fff; } .toolbar { display:none; }
+    .page { border:0; box-shadow:none; margin:0; padding:0; max-width:none; }
+    .scheme.show { page-break-before:always; }
+    .sec { page-break-after:avoid; }
+  }
+
+  .figs { display:flex; gap:14px; flex-wrap:wrap; margin:8px 0; }
+  .fig { border:1px solid var(--line); border-radius:6px; padding:6px 10px; text-align:center; font-size:.8rem; color:var(--muted); background:#fff; }
+  table.grid { border-collapse:collapse; margin:8px 0; }
+  table.grid td { border:1px solid var(--line); width:44px; height:30px; text-align:center; font-size:.9rem; }
+  table.grid td.hl { background:#fee2e2; font-weight:700; }
+  .scenario { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:8px 14px; margin:10px 0; }
+  .scenario h4 { margin:0 0 4px; color:#0369a1; }
+  .tf { margin:4px 0 0 24px; }
+  .tf span { margin-right:18px; } .tf span::before { content:"\25CB\00a0"; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="window.print()">Print worksheet</button>
+  <button class="alt" id="btnScheme" onclick="toggleScheme()">Show marking scheme</button>
+  <span>Tip: print the worksheet first. Show the marking scheme only for the marker (it prints on its own page).</span>
+</div>
+
+<div class="page" id="worksheet">
+  <h1>Chapter 9 Worksheet 7: Investigations and Puzzles</h1>
+  <p class="sub">Cambridge Lower Secondary Mathematics &middot; Grade 6 &middot; Chapter 9 riddles, codes, puzzles and investigations</p>
+
+  <div class="idrow">
+    <div>Name:</div><div>Date:</div><div class="score">Score: &nbsp;&nbsp;&nbsp; / 40</div>
+  </div>
+
+  <div class="info">
+    <strong>Time allowed:</strong> 55 minutes &nbsp;&middot;&nbsp; <strong>Total:</strong> 40 marks
+    <ul>
+      <li>Answer all questions. Write your answers on the dotted lines or circle your choice.</li>
+      <li>This worksheet uses puzzles and investigations: riddles, a number grid, a code, think-of-a-number problems and a digit puzzle.</li>
+      <li>Show your working. Marks are given for method as well as the answer.</li>
+      <li>The number of marks is shown in a box like <span class="marks" style="float:none;margin:0">2 marks</span> at the end of each question.</li>
+      <li>No calculator.</li>
+    </ul>
+  </div>
+
+  <table class="mix"><tr><th>Section</th><th>Level</th><th>Questions</th><th>Marks</th><th>Share</th></tr><tr><td>A</td><td>Low (riddles and grids)</td><td>1 to 4</td><td>8</td><td rowspan="2">50% (20 marks)</td></tr><tr><td>B</td><td>Medium (detective work and codes)</td><td>5 to 8</td><td>12</td></tr><tr><td>C</td><td>Hard (9 out of 10, investigations and puzzles)</td><td>9 to 13</td><td>20</td><td>50% (20 marks)</td></tr></table>
+  <p style="font-size:.88rem;color:var(--muted);margin:0">Overall difficulty (same level as Worksheet 3): <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 7.2 out of 10</p>
+
+  <div class="sec low"><span>Section A: Low difficulty</span><span>8 marks</span></div><div class="q"><div class="no">1.</div><div class="body"><span class="marks">2 marks</span> <span class="fmt">Riddles</span> Who am I? Write each number. <span class="tag low">LOW</span><ul class="parts"><li>(a) I am a term of the sequence 7n. I am bigger than 40 and smaller than 50.<span class="m">[1]</span><span class="ans"></span></li><li>(b) I am the 9th term of the sequence 5n.<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">2.</div><div class="body"><span class="marks">2 marks</span> <span class="fmt">Number grid</span> The numbers 1 to 40 are written in rows of 8. The last number in each row is shaded. <span class="tag low">LOW</span><table class="grid"><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td class="hl">8</td></tr><tr><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td class="hl">16</td></tr><tr><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td class="hl">24</td></tr><tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td class="hl">32</td></tr><tr><td>33</td><td>34</td><td>35</td><td>36</td><td>37</td><td>38</td><td>39</td><td class="hl">40</td></tr></table><ul class="parts"><li>(a) What is the term-to-term rule for the shaded numbers?<span class="m">[1]</span><span class="ans"></span></li><li>(b) If the grid continued, what number would end row 9?<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">3.</div><div class="body"><span class="marks">2 marks</span> <span class="fmt">Circle the terms</span> Circle every number that is a term of the sequence <span class="seq">3, 7, 11, 15, &hellip;</span> <span class="tag low">LOW</span><ul class="parts"><li>Numbers: &nbsp; 27 &nbsp;&nbsp; 30 &nbsp;&nbsp; 35 &nbsp;&nbsp; 43<span class="m">[2]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">4.</div><div class="body"><span class="marks">2 marks</span> <span class="fmt">Function machine</span> This machine divides by 4. Write the two outputs. <span class="tag low">LOW</span><div><span class="machine"><span class="chip">input</span> &rarr; <span class="box">&divide; 4</span> &rarr; <span class="chip">output</span></span></div><ul class="parts"><li>(a) Input 20. Output: ______<span class="m">[1]</span></li><li>(b) Input 36. Output: ______<span class="m">[1]</span></li></ul></div></div><div class="sec med"><span>Section B: Medium difficulty</span><span>12 marks</span></div><div class="q"><div class="no">5.</div><div class="body"><span class="marks">3 marks</span> <span class="fmt">Number detective</span> A sequence has the rule &ldquo;Add 5&rdquo;. Its 4th term is 22. <span class="tag med">MEDIUM</span><ul class="parts"><li>(a) Write the first three terms.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Work out the 10th term.<span class="m">[1]</span><span class="ans"></span></li><li>(c) Is 100 a term of the sequence? Explain.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">6.</div><div class="body"><span class="marks">3 marks</span> <span class="fmt">Crack the code</span> Use the code table to change numbers into letters. <span class="tag med">MEDIUM</span><table class="data"><tr><th>Letter</th><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td></tr><tr><th>Number</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr><tr><th>Letter</th><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td></tr><tr><th>Number</th><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr></table><ul class="parts"><li>(a) The 4th term of the sequence 5n is a letter. Which letter?<span class="m">[1]</span><span class="ans"></span></li><li>(b) The 8th term of the sequence 3n is a letter. Which letter?<span class="m">[1]</span><span class="ans"></span></li><li>(c) The letter P is a term of 4n. Which term is it?<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">7.</div><div class="body"><span class="marks">3 marks</span> <span class="fmt">Name the operation</span> Find the single operation each machine does. <span class="tag med">MEDIUM</span><ul class="parts"><li>(a) Input 6 gives 2 and input 12 gives 4.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Input 5 gives 12 and input 9 gives 16.<span class="m">[1]</span><span class="ans"></span></li><li>(c) Input 4 gives 28 and input 9 gives 63.<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">8.</div><div class="body"><span class="marks">3 marks</span> <span class="fmt">Hopscotch</span> Jo starts at 0 and hops 6 each time. Kai starts at 0 and hops 9 each time. <span class="tag med">MEDIUM</span><ul class="parts"><li>(a) What is the first number (after 0) that both land on?<span class="m">[1]</span><span class="ans"></span></li><li>(b) What is the next number that both land on?<span class="m">[1]</span><span class="ans"></span></li><li>(c) Write all the numbers up to 100 that both land on.<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="sec hard"><span>Section C: Hard (challenge) problems</span><span>20 marks</span></div><div class="q"><div class="no">9.</div><div class="body"><span class="marks">5 marks</span> <span class="fmt">Think of a number</span> Work backwards to find each number. <span class="tag hard">HARD</span><ul class="parts"><li>(a) I think of a number. I multiply it by 6 and subtract 4. I get 38. What is my number? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(b) I think of a number. I add 9 and then multiply by 3. I get 51. What is my number? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(c) Explain why you start with the answer and use inverse operations in the opposite order.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">10.</div><div class="body"><span class="marks">4 marks</span> <span class="fmt">Investigation</span> Sequence A has nth term 5n. Sequence B has nth term 10n. <span class="tag hard">HARD</span><ul class="parts"><li>(a) Write the first three numbers that are in both sequences.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Explain why every term of B is also a term of A.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(c) Is every term of A also a term of B? Give an example to explain.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">11.</div><div class="body"><span class="marks">4 marks</span> <span class="fmt">Digit puzzle</span> All the numbers in this question are terms of the sequence 9n. The letter A stands for a missing digit. <span class="tag hard">HARD</span><ul class="parts"><li>(a) The two-digit number 7A is a term of 9n. What is the digit A?<span class="m">[1]</span><span class="ans"></span></li><li>(b) The three-digit number 4A5 is a term of 9n. Find <strong>all</strong> the possible values of A. Show your working.<span class="m">[3]</span><span class="ans"></span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">12.</div><div class="body"><span class="marks">4 marks</span> <span class="fmt">Plant race</span> Plant A is 20 cm tall and grows 4 cm every week. Plant B is 5 cm tall and grows 6 cm every week. <span class="tag hard">HARD</span><ul class="parts"><li>(a) How tall is each plant after 7 weeks?<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(b) After how many weeks is plant B first taller than plant A? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">13.</div><div class="body"><span class="marks">3 marks</span> <span class="fmt">Find the nth term</span> Look at the sequence <span class="seq">3, 7, 11, 15, &hellip;</span> <span class="tag hard">HARD</span><ul class="parts"><li>(a) Show that the nth term is 4n &minus; 1.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(b) Which term of the sequence is equal to 99?<span class="m">[1]</span><span class="ans"></span></li></ul><div class="hint">Hint: write out the sequence 4n next to it and compare.</div></div></div>
+
+  <p class="end">End of worksheet &middot; Total: 40 marks</p>
+</div>
+
+<div class="page scheme" id="scheme">
+  <h1>Marking Scheme: Chapter 9 Worksheet 7 (40 marks)</h1>
+  <p class="sub">For the marker. M = method mark, A = answer mark. Award method marks even if the final answer is wrong.</p>
+  <table class="ms">
+    <tr><th>Q</th><th>Level</th><th>Answer and mark allocation</th><th>Marks</th></tr>
+    <tr><td>1(a)</td><td>Low</td><td>42 (A1)</td><td class="mk">1</td></tr><tr><td>1(b)</td><td>Low</td><td>45 (A1)</td><td class="mk">1</td></tr><tr><td>2(a)</td><td>Low</td><td>Add 8 (A1)</td><td class="mk">1</td></tr><tr><td>2(b)</td><td>Low</td><td>72 (A1). 9 &times; 8</td><td class="mk">1</td></tr><tr><td>3</td><td>Low</td><td>A1 for 27 and 35 circled. A1 for 43 circled and 30 not circled. The terms are 3, 7, 11, &hellip;, 27, &hellip;, 35, &hellip;, 43</td><td class="mk">2</td></tr><tr><td>4(a)</td><td>Low</td><td>5 (A1)</td><td class="mk">1</td></tr><tr><td>4(b)</td><td>Low</td><td>9 (A1)</td><td class="mk">1</td></tr><tr><td>5(a)</td><td>Medium</td><td>7, 12, 17 (A1, all three)</td><td class="mk">1</td></tr><tr><td>5(b)</td><td>Medium</td><td>52 (A1). 7 + 9 &times; 5</td><td class="mk">1</td></tr><tr><td>5(c)</td><td>Medium</td><td>No (A1). 100 &minus; 7 = 93 and 93 &divide; 5 is not a whole number</td><td class="mk">1</td></tr><tr><td>6(a)</td><td>Medium</td><td>T (A1). 5 &times; 4 = 20</td><td class="mk">1</td></tr><tr><td>6(b)</td><td>Medium</td><td>X (A1). 3 &times; 8 = 24</td><td class="mk">1</td></tr><tr><td>6(c)</td><td>Medium</td><td>The 4th term (A1). P = 16 = 4 &times; 4</td><td class="mk">1</td></tr><tr><td>7(a)</td><td>Medium</td><td>Divide by 3 (A1)</td><td class="mk">1</td></tr><tr><td>7(b)</td><td>Medium</td><td>Add 7 (A1)</td><td class="mk">1</td></tr><tr><td>7(c)</td><td>Medium</td><td>Multiply by 7 (A1)</td><td class="mk">1</td></tr><tr><td>8(a)</td><td>Medium</td><td>18 (A1)</td><td class="mk">1</td></tr><tr><td>8(b)</td><td>Medium</td><td>36 (A1)</td><td class="mk">1</td></tr><tr><td>8(c)</td><td>Medium</td><td>18, 36, 54, 72, 90 (A1, all five)</td><td class="mk">1</td></tr><tr><td>9(a)</td><td>Hard</td><td>M1 for working backwards: 38 + 4 = 42. A1 for 42 &divide; 6 = 7</td><td class="mk">2</td></tr><tr><td>9(b)</td><td>Hard</td><td>M1 for working backwards: 51 &divide; 3 = 17. A1 for 17 &minus; 9 = 8</td><td class="mk">2</td></tr><tr><td>9(c)</td><td>Hard</td><td>Inverse operations undo the steps in reverse, like taking off your shoes before your socks (A1 for a clear explanation of reversing the order)</td><td class="mk">1</td></tr><tr><td>10(a)</td><td>Hard</td><td>10, 20, 30 (A1)</td><td class="mk">1</td></tr><tr><td>10(b)</td><td>Hard</td><td>M1: 10n = 5 &times; 2n. A1: so every term of B is a term of A (the 2nd, 4th, 6th, &hellip; terms)</td><td class="mk">2</td></tr><tr><td>10(c)</td><td>Hard</td><td>No (A1). For example 5 is in A but not in B</td><td class="mk">1</td></tr><tr><td>11(a)</td><td>Hard</td><td>2 (A1). 72 is in the 9 times table</td><td class="mk">1</td></tr><tr><td>11(b)</td><td>Hard</td><td>M1: list multiples of 9 between 400 and 500: 405, 414, 423, &hellip;, 495. A1: 405 gives A = 0. A1: 495 gives A = 9. Both needed; no other value works</td><td class="mk">3</td></tr><tr><td>12(a)</td><td>Hard</td><td>Plant A 48 cm (A1). 20 + 7 &times; 4. Plant B 47 cm (A1). 5 + 7 &times; 6</td><td class="mk">2</td></tr><tr><td>12(b)</td><td>Hard</td><td>M1: compares the heights, e.g. week 8 is A 52 cm and B 53 cm. A1: after 8 weeks (at week 7, A is still taller)</td><td class="mk">2</td></tr><tr><td>13(a)</td><td>Hard</td><td>M1: writes 4n as 4, 8, 12, 16. A1: each term of the sequence is 1 less than 4n, so the nth term is 4n &minus; 1</td><td class="mk">2</td></tr><tr><td>13(b)</td><td>Hard</td><td>Term 25 (A1). 4n &minus; 1 = 99 gives 4n = 100</td><td class="mk">1</td></tr>
+  </table>
+
+  <h3>Marks summary</h3>
+  <table class="ms grid-sum" style="max-width:520px">
+    <tr><th>Level</th><th>Questions</th><th>Marks</th><th>Share</th></tr>
+    <tr><td>Low</td><td>1 to 4</td><td>8</td><td rowspan="2">50%</td></tr>
+    <tr><td>Medium</td><td>5 to 8</td><td>12</td></tr>
+    <tr><td>Hard</td><td>9 to 13</td><td>20</td><td>50%</td></tr>
+    <tr><th>Total</th><th></th><th>40</th><th>100%</th></tr>
+  </table>
+
+  <h3>Grade bands (guide)</h3>
+  <table class="ms" style="max-width:520px">
+    <tr><th>Score</th><th>Meaning</th></tr>
+    <tr><td>32 to 40</td><td>Excellent: strong reasoning with sequences and functions</td></tr>
+    <tr><td>24 to 31</td><td>Good: practise the Section C question types where marks were lost</td></tr>
+    <tr><td>16 to 23</td><td>Developing: redo the earlier worksheets and the worked examples in lessons 9.3 and 9.4</td></tr>
+    <tr><td>0 to 15</td><td>Needs support: start with Worksheet 1 and the study guide</td></tr>
+  </table>
+</div>
+
+<script>
+  function toggleScheme() {
+    var s = document.getElementById('scheme');
+    var on = s.classList.toggle('show');
+    document.getElementById('btnScheme').textContent = on ? 'Hide marking scheme' : 'Show marking scheme';
+    if (on) s.scrollIntoView({ behavior: 'smooth' });
+  }
+
+</script>
+</body>
+</html>

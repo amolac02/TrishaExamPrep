@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 9 Worksheet 5: Case Studies (40 marks)</title>
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --line:#d1d5db; --brand:#b91c1c;
+          --low:#15803d; --low-bg:#dcfce7; --med:#b45309; --med-bg:#fef3c7; --hard:#b91c1c; --hard-bg:#fee2e2; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,Arial,sans-serif; color:var(--ink); background:#f3f4f6; line-height:1.55; }
+  .toolbar { background:#fff; border-bottom:1px solid var(--line); padding:10px 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; position:sticky; top:0; z-index:5; }
+  .toolbar button { font-size:.95rem; padding:7px 16px; border:0; border-radius:6px; background:#1d4ed8; color:#fff; cursor:pointer; }
+  .toolbar button.alt { background:#0f766e; }
+  .toolbar span { color:var(--muted); font-size:.88rem; }
+  .page { max-width:820px; margin:18px auto; background:#fff; border:1px solid var(--line); border-radius:6px; padding:30px 38px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  h1 { margin:0; font-size:1.55rem; color:var(--brand); }
+  .sub { color:var(--muted); margin:2px 0 14px; }
+  .idrow { display:flex; flex-wrap:wrap; gap:14px 28px; margin:10px 0 14px; }
+  .idrow div { flex:1 1 200px; border-bottom:1.5px solid var(--ink); padding:4px 0 2px; font-size:.95rem; min-height:30px; }
+  .idrow .score { flex:0 0 150px; border:2px solid var(--ink); border-radius:6px; text-align:center; font-weight:700; }
+  .info { background:#f9fafb; border:1px solid var(--line); border-radius:8px; padding:10px 14px; font-size:.93rem; }
+  .info ul { margin:4px 0 0; padding-left:20px; }
+  table.mix { border-collapse:collapse; width:100%; margin:12px 0; font-size:.92rem; }
+  table.mix th, table.mix td { border:1px solid var(--line); padding:6px 10px; text-align:left; }
+  table.mix th { background:#f3f4f6; }
+  .sec { margin:26px 0 8px; padding:7px 12px; border-radius:6px; font-weight:700; display:flex; justify-content:space-between; }
+  .sec.low { background:var(--low-bg); color:var(--low); } .sec.med { background:var(--med-bg); color:var(--med); } .sec.hard { background:var(--hard-bg); color:var(--hard); }
+  .q { margin:16px 0 4px; display:flex; gap:10px; page-break-inside:avoid; }
+  .q .no { font-weight:700; min-width:30px; }
+  .q .body { flex:1; }
+  .marks { float:right; font-weight:600; font-size:.88rem; border:1px solid var(--ink); border-radius:4px; padding:0 7px; margin-left:12px; white-space:nowrap; }
+  .tag { display:inline-block; font-size:.7rem; font-weight:700; padding:1px 7px; border-radius:999px; vertical-align:middle; margin-left:4px; }
+  .tag.low { background:var(--low-bg); color:var(--low); } .tag.med { background:var(--med-bg); color:var(--med); } .tag.hard { background:var(--hard-bg); color:var(--hard); }
+  .fmt { display:inline-block; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#1d4ed8; background:#dbeafe; padding:1px 8px; border-radius:4px; margin-right:6px; }
+  .parts { list-style:none; padding:0; margin:6px 0; }
+  .parts li { margin:8px 0; }
+  .parts .m { float:right; font-size:.85rem; color:var(--muted); margin-left:10px; }
+  .ans { display:block; border-bottom:1px dotted #6b7280; height:26px; margin:6px 0 0 24px; }
+  .seq { font-family:Consolas,"Courier New",monospace; font-size:1.05rem; }
+  .hint { background:#eff6ff; border-left:4px solid #1d4ed8; padding:4px 10px; border-radius:4px; font-size:.9rem; margin:6px 0; }
+  .opts { display:flex; flex-wrap:wrap; gap:6px 22px; margin:4px 0 0 24px; }
+  .opts span { white-space:nowrap; }
+  .opts span::before { content:"\25CB\00a0"; }
+  .machine { display:inline-flex; align-items:center; gap:8px; margin:4px 0; }
+  .machine .chip { border:1.5px solid #6b7280; border-radius:6px; padding:2px 12px; min-width:44px; text-align:center; background:#fff; }
+  .machine .box { border:2px solid var(--brand); background:#fee2e2; border-radius:8px; padding:4px 14px; font-weight:600; }
+  table.data { border-collapse:collapse; margin:8px 0; font-size:.92rem; }
+  table.data th, table.data td { border:1px solid var(--line); padding:5px 14px; text-align:center; min-width:52px; }
+  table.data th { background:#f3f4f6; }
+  table.data td.blank { background:#fffbeb; }
+  .sets { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; margin:6px 0 6px 24px; }
+  .sets div { border:1px solid var(--line); border-radius:6px; padding:4px 10px; }
+  .scheme { display:none; }
+  .scheme.show { display:block; }
+  table.ms { border-collapse:collapse; width:100%; font-size:.92rem; margin:10px 0; }
+  table.ms th, table.ms td { border:1px solid var(--line); padding:6px 10px; vertical-align:top; text-align:left; }
+  table.ms th { background:#f3f4f6; }
+  table.ms td.mk { text-align:center; width:60px; font-weight:600; }
+  .grid-sum td, .grid-sum th { text-align:center; }
+  .end { text-align:center; color:var(--muted); margin-top:24px; font-size:.9rem; }
+  .meter { display:inline-flex; gap:3px; vertical-align:middle; margin:0 6px; }
+  .meter i { width:12px; height:12px; border-radius:3px; background:#e5e7eb; display:inline-block; }
+  .meter i.on { background:var(--hard); }
+  @media print {
+    body { background:#fff; } .toolbar { display:none; }
+    .page { border:0; box-shadow:none; margin:0; padding:0; max-width:none; }
+    .scheme.show { page-break-before:always; }
+    .sec { page-break-after:avoid; }
+  }
+
+  .figs { display:flex; gap:14px; flex-wrap:wrap; margin:8px 0; }
+  .fig { border:1px solid var(--line); border-radius:6px; padding:6px 10px; text-align:center; font-size:.8rem; color:var(--muted); background:#fff; }
+  table.grid { border-collapse:collapse; margin:8px 0; }
+  table.grid td { border:1px solid var(--line); width:44px; height:30px; text-align:center; font-size:.9rem; }
+  table.grid td.hl { background:#fee2e2; font-weight:700; }
+  .scenario { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:8px 14px; margin:10px 0; }
+  .scenario h4 { margin:0 0 4px; color:#0369a1; }
+  .tf { margin:4px 0 0 24px; }
+  .tf span { margin-right:18px; } .tf span::before { content:"\25CB\00a0"; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="window.print()">Print worksheet</button>
+  <button class="alt" id="btnScheme" onclick="toggleScheme()">Show marking scheme</button>
+  <span>Tip: print the worksheet first. Show the marking scheme only for the marker (it prints on its own page).</span>
+</div>
+
+<div class="page" id="worksheet">
+  <h1>Chapter 9 Worksheet 5: Case Studies</h1>
+  <p class="sub">Cambridge Lower Secondary Mathematics &middot; Grade 6 &middot; Chapter 9 problems built around three real situations</p>
+
+  <div class="idrow">
+    <div>Name:</div><div>Date:</div><div class="score">Score: &nbsp;&nbsp;&nbsp; / 40</div>
+  </div>
+
+  <div class="info">
+    <strong>Time allowed:</strong> 55 minutes &nbsp;&middot;&nbsp; <strong>Total:</strong> 40 marks
+    <ul>
+      <li>Answer all questions. Write your answers on the dotted lines or circle your choice.</li>
+      <li>This worksheet is made of case studies. Each case study is one situation with several parts. The parts often build on each other.</li>
+      <li>Show your working. Marks are given for method as well as the answer.</li>
+      <li>The number of marks is shown in a box like <span class="marks" style="float:none;margin:0">2 marks</span> at the end of each question.</li>
+      <li>No calculator.</li>
+    </ul>
+  </div>
+
+  <table class="mix"><tr><th>Section</th><th>Level</th><th>Questions</th><th>Marks</th><th>Share</th></tr><tr><td>A</td><td>Low (one simple case study)</td><td>1 to 1</td><td>8</td><td rowspan="2">50% (20 marks)</td></tr><tr><td>B</td><td>Medium (two case studies)</td><td>2 to 3</td><td>12</td></tr><tr><td>C</td><td>Hard (9 out of 10, three multi-step case studies)</td><td>4 to 6</td><td>20</td><td>50% (20 marks)</td></tr></table>
+  <p style="font-size:.88rem;color:var(--muted);margin:0">Overall difficulty (same level as Worksheet 3): <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 7.2 out of 10</p>
+
+  <div class="sec low"><span>Section A: Low difficulty</span><span>8 marks</span></div><div class="q"><div class="no">1.</div><div class="body"><span class="marks">8 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag low">LOW</span><div class="scenario"><h4>The Cake Stall</h4>At the school fair the cake stall sells <span class="seq">5, 10, 15, 20, &hellip;</span> cakes in hours 1, 2, 3, 4, &hellip;</div><ul class="parts"><li>(a) Write the term-to-term rule for the number of cakes sold each hour.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Write the nth term for the number of cakes sold in hour n.<span class="m">[1]</span><span class="ans"></span></li><li>(c) How many cakes are sold in hour 6?<span class="m">[1]</span><span class="ans"></span></li><li>(d) How many cakes are sold in hour 10?<span class="m">[1]</span><span class="ans"></span></li><li>(e) Each cake costs $4. How much do 7 cakes cost?<span class="m">[1]</span><span class="ans"></span></li><li>(f) Amy pays $36 for cakes. How many cakes does she buy?<span class="m">[1]</span><span class="ans"></span></li><li>(g) In which hour does the stall sell 45 cakes?<span class="m">[1]</span><span class="ans"></span></li><li>(h) Write the money earned in hours 1 to 5, if every cake costs $4.<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="sec med"><span>Section B: Medium difficulty</span><span>12 marks</span></div><div class="q"><div class="no">2.</div><div class="body"><span class="marks">6 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag med">MEDIUM</span><div class="scenario"><h4>The Games Booth</h4>A player starts with 40 tokens. Each game costs 3 tokens.</div><ul class="parts"><li>(a) Write the number of tokens left after games 1, 2, 3 and 4.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Write the term-to-term rule.<span class="m">[1]</span><span class="ans"></span></li><li>(c) How many tokens are left after 8 games?<span class="m">[1]</span><span class="ans"></span></li><li>(d) After how many games does a player have 7 tokens left?<span class="m">[1]</span><span class="ans"></span></li><li>(e) Can a player have exactly 20 tokens left? Explain.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li><li>(f) How many games can a player play altogether with 40 tokens?<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">3.</div><div class="body"><span class="marks">6 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag med">MEDIUM</span><div class="scenario"><h4>The Raffle</h4>Raffle tickets are sold in packs of 8. The number of tickets in n packs is <strong>8n</strong>.</div><ul class="parts"><li>(a) How many raffle tickets are in 7 packs?<span class="m">[1]</span><span class="ans"></span></li><li>(b) Mina has 96 tickets. How many packs is that?<span class="m">[1]</span><span class="ans"></span></li><li>(c) Can Mina have exactly 100 tickets? Explain.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li><li>(d) Write the 3rd, 4th and 5th terms of the sequence 8n.<span class="m">[1]</span><span class="ans"></span></li><li>(e) The machine &times; 8 has the input 15. What is the output?<span class="m">[1]</span><span class="ans"></span></li><li>(f) The machine &times; 8 has the output 200. What is the input?<span class="m">[1]</span><span class="ans"></span></li></ul></div></div><div class="sec hard"><span>Section C: Hard (challenge) problems</span><span>20 marks</span></div><div class="q"><div class="no">4.</div><div class="body"><span class="marks">7 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag hard">HARD</span><div class="scenario"><h4>The Treasure Trail</h4>The Red team visits stations <span class="seq">4, 11, 18, 25, &hellip;</span> The Blue team visits stations <span class="seq">3, 11, 19, 27, &hellip;</span></div><ul class="parts"><li>(a) Write the term-to-term rule for the Red team.<span class="m">[1]</span><span class="ans"></span></li><li>(b) Write the term-to-term rule for the Blue team.<span class="m">[1]</span><span class="ans"></span></li><li>(c) What is the first station that both teams visit?<span class="m">[1]</span><span class="ans"></span></li><li>(d) What is the next station that both teams visit?<span class="m">[1]</span><span class="ans"></span></li><li>(e) Do both teams visit station 123? Show how you know.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(f) Why are the stations that both teams visit always 56 apart?<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li></ul><div class="hint">Hint: write out the next few stations for each team and look for numbers in both lists.</div></div></div><div class="q"><div class="no">5.</div><div class="body"><span class="marks">7 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag hard">HARD</span><div class="scenario"><h4>The Prize Wheel</h4>The prize in dollars on day n of the fair is <strong>6n + 9</strong>.</div><ul class="parts"><li>(a) What is the prize on day 1?<span class="m">[1]</span><span class="ans"></span></li><li>(b) What is the prize on day 20?<span class="m">[1]</span><span class="ans"></span></li><li>(c) On which day is the prize $99? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(d) Can the prize ever be exactly $200? Explain.<span class="m">[1]</span><span class="ans"></span><span class="ans"></span></li><li>(e) Pip says, &ldquo;The prize on day 10 is double the prize on day 5.&rdquo; Is Pip right? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li></ul></div></div><div class="q"><div class="no">6.</div><div class="body"><span class="marks">6 marks</span> <span class="fmt">Case study</span> Read the situation, then answer every part. <span class="tag hard">HARD</span><div class="scenario"><h4>The Score Machine</h4>Points are turned into a score by this machine.<div><span class="machine"><span class="chip">input</span> &rarr; <span class="box">&times; 3</span> &rarr; <span class="box">&minus; 5</span> &rarr; <span class="chip">score</span></span></div></div><ul class="parts"><li>(a) What is the score when the input is 8?<span class="m">[1]</span><span class="ans"></span></li><li>(b) The score is 61. What was the input? Show your working.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li><li>(c) The score is 100. What was the input?<span class="m">[1]</span><span class="ans"></span></li><li>(d) Explain why the score can never be 14.<span class="m">[2]</span><span class="ans"></span><span class="ans"></span></li></ul></div></div>
+
+  <p class="end">End of worksheet &middot; Total: 40 marks</p>
+</div>
+
+<div class="page scheme" id="scheme">
+  <h1>Marking Scheme: Chapter 9 Worksheet 5 (40 marks)</h1>
+  <p class="sub">For the marker. M = method mark, A = answer mark. Award method marks even if the final answer is wrong.</p>
+  <table class="ms">
+    <tr><th>Q</th><th>Level</th><th>Answer and mark allocation</th><th>Marks</th></tr>
+    <tr><td>1(a)</td><td>Low</td><td>Add 5 (A1)</td><td class="mk">1</td></tr><tr><td>1(b)</td><td>Low</td><td>5n (A1)</td><td class="mk">1</td></tr><tr><td>1(c)</td><td>Low</td><td>30 (A1)</td><td class="mk">1</td></tr><tr><td>1(d)</td><td>Low</td><td>50 (A1)</td><td class="mk">1</td></tr><tr><td>1(e)</td><td>Low</td><td>$28 (A1)</td><td class="mk">1</td></tr><tr><td>1(f)</td><td>Low</td><td>9 cakes (A1). 36 &divide; 4</td><td class="mk">1</td></tr><tr><td>1(g)</td><td>Low</td><td>Hour 9 (A1). 45 &divide; 5</td><td class="mk">1</td></tr><tr><td>1(h)</td><td>Low</td><td>$20, $40, $60, $80, $100 (A1, all five)</td><td class="mk">1</td></tr><tr><td>2(a)</td><td>Medium</td><td>37, 34, 31, 28 (A1, all four)</td><td class="mk">1</td></tr><tr><td>2(b)</td><td>Medium</td><td>Subtract 3 (A1)</td><td class="mk">1</td></tr><tr><td>2(c)</td><td>Medium</td><td>16 (A1). 40 &minus; 8 &times; 3</td><td class="mk">1</td></tr><tr><td>2(d)</td><td>Medium</td><td>11 games (A1). 40 &minus; 7 = 33 and 33 &divide; 3 = 11</td><td class="mk">1</td></tr><tr><td>2(e)</td><td>Medium</td><td>No (A1). 40 &minus; 20 = 20 tokens used, and 20 &divide; 3 is not a whole number</td><td class="mk">1</td></tr><tr><td>2(f)</td><td>Medium</td><td>13 games (A1). 13 &times; 3 = 39 and 14 &times; 3 = 42 is more than 40</td><td class="mk">1</td></tr><tr><td>3(a)</td><td>Medium</td><td>56 (A1)</td><td class="mk">1</td></tr><tr><td>3(b)</td><td>Medium</td><td>12 packs (A1). 96 &divide; 8</td><td class="mk">1</td></tr><tr><td>3(c)</td><td>Medium</td><td>No (A1). 100 &divide; 8 = 12.5, not a whole number</td><td class="mk">1</td></tr><tr><td>3(d)</td><td>Medium</td><td>24, 32, 40 (A1, all three)</td><td class="mk">1</td></tr><tr><td>3(e)</td><td>Medium</td><td>120 (A1)</td><td class="mk">1</td></tr><tr><td>3(f)</td><td>Medium</td><td>25 (A1). 200 &divide; 8</td><td class="mk">1</td></tr><tr><td>4(a)</td><td>Hard</td><td>Add 7 (A1)</td><td class="mk">1</td></tr><tr><td>4(b)</td><td>Hard</td><td>Add 8 (A1)</td><td class="mk">1</td></tr><tr><td>4(c)</td><td>Hard</td><td>Station 11 (A1)</td><td class="mk">1</td></tr><tr><td>4(d)</td><td>Hard</td><td>Station 67 (A1). Red: 11, 18, 25, &hellip;, 67. Blue: 11, 19, 27, &hellip;, 67</td><td class="mk">1</td></tr><tr><td>4(e)</td><td>Hard</td><td>M1: 123 &minus; 11 = 112 and 112 = 2 &times; 56 (or continuing the lists to 123). A1: yes, both visit 123</td><td class="mk">2</td></tr><tr><td>4(f)</td><td>Hard</td><td>Red moves in 7s and Blue in 8s, and 56 is the first number in both the 7 and 8 times tables (A1)</td><td class="mk">1</td></tr><tr><td>5(a)</td><td>Hard</td><td>$15 (A1). 6 + 9</td><td class="mk">1</td></tr><tr><td>5(b)</td><td>Hard</td><td>$129 (A1). 6 &times; 20 + 9</td><td class="mk">1</td></tr><tr><td>5(c)</td><td>Hard</td><td>M1: 6n + 9 = 99 gives 6n = 90. A1: day 15</td><td class="mk">2</td></tr><tr><td>5(d)</td><td>Hard</td><td>No (A1). 200 &minus; 9 = 191 and 191 &divide; 6 is not a whole number</td><td class="mk">1</td></tr><tr><td>5(e)</td><td>Hard</td><td>M1: day 5 is $39 and day 10 is $69. A1: double $39 is $78, so Pip is wrong</td><td class="mk">2</td></tr><tr><td>6(a)</td><td>Hard</td><td>19 (A1). 8 &times; 3 = 24, then &minus; 5</td><td class="mk">1</td></tr><tr><td>6(b)</td><td>Hard</td><td>M1 for working backwards: 61 + 5 = 66. A1 for 66 &divide; 3 = 22</td><td class="mk">2</td></tr><tr><td>6(c)</td><td>Hard</td><td>35 (A1). 100 + 5 = 105 and 105 &divide; 3</td><td class="mk">1</td></tr><tr><td>6(d)</td><td>Hard</td><td>M1: 14 + 5 = 19. A1: 19 &divide; 3 is not a whole number, so no whole input gives 14</td><td class="mk">2</td></tr>
+  </table>
+
+  <h3>Marks summary</h3>
+  <table class="ms grid-sum" style="max-width:520px">
+    <tr><th>Level</th><th>Questions</th><th>Marks</th><th>Share</th></tr>
+    <tr><td>Low</td><td>1 to 1</td><td>8</td><td rowspan="2">50%</td></tr>
+    <tr><td>Medium</td><td>2 to 3</td><td>12</td></tr>
+    <tr><td>Hard</td><td>4 to 6</td><td>20</td><td>50%</td></tr>
+    <tr><th>Total</th><th></th><th>40</th><th>100%</th></tr>
+  </table>
+
+  <h3>Grade bands (guide)</h3>
+  <table class="ms" style="max-width:520px">
+    <tr><th>Score</th><th>Meaning</th></tr>
+    <tr><td>32 to 40</td><td>Excellent: strong reasoning with sequences and functions</td></tr>
+    <tr><td>24 to 31</td><td>Good: practise the Section C question types where marks were lost</td></tr>
+    <tr><td>16 to 23</td><td>Developing: redo the earlier worksheets and the worked examples in lessons 9.3 and 9.4</td></tr>
+    <tr><td>0 to 15</td><td>Needs support: start with Worksheet 1 and the study guide</td></tr>
+  </table>
+</div>
+
+<script>
+  function toggleScheme() {
+    var s = document.getElementById('scheme');
+    var on = s.classList.toggle('show');
+    document.getElementById('btnScheme').textContent = on ? 'Hide marking scheme' : 'Show marking scheme';
+    if (on) s.scrollIntoView({ behavior: 'smooth' });
+  }
+
+</script>
+</body>
+</html>
