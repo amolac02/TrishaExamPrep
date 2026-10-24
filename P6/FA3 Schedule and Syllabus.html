@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FA3 Schedule and Syllabus</title>
+    <title>GS International School - FA3 Schedule and Syllabus</title>
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,6 +43,59 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8; 
         }
+
+        /* Print-specific styles to format nicely on A4/Letter paper */
+        @media print {
+            body {
+                background-color: white !important;
+                padding: 0 !important;
+            }
+            .max-w-5xl {
+                max-width: 100% !important;
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+            }
+            
+            /* Force page break immediately after the schedule section */
+            #schedule-section {
+                break-after: page;
+                page-break-after: always;
+                margin-bottom: 0 !important;
+            }
+
+            /* Ensure tables display fully without scrollbars */
+            .overflow-x-auto {
+                overflow: visible !important;
+            }
+
+            /* Automatically expand all accordion content for printing */
+            .accordion-content {
+                display: block !important;
+                padding-bottom: 0 !important;
+            }
+            
+            /* Hide the interactive plus/minus icons */
+            .accordion-header .icon {
+                display: none !important;
+            }
+            
+            /* Prevent syllabus items from breaking awkwardly across pages */
+            .accordion-item {
+                border: none !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            /* Simplify header borders for print */
+            header {
+                padding: 0 0 1rem 0 !important;
+            }
+            main {
+                padding: 0 !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased p-4 sm:p-6 md:p-8">
@@ -78,7 +131,7 @@
             </section>
 
             <!-- Schedule Table Section -->
-            <section class="mb-12">
+            <section id="schedule-section" class="mb-12">
                 <h3 class="text-lg font-bold text-ubs-red uppercase tracking-wide mb-4">Schedule of Formative Assessment 3</h3>
                 
                 <!-- Responsive Table Wrapper -->
