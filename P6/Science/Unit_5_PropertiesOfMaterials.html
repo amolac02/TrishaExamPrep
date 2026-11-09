@@ -1,0 +1,1226 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Properties of Materials Field Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single readable column like an explorer's field notebook; each topic is a "station" with its own colour stripe */
+:root{
+  --bg:#f3f6f8; --paper:#ffffff; --ink:#18242c; --muted:#56656f; --line:#d5dfe5;
+  --sound:#2266d4; --echo:#7b4fd6; --earth:#b8661a; --quake:#d23b2a; --sky:#0f8b8d;
+  --tint:#e8f0fb; --hl:#fff3c4; --hl-ink:#5b4500;
+  --sun:#f6b81d; --moon:#9aa6b0; --planet:#3a8ee6; --land:#5aa654;
+  --f-display:"Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --f-body:"Nunito", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --hl:#3d3413; --hl-ink:#ffe38a;
+  --sun:#f6c140; --moon:#b9c3cb; --planet:#5aa6f5; --land:#6cbf66; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --hl:#3d3413; --hl-ink:#ffe38a;
+  --sun:#f6c140; --moon:#b9c3cb; --planet:#5aa6f5; --land:#6cbf66; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:820px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:800}
+h3{font-size:1.3rem;font-weight:600;margin-top:28px}
+p{margin:12px 0;max-width:66ch}
+a{color:inherit}
+.kw{background:var(--hl);color:var(--hl-ink);padding:0 4px;border-radius:4px;font-weight:800}
+small,.cap{font-size:.85rem;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-size:.92em}
+
+/* hero */
+header.hero{padding-block:44px 28px}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero p{font-size:1.1rem}
+.route{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:22px}
+.route a{display:flex;flex-direction:column;gap:2px;text-decoration:none;background:var(--paper);border:1px solid var(--line);
+  border-top:5px solid var(--c);border-radius:10px;padding:10px 12px}
+.route a:hover,.route a:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.route b{font-family:var(--f-display);font-size:1.05rem}
+.route span{font-size:.8rem;color:var(--muted)}
+
+/* stations */
+section.station{margin-top:40px;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.st-head{border-left:8px solid var(--c);padding:22px 22px 6px}
+.st-head .eyebrow{color:var(--c)}
+.st-body{padding:0 22px 24px}
+.goals{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px;padding:0;list-style:none}
+.goals li{font-size:.85rem;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+
+figure{margin:20px 0;}
+figure svg{width:100%;height:auto;display:block;max-width:100%}
+.fig-box{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:6px}
+svg text{font-family:var(--f-body);fill:var(--ink);font-size:13px}
+svg .lbl{font-weight:800}
+
+.callout{border-radius:10px;padding:14px 16px;margin:18px 0;background:var(--tint);border:1px solid var(--line)}
+.callout h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem}
+.callout p{margin:6px 0}
+.callout.try h4::before{content:"Try it · "; color:var(--c)}
+.callout.wow h4::before{content:"Did you know? · "; color:var(--c)}
+.callout.safe{border-color:var(--quake)}
+.callout.safe h4{color:var(--quake)}
+.callout ol,.callout ul{margin:6px 0;padding-left:22px}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:16px 0}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.card h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem;color:var(--c)}
+.card p{margin:4px 0;font-size:.95rem}
+
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tbl{overflow-x:auto;margin:14px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:1rem}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.9rem;white-space:nowrap}
+
+.calc{font-family:var(--f-mono);background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:12px 14px;font-size:.92rem;line-height:1.8;overflow-x:auto}
+
+/* glossary + quiz */
+dl.gloss{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:6px 16px;margin:16px 0}
+dl.gloss dt{font-weight:800}
+dl.gloss dd{margin:0;color:var(--ink)}
+@media (max-width:520px){dl.gloss{grid-template-columns:1fr}dl.gloss dd{margin-bottom:8px}}
+.q{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0}
+.q p{margin:0 0 8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.opts button:hover{border-color:var(--sky)}
+.opts button:focus-visible,.reveal:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.opts button.right{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.opts button.wrong{background:var(--quake);border-color:var(--quake);color:#fff}
+.fb{font-size:.92rem;margin-top:8px;color:var(--muted)}
+.reveal{font:inherit;font-size:.9rem;border:none;background:none;color:var(--sky);font-weight:800;cursor:pointer;padding:0}
+.ans{margin-top:8px;font-size:.95rem;background:var(--tint);border-radius:8px;padding:8px 12px}
+#score{font-family:var(--f-display);font-size:1.2rem}
+.check li{list-style:none;margin:6px 0}
+.check{padding:0}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{margin-top:6px;width:18px;height:18px;accent-color:var(--sky)}
+
+/* animation */
+@keyframes squeeze{0%,100%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+.pt{animation:squeeze 1s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.pt{animation:none}}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+
+/* level-up practice (Focus / Practice / Challenge) */
+.levelup{margin-top:28px;border-top:2px dashed var(--line);padding-top:8px}
+.levelup > h3{margin-top:12px}
+.lv{display:inline-block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:999px;padding:2px 9px;margin-right:6px;vertical-align:2px;color:#fff}
+.lv.f{background:#1f9d55}.lv.p{background:#d08a00}.lv.c{background:var(--quake)}
+details.task{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0;background:var(--paper)}
+details.task > summary{cursor:pointer;font-weight:600;list-style:none}
+details.task > summary::-webkit-details-marker{display:none}
+details.task > summary::after{content:"Show answer ▾";display:block;font-size:.82rem;font-weight:800;color:var(--sky);margin-top:4px}
+details.task[open] > summary::after{content:"Hide answer ▴"}
+details.task .ans{margin-top:8px}
+details.task summary:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:4px}
+
+/* deeper understanding blocks */
+.deeper{margin-top:28px;border-top:2px dashed var(--line);padding-top:8px}
+.deeper > h3{margin-top:12px}
+.myths{display:grid;gap:10px;margin:12px 0}
+.myth{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.myth > div{padding:10px 14px;min-width:0;font-size:.95rem}
+.myth .no{background:var(--bg)}
+.myth .no::before{content:"✗ Myth";display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--quake);font-weight:500;margin-bottom:2px}
+.myth .yes::before{content:"✓ Science says";display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:#1f9d55;font-weight:500;margin-bottom:2px}
+@media (max-width:560px){.myth{grid-template-columns:1fr}}
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+.app{border-left:4px solid var(--c);background:var(--bg);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.93rem;min-width:0}
+.app b{display:block;font-family:var(--f-display);font-size:1.02rem}
+.puzzle{border:2px solid var(--c);border-radius:10px;padding:12px 16px;margin:14px 0}
+.puzzle h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem}
+.puzzle h4::before{content:"Brain-teaser · ";color:var(--c)}
+details.worked{border:1px solid var(--line);border-radius:10px;margin:14px 0;background:var(--paper);overflow:hidden}
+details.worked > summary{cursor:pointer;list-style:none;padding:12px 16px;background:var(--tint)}
+details.worked > summary::-webkit-details-marker{display:none}
+details.worked > summary .tag{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+details.worked > summary .qq{display:block;font-weight:600;margin-top:2px}
+details.worked > summary::after{content:"Think first, then open the step-by-step reasoning ▾";display:block;font-size:.82rem;font-weight:800;color:var(--sky);margin-top:6px}
+details.worked[open] > summary::after{content:"Hide reasoning ▴"}
+details.worked summary:focus-visible{outline:2px solid var(--sky);outline-offset:-2px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:12px 16px 4px}
+.steps li{counter-increment:s;position:relative;padding-left:38px;margin:0 0 12px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;
+  background:var(--c);color:#fff;font-weight:800;font-size:.85rem;display:grid;place-items:center}
+.steps li b.st{display:block;font-family:var(--f-display);font-size:1rem}
+.worked .final{margin:0 16px 14px;padding:8px 12px;border-radius:8px;background:var(--hl);color:var(--hl-ink)}
+.worked .tip{margin:0 16px 14px;font-size:.88rem;color:var(--muted)}
+.cmd td:first-child{font-weight:800;white-space:nowrap}
+</style></head><body><style>
+/* Unit 5 extras: hazard cards, pH strip */
+.haz{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0}
+.haz .card{text-align:center}
+.haz svg{width:72px;height:72px;display:block;margin:0 auto 6px}
+.ph{display:grid;grid-template-columns:repeat(15,1fr);border-radius:8px;overflow:hidden;margin:10px 0 4px}
+.ph span{padding:8px 0;text-align:center;font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:#111}
+.ph-lbl{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Science Stage 7 · Chapter 5 study guide</div>
+  <h1>Properties of Materials Field Guide</h1>
+  <p>Why are saucepans made of metal but their handles made of plastic? How do you get pure water out of sea water? Which liquids in your kitchen are acids? This chapter answers all of these. There are six stations. Each one has the big ideas, diagrams and experiments, plus a <b>Level up</b> practice set in three steps: <span class="lv f">Focus</span><span class="lv p">Practice</span><span class="lv c">Challenge</span>. Try each question before you open the answer!</p>
+  <nav class="route" aria-label="Topics">
+    <a href="#metals" style="--c:var(--sound)"><b>5.1 Metals and non-metals</b><span>properties · uses</span></a>
+    <a href="#compare" style="--c:var(--echo)"><b>5.2 Comparing them</b><span>tests · evidence</span></a>
+    <a href="#alloys" style="--c:var(--earth)"><b>5.3 Alloys</b><span>metal mixtures · particles</span></a>
+    <a href="#separate" style="--c:var(--sky)"><b>5.4 Separating mixtures</b><span>filter · evaporate · distil</span></a>
+    <a href="#acids" style="--c:var(--quake)"><b>5.5 Acids and alkalis</b><span>hazards · safety</span></a>
+    <a href="#ph" style="--c:var(--land)"><b>5.6 Indicators and pH</b><span>litmus · universal indicator</span></a>
+    <a href="#toolkit" style="--c:var(--ink)"><b>Think like a scientist</b><span>how to answer any question</span></a>
+    <a href="#exam" style="--c:var(--quake)"><b>Exam practice</b><span>past-paper style · mark scheme</span></a>
+  </nav>
+</header>
+
+<!-- ================= Toolkit ================= -->
+<section class="station" id="toolkit" style="--c:var(--ink)">
+  <div class="st-head">
+    <div class="eyebrow">Before you start</div>
+    <h2>Think like a scientist: how to crack any question</h2>
+    <ul class="goals"><li>Read the command word</li><li>Link property → use</li><li>Pick the right method</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Chemistry questions often give you a material, a mixture or a mystery liquid, and ask you to <b>work something out</b>. These three tools help with every one.</p>
+
+    <h3>Tool 1: Spot the command word</h3>
+    <div class="tbl"><table class="cmd">
+      <thead><tr><th>Command word</th><th>What it wants</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>State / Name</td><td>A short fact. No reason needed.</td><td>"Name the piece of equipment that cools steam." → Condenser.</td></tr>
+        <tr><td>Describe</td><td>Say <i>what</i> happens, step by step.</td><td>Describe how to get salt from salty water.</td></tr>
+        <tr><td>Explain</td><td>Say <i>why</i>. Use "because", "so", "this means".</td><td>Explain why copper is used for electrical wires.</td></tr>
+        <tr><td>Suggest</td><td>Use your science on something new.</td><td>Suggest the pH of a liquid that turns universal indicator blue.</td></tr>
+        <tr><td>Identify</td><td>Pick out the answer from the information given.</td><td>Identify which substance is a metal.</td></tr>
+        <tr><td>Compare</td><td>Say how two things are the same <i>and</i> different. Use "whereas".</td><td>Compare the properties of metals and non-metals.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Tool 2: The property → use chain</h3>
+    <p>Most "why is it used for…" questions need two links. Name the <b>property</b>, then say <b>why that property matters for the job</b>.</p>
+    <div class="grid2">
+      <div class="card" style="--c:var(--sound)"><h4>Weak answer</h4><p>"Copper is used for wires because it is a good metal."</p><p class="cap">No property named, and no link to the job.</p></div>
+      <div class="card" style="--c:var(--land)"><h4>Strong answer</h4><p>"Copper is used for wires because it is a good <b>conductor of electricity</b>, <b>so</b> current flows easily. It is also <b>ductile</b>, <b>so</b> it can be drawn into thin wires."</p></div>
+    </div>
+
+    <h3>Tool 3: Choosing a separation method</h3>
+    <p>Ask two questions about the mixture: <b>Is the solid dissolved or not?</b> and <b>Which part do I want to keep?</b></p>
+    <div class="tbl"><table>
+      <thead><tr><th>Mixture</th><th>Part you want</th><th>Method</th></tr></thead>
+      <tbody>
+        <tr><td>Insoluble solid + liquid (sand + water)</td><td>The solid, or a clear liquid</td><td><b>Filtration</b></td></tr>
+        <tr><td>Dissolved solid (salt water)</td><td>The solid (salt)</td><td><b>Evaporation</b></td></tr>
+        <tr><td>Dissolved solid (salt water)</td><td>The pure liquid (water)</td><td><b>Distillation</b></td></tr>
+        <tr><td>Magnetic + non-magnetic solids</td><td>Either</td><td><b>Magnet</b></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ================= 5.1 ================= -->
+<section class="station" id="metals" style="--c:var(--sound)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.1</div>
+    <h2>Metals and non-metals: two families of materials</h2>
+    <ul class="goals"><li>Properties of metals</li><li>Properties of non-metals</li><li>Matching properties to uses</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Look around the room. Door handles, coins, scissors, a laptop case: all metals. Air, the graphite in your pencil, the oxygen you breathe: non-metals. <span class="kw">Materials</span> are the substances that objects are made from. Scientists sort the elements into two big groups, metals and non-metals, by their <b>properties</b> (what they are like and how they behave).</p>
+
+    <h3>What makes a metal a metal?</h3>
+    <div class="grid2">
+      <div class="card"><h4>Shiny</h4><p>Freshly cut or polished metals are <span class="kw">shiny</span>. Old metal can look dull because its surface reacts with the air.</p></div>
+      <div class="card"><h4>Strong and tough</h4><p>Metals don't <span class="kw">shatter</span> (break into pieces) when dropped. They can hold heavy loads, which is why bridges use iron and steel.</p></div>
+      <div class="card"><h4>Malleable</h4><p><span class="kw">Malleable</span> means it can be hammered or bent into shape without breaking. A blacksmith shapes hot iron this way.</p></div>
+      <div class="card"><h4>Ductile</h4><p><span class="kw">Ductile</span> means it can be pulled out into long, thin wires. Copper is very ductile.</p></div>
+      <div class="card"><h4>Sonorous</h4><p><span class="kw">Sonorous</span> means it makes a ringing sound when hit, like a bell or cymbals.</p></div>
+      <div class="card"><h4>High melting point</h4><p>Most metals need a lot of heat to melt. <b>Mercury</b> is the odd one out: it's a metal that is liquid at room temperature.</p></div>
+      <div class="card"><h4>Good conductors</h4><p>Metals <span class="kw">conduct</span> (let through) heat and electricity well. That's why a metal railing feels cold: it carries heat away from your hand quickly.</p></div>
+      <div class="card"><h4>Some are magnetic</h4><p>Only <b>iron, nickel and cobalt</b> (and steel, which contains iron) are <span class="kw">magnetic</span>. Most metals, like copper and aluminium, are not.</p></div>
+    </div>
+
+    <h3>What are non-metals like?</h3>
+    <p>Non-metals are much more varied. Many are gases (oxygen, nitrogen, helium, chlorine). The solid ones usually share these properties:</p>
+    <div class="grid2">
+      <div class="card"><h4>Dull</h4><p>They don't reflect light well, so they look dull, like a lump of sulfur or charcoal.</p></div>
+      <div class="card"><h4>Brittle</h4><p><span class="kw">Brittle</span> means it breaks or shatters easily when hit or bent. Hit a lump of sulfur with a hammer and it crumbles.</p></div>
+      <div class="card"><h4>Insulators</h4><p>Most do not conduct heat or electricity. They are <span class="kw">insulators</span>, which makes them useful for pan handles and wire coatings.</p></div>
+      <div class="card"><h4>Low melting points</h4><p>Solid non-metals usually melt and boil at much lower temperatures than metals.</p></div>
+    </div>
+
+    <h3>Property → use</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Material</th><th>Use</th><th>Property that makes it right for the job</th></tr></thead>
+      <tbody>
+        <tr><td>Copper</td><td>Electrical wires</td><td>Excellent conductor of electricity; ductile</td></tr>
+        <tr><td>Iron / steel</td><td>Bridges, buildings</td><td>Strong; can carry heavy loads</td></tr>
+        <tr><td>Gold, silver</td><td>Jewellery</td><td>Shiny, stays shiny, malleable, rare and valuable</td></tr>
+        <tr><td>Steel</td><td>Cooking pans</td><td>Good conductor of heat; strong</td></tr>
+        <tr><td>Helium (non-metal)</td><td>Party balloons</td><td>A gas much less dense than air, and unreactive (won't catch fire)</td></tr>
+        <tr><td>Oxygen (non-metal)</td><td>Hospital breathing support</td><td>Needed for respiration</td></tr>
+        <tr><td>Chlorine (non-metal)</td><td>Swimming pools</td><td>Kills bacteria</td></tr>
+        <tr><td>Carbon (non-metal)</td><td>Water filters, treating indigestion</td><td>Its tiny particles trap other substances</td></tr>
+        <tr><td>Silicon</td><td>Computer chips</td><td>Can be made to conduct electricity in a controlled way</td></tr>
+        <tr><td>Sulfur (non-metal)</td><td>Hardening rubber for tyres</td><td>Links rubber molecules together</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">Where are they on the Periodic Table? Metals are on the <b>left and in the middle</b>; non-metals are on the <b>right</b>.</p>
+
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 650 205" role="img" aria-label="Simplified periodic table: metals on the left and middle, non-metals on the right, with a staircase of in-between elements"><rect x="20" y="14" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="36.0" y="31" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">H</text><rect x="598" y="14" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="31" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">He</text><rect x="20" y="40" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="36.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Li</text><rect x="54" y="40" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="70.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Be</text><rect x="428" y="40" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="444.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">B</text><rect x="462" y="40" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="478.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">C</text><rect x="496" y="40" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="512.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">N</text><rect x="530" y="40" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="546.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">O</text><rect x="564" y="40" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="580.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">F</text><rect x="598" y="40" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="57" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ne</text><rect x="20" y="66" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="36.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Na</text><rect x="54" y="66" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="70.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Mg</text><rect x="428" y="66" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="444.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Al</text><rect x="462" y="66" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="478.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Si</text><rect x="496" y="66" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="512.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">P</text><rect x="530" y="66" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="546.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">S</text><rect x="564" y="66" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="580.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Cl</text><rect x="598" y="66" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="83" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ar</text><rect x="20" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="36.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">K</text><rect x="54" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="70.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ca</text><rect x="88" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="104.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Sc</text><rect x="122" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="138.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ti</text><rect x="156" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="172.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">V</text><rect x="190" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="206.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Cr</text><rect x="224" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="240.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Mn</text><rect x="258" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="274.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Fe</text><rect x="292" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="308.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Co</text><rect x="326" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="342.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ni</text><rect x="360" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="376.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Cu</text><rect x="394" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="410.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Zn</text><rect x="428" y="92" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="444.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ga</text><rect x="462" y="92" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="478.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ge</text><rect x="496" y="92" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="512.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">As</text><rect x="530" y="92" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="546.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Se</text><rect x="564" y="92" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="580.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Br</text><rect x="598" y="92" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="109" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Kr</text><rect x="20" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="36.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Rb</text><rect x="54" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="70.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Sr</text><rect x="88" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="104.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Y</text><rect x="122" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="138.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Zr</text><rect x="156" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="172.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Nb</text><rect x="190" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="206.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Mo</text><rect x="224" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="240.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Tc</text><rect x="258" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="274.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ru</text><rect x="292" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="308.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Rh</text><rect x="326" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="342.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Pd</text><rect x="360" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="376.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ag</text><rect x="394" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="410.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Cd</text><rect x="428" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="444.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">In</text><rect x="462" y="118" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="478.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Sn</text><rect x="496" y="118" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="512.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Sb</text><rect x="530" y="118" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="546.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Te</text><rect x="564" y="118" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="580.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">I</text><rect x="598" y="118" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="135" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Xe</text><rect x="20" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="36.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Cs</text><rect x="54" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="70.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ba</text><rect x="88" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="104.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">La</text><rect x="122" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="138.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Hf</text><rect x="156" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="172.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ta</text><rect x="190" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="206.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">W</text><rect x="224" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="240.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Re</text><rect x="258" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="274.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Os</text><rect x="292" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="308.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Ir</text><rect x="326" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="342.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Pt</text><rect x="360" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="376.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Au</text><rect x="394" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="410.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Hg</text><rect x="428" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="444.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Tl</text><rect x="462" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="478.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Pb</text><rect x="496" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="512.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Bi</text><rect x="530" y="144" width="32" height="24" rx="3" fill="var(--sound)" opacity=".85"/><text x="546.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Po</text><rect x="564" y="144" width="32" height="24" rx="3" fill="var(--muted)" opacity=".85"/><text x="580.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">At</text><rect x="598" y="144" width="32" height="24" rx="3" fill="var(--quake)" opacity=".85"/><text x="614.0" y="161" text-anchor="middle" style="fill:#fff;font-size:11px;font-weight:800">Rn</text><rect x="20" y="182" width="14" height="14" rx="3" fill="var(--sound)"/><text x="40" y="194">metals</text><rect x="110" y="182" width="14" height="14" rx="3" fill="var(--quake)"/><text x="130" y="194">non-metals</text><rect x="225" y="182" width="14" height="14" rx="3" fill="var(--muted)"/><text x="245" y="194">in-between (metalloids)</text></svg>
+      </div>
+      <figcaption>The first six rows of the Periodic Table. Metals (blue) fill the left and middle; non-metals (red) sit on the right. Hydrogen is a non-metal even though it sits top left. Between them is a zig-zag staircase of "in-between" elements such as silicon, which have some properties of each.</figcaption>
+    </figure>
+
+    <div class="callout wow"><h4>The exceptions</h4><p>Science loves exceptions. <b>Graphite</b> (a form of carbon, a non-metal) conducts electricity, which is why pencil "lead" can complete a circuit. <b>Diamond</b> (also carbon) is the hardest natural material, not brittle at all. <b>Mercury</b> is a liquid metal. So always look at <i>several</i> properties together before deciding.</p></div>
+
+    <div class="callout try"><h4>Property detective</h4>
+      <p>Collect metal objects at home: a spoon, scissors, a key, foil, a paper clip. For each one, write: what it is used for, what metal it's probably made of, and <b>which property</b> makes it right for the job. Then find two things with plastic handles and explain why the handle isn't metal.</p>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Why do metals feel cold?</b> A metal railing and a wooden bench in the same shade are at the same temperature. The metal <i>feels</i> colder because it is a good conductor: it carries heat away from your hand much faster. Your skin senses heat leaving, not the actual temperature.</p>
+      <p><b>"Dull" doesn't always mean non-metal.</b> Old metals get a dull coating because the surface reacts with oxygen in the air (like a tarnished spoon). Scratch or polish it and the shine comes back. A non-metal stays dull all the way through.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">All metals are magnetic.</div><div class="yes">Only <b>iron, nickel, cobalt</b> (and steel) are. A magnet won't pick up copper, gold or aluminium cans.</div></div>
+        <div class="myth"><div class="no">All metals are solid.</div><div class="yes"><b>Mercury</b> is a liquid metal at room temperature.</div></div>
+        <div class="myth"><div class="no">If it makes a ringing sound, it must be metal.</div><div class="yes">Glass bottles and ceramic cups ring too. Use <b>several</b> tests before deciding.</div></div>
+        <div class="myth"><div class="no">Metal feels cold because metal is colder.</div><div class="yes">It's the same temperature. It <b>conducts heat away</b> from your hand faster.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Hawker centres</b>Stainless steel tables and pots are strong, easy to clean and don't rust.</div>
+        <div class="app"><b>Phone charging cable</b>Copper wires inside (conductor), plastic coating outside (insulator).</div>
+        <div class="app"><b>Olympic medals</b>Gold medals are mostly silver with a gold coating, because pure gold is soft and very expensive.</div>
+        <div class="app"><b>Scrapyards</b>Huge electromagnets lift iron and steel but leave aluminium behind, which helps sort metals for recycling.</div>
+      </div>
+
+      <div class="puzzle"><h4>The cooking pan</h4><p>A saucepan has a steel base and a plastic handle. Explain both choices using properties. <i>(Steel conducts heat well, so the food cooks. Plastic is a poor conductor (insulator), so the handle stays cool enough to hold.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Explain · property → use</span><span class="qq">Explain why aluminium foil is used to wrap food for the oven.</span></summary>
+        <ol class="steps">
+          <li><b class="st">What does the job need?</b>Something that can be folded tightly around food, can survive oven heat, and lets heat reach the food.</li>
+          <li><b class="st">Match properties to needs</b>Folding → <b>malleable</b>. Oven heat → <b>high melting point</b>. Heat reaching the food → <b>good conductor of heat</b>.</li>
+          <li><b class="st">Write each as a chain</b>"It is malleable, <b>so</b> it can be shaped around the food…"</li>
+        </ol>
+        <p class="final">Aluminium is malleable, so it can be folded around the food. It has a high melting point, so it doesn't melt in the oven, and it conducts heat well, so the food cooks.</p>
+        <p class="tip">Start from the job, not the material. Ask "what does this job need?" and the properties follow.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Identify · using several clues</span><span class="qq">A grey, solid element is dull, crumbles when hit with a hammer, and does not let a bulb light in a circuit. Is it a metal or non-metal?</span></summary>
+        <ol class="steps">
+          <li><b class="st">List each clue</b>Dull, brittle, doesn't conduct electricity.</li>
+          <li><b class="st">Sort each clue</b>Dull → non-metal. Brittle → non-metal. Insulator → non-metal.</li>
+          <li><b class="st">Check for a trap</b>"Grey" isn't helpful: both metals and non-metals can be grey. Don't use colour as evidence.</li>
+          <li><b class="st">Decide using all the evidence</b>Three non-metal clues and none for metal.</li>
+        </ol>
+        <p class="final">It is a <b>non-metal</b>, because it is dull, brittle and does not conduct electricity.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Suggest · unfamiliar context</span><span class="qq">Suggest why tin was used to make old-fashioned toy soldiers.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Think about how toys are made</b>Small, detailed shapes are easiest to make by melting a metal and pouring it into a mould.</li>
+          <li><b class="st">Which property helps?</b>Tin has a <b>low melting point for a metal</b> (about 232 °C), so it melts easily.</li>
+          <li><b class="st">Add a second property</b>It is a metal, so it is tough and won't shatter when dropped.</li>
+        </ol>
+        <p class="final">Tin has a low melting point, so it is easy to melt and pour into moulds, and as a metal it doesn't shatter when dropped.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.1</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Which of these describe metals? Malleable, dull, conducts heat, brittle, sonorous, shiny.</summary>
+        <div class="ans">Malleable, conducts heat, sonorous, shiny. (Dull and brittle describe solid non-metals.)</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> What do these words mean: (a) ductile (b) sonorous (c) brittle?</summary>
+        <div class="ans">(a) Can be drawn out into wires. (b) Makes a ringing sound when hit. (c) Breaks or shatters easily.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Name a metal and a property that makes it right for: (a) a bridge (b) a wedding ring (c) a bell.</summary>
+        <div class="ans">(a) Steel: strong. (b) Gold: shiny, stays shiny, malleable, valuable. (c) Bronze or brass: sonorous.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Choose any object in your home made of metal. Explain in a full sentence why that metal was chosen, using at least two properties.</summary>
+        <div class="ans">Example: "A copper-bottomed pan uses copper because it is an excellent conductor of heat, so the food heats evenly, and it is malleable, so it can be pressed into the pan shape." Any answer works if it names two correct properties and links each to the job.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.2 ================= -->
+<section class="station" id="compare" style="--c:var(--echo)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.2</div>
+    <h2>Comparing metals and non-metals: be the detective</h2>
+    <ul class="goals"><li>Compare their properties</li><li>Test an unknown material</li><li>Use information to decide</li></ul>
+  </div>
+  <div class="st-body">
+    <p>You've met the two families. Now the skill is to <span class="kw">distinguish</span> between them: to tell them apart using evidence. To do that, you <span class="kw">examine</span> a material closely and carry out simple tests.</p>
+
+    <div class="tbl"><table>
+      <thead><tr><th>Property</th><th>Metals</th><th>Non-metals</th></tr></thead>
+      <tbody>
+        <tr><td>State at room temperature</td><td>Mostly solid (except mercury)</td><td>Many are gases; some solids; bromine is a liquid</td></tr>
+        <tr><td>Appearance</td><td>Shiny</td><td>Dull</td></tr>
+        <tr><td>When hit or bent</td><td>Bend (malleable), don't shatter</td><td>Brittle (if solid)</td></tr>
+        <tr><td>Heat conduction</td><td>Good</td><td>Poor (insulators)</td></tr>
+        <tr><td>Electrical conduction</td><td>Good</td><td>Poor (except graphite)</td></tr>
+        <tr><td>Sound when hit</td><td>Ringing (sonorous)</td><td>Dull thud</td></tr>
+        <tr><td>Melting and boiling points</td><td>Usually high</td><td>Usually low</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>The best test: does it conduct electricity?</h3>
+    <p>Of all the tests, the circuit test is the most reliable for solids, because almost all metals conduct and almost all solid non-metals don't.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 220" role="img" aria-label="Circuit with a cell, a lamp and two crocodile clips holding a test material">
+        <rect x="270" y="20" width="100" height="40" rx="6" fill="var(--earth)"/>
+        <rect x="370" y="32" width="10" height="16" fill="var(--earth)"/>
+        <text x="320" y="45" text-anchor="middle" class="lbl" style="fill:#fff">cell</text>
+        <path d="M270 40 H120 V150 H180" fill="none" stroke="var(--quake)" stroke-width="4"/>
+        <path d="M380 40 H520 V150 H460" fill="none" stroke="var(--ink)" stroke-width="4"/>
+        <circle cx="120" cy="105" r="18" fill="var(--hl)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M108 93 L132 117 M132 93 L108 117" stroke="var(--ink)" stroke-width="2"/>
+        <text x="60" y="110" class="lbl">lamp</text>
+        <path d="M180 150 l22 -8 l0 16 z" fill="var(--muted)"/>
+        <path d="M460 150 l-22 -8 l0 16 z" fill="var(--muted)"/>
+        <rect x="202" y="142" width="236" height="16" rx="3" fill="var(--echo)" opacity=".85"/>
+        <text x="320" y="185" text-anchor="middle" class="lbl">test material between the crocodile clips</text>
+        <text x="320" y="210" text-anchor="middle">Lamp lights → it conducts (probably a metal)</text>
+      </svg>
+      </div>
+      <figcaption>Before testing, touch the two clips together to check the lamp works, so a "no light" result really means "doesn't conduct". Make good contact with the test material.</figcaption>
+    </figure>
+
+    <div class="callout try"><h4>Materials investigation</h4>
+      <p>For each material ask: Shiny or dull? Rings when tapped? Bends or snaps? Feels cold or warm? Lights the lamp? Record the answers in a table with a final column: <b>metal or non-metal?</b> Decide using <b>all</b> the evidence, not one test.</p>
+    </div>
+
+    <h3>Writing a good comparison</h3>
+    <p>A comparison puts the two things side by side in the same sentence. Useful phrases: <i>whereas, but, however, higher than, compared with</i>.</p>
+    <div class="grid2">
+      <div class="card"><h4>Not a comparison</h4><p>"Metals are shiny. Non-metals are dull."</p></div>
+      <div class="card"><h4>A comparison</h4><p>"Metals are shiny, <b>whereas</b> non-metals are dull. Metals also have <b>higher</b> melting points <b>than</b> most non-metals."</p></div>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Using data like a scientist.</b> Sometimes you can't touch the substance, but you're given information: melting point, boiling point, appearance, conductivity. Build your decision from <b>several clues</b>, then name the substance only if the clues point clearly to one.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Mystery substance</th><th>Clues</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>P</td><td>Yellow brittle solid; melts at about 115 °C; doesn't conduct</td><td>Non-metal (it's sulfur)</td></tr>
+          <tr><td>Q</td><td>Silvery liquid at room temperature; conducts electricity</td><td>Metal (it's mercury)</td></tr>
+          <tr><td>R</td><td>Colourless gas; boils at −183 °C; needed for breathing</td><td>Non-metal (it's oxygen)</td></tr>
+          <tr><td>S</td><td>Reddish-brown shiny solid; melts at 1085 °C; conducts well</td><td>Metal (it's copper)</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">One test is enough to decide.</div><div class="yes">Graphite conducts but is a non-metal; glass rings but isn't a metal. Use <b>several</b> tests.</div></div>
+        <div class="myth"><div class="no">If the lamp doesn't light, the material is definitely a non-metal.</div><div class="yes">Check the circuit first and make good contact. A dull, dirty metal surface can stop a good connection.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Recycling centres</b>Machines sort waste using magnets (iron and steel) and other property tests.</div>
+        <div class="app"><b>Airport scanners</b>Metal detectors work because metals affect electric and magnetic fields.</div>
+        <div class="app"><b>Electricians</b>They test whether a material conducts before working on it, for safety.</div>
+      </div>
+
+      <div class="puzzle"><h4>The odd market</h4><p>In a market you see metal buckets, plastic bowls, glass jars, wooden spoons and copper pots. Which items are metal, and what one test would quickly confirm it? <i>(Buckets and copper pots. A circuit test, since metals conduct electricity.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Identify · from data</span><span class="qq">Substance X is shiny, conducts electricity and melts at −39 °C. Substance Y is black, brittle, but also conducts electricity. Are X and Y metals?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Look at X</b>Shiny ✓ metal. Conducts ✓ metal. Melts at −39 °C means it's a liquid at room temperature. Unusual, but there is one liquid metal: mercury.</li>
+          <li><b class="st">Look at Y</b>Black and brittle → non-metal clues. Conducts → metal clue. Mixed evidence!</li>
+          <li><b class="st">Weigh the evidence</b>Two non-metal clues against one. And we know a non-metal that conducts: graphite (carbon).</li>
+        </ol>
+        <p class="final">X is a metal (mercury). Y is a non-metal (graphite), the exception that conducts electricity.</p>
+        <p class="tip">When clues disagree, count them and think of the known exceptions.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Evaluate · test plan</span><span class="qq">Which single test is most useful for telling metals and non-metals apart, and why?</span></summary>
+        <ol class="steps">
+          <li><b class="st">List the tests</b>Look (shine), tap (ring), bend, feel (cold), conduct electricity.</li>
+          <li><b class="st">Find each test's weak spot</b>Shine: old metals look dull. Ring: glass rings too. Bend: thick metal won't bend by hand. Feel: hard to judge.</li>
+          <li><b class="st">Choose the most reliable</b>The circuit test gives a clear yes/no and has only one common exception (graphite).</li>
+        </ol>
+        <p class="final">The electrical conductivity test, because nearly all metals conduct and nearly all solid non-metals don't, and the result is clear.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.2</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Sort these into metals and non-metals: silver, oxygen, helium, carbon, copper, nitrogen, sulfur, iron.</summary>
+        <div class="ans">Metals: silver, copper, iron. Non-metals: oxygen, helium, carbon, nitrogen, sulfur. (A common slip is calling carbon or sulfur a metal because they are solids.)</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> True or false? (a) All metals are magnetic. (b) Solid non-metals are brittle. (c) All metals are solids. (d) Metals conduct heat. (e) Non-metals are good conductors of electricity.</summary>
+        <div class="ans">(a) False: only iron, nickel, cobalt. (b) True. (c) False: mercury is liquid. (d) True. (e) False: most are insulators (graphite is the exception).</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Draw and label a circuit to test whether a material conducts electricity.</summary>
+        <div class="ans">Cell, wires, lamp and two crocodile clips in one loop, with the test material clipped between the clips. Label: cell, lamp, crocodile clips, test material. Lamp lights = conducts.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> A transparent, very hard substance has a melting point above 3500 °C and does not conduct electricity. Metal or non-metal? Suggest what it is.</summary>
+        <div class="ans">Non-metal: it's not shiny like a metal, and it doesn't conduct. The very high melting point is unusual for a non-metal, which points to <b>diamond</b> (a form of carbon). Notice that you had to weigh the clues rather than use just one.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.3 ================= -->
+<section class="station" id="alloys" style="--c:var(--earth)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.3</div>
+    <h2>Alloys: metals mixed to be better</h2>
+    <ul class="goals"><li>What an alloy is</li><li>Why alloys are harder (particle theory)</li><li>Alloys in everyday life</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Pure gold is so soft you could scratch it with a fingernail. So how can a gold ring survive years of wear? The answer is an <span class="kw">alloy</span>: a mixture of a metal with other elements (usually other metals), made by melting them together. The atoms mix but don't bond together, so an alloy is a <b>mixture</b>, not a compound.</p>
+    <div class="callout"><h4>Quick recap: element, compound, mixture</h4>
+      <p><b>Element:</b> only one kind of atom (copper). <b>Compound:</b> different atoms chemically joined (water, H₂O). <b>Mixture:</b> different substances together but not chemically joined (sea water, brass).</p></div>
+
+    <h3>Why are alloys harder? Particle theory</h3>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 660 230" role="img" aria-label="Pure metal: neat rows of same-sized atoms that slide when pushed. Alloy: a bigger atom disrupts the rows so they can't slide easily">
+        <text x="150" y="20" text-anchor="middle" class="lbl">Pure metal</text>
+        <text x="500" y="20" text-anchor="middle" class="lbl">Alloy</text>
+        <g id="pure"></g><g id="alloy"></g>
+        <line x1="20" y1="110" x2="60" y2="110" stroke="var(--quake)" stroke-width="4" marker-end="url(#fa)"/>
+        <text x="16" y="96">force</text>
+        <line x1="370" y1="110" x2="410" y2="110" stroke="var(--quake)" stroke-width="4" marker-end="url(#fa)"/>
+        <text x="366" y="96">force</text>
+        <text x="150" y="215" text-anchor="middle">layers slide easily → soft, malleable</text>
+        <text x="500" y="215" text-anchor="middle">bigger atom jams the layers → harder</text>
+        <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--quake)"/></marker></defs>
+      </svg>
+      </div>
+      <figcaption>In a pure metal, all the atoms are the same size and sit in neat layers. A force can push one layer over the next. In an alloy, atoms of a different size <span class="kw">disrupt</span> (break up) the regular pattern, so the layers get stuck.</figcaption>
+    </figure>
+    <p>This one idea explains a lot. Layers that slide easily make a pure metal <b>malleable and ductile</b>, but also <b>soft</b>. Jam the layers and the alloy becomes <b>harder and stronger</b>, though usually a little less malleable.</p>
+
+    <h3>Famous alloys</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Alloy</th><th>Made from</th><th>Why it's better</th><th>Uses</th></tr></thead>
+      <tbody>
+        <tr><td><b>Bronze</b></td><td>Copper + tin</td><td>Harder than copper or tin; resists corrosion</td><td>Statues, bells, ship parts, medals</td></tr>
+        <tr><td><b>Brass</b></td><td>Copper + zinc</td><td>Harder than copper; resists corrosion; golden colour</td><td>Musical instruments, taps, plumbing</td></tr>
+        <tr><td><b>Steel</b></td><td>Iron + a little carbon</td><td>Much harder and stronger than pure iron</td><td>Bridges, buildings, car bodies</td></tr>
+        <tr><td><b>Stainless steel</b></td><td>Iron + carbon + chromium + nickel</td><td>Does not rust</td><td>Cutlery, pans, sinks</td></tr>
+        <tr><td><b>Duralumin</b></td><td>Aluminium + copper + magnesium</td><td>Light like aluminium but much stronger</td><td>Aeroplane bodies</td></tr>
+        <tr><td><b>Nitinol</b></td><td>Nickel + titanium</td><td>"Shape memory": bent, it returns to shape when warmed</td><td>Glasses frames, medical wires</td></tr>
+        <tr><td><b>Titanium alloys</b></td><td>Titanium + other metals</td><td>Strong, light, don't corrode, safe inside the body</td><td>Artificial hip joints</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">Steel is an unusual alloy because carbon is a <b>non-metal</b>. Even a tiny amount of carbon makes iron much harder.</p>
+
+    <h3>Gold and carats</h3>
+    <p>The purity of gold is measured in <b>carats</b>, out of 24. <b>24 carat</b> gold is pure gold. <b>18 carat</b> gold has 18 parts gold out of 24, and 6 parts other metals like copper or silver.</p>
+    <div class="calc">18 carat: 18 ÷ 24 = 0.75 → 75% gold<br>9 carat: 9 ÷ 24 = 0.375 → 37.5% gold</div>
+    <p class="cap">Lower carat gold is harder (better for rings that get knocked about), but contains less gold, so it's cheaper.</p>
+
+    <h3>Mixtures melt over a range</h3>
+    <p>A pure substance melts at <b>one fixed temperature</b>: copper melts at 1085 °C and zinc at about 420 °C. Brass is a mixture, and the amounts of copper and zinc can vary, so brass melts over a <b>range</b> of temperatures (roughly 900–1000 °C). The same is true for bronze.</p>
+    <div class="callout wow"><h4>Coins and medals</h4><p>"Silver" coins usually contain no silver at all! They're often made of copper and nickel alloys, which are much harder (so they don't wear away in your pocket) and much cheaper.</p></div>
+
+    <div class="callout try"><h4>Bubble raft model</h4>
+      <p>Put a little washing-up liquid water in a shallow dish. Use a straw or syringe to blow lots of equal-sized small bubbles until they pack into neat rows: these are metal atoms. Push the rows gently with a pencil and watch them slide. Now add one much bigger bubble in the middle and look at how it disrupts the pattern. That's your alloy!</p>
+      <p class="cap">Limitation of the model: bubbles pop and drift, and real atoms are packed in three dimensions, not a flat layer.</p>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>A traffic jam analogy.</b> Picture cars of the same size driving in neat lanes: they can glide past each other. Now park a big lorry across two lanes. Everything gets stuck. The lorry is the different-sized atom in an alloy. (Where the analogy breaks down: atoms don't drive forward on their own; the layers only slide when a force pushes them.)</p>
+      <p><b>Trade-offs.</b> Making an alloy is a design choice. You often gain hardness and strength but lose a little malleability or conductivity. Engineers choose the alloy that fits the job best.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">An alloy is a compound.</div><div class="yes">An alloy is a <b>mixture</b>. The atoms mix but don't chemically bond, and the amounts can vary.</div></div>
+        <div class="myth"><div class="no">Pure metals are always stronger.</div><div class="yes">Pure metals are often <b>softer</b> because their layers slide easily. Alloys are usually harder.</div></div>
+        <div class="myth"><div class="no">24 carat means the strongest gold.</div><div class="yes">24 carat is the <b>purest</b> gold, but also the <b>softest</b>.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Your school bag zip</b>Often brass or a similar alloy: strong and doesn't rust.</div>
+        <div class="app"><b>Changi Airport</b>Every plane landing has a body made mostly of aluminium alloys: light and strong.</div>
+        <div class="app"><b>Braces on teeth</b>Some use nitinol wires that gently return to shape as they warm in your mouth.</div>
+        <div class="app"><b>Hip replacements</b>Titanium alloy joints help people with damaged joints walk again.</div>
+      </div>
+
+      <div class="puzzle"><h4>The bent glasses</h4><p>A boy sits on his glasses and the frames bend. His dad dips them in warm water and they spring back into shape. What are the frames made of, and what property does it have? <i>(A shape memory alloy like nitinol: when warmed, it returns to its original shape.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Explain · particle theory</span><span class="qq">Use particle theory to explain why steel is harder than pure iron.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Describe the pure metal</b>In pure iron, all the atoms are the same size and arranged in regular layers.</li>
+          <li><b class="st">Say what a force does</b>When a force is applied, the layers can slide over each other easily, so pure iron is quite soft.</li>
+          <li><b class="st">Describe the alloy</b>In steel, carbon atoms are a different size and disrupt the regular layers.</li>
+          <li><b class="st">Link to the property</b>The layers can't slide easily, <b>so</b> steel is harder.</li>
+        </ol>
+        <p class="final">In pure iron, the same-sized atoms form layers that slide easily. In steel, different-sized carbon atoms disrupt the layers, so they can't slide easily, making steel harder.</p>
+        <p class="tip">Exam answers need all four links: same-sized atoms → layers slide → different-sized atoms disrupt → layers can't slide.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Calculate · carats</span><span class="qq">A necklace is 22 carat gold and has a mass of 12 g. About how many grams of pure gold does it contain?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Turn carats into a fraction</b>22 carat = 22 parts out of 24 → 22/24.</li>
+          <li><b class="st">Simplify</b>22/24 = 11/12.</li>
+          <li><b class="st">Multiply by the mass</b>11/12 × 12 g = 11 g.</li>
+          <li><b class="st">Sense-check</b>22 carat is nearly pure, so the gold should be nearly all of the 12 g. 11 g ✓</li>
+        </ol>
+        <p class="final">About <b>11 g</b> of pure gold (and 1 g of other metals).</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Evaluate · choosing a material</span><span class="qq">Why are aeroplanes made from aluminium alloys and not pure aluminium or steel?</span></summary>
+        <ol class="steps">
+          <li><b class="st">What does a plane need?</b>Light (to fly using less fuel) and strong (to cope with huge forces).</li>
+          <li><b class="st">Test each option</b>Pure aluminium: light ✓ but too soft ✗. Steel: strong ✓ but heavy ✗.</li>
+          <li><b class="st">Find the best fit</b>An aluminium alloy (duralumin): light ✓ and strong ✓.</li>
+        </ol>
+        <p class="final">Aluminium alloys are both light and strong. Pure aluminium is too soft, and steel is too heavy.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.3</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> What is an alloy? Give three examples.</summary>
+        <div class="ans">A mixture of a metal with other elements (usually metals), made by melting them together. Examples: bronze, brass, steel (also stainless steel, duralumin).</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Why is pure copper not used for coins?</summary>
+        <div class="ans">Pure copper is soft, so coins would wear away and lose their pattern quickly. An alloy is harder, so it lasts much longer.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Why is a range of temperatures given for the melting point of bronze?</summary>
+        <div class="ans">Bronze is a mixture, and different bronzes contain different amounts of copper and tin. So there is no single melting point. It depends on the recipe.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Research an alloy (for example, solder or pewter). Find: what it's made of, its properties, how they differ from the pure metals, and one use. Use a reliable source.</summary>
+        <div class="ans">Example, solder: traditionally tin + lead (now often tin + copper + silver). It melts at a lower temperature than its pure metals, so it can join electrical parts without melting them. Use: joining wires on circuit boards. Good sources: science museum or university sites, not adverts.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.4 ================= -->
+<section class="station" id="separate" style="--c:var(--sky)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.4</div>
+    <h2>Separating mixtures: using properties to pull things apart</h2>
+    <ul class="goals"><li>Choose the right method</li><li>Choose the right apparatus</li><li>Work safely</li></ul>
+  </div>
+  <div class="st-body">
+    <p>A mixture contains different substances that are not chemically joined. That's good news: it means we can separate them, using a <b>difference in their properties</b>. Iron is magnetic but sulfur isn't, so a magnet separates them. Sand doesn't dissolve but salt does, so water and a filter separate them.</p>
+
+    <h3>Filtration</h3>
+    <p><b>Filtration</b> separates an <b>insoluble</b> solid (one that doesn't dissolve) from a liquid. A <span class="kw">filter paper</span> sits in a <span class="kw">filter funnel</span> over a <span class="kw">conical flask</span>. The tiny holes in the paper let water and dissolved particles through, but trap bigger solid grains.</p>
+    <div class="grid2">
+      <div class="card"><h4>Residue</h4><p>The solid left in the filter paper (for example, sand).</p></div>
+      <div class="card"><h4>Filtrate</h4><p>The clear liquid that passes through (for example, salty water).</p></div>
+    </div>
+
+    <h3>Evaporation</h3>
+    <p><b>Evaporation</b> gets a <b>dissolved</b> solid back out of a solution. Heat the solution in an evaporating basin so the water turns to vapour and escapes, leaving the solid behind. Copper sulfate solution left in a warm place slowly leaves blue crystals.</p>
+    <p class="cap">Tip: heat gently until about half the water has gone, then leave it to finish in a warm place. Boiling it dry can make hot crystals spit out.</p>
+
+    <h3>Distillation</h3>
+    <p><b>Distillation</b> gets the pure <b>liquid</b> back from a solution. It works because the substances have different <b>boiling points</b>.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 660 270" role="img" aria-label="Distillation apparatus: heated flask with thermometer, sloping condenser with cold water flowing in at the lower end and out at the upper end, pure water collecting in a beaker">
+  <rect x="138" y="62" width="24" height="72" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+  <circle cx="150" cy="170" r="50" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+  <path d="M104 182 A50 50 0 0 0 196 182 Z" fill="var(--sky)" opacity=".45"/>
+  <rect x="134" y="52" width="32" height="12" fill="var(--muted)"/>
+  <line x1="150" y1="28" x2="150" y2="104" stroke="var(--ink)" stroke-width="3"/>
+  <circle cx="150" cy="106" r="4" fill="var(--quake)"/>
+  <text x="160" y="34">thermometer</text>
+  <line x1="162" y1="80" x2="470" y2="183" stroke="var(--ink)" stroke-width="3"/>
+  <polygon points="234,90 464,167 455,193 225,116" fill="var(--sky)" opacity=".25" stroke="var(--ink)" stroke-width="1.5"/>
+  <line x1="448" y1="232" x2="448" y2="196" stroke="var(--sky)" stroke-width="4" marker-end="url(#wa)"/>
+  <text x="440" y="250" text-anchor="end">cold water in</text>
+  <line x1="240" y1="88" x2="240" y2="52" stroke="var(--sky)" stroke-width="4" marker-end="url(#wa)"/>
+  <text x="250" y="56">water out (warm)</text>
+  <text x="330" y="118" class="lbl">condenser</text>
+  <text x="178" y="76">steam</text>
+  <circle cx="474" cy="196" r="3" fill="var(--sky)"/>
+  <path d="M470 200 v52 h70 v-52" fill="none" stroke="var(--ink)" stroke-width="2"/>
+  <rect x="472" y="230" width="66" height="21" fill="var(--sky)" opacity=".45"/>
+  <text x="548" y="245" class="lbl">pure water</text>
+  <text x="20" y="200">salty water</text>
+  <line x1="95" y1="196" x2="118" y2="196" stroke="var(--muted)"/>
+  <path d="M138 252 q6 -18 10 -30 q4 12 10 30 z" fill="var(--quake)"/>
+  <text x="150" y="266" text-anchor="middle" class="lbl">heat</text>
+  <defs><marker id="wa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--sky)"/></marker></defs>
+</svg>
+      </div>
+      <figcaption>Water boils at 100 °C and turns to steam (a gas). The steam travels into the <span class="kw">condenser</span>, where cold water flowing around the outside cools it, so it <b>condenses</b> back into liquid water. The salt stays behind in the flask because its boiling point is far higher.</figcaption>
+    </figure>
+    <div class="callout"><h4>The two changes of state</h4><p><b>Evaporating/boiling:</b> liquid → gas (in the heated flask). <b>Condensing:</b> gas → liquid (in the condenser). Distillation is just these two changes, one after the other.</p></div>
+
+    <h3>Separating a three-part mixture: sand, salt and water</h3>
+    <ol>
+      <li><b>Filter</b> the mixture. Sand stays in the filter paper (residue). Salty water passes through (filtrate).</li>
+      <li>Leave the filter paper somewhere warm to <b>dry the sand</b>.</li>
+      <li><b>Evaporate</b> the filtrate in an evaporating basin to get the salt.</li>
+      <li>Want the water too? <b>Distil</b> the filtrate instead of evaporating it.</li>
+    </ol>
+
+    <h3>Apparatus you should know</h3>
+    <div class="apps">
+      <div class="app"><b>Filter funnel + filter paper</b>Filtration</div>
+      <div class="app"><b>Conical flask / beaker</b>Collecting liquids</div>
+      <div class="app"><b>Evaporating basin</b>Heating a solution to leave the solid</div>
+      <div class="app"><b>Tripod + pipe clay triangle or gauze</b>Holding things over the flame</div>
+      <div class="app"><b>Bunsen burner</b>Heating</div>
+      <div class="app"><b>Condenser</b>Cooling steam back to liquid</div>
+      <div class="app"><b>Safety glasses</b>Always, when heating or using chemicals</div>
+    </div>
+
+    <div class="callout safe"><h4>Safety when separating</h4>
+      <ul><li>Wear safety glasses when heating.</li><li>Stand up when heating so you can move away quickly.</li><li>Use tongs on hot evaporating basins.</li><li>Don't heat until dry: hot crystals can spit.</li><li>Sweep broken glass with a dustpan and brush, never with bare hands.</li></ul></div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Why does filtering work?</b> When salt dissolves, it breaks into particles far too small to see, and they spread through the water. They're small enough to pass through the holes in filter paper. Sand grains are millions of times bigger, so they get stuck. Filtering separates by <b>particle size</b>.</p>
+      <p><b>Why does distillation work?</b> It separates by <b>boiling point</b>. Water boils at 100 °C; salt would need over 1400 °C. Only the water turns to gas and leaves the flask.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">Filtering salty water removes the salt.</div><div class="yes">Dissolved salt passes <b>through</b> filter paper. You need evaporation or distillation.</div></div>
+        <div class="myth"><div class="no">When salt dissolves, it disappears.</div><div class="yes">The salt is still there as tiny particles. Taste it, or evaporate the water to get it back.</div></div>
+        <div class="myth"><div class="no">Evaporation and distillation are the same.</div><div class="yes">Evaporation <b>keeps the solid</b> and loses the water. Distillation <b>keeps both</b> by collecting the water too.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Singapore's water</b>Desalination plants turn sea water into drinking water, and NEWater uses very fine membranes (super-filters) to clean used water.</div>
+        <div class="app"><b>Tea bags and coffee filters</b>Filtration: the leaves or grounds stay behind.</div>
+        <div class="app"><b>Salt pans</b>In hot countries, sea water evaporates in shallow pools to leave sea salt.</div>
+        <div class="app"><b>Car air filters</b>Trap dust so clean air reaches the engine.</div>
+      </div>
+
+      <div class="puzzle"><h4>The black and white powder</h4><p>Someone mixes powdered carbon (black) with table salt (white). How could you separate them? <i>(Add water and stir: the salt dissolves, carbon doesn't. Filter: carbon stays in the paper. Evaporate the filtrate to get the salt back.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Plan · broken glass</span><span class="qq">A bottle of copper sulfate crystals smashes on the floor. Plan how to get clean, dry crystals back, safely.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Safety first</b>Wear gloves and safety glasses. Sweep up glass and crystals with a dustpan and brush.</li>
+          <li><b class="st">Find the property difference</b>Copper sulfate <b>dissolves</b> in water; glass doesn't.</li>
+          <li><b class="st">Dissolve</b>Put everything in a beaker with warm water and stir until the crystals dissolve.</li>
+          <li><b class="st">Filter</b>The glass stays in the filter paper; blue copper sulfate solution passes through.</li>
+          <li><b class="st">Get the crystals back</b>Heat the filtrate gently to remove some water, then leave it in a warm place so crystals form. Pat them dry with filter paper.</li>
+        </ol>
+        <p class="final">Dissolve the crystals in water, filter out the glass, then evaporate the filtrate to grow clean crystals, wearing gloves and glasses throughout.</p>
+        <p class="tip">Every separation plan starts by asking: what property is different between the two substances?</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Choose · method</span><span class="qq">Which method gives you drinkable water from sea water, and which gives you salt? Explain each choice.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Is the solid dissolved?</b>Yes: salt is dissolved, so filtration won't work.</li>
+          <li><b class="st">Which part do we want?</b>Water → we must collect the gas and turn it back to liquid → <b>distillation</b>. Salt → we can let the water escape → <b>evaporation</b>.</li>
+          <li><b class="st">Name the property used</b>Both rely on water having a much lower boiling point than salt.</li>
+        </ol>
+        <p class="final">Distillation for drinking water (the water is collected after condensing). Evaporation for salt (the water escapes and the salt is left).</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · the condenser</span><span class="qq">Explain why cold water flows through the outside of a condenser during distillation.</span></summary>
+        <ol class="steps">
+          <li><b class="st">What enters the condenser?</b>Hot steam (a gas).</li>
+          <li><b class="st">What do we want to come out?</b>Liquid water.</li>
+          <li><b class="st">What change of state is needed?</b>Gas → liquid = condensing, which needs cooling.</li>
+          <li><b class="st">Link to the cold water</b>The cold water takes heat away from the steam, so it condenses.</li>
+        </ol>
+        <p class="final">The cold water cools the steam, so it condenses back into liquid water, which drips into the beaker.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.4</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> List the equipment needed to separate sand from salty water and then get the salt.</summary>
+        <div class="ans">Beaker, filter funnel, filter paper, conical flask, evaporating basin, tripod, pipe clay triangle or gauze, Bunsen burner, heat-proof mat, tongs, safety glasses.</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> Name the method: (a) tea leaves from tea (b) salt from salt water (c) pure water from salt water (d) iron filings from sulfur.</summary>
+        <div class="ans">(a) Filtration (b) Evaporation (c) Distillation (d) A magnet.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> A student stirs the mixture in the filter paper with a pencil to make it go faster. Why is this a bad idea?</summary>
+        <div class="ans">Wet filter paper tears easily. The pencil could make a hole, and then the sand would go through into the filtrate.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> The salt left in the evaporating basin is a little dirty. Suggest a way to get cleaner salt.</summary>
+        <div class="ans">Re-dissolve it in clean water, filter again (maybe with two filter papers), then evaporate again.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> A mixture of food dye and water is distilled. What is left in the flask, and what collects in the beaker? Explain.</summary>
+        <div class="ans">The dye stays in the flask; pure, colourless water collects in the beaker. Water boils at 100 °C and turns to steam, which condenses in the condenser. The dye has a much higher boiling point, so it doesn't evaporate.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.5 ================= -->
+<section class="station" id="acids" style="--c:var(--quake)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.5</div>
+    <h2>Acids and alkalis: chemical opposites</h2>
+    <ul class="goals"><li>Properties of acids and alkalis</li><li>Hazard symbols</li><li>Working safely</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Bite into a lemon and your face screws up. That sour taste comes from an <span class="kw">acid</span>. Acids are everywhere: citrus fruits contain <b>citric acid</b>, vinegar contains <b>ethanoic acid</b>, and fizzy drinks contain acids too. These are <b>weak acids</b>, safe to eat in small amounts. <b>Never taste anything in a lab</b>, though!</p>
+
+    <div class="grid2">
+      <div class="card"><h4>Acids</h4><p>Taste sour (food acids only).<br>Lab acids: hydrochloric, sulfuric, nitric acid.<br>Strong acids are <span class="kw">corrosive</span>: they destroy living tissue such as skin and cause chemical burns.</p></div>
+      <div class="card"><h4>Alkalis</h4><p>Feel soapy (never test this on purpose!).<br>Found in many cleaning products: soap, washing powder, oven cleaner.<br>Lab alkalis: sodium hydroxide, potassium hydroxide, calcium hydroxide.<br>Strong alkalis are corrosive too.</p></div>
+    </div>
+    <p>Acids and alkalis are <b>chemical opposites</b>. When they are mixed in the right amounts, they cancel each other out. Whether a substance is acidic or alkaline is one of its <b>chemical properties</b>.</p>
+
+    <h3>Dilute means less dangerous, not safe</h3>
+    <p>Adding water to an acid or alkali makes it <b>dilute</b>, which makes it less dangerous. But dilute acids can still be <span class="kw">harmful</span> (cause harm if they get into the body) or <span class="kw">irritant</span> (make skin and eyes sore and red). If you spill some, wash it off with <b>lots of water</b>. The water dilutes it and carries it away.</p>
+
+    <h3>Hazard warning symbols</h3>
+    <p>Dangerous chemicals carry a red diamond warning symbol. These symbols are used worldwide, so you can understand the danger whatever language you speak.</p>
+    <div class="haz">
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><path d="M50 30 l5 12 l12 -4 l-6 11 l10 7 l-13 2 l1 13 l-9 -9 l-9 9 l1 -13 l-13 -2 l10 -7 l-6 -11 l12 4z" fill="#111"/><rect x="30" y="72" width="40" height="4" fill="#111"/></svg><b>Explosive</b><p>May explode if heated or near a flame.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><path d="M50 26 c8 12 16 18 14 32 c-2 10 -8 14 -14 14 c-8 0 -15 -6 -15 -14 c0 -8 6 -12 8 -18 c2 6 4 8 7 8 c0 -8 -2 -14 0 -22z" fill="#111"/><rect x="30" y="74" width="40" height="4" fill="#111"/></svg><b>Flammable</b><p>Catches fire easily.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><circle cx="50" cy="62" r="11" fill="none" stroke="#111" stroke-width="5"/><path d="M50 22 c6 9 12 14 10 24 c-1 4 -4 6 -10 6 c-6 0 -9 -2 -10 -6 c-2 -10 4 -15 10 -24z" fill="#111"/><rect x="30" y="77" width="40" height="4" fill="#111"/></svg><b>Oxidising</b><p>Helps other things burn; gives off heat with other substances.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><path d="M28 30 l12 -6 l3 6 l-12 6z M56 30 l12 -6 l3 6 l-12 6z" fill="#111"/><path d="M34 38 v6 M38 40 v8 M62 38 v6 M66 40 v8" stroke="#111" stroke-width="2"/><rect x="26" y="52" width="20" height="5" fill="#111"/><path d="M56 56 h20 v6 h-20z" fill="#111"/><path d="M28 64 h46 v6 h-46z" fill="#111"/></svg><b>Corrosive</b><p>Destroys living tissue (skin, eyes) and attacks metals.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><ellipse cx="50" cy="42" rx="12" ry="11" fill="#111"/><rect x="44" y="50" width="12" height="7" fill="#111"/><circle cx="45" cy="41" r="3" fill="#fff"/><circle cx="55" cy="41" r="3" fill="#fff"/><path d="M30 60 L70 76 M70 60 L30 76" stroke="#111" stroke-width="5" stroke-linecap="round"/></svg><b>Toxic</b><p>Poisonous: can kill or seriously harm in small amounts.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><path d="M36 70 v-30 M36 46 l-8 -8 M36 52 l8 -8" stroke="#111" stroke-width="4"/><path d="M50 66 q10 -10 22 0 q-10 8 -22 0z M72 66 l6 -5 v10z" fill="#111"/><rect x="26" y="72" width="50" height="3" fill="#111"/></svg><b>Hazardous to the environment</b><p>Harms plants, fish and other living things.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><rect x="45" y="26" width="10" height="32" rx="3" fill="#111"/><circle cx="50" cy="68" r="6" fill="#111"/></svg><b>Health hazard</b><p>Harmful or irritant: may make skin or eyes sore.</p></div>
+      <div class="card"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 L96 50 L50 96 L4 50Z" fill="#fff" stroke="#d1202b" stroke-width="7"/><circle cx="50" cy="30" r="8" fill="#111"/><path d="M34 76 v-26 q16 -12 32 0 v26z" fill="#111"/><path d="M50 52 l3 6 l6 -2 l-3 6 l4 5 l-6 0 l-1 6 l-3 -5 l-3 5 l-1 -6 l-6 0 l4 -5 l-3 -6 l6 2z" fill="#fff"/></svg><b>Serious health hazard</b><p>Can cause long-term damage to health.</p></div>
+    </div>
+    <p class="cap">These drawings are simplified versions for revision. Learn to recognise the real symbols on bottles in the lab.</p>
+
+    <h3>Working safely with acids and alkalis</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Safety rule</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Wear safety glasses</td><td>A splash in the eye can cause serious, permanent damage.</td></tr>
+        <tr><td>Stand up to work</td><td>If something spills, you can step back so it doesn't land on your lap.</td></tr>
+        <tr><td>Put bottle stoppers upside down on the bench</td><td>Keeps the chemical off the bench and keeps dirt off the stopper.</td></tr>
+        <tr><td>Put the stopper back as soon as you've finished</td><td>Prevents spills and stops stoppers being mixed up between bottles.</td></tr>
+        <tr><td>Read the hazard label before you start</td><td>So you know the danger and how to handle the chemical.</td></tr>
+        <tr><td>Work in an orderly, tidy way</td><td>Fewer accidents, and you won't knock bottles over.</td></tr>
+        <tr><td>If you spill on skin: wash with lots of water and tell the teacher</td><td>Dilutes the chemical and washes it away quickly.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Corrosive vs irritant.</b> Think of it as a scale of damage. <b>Corrosive</b> = destroys tissue (a chemical burn). <b>Irritant</b> = makes skin red and sore, but doesn't destroy it. <b>Harmful</b> = can make you ill. A strong acid is corrosive; diluting it can turn it into an irritant.</p>
+      <p><b>Why have symbols at all?</b> A picture works in any language, and you can recognise it from across a room. Lorries carrying acids also display warning signs, so emergency teams know immediately how to deal with a spill.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">Only acids are dangerous; alkalis are safe.</div><div class="yes">Strong alkalis like sodium hydroxide are <b>corrosive</b> too. Oven cleaner can burn skin.</div></div>
+        <div class="myth"><div class="no">All acids are dangerous.</div><div class="yes">Weak acids in lemons, vinegar and yoghurt are safe to eat. Strength and concentration matter.</div></div>
+        <div class="myth"><div class="no">If acid spills on your skin, wipe it off with a dry cloth.</div><div class="yes">Wash with <b>lots of water</b>. Wiping can spread it, and water dilutes it.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Your stomach</b>It makes hydrochloric acid to help digest food and kill germs.</div>
+        <div class="app"><b>Cleaning</b>Alkaline cleaners break down grease in kitchens and ovens.</div>
+        <div class="app"><b>Indigestion tablets</b>Mild alkalis cancel out extra stomach acid.</div>
+        <div class="app"><b>Tanker lorries</b>Hazard signs tell firefighters what's inside if there's an accident.</div>
+      </div>
+
+      <div class="puzzle"><h4>The orange warning sign</h4><p>A lorry delivering acid to a factory parks with a warning sign next to it. Why does this matter if there's an accident? <i>(It tells people to stay away and tells emergency crews exactly what chemical has spilled, so they can deal with it safely, for example by diluting with lots of water or neutralising it.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Identify · hazard symbol</span><span class="qq">A bottle shows a skull and crossbones in a red diamond. What does it mean, why is it important, and give two precautions.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Recognise the symbol</b>Skull and crossbones = <b>toxic</b> (poisonous).</li>
+          <li><b class="st">Why it matters</b>It warns everyone, in any language, that small amounts can seriously harm or kill, so they handle it carefully.</li>
+          <li><b class="st">Choose precautions that match the hazard</b>Poisons enter the body by mouth, skin or breathing. So: wear gloves and safety glasses; never eat or drink in the lab; wash hands afterwards; use a fume cupboard if it gives off vapour.</li>
+        </ol>
+        <p class="final">Toxic. It warns users the substance is poisonous so they take care. Precautions: wear gloves and safety glasses; wash hands after use and never eat in the lab.</p>
+        <p class="tip">Match each precaution to how the hazard could get into your body. That makes your answer clearly reasoned.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · safety rule</span><span class="qq">Explain why you should put a bottle stopper upside down on the bench.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Picture it</b>The bottom of the stopper has been inside the bottle, so it's wet with the chemical.</li>
+          <li><b class="st">What if it's put the right way up?</b>The chemical touches the bench, and dirt from the bench gets onto the stopper.</li>
+          <li><b class="st">Give both reasons</b>Protects the bench (and people's hands) and keeps the chemical clean.</li>
+        </ol>
+        <p class="final">So the chemical on the stopper doesn't get onto the bench, and dirt from the bench doesn't get into the bottle.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.5</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Sort into acid or alkali (some can go in both): citric acid, cola, corrosive, lemon juice, nitric acid, sour, sodium hydroxide, soap, vinegar, washing powder.</summary>
+        <div class="ans">Acid: citric acid, cola, lemon juice, nitric acid, sour, vinegar. Alkali: sodium hydroxide, soap, washing powder. Both: corrosive (strong acids and strong alkalis).</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> What does "corrosive" mean? What should you do if you spill acid on your hand?</summary>
+        <div class="ans">Corrosive: can destroy living tissue such as skin. Wash immediately with lots of running water and tell the teacher.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Give the reason for each rule: wearing safety glasses; standing up; replacing stoppers straight away; working in an orderly way.</summary>
+        <div class="ans">Glasses: protect eyes from splashes. Standing: you can move away from spills quickly. Replacing stoppers: prevents spills and mixing up stoppers between bottles. Orderly: fewer accidents and knocked-over bottles.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.6 ================= -->
+<section class="station" id="ph" style="--c:var(--land)">
+  <div class="st-head">
+    <div class="eyebrow">Station 5.6</div>
+    <h2>Indicators and the pH scale: chemistry in colour</h2>
+    <ul class="goals"><li>Tell acids from alkalis</li><li>Make and use indicators</li><li>Use the pH scale</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Three beakers of clear liquid look exactly the same. One is water, one is acid, one is alkali. You can't taste them and you shouldn't touch them. How do you tell them apart? Add a few drops of an <span class="kw">indicator</span>: a substance that changes colour depending on whether it's in an acid or an alkali.</p>
+
+    <h3>Litmus</h3>
+    <p><span class="kw">Litmus</span> is a dye that comes from tiny organisms called lichens. It's used as a solution or soaked into paper.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>In acid</th><th>In neutral (water)</th><th>In alkali</th></tr></thead>
+      <tbody>
+        <tr><td><b>Litmus solution</b></td><td>Red</td><td>Purple</td><td>Blue</td></tr>
+        <tr><td><b>Red litmus paper</b></td><td>Stays red</td><td>Stays red</td><td><b>Turns blue</b></td></tr>
+        <tr><td><b>Blue litmus paper</b></td><td><b>Turns red</b></td><td>Stays blue</td><td>Stays blue</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><h4>Litmus paper trap (exam favourite!)</h4><p>If <b>red</b> litmus paper stays red, the liquid could be <b>acid OR neutral</b>. You can't tell which from that test alone. You need blue litmus too: if blue turns red, it's an acid; if blue stays blue, it's neutral.</p></div>
+    <p>A <span class="kw">neutral</span> substance is neither acid nor alkali. Pure water and sugar solution are neutral.</p>
+
+    <h3>Homemade indicators</h3>
+    <p>Many brightly coloured plants contain natural indicators: <b>red cabbage</b>, blackcurrants, beetroot. Red cabbage juice turns <b>red/pink in acids</b>, stays <b>purple-blue in neutral</b> water and turns <b>green to yellow in alkalis</b>.</p>
+    <div class="callout try"><h4>Make red cabbage indicator</h4>
+      <ol><li>Chop some red cabbage and crush it in a mortar and pestle (or blend it at home with an adult).</li>
+      <li>Add a little warm water (in school, ethanol may be used; it's flammable, so no flames nearby!).</li>
+      <li>Keep crushing until the liquid is deep purple. Strain it.</li>
+      <li>Add a few drops to lemon juice, water, and a little dissolved baking soda. Record the colours.</li></ol>
+      <p class="cap">Limitation: a coloured liquid like cola, coffee or tea hides the colour change, so this indicator can't test those. Use a pH meter instead.</p>
+    </div>
+
+    <h3>Universal indicator and the pH scale</h3>
+    <p>Litmus only tells you <i>if</i> something is acid or alkali. <span class="kw">Universal indicator</span> is a mixture of several indicators, so it shows many colours and tells you <b>how</b> acidic or alkaline something is. We match the colour to a number on the <span class="kw">pH scale</span>, which runs from 0 to 14.</p>
+    <div class="ph" aria-label="pH colour chart from 0 to 14">
+      <span style="background:#d7191c">0</span><span style="background:#e8411f">1</span><span style="background:#f06a21">2</span><span style="background:#f79027">3</span><span style="background:#fbb43a">4</span><span style="background:#fdd348">5</span><span style="background:#e9e352">6</span><span style="background:#7cc35a">7</span><span style="background:#3faa6e">8</span><span style="background:#2f9a9a">9</span><span style="background:#2b83ba">10</span><span style="background:#3a63b0">11</span><span style="background:#5a4aa6">12</span><span style="background:#6e3a9a;color:#fff">13</span><span style="background:#5e2a7e;color:#fff">14</span>
+    </div>
+    <div class="ph-lbl"><span>← stronger acid</span><span>neutral 7</span><span>stronger alkali →</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>pH</th><th>Colour of universal indicator</th><th>Type</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0–2</td><td>Red</td><td>Strongly acidic</td><td>Hydrochloric acid, stomach acid</td></tr>
+        <tr><td class="num">3–6</td><td>Orange to yellow</td><td>Weakly acidic</td><td>Vinegar (about 3), lemon juice (about 2–3), cola</td></tr>
+        <tr><td class="num">7</td><td>Green</td><td>Neutral</td><td>Pure water, sugar solution, salt water</td></tr>
+        <tr><td class="num">8–11</td><td>Blue / blue-green</td><td>Weakly alkaline</td><td>Baking soda, soap, many detergents (about 9–11)</td></tr>
+        <tr><td class="num">12–14</td><td>Purple / violet</td><td>Strongly alkaline</td><td>Sodium hydroxide, oven cleaner</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">The exact colours vary a little between brands of universal indicator, so always use the chart that comes with it.</p>
+    <div class="callout"><h4>Remember the direction</h4><p>Below 7 = acid, 7 = neutral, above 7 = alkali. The <b>further from 7</b>, the stronger it is. So pH 1 is a <b>stronger</b> acid than pH 5. Lower number, stronger acid. That feels backwards, so learn it carefully!</p></div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Why use more than one indicator?</b> Each simple indicator changes colour at a different pH. By testing with two, you can narrow down the pH. For example, <b>methyl orange</b> is red below about pH 3 and yellow above about pH 4.5, and <b>phenolphthalein</b> is colourless below about pH 8 and pink above it. If a liquid turns methyl orange red <i>and</i> leaves phenolphthalein colourless, its pH must be about 3 or lower.</p>
+      <p><b>Neutralisation.</b> When you add an alkali to an acid little by little, the pH rises towards 7. At pH 7 the acid has been cancelled out. This is called <b>neutralisation</b>, and it's how indigestion tablets work.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">A higher pH number means a stronger acid.</div><div class="yes">For acids, it's the opposite: <b>lower</b> pH = <b>stronger</b> acid.</div></div>
+        <div class="myth"><div class="no">If red litmus stays red, the liquid is an acid.</div><div class="yes">It could be acid <b>or neutral</b>. Test with blue litmus or universal indicator to be sure.</div></div>
+        <div class="myth"><div class="no">Litmus can tell you how strong an acid is.</div><div class="yes">Litmus only says acid or alkali. <b>Universal indicator</b> shows the strength (pH).</div></div>
+        <div class="myth"><div class="no">Water is a weak acid.</div><div class="yes">Pure water is <b>neutral</b>, pH 7.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Swimming pools</b>Staff test the pH every day and keep it close to neutral (about 7.2–7.8) so it doesn't sting your eyes.</div>
+        <div class="app"><b>Gardening</b>Hydrangea flowers turn blue in acidic soil and pink in alkaline soil: a natural indicator!</div>
+        <div class="app"><b>Shampoo</b>Many are made slightly acidic to be gentle on hair and skin.</div>
+        <div class="app"><b>Aquariums</b>Fish need the right pH; owners test the water with indicator kits.</div>
+      </div>
+
+      <div class="puzzle"><h4>The invisible ink</h4><p>Write a message on paper with lemon juice and let it dry. Spray it with red cabbage juice. What will you see, and why? <i>(The message appears pink/red, because the lemon juice is acidic and the indicator changes colour where the acid is.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Identify · litmus test</span><span class="qq">Vinegar, sugar solution and detergent are tested with red litmus paper. Two show no change. Which two, and why?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Classify each liquid first</b>Vinegar = acid. Sugar solution = neutral. Detergent = alkali.</li>
+          <li><b class="st">Recall what red litmus does</b>It turns blue only in an alkali. In acid or neutral liquids, it stays red.</li>
+          <li><b class="st">Apply it</b>Detergent turns it blue. Vinegar and sugar solution leave it red.</li>
+        </ol>
+        <p class="final"><b>Vinegar</b> (an acid) and <b>sugar solution</b> (neutral). Red litmus only changes colour (to blue) in an alkali.</p>
+        <p class="tip">Always classify each substance first, then apply the indicator rule.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Use the scale · placing on pH</span><span class="qq">Mark likely pH values for vinegar, sugar solution and detergent, and say which turns universal indicator violet.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Classify</b>Vinegar = weak acid; sugar solution = neutral; detergent = alkali.</li>
+          <li><b class="st">Pick a sensible number for each</b>Weak acid → between 3 and 6 (vinegar about 3). Neutral → exactly 7. Alkali → above 7 (detergent about 9–11).</li>
+          <li><b class="st">Match the colour</b>Violet/purple is at the alkaline end, so it must be the detergent (a strongly alkaline one).</li>
+        </ol>
+        <p class="final">Vinegar about pH 3, sugar solution pH 7, detergent about pH 10. Violet = <b>detergent</b>, because violet means strongly alkaline.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Analyse · two indicators</span><span class="qq">A liquid makes phenolphthalein stay colourless and turns methyl orange yellow. What can you say about its pH?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Use the first clue</b>Phenolphthalein colourless → pH below about 8.</li>
+          <li><b class="st">Use the second clue</b>Methyl orange yellow → pH above about 4.5.</li>
+          <li><b class="st">Combine them</b>The pH must satisfy both: between about 4.5 and 8.</li>
+          <li><b class="st">Say what you still don't know</b>It could be weakly acidic, neutral, or very weakly alkaline. Universal indicator would narrow it down.</li>
+        </ol>
+        <p class="final">The pH is between about 4.5 and 8. These two indicators can't say exactly; universal indicator would give a closer value.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 5.6</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> A student's results table has mistakes. Spot them: lemon juice: yellow, pH 4, weakly alkaline. Water: green, pH 5, neutral. Hydrochloric acid: blue, pH 2, strongly acidic.</summary>
+        <div class="ans">Lemon juice: weakly <b>acidic</b> (not alkaline). Water: pH <b>7</b> (not 5). Hydrochloric acid: universal indicator would be <b>red</b> (not blue).</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> What colour is litmus in (a) an acid (b) an alkali (c) water?</summary>
+        <div class="ans">(a) Red (b) Blue (c) Purple.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Describe how to make an indicator from red cabbage and check it works.</summary>
+        <div class="ans">Chop and crush the cabbage, add a little water or ethanol, keep crushing until the liquid is coloured, then strain it. Test it with a known acid (lemon juice), a neutral liquid (water) and a known alkali (soap solution). If you get three different colours, it works.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Explain why universal indicator is more useful than litmus.</summary>
+        <div class="ans">Litmus only shows whether something is an acid or an alkali. Universal indicator shows a range of colours that match pH numbers, so it also tells you <b>how strong</b> the acid or alkali is.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Exam practice ================= -->
+<section class="station" id="exam" style="--c:var(--quake)">
+  <div class="st-head">
+    <div class="eyebrow">Exam room</div>
+    <h2>Exam-style practice paper</h2>
+    <ul class="goals"><li>Same style as school assessments</li><li>Marks shown in [ ]</li><li>Mark scheme explains how to earn each mark</li></ul>
+  </div>
+  <div class="st-body">
+    <div class="callout"><h4>Exam technique</h4>
+      <ul>
+        <li><b>Use the marks as a guide.</b> [1] = one point; [2] = two separate points.</li>
+        <li><b>Hazard symbols:</b> name the hazard exactly (toxic, corrosive, flammable…). "Dangerous" alone won't earn the mark.</li>
+        <li><b>Separation questions:</b> name the method <i>and</i> the property it uses (dissolves, boiling point, magnetic).</li>
+        <li><b>Indicator questions:</b> classify each substance (acid / neutral / alkali) before deciding colours.</li>
+        <li><b>"Explain your answer":</b> the mark is for the reason, not just the choice.</li>
+      </ul>
+    </div>
+
+    <details class="worked"><summary><span class="tag">Q1 · Multiple choice [1]</span><span class="qq">A bottle has a red diamond label showing liquid dripping onto a hand and a metal bar, which are being eaten away. What is the hazard? A. Irritant &nbsp; B. Flammable &nbsp; C. Toxic &nbsp; D. Corrosive</span></summary>
+      <ol class="steps">
+        <li><b class="st">Picture the symbol</b>Liquid destroying a hand and metal = destroys materials and living tissue.</li>
+        <li><b class="st">Eliminate</b>Flammable = flame ✗. Toxic = skull ✗. Irritant = exclamation mark, and it makes skin sore rather than destroying it ✗.</li>
+      </ol>
+      <p class="final"><b>D. Corrosive</b> [1]</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q2 · Multiple choice [1]</span><span class="qq">Blue litmus paper is dipped in a strongly alkaline solution. What happens? A. It turns red &nbsp; B. It stays blue &nbsp; C. It turns green &nbsp; D. It turns red, then back to blue</span></summary>
+      <ol class="steps">
+        <li><b class="st">Recall</b>Blue litmus turns red only in acid.</li>
+        <li><b class="st">Apply</b>This is an alkali, so there is no reason to change.</li>
+        <li><b class="st">Trap check</b>Green is a universal indicator colour, not a litmus colour. Litmus doesn't flip back and forth.</li>
+      </ol>
+      <p class="final"><b>B. It stays blue</b> [1]. (In the past paper, the reverse was asked: red litmus in acid stays red.)</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q3 · Short answer [4]</span><span class="qq">A bottle shows a skull and crossbones. (a) What does it mean? [1] (b) Why is the symbol important? [1] (c) Give two safety precautions. [2]</span></summary>
+      <ol class="steps">
+        <li><b class="st">(a)</b>Name it exactly: toxic (poisonous).</li>
+        <li><b class="st">(b)</b>Say who it protects and how: it warns anyone, in any language, of the danger so they handle it safely.</li>
+        <li><b class="st">(c)</b>Two <b>different</b> precautions, each linked to how poison enters the body.</li>
+      </ol>
+      <p class="final">(a) Toxic: can poison or kill [1]. (b) It warns users of the danger so they take precautions [1]. (c) Wear gloves and safety glasses [1]; wash hands after use and never eat or drink in the lab [1].</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q4 · Methods [2]</span><span class="qq">Name the method to obtain: (i) pure water from a sugar solution [1] (ii) coffee grounds from coffee [1].</span></summary>
+      <ol class="steps">
+        <li><b class="st">(i) Is the solid dissolved? Which part do we want?</b>Sugar is dissolved; we want the water → collect it as it boils and condenses.</li>
+        <li><b class="st">(ii)</b>Coffee grounds don't dissolve → trap them in a filter.</li>
+      </ol>
+      <p class="final">(i) <b>Distillation</b> [1] (ii) <b>Filtration</b> [1]. "Evaporation" is wrong for (i), because it loses the water.</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q5 · Distillation [3]</span><span class="qq">Sea water is distilled. (i) Name the process [1] (ii) What is the condenser for? [1] (iii) What is left in the flask afterwards? [1]</span></summary>
+      <ol class="steps">
+        <li><b class="st">(i)</b>Distillation.</li>
+        <li><b class="st">(ii)</b>Say what it does to the steam and the result: cools it so it condenses into liquid water.</li>
+        <li><b class="st">(iii)</b>Think about which substances have high boiling points: the salts (and anything else dissolved).</li>
+      </ol>
+      <p class="final">(i) Distillation [1] (ii) To cool the steam so it condenses back into liquid water [1] (iii) Salt (and other dissolved solids) [1]</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q6 · Indicators [3]</span><span class="qq">Lemon juice, salt water and soap solution are tested. (a) Which two leave red litmus red? Explain. [2] (b) Which turns universal indicator blue? Explain. [1]</span></summary>
+      <ol class="steps">
+        <li><b class="st">Classify</b>Lemon juice = acid; salt water = neutral; soap = alkali.</li>
+        <li><b class="st">(a)</b>Red litmus turns blue only in alkali → lemon juice and salt water stay red. One mark each, with its reason.</li>
+        <li><b class="st">(b)</b>Blue = weakly alkaline → soap.</li>
+      </ol>
+      <p class="final">(a) Lemon juice, because it's an acid [1]; salt water, because it's neutral [1]. (b) Soap solution, because it is (weakly) alkaline [1].</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q7 · pH scale [3]</span><span class="qq">Mark likely pH values on a 0–14 scale for: stomach acid, pure water and oven cleaner.</span></summary>
+      <ol class="steps">
+        <li><b class="st">Classify and judge strength</b>Stomach acid = strong acid; water = neutral; oven cleaner = strong alkali.</li>
+        <li><b class="st">Place them</b>Strong acid → 1–2. Neutral → 7. Strong alkali → 13–14.</li>
+      </ol>
+      <p class="final">Stomach acid ≈ pH 1–2 [1]; water = pH 7 [1]; oven cleaner ≈ pH 13–14 [1]. Any value in the right zone scores.</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q8 · Alloys [3]</span><span class="qq">Explain, using particle theory, why bronze is harder than pure copper.</span></summary>
+      <ol class="steps">
+        <li><b class="st">[1]</b>In pure copper, all the atoms are the same size and arranged in regular layers.</li>
+        <li><b class="st">[1]</b>These layers can slide over each other easily when a force is applied.</li>
+        <li><b class="st">[1]</b>In bronze, tin atoms of a different size disrupt the layers, so they can't slide easily.</li>
+      </ol>
+      <p class="final">Same-sized atoms in layers slide easily [1, 1]; different-sized tin atoms disrupt the layers so they can't slide, making bronze harder [1].</p>
+    </details>
+  </div>
+</section>
+
+<!-- ================= Glossary ================= -->
+<section class="station" id="words" style="--c:var(--ink)">
+  <div class="st-head"><div class="eyebrow">Toolkit</div><h2>Key words</h2></div>
+  <div class="st-body">
+    <dl class="gloss">
+      <dt>Materials</dt><dd>The substances that objects are made from.</dd>
+      <dt>Shiny</dt><dd>Reflects light well, like a polished metal.</dd>
+      <dt>Shatter</dt><dd>Break suddenly into many pieces.</dd>
+      <dt>Malleable</dt><dd>Can be hammered or bent into shape without breaking.</dd>
+      <dt>Ductile</dt><dd>Can be pulled out into thin wires.</dd>
+      <dt>Sonorous</dt><dd>Makes a ringing sound when hit.</dd>
+      <dt>Brittle</dt><dd>Breaks or shatters easily.</dd>
+      <dt>Conduct / conductor</dt><dd>Lets heat or electricity pass through easily.</dd>
+      <dt>Insulator</dt><dd>Does not let heat or electricity pass through easily.</dd>
+      <dt>Magnetic</dt><dd>Attracted to a magnet (iron, nickel, cobalt, steel).</dd>
+      <dt>Distinguish</dt><dd>Tell apart; identify the difference.</dd>
+      <dt>Examine</dt><dd>Look at closely and carefully.</dd>
+      <dt>Contact</dt><dd>Touching; a good contact lets current flow in a circuit test.</dd>
+      <dt>Alloy</dt><dd>A mixture of a metal with other elements, made by melting them together.</dd>
+      <dt>Bronze</dt><dd>An alloy of copper and tin.</dd>
+      <dt>Brass</dt><dd>An alloy of copper and zinc.</dd>
+      <dt>Steel</dt><dd>An alloy of iron and a small amount of carbon.</dd>
+      <dt>Disrupt</dt><dd>Break up a regular pattern.</dd>
+      <dt>Carat</dt><dd>A measure of gold purity, out of 24 (24 carat = pure gold).</dd>
+      <dt>Filtration</dt><dd>Separating an insoluble solid from a liquid using filter paper.</dd>
+      <dt>Filter funnel / filter paper</dt><dd>Equipment that holds the paper and traps the solid.</dd>
+      <dt>Conical flask</dt><dd>A cone-shaped glass flask that collects the filtrate.</dd>
+      <dt>Residue / filtrate</dt><dd>The solid left in the filter paper / the liquid that passes through.</dd>
+      <dt>Evaporation</dt><dd>Heating a solution so the liquid turns to gas, leaving the dissolved solid.</dd>
+      <dt>Distillation</dt><dd>Boiling a liquid and condensing the gas to collect a pure liquid.</dd>
+      <dt>Condenser</dt><dd>Cools a gas so it condenses back into a liquid.</dd>
+      <dt>Acid</dt><dd>A substance with pH below 7; turns litmus red.</dd>
+      <dt>Alkali</dt><dd>A substance with pH above 7; turns litmus blue.</dd>
+      <dt>Neutral</dt><dd>Neither acid nor alkali; pH 7.</dd>
+      <dt>Corrosive</dt><dd>Destroys living tissue and materials.</dd>
+      <dt>Harmful</dt><dd>Can cause harm if it gets into the body.</dd>
+      <dt>Irritant</dt><dd>Makes skin or eyes red and sore.</dd>
+      <dt>Flammable</dt><dd>Catches fire easily.</dd>
+      <dt>Oxidising</dt><dd>Helps other substances burn; gives off heat with them.</dd>
+      <dt>Toxic</dt><dd>Poisonous.</dd>
+      <dt>Indicator</dt><dd>A substance that changes colour in acids and alkalis.</dd>
+      <dt>Litmus</dt><dd>An indicator: red in acid, blue in alkali, purple in neutral.</dd>
+      <dt>Universal indicator</dt><dd>A mixture of indicators that shows a range of colours matching pH values.</dd>
+      <dt>pH scale</dt><dd>A scale from 0 to 14 that measures how acidic or alkaline a substance is.</dd>
+      <dt>Neutralisation</dt><dd>When an acid and an alkali cancel each other out.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ================= Quiz ================= -->
+<section class="station" id="quiz" style="--c:var(--sky)">
+  <div class="st-head"><div class="eyebrow">Check yourself</div><h2>Quick-fire quiz</h2>
+    <p>Tap an answer. <span id="score">Score: 0 / 0</span></p></div>
+  <div class="st-body" id="mcq"></div>
+</section>
+
+<section class="station" style="--c:var(--earth)">
+  <div class="st-head"><div class="eyebrow">Explain it</div><h2>Thinking questions</h2></div>
+  <div class="st-body" id="open"></div>
+</section>
+
+<section class="station" style="--c:var(--land)">
+  <div class="st-head"><div class="eyebrow">Self-check</div><h2>I can…</h2></div>
+  <div class="st-body">
+    <ul class="check">
+      <li><label><input type="checkbox" id="c1"> list the properties of metals and non-metals</label></li>
+      <li><label><input type="checkbox" id="c2"> explain why a material is used, by linking a property to its job</label></li>
+      <li><label><input type="checkbox" id="c3"> plan tests to tell a metal from a non-metal</label></li>
+      <li><label><input type="checkbox" id="c4"> explain what an alloy is and give examples</label></li>
+      <li><label><input type="checkbox" id="c5"> use particle theory to explain why alloys are harder</label></li>
+      <li><label><input type="checkbox" id="c6"> choose filtration, evaporation or distillation for a mixture</label></li>
+      <li><label><input type="checkbox" id="c7"> explain how a condenser works</label></li>
+      <li><label><input type="checkbox" id="c8"> recognise hazard symbols and give safety precautions</label></li>
+      <li><label><input type="checkbox" id="c9"> use litmus and universal indicator, and place substances on the pH scale</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>An original study guide written to accompany Chapter 5 (Properties of materials) of the Cambridge Lower Secondary Science Stage 7 course (Learner's Book and Workbook). All explanations, diagrams, data and questions are original.</footer>
+</div>
+
+<script>
+// atom-layer diagrams for alloys
+(function(){
+  const ns='http://www.w3.org/2000/svg';
+  function draw(id,ox,alloy){
+    const g=document.getElementById(id); if(!g) return;
+    for(let r=0;r<4;r++)for(let c=0;c<7;c++){
+      const x=ox+c*30+(r%2)*15, y=60+r*28;
+      if(alloy&&r===1&&(c===3||c===4)) continue;
+      const e=document.createElementNS(ns,'circle');
+      e.setAttribute('cx',x);e.setAttribute('cy',y);e.setAttribute('r',13);
+      e.setAttribute('fill','var(--moon)');e.setAttribute('stroke','var(--ink)');e.setAttribute('stroke-width','1');
+      g.appendChild(e);
+    }
+    if(alloy){const b=document.createElementNS(ns,'circle');b.setAttribute('cx',ox+3*30+15+15);b.setAttribute('cy',88);b.setAttribute('r',22);b.setAttribute('fill','var(--sun)');b.setAttribute('stroke','var(--ink)');g.appendChild(b);}
+  }
+  draw('pure',70,false); draw('alloy',420,true);
+})();
+
+const MCQ=[
+ {q:"Which property explains why copper is used for electrical wiring?",o:["It is magnetic","It conducts electricity well","It is brittle","It has a low melting point"],a:1,why:"Copper conducts electricity well (and is ductile, so it can be drawn into wires)."},
+ {q:"A solid is dull, brittle and does not conduct electricity. It is most likely…",o:["a metal","an alloy","a non-metal","mercury"],a:2,why:"Dull + brittle + insulator are all non-metal properties."},
+ {q:"Which metal is attracted to a magnet?",o:["Copper","Aluminium","Gold","Nickel"],a:3,why:"Only iron, nickel and cobalt (and steel) are magnetic."},
+ {q:"Why does a metal railing feel colder than a wooden bench in the same place?",o:["The metal is colder","Metal conducts heat away from your hand faster","Wood makes its own heat","Metal is shiny"],a:1,why:"They're at the same temperature; the metal conducts heat away from your skin faster."},
+ {q:"Which non-metal conducts electricity?",o:["Sulfur","Graphite (carbon)","Oxygen","Helium"],a:1,why:"Graphite is the famous exception."},
+ {q:"Why is steel harder than pure iron?",o:["Carbon atoms disrupt the layers so they can't slide easily","Steel is heated more","Steel contains more iron","Steel is a compound"],a:0,why:"Different-sized atoms jam the layers."},
+ {q:"How much of 18 carat gold is pure gold?",o:["18%","50%","75%","100%"],a:2,why:"18 ÷ 24 = 0.75 = 75%."},
+ {q:"Brass melts over a range of temperatures because…",o:["it is a mixture whose recipe can vary","it is a pure element","it contains water","it is magnetic"],a:0,why:"Mixtures with varying amounts don't have one fixed melting point."},
+ {q:"Which method separates sand from salty water?",o:["Distillation","Evaporation","Filtration","Using a magnet"],a:2,why:"Sand is insoluble, so filter paper traps it."},
+ {q:"You want drinkable water from sea water. Which method?",o:["Filtration","Distillation","Evaporation","Using a magnet"],a:1,why:"Distillation collects the water; evaporation loses it."},
+ {q:"What does the condenser do in distillation?",o:["Heats the mixture","Cools steam so it condenses into liquid","Filters out salt","Measures the temperature"],a:1,why:"Cold water around it cools the steam."},
+ {q:"A skull and crossbones on a bottle means…",o:["Corrosive","Flammable","Toxic","Explosive"],a:2,why:"Skull and crossbones = toxic (poisonous)."},
+ {q:"Acid is spilled on your hand. What should you do first?",o:["Wipe it with a dry tissue","Wash with lots of water","Cover it with a plaster","Add an alkali straight away"],a:1,why:"Lots of water dilutes and removes the acid. Then tell the teacher."},
+ {q:"Red litmus paper stays red in a liquid. The liquid could be…",o:["only an acid","only an alkali","an acid or neutral","only neutral"],a:2,why:"Red litmus only changes (to blue) in an alkali."},
+ {q:"Universal indicator turns green. The pH is about…",o:["1","4","7","13"],a:2,why:"Green = neutral = pH 7."},
+ {q:"Which is the strongest acid?",o:["pH 6","pH 4","pH 2","pH 8"],a:2,why:"Lower pH = stronger acid. pH 8 is an alkali."},
+ {q:"Why can't red cabbage indicator test cola?",o:["Cola is neutral","Cola's dark colour hides the colour change","Cola is too fizzy","Indicators only work on clear acids"],a:1,why:"A coloured liquid masks the indicator's colour."},
+ {q:"Universal indicator turns violet in a cleaning liquid. It is…",o:["strongly acidic","weakly acidic","neutral","strongly alkaline"],a:3,why:"Violet/purple is at the pH 12–14 end."}
+];
+let score=0, tried=0;
+const box=document.getElementById('mcq'), sc=document.getElementById('score');
+MCQ.forEach((it,i)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<p><b>${i+1}.</b> ${it.q}</p><div class="opts"></div><div class="fb" hidden></div>`;
+  const opts=d.querySelector('.opts'), fb=d.querySelector('.fb');
+  it.o.forEach((t,j)=>{
+    const b=document.createElement('button'); b.type='button'; b.textContent=t; b.id=`q${i}o${j}`;
+    b.addEventListener('click',()=>{
+      if(d.dataset.done) return; d.dataset.done=1; tried++;
+      if(j===it.a){score++; b.classList.add('right'); fb.textContent='Correct! '+it.why;}
+      else{b.classList.add('wrong'); opts.children[it.a].classList.add('right'); fb.textContent='Not quite. '+it.why;}
+      fb.hidden=false; sc.textContent=`Score: ${score} / ${tried}`;
+    });
+    opts.appendChild(b);
+  });
+  box.appendChild(d);
+});
+
+const OPEN=[
+ ["Why are saucepan handles often made of plastic, while the pan is made of metal?","The metal conducts heat well, so the food cooks. Plastic is an insulator, so heat doesn't travel through the handle and it stays cool enough to hold."],
+ ["Why are 'silver' coins not made of pure silver?","Pure silver is soft, so the coins would wear down quickly, and silver is expensive. An alloy such as copper-nickel is harder and cheaper."],
+ ["Explain why a range of temperatures is given for the melting point of brass, but one temperature for copper.","Copper is a pure element, so it melts at one fixed temperature. Brass is a mixture and its recipe varies, so different brasses melt at different temperatures."],
+ ["You have a mixture of iron filings, sand and salt. Describe how to separate all three.","Use a magnet to remove the iron filings. Add water and stir to dissolve the salt. Filter: the sand stays in the filter paper. Evaporate the filtrate to get the salt."],
+ ["A student says, 'Filtering sea water makes it safe to drink.' Explain why this is wrong.","The salt is dissolved, so its particles are small enough to pass through the filter paper. Filtering only removes insoluble bits. Distillation is needed to get pure water."],
+ ["Why should bottle stoppers be replaced as soon as you've finished with a chemical?","It prevents spills if the bottle is knocked over, and stops stoppers being swapped between bottles, which could contaminate the chemicals."],
+ ["A liquid turns blue litmus red and universal indicator orange. What can you conclude?","It is an acid (blue litmus turns red). Orange universal indicator means it's a weak acid, roughly pH 3–5."]
+];
+const ob=document.getElementById('open');
+OPEN.forEach(([q,a],i)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<p><b>${i+1}.</b> ${q}</p><button class="reveal" type="button" id="r${i}">Show a model answer</button><div class="ans" hidden>${a}</div>`;
+  const btn=d.querySelector('.reveal'), ans=d.querySelector('.ans');
+  btn.addEventListener('click',()=>{ans.hidden=!ans.hidden; btn.textContent=ans.hidden?'Show a model answer':'Hide answer';});
+  ob.appendChild(d);
+});
+
+document.querySelectorAll('.check input').forEach(cb=>{
+  try{ if(localStorage.getItem('u5-'+cb.id)==='1') cb.checked=true; }catch(e){}
+  cb.addEventListener('change',()=>{ try{ localStorage.setItem('u5-'+cb.id, cb.checked?'1':'0'); }catch(e){} });
+});
+</script>
+</body></html>
