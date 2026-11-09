@@ -1,0 +1,536 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Earth Physics Revision Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one question card at a time, like an exam desk; topic colour stripes match the Field Guide */
+:root{
+  --bg:#f3f6f8; --paper:#ffffff; --ink:#18242c; --muted:#56656f; --line:#d5dfe5;
+  --sound:#2266d4; --echo:#7b4fd6; --earth:#b8661a; --quake:#d23b2a; --sky:#0f8b8d;
+  --tint:#e8f0fb; --ok:#1f8a4c; --ok-bg:#e3f5ea; --bad:#c23a2b; --bad-bg:#fbe7e4; --warn:#a86b00; --warn-bg:#fff3d6;
+  --f-display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --ok:#53c787; --ok-bg:#16301f; --bad:#ff7a66; --bad-bg:#3a1a16; --warn:#ffc35a; --warn-bg:#352a10; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --ok:#53c787; --ok-bg:#16301f; --bad:#ff7a66; --bad-bg:#3a1a16; --warn:#ffc35a; --warn-bg:#352a10; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:800}
+p{margin:10px 0}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header{padding-block:36px 18px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:16px}
+button{font:inherit;cursor:pointer}
+.btn{border:none;border-radius:10px;padding:10px 18px;font-weight:800;background:var(--sky);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.conf button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* start */
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+.chip{text-align:left;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:10px 12px}
+.chip b{display:block;font-family:var(--f-display);font-size:1.05rem}
+.chip span{font-size:.82rem;color:var(--muted)}
+.chip.all{border-left-color:var(--ink)}
+.how{font-size:.95rem}
+.how li{margin:4px 0}
+
+/* question */
+.qhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c);font-weight:500}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 16px}
+.prog i{display:block;height:100%;background:var(--sky);transition:width .3s}
+.qtext{font-size:1.12rem;font-weight:600;margin:6px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 12px}
+.opt:hover:not(:disabled){border-color:var(--sky)}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--paper);border:1px solid var(--line);font-size:.9rem}
+.opt.sel{border-color:var(--sky);background:var(--tint)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+.opt .fb{display:block;font-size:.9rem;margin-top:4px;color:var(--ink)}
+.conf{margin-top:16px;font-size:.95rem}
+.conf .row{margin-top:6px}
+.conf button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:600}
+.conf button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.result{margin-top:16px;border-radius:10px;padding:12px 16px}
+.result.ok{background:var(--ok-bg)}
+.result.bad{background:var(--bad-bg)}
+.result h3{font-size:1.15rem}
+.why{margin-top:8px}
+.why ol{margin:6px 0;padding-left:22px}
+.why li{margin:3px 0}
+.revise{margin-top:8px;font-size:.9rem;color:var(--muted)}
+.revise a{color:var(--sky);font-weight:800}
+.nav{margin-top:18px;justify-content:space-between}
+
+/* results */
+.big{font-family:var(--f-display);font-size:3rem;font-weight:800;line-height:1}
+.bars{display:grid;gap:10px;margin:14px 0}
+.bar{display:grid;grid-template-columns:minmax(120px,170px) 1fr 64px;gap:10px;align-items:center;font-size:.92rem}
+.bar .t{height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--c)}
+.bar .n{font-family:var(--f-mono);font-size:.85rem;text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.bar{grid-template-columns:1fr 56px}.bar .t{grid-column:1/-1;grid-row:2}}
+.grp{margin-top:16px}
+.grp h3{font-size:1.1rem}
+.grp ul{padding-left:20px;margin:6px 0}
+.grp li{margin:6px 0;font-size:.95rem}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.72rem;border-radius:999px;padding:1px 8px;margin-right:6px}
+.pill.m{background:var(--bad-bg);color:var(--bad)}
+.pill.g{background:var(--warn-bg);color:var(--warn)}
+.pill.s{background:var(--tint);color:var(--sky)}
+@media (prefers-reduced-motion: reduce){.prog i{transition:none}}
+footer{margin-top:28px;color:var(--muted);font-size:.85rem}
+</style></head><body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Science Stage 7 · Chapter 6</div>
+  <h1>Earth Physics Revision Check</h1>
+  <p>48 questions that cover every idea in the chapter. The wrong answers are built from the most common mistakes, so you'll need to <b>think it through</b>, not just spot a familiar word.</p>
+</header>
+
+<div id="app"></div>
+<footer>Original questions written to accompany the Earth Physics Field Guide (Unit 6). Your progress is saved in this browser only.</footer>
+</div>
+
+<script>
+const TOPICS={
+  sound:{name:"6.1 Sound waves",c:"var(--sound)",anchor:"sound"},
+  echo:{name:"6.2 Echoes",c:"var(--echo)",anchor:"echo"},
+  inside:{name:"6.3 Inside the Earth",c:"var(--earth)",anchor:"inside"},
+  changes:{name:"6.4 Restless Earth",c:"var(--quake)",anchor:"changes"},
+  eclipse:{name:"6.5 Eclipses",c:"var(--sky)",anchor:"eclipse"}
+};
+// each option: [text, feedback]. a = index of correct option. why = reasoning steps. rev = what to revise.
+const Q=[
+/* ---------- 6.1 SOUND ---------- */
+{t:"sound",k:"How sound travels",q:"A guitar string is plucked and a friend across the room hears it. Which statement best explains how the sound reaches her?",
+ o:[["Air flows from the guitar across the room into her ear.","The air doesn't travel across the room. Each particle only wobbles in place; the energy is what travels."],
+    ["The string vibrates and pushes nearby air particles, which pass the vibration on from particle to particle.","Correct: vibration → particles nudge neighbours → energy reaches the ear."],
+    ["The string gives off tiny 'sound particles' that fly to her ear.","There are no 'sound particles'. Sound is a vibration of the particles already in the medium."],
+    ["The string heats the air, and the warm air carries the sound.","Temperature isn't what carries sound. Sound needs a vibration passed through particles."]],a:1,
+ why:["Start at the source: what is the string doing? Vibrating.","Ask what's between the string and the ear: air particles.","Link them: each particle pushes the next, so the energy moves along while particles stay put."],rev:"What is a sound wave?"},
+{t:"sound",k:"Particle motion",q:"A sound wave travels from west to east through air. How do the air particles move?",
+ o:[["They travel east with the wave all the way to the listener.","If particles travelled with the wave, sound would be a wind. They only oscillate around one spot."],
+    ["They move up and down, at right angles to the wave.","That's how a wave on a rope or water moves. In a sound wave the vibration is along the direction of travel."],
+    ["They vibrate backwards and forwards (west–east) around their own position.","Correct: back and forth along the same line the wave travels."],
+    ["They move randomly in all directions.","Particles always jiggle randomly, but the sound wave is an organised back-and-forth motion along its direction."]],a:2,
+ why:["Recall the slinky model: you push and pull along its length.","The squashed regions move along, but each coil only moves back and forth.","So particles vibrate parallel to the direction of the wave and stay near their starting place."],rev:"What is a sound wave? (slinky model)"},
+{t:"sound",k:"Modelling",q:"You want to use a slinky spring to model a sound wave. How should you move your hand?",
+ o:[["Quickly side to side, across the slinky.","Side-to-side makes a different kind of wave (like a rope wave). Sound vibrations go along the direction of travel."],
+    ["Push and pull it back and forth along its length.","Correct: this makes squashed and stretched regions travel along, just like a sound wave."],
+    ["Pull it once and let go.","One pull makes one disturbance, not a vibration. A sound wave comes from repeated back-and-forth movement."],
+    ["Spin it in circles.","Circular motion doesn't match how air particles move in a sound wave."]],a:1,
+ why:["Ask: in which direction do air particles vibrate in a sound wave? Along the direction of travel.","The model must copy that, so the hand moves along the slinky's length.","Repeat it to create a continuous wave."],rev:"Try it: slinky sound wave"},
+{t:"sound",k:"Loudness",q:"A drummer hits the same drum much harder. What happens and why?",
+ o:[["The sound is higher pitched because the skin vibrates faster.","Hitting harder changes the size of the vibration, not mainly its speed. Pitch depends on how fast it vibrates."],
+    ["The sound is louder because the skin vibrates with bigger movements.","Correct: more force → bigger vibrations (larger amplitude) → louder."],
+    ["The sound is louder because the vibrations are faster.","Faster vibrations change the pitch. Loudness is about the size of the vibration."],
+    ["The sound reaches the audience sooner.","Loud and quiet sounds travel at the same speed in the same medium."]],a:1,
+ why:["Separate the two properties: loudness = size of vibration; pitch = speed (frequency) of vibration.","Hitting harder puts in more energy, which makes bigger vibrations.","Bigger vibrations mean a louder sound. The speed through air doesn't change."],rev:"Loudness and pitch"},
+{t:"sound",k:"Pitch & frequency",q:"String X vibrates 440 times per second. String Y vibrates 220 times per second. Which statement is correct?",
+ o:[["X has a higher pitch.","Correct: more vibrations per second (higher frequency) means a higher pitch."],
+    ["Y has a higher pitch because its vibrations are slower and stronger.","Slower vibration means lower pitch. 'Stronger' would affect loudness, not pitch."],
+    ["X is louder.","Frequency tells you about pitch. You can't tell loudness from the number of vibrations per second."],
+    ["X's sound travels twice as fast.","Speed depends on the medium (air), not on the pitch."]],a:0,
+ why:["Notice what the numbers measure: vibrations per second = frequency (Hz).","Higher frequency → higher pitch.","Check the distractors: loudness and speed aren't decided by frequency."],rev:"Understand it deeper: pitch, more precisely"},
+{t:"sound",k:"Calculation",q:"You see lightning and hear the thunder 9 seconds later. Sound travels at 340 m/s. How far away was the lightning?",
+ o:[["340 m","That's the distance sound travels in just 1 second. Multiply by the time."],
+    ["1530 m","You halved the answer. Halving is only for echoes (there and back). Thunder travels one way."],
+    ["3060 m","Correct: distance = speed × time = 340 × 9 = 3060 m (about 3 km)."],
+    ["About 38 m","You divided 340 by 9. Distance = speed × time, so multiply."]],a:2,
+ why:["Decide the journey: one-way, from the lightning to you (not an echo).","Choose the equation: distance = speed × time.","Substitute: 340 × 9 = 3060 m. Sense-check: about 3 s per km, so 9 s ≈ 3 km ✓"],rev:"Worked reasoning: thunder"},
+{t:"sound",k:"Vacuum",q:"Two astronauts on the Moon stand side by side. One drops a heavy tool onto a rock. Why can't the other one hear it, even without a helmet radio?",
+ o:[["It's too cold on the Moon for sound to travel.","Temperature changes sound's speed a little, but cold doesn't stop sound. The missing ingredient is particles."],
+    ["There's no air, so there are no particles to pass the vibration through the space between them.","Correct: no medium → no sound wave can travel across the gap."],
+    ["Low gravity makes the tool hit too gently.","The tool still vibrates the rock. The problem is getting the vibration to the listener."],
+    ["The sound is there but too high-pitched for humans.","Pitch isn't the issue. With no medium, no sound wave travels at all."]],a:1,
+ why:["List what sound needs: (1) a vibration (2) a medium with particles.","Check each: the impact does make a vibration ✓. Is there air between them? No ✗.","So the missing link is the medium. The Moon is effectively a vacuum."],rev:"Silence in a vacuum"},
+{t:"sound",k:"Bell jar",q:"An electric bell rings inside a glass jar. Air is slowly pumped out. What will you observe?",
+ o:[["The bell stops vibrating as the air is removed.","The bell still vibrates: you can see the hammer moving. Only the medium is disappearing."],
+    ["The sound fades gradually while you can still see the bell vibrating.","Correct: fewer particles → less sound carried out, but the vibration continues."],
+    ["The sound becomes higher in pitch.","Removing air doesn't change how fast the bell vibrates, so the pitch stays the same."],
+    ["Nothing changes, because glass is a solid and solids carry sound.","The vibration has to cross the empty space inside the jar before it reaches the glass. With no air, it can't."]],a:1,
+ why:["What changes? The number of air particles, gradually.","What does that affect? How much vibration is carried from the bell to the glass.","Gradual change → gradual effect: quieter and quieter, while the bell is still visibly vibrating."],rev:"Worked reasoning: bell jar"},
+{t:"sound",k:"Speed in media",q:"Sound travels at about 340 m/s in air but about 5000 m/s in steel. What is the best explanation?",
+ o:[["Steel particles are closer together and strongly linked, so each passes the vibration on very quickly.","Correct: tightly packed particles pass vibrations on fastest."],
+    ["Steel is heavier, so it pushes the sound along harder.","'Heavier' isn't the reason. It's how close and connected the particles are."],
+    ["Air has fewer particles, so sound in air is quieter.","This mixes up loudness with speed. The question is about how fast sound travels."],
+    ["Steel is colder than air.","Temperature isn't what makes solids faster. Particle arrangement is."]],a:0,
+ why:["Compare the particle arrangement: gas (far apart) vs solid (packed, linked).","Think of dominoes: close together → the push passes along quickly.","So the solid passes the vibration on faster."],rev:"Which medium is fastest?"},
+{t:"sound",k:"Energy & hearing",q:"Why can very loud sounds permanently damage hearing?",
+ o:[["High-pitched sounds are always harmful.","It's the energy (loudness) that matters most. Loud low sounds can also damage hearing."],
+    ["Large vibrations carry a lot of energy, which can damage the delicate parts inside the ear.","Correct: sound transfers energy; too much energy harms the ear."],
+    ["Loud sounds put sound particles inside your ear.","There are no sound particles. Vibrations of the air reach your ear."],
+    ["Loud sounds travel faster and hit the ear harder.","All sounds travel at the same speed in air. What changes is the size of the vibrations."]],a:1,
+ why:["Remember: sound is a way of transferring energy.","Loud = big vibrations = lots of energy.","Too much energy reaching the ear can damage it. That's why ear defenders are needed near jets."],rev:"Sound carries energy"},
+
+/* ---------- 6.2 ECHOES ---------- */
+{t:"echo",k:"Reflectors",q:"Which wall would give the strongest echo of a clap, and why?",
+ o:[["A wall covered in foam, because soft surfaces bounce sound back.","Soft surfaces absorb sound energy, so the echo is weak."],
+    ["A smooth tiled wall, because hard, flat surfaces reflect most of the sound energy.","Correct: hard, smooth, flat → good reflector."],
+    ["A brick wall covered in thick ivy, because the leaves trap sound and send it back.","Leaves and gaps absorb and scatter sound, so the echo is weaker."],
+    ["All walls give the same echo if they are the same size.","The surface material matters a lot: compare tile with foam."]],a:1,
+ why:["Recall the three things a surface can do: reflect, absorb, transmit.","Hard, smooth, flat surfaces reflect most energy; soft, rough ones absorb it.","Pick the hardest, smoothest surface: tiles."],rev:"Reflect, absorb or pass through?"},
+{t:"echo",k:"Echo properties",q:"Compared with the original shout, an echo from a cliff is:",
+ o:[["the same pitch but quieter.","Correct: it's the same wave reflected, but some energy is absorbed and the sound spreads out."],
+    ["higher pitched and quieter.","Reflection doesn't change how fast the wave vibrates, so the pitch stays the same."],
+    ["the same pitch but louder.","An echo can't have more energy than the sound that made it."],
+    ["a completely new sound made by the cliff.","The cliff doesn't make a new sound. It reflects the same sound wave."]],a:0,
+ why:["Ask: is it the same wave or a new one? The same wave, bounced back.","Same wave → same frequency → same pitch.","Energy: some absorbed by the cliff plus spreading out → quieter."],rev:"Myth-busters (Echoes)"},
+{t:"echo",k:"Calculation",q:"A ship's sonar pulse returns 0.6 s after it was sent. Sound travels at 1500 m/s in sea water. How deep is the water?",
+ o:[["900 m","That's the total there-and-back distance. Halve it for the depth."],
+    ["450 m","Correct: 1500 × 0.6 = 900 m round trip, ÷ 2 = 450 m."],
+    ["2500 m","You divided 1500 by 0.6. Distance = speed × time."],
+    ["1500 m","That's how far sound goes in 1 s, but the echo took 0.6 s."]],a:1,
+ why:["Draw it: arrow down, arrow up. The time covers both.","distance = speed × time = 1500 × 0.6 = 900 m (round trip).","Depth = one way = 900 ÷ 2 = 450 m."],rev:"Worked example: how deep is the water?"},
+{t:"echo",k:"Calculation",q:"Leo stands 170 m from a cliff and shouts. Sound travels at 340 m/s. When does he hear the echo?",
+ o:[["After 0.5 s","You used only the distance to the cliff. The sound must come back too: 340 m in total."],
+    ["After 1 s","Correct: total distance 340 m; time = 340 ÷ 340 = 1 s."],
+    ["After 2 s","You may have doubled twice. The round trip is 340 m, which takes 1 s."],
+    ["After 57 800 s","You multiplied. Time = distance ÷ speed."]],a:1,
+ why:["Find the total path: 170 m there + 170 m back = 340 m.","Rearrange the equation: time = distance ÷ speed.","340 ÷ 340 = 1 s. Sense-check: sound goes about 340 m every second ✓"],rev:"Level up: practise 6.2"},
+{t:"echo",k:"Calculation",q:"A class stands 100 m from a large wall. The echo of a clap returns after 0.6 s. What speed of sound does this give?",
+ o:[["About 167 m/s","You used 100 m. The sound travelled to the wall and back: 200 m."],
+    ["About 333 m/s","Correct: speed = 200 ÷ 0.6 ≈ 333 m/s."],
+    ["60 m/s","You multiplied. Speed = distance ÷ time."],
+    ["340 m/s exactly, because sound is always 340 m/s","Use the data you are given. Real measurements are a little off because of reaction time."]],a:1,
+ why:["The unknown is speed, so speed = distance ÷ time.","Distance = round trip = 2 × 100 = 200 m.","200 ÷ 0.6 ≈ 333 m/s, close to 340. The small gap is likely due to stopwatch reaction time."],rev:"Worked reasoning: measuring the speed of sound"},
+{t:"echo",k:"Hearing echoes",q:"Why don't you usually hear a separate echo when you speak in your bedroom?",
+ o:[["The walls absorb all of the sound.","If walls absorbed everything, the room would sound totally dead. Walls do reflect sound."],
+    ["The reflection comes back so quickly (in less than about 0.1 s) that your brain blends it with the original sound.","Correct: you need the wall about 17 m or more away to hear a separate echo."],
+    ["Echoes only happen outdoors.","Echoes happen anywhere there is a reflecting surface, e.g. in tunnels and halls."],
+    ["Sound can't reflect inside small spaces.","Sound does reflect. It just returns too fast to be heard as separate."]],a:1,
+ why:["Sound does reflect off the walls, so that's not the issue.","Work out the timing: walls a few metres away → the echo returns in a few hundredths of a second.","The brain needs ~0.1 s to separate two sounds, so they merge."],rev:"Worked reasoning: shortest echo"},
+{t:"echo",k:"Uses",q:"How does a bat know how far away an insect is?",
+ o:[["From the time taken for the echo of its squeak to return.","Correct: longer time → further away."],
+    ["From how high-pitched the echo is.","The echo has the same pitch as the squeak, so pitch can't tell distance."],
+    ["By seeing the insect with its eyes.","Bats hunt in the dark using sound, not sight."],
+    ["From how loud its own squeak is.","The bat controls its squeak, so that tells it nothing about the insect."]],a:0,
+ why:["What does the bat send out? A sound. What comes back? An echo.","What changes with distance? The time for the round trip.","So the time delay tells the bat the distance (and the echo's direction tells it where)."],rev:"Useful echoes"},
+{t:"echo",k:"Data",q:"Echo loudness from four surfaces: tile 68 dB, wood 55 dB, cardboard 46 dB, foam 31 dB. Which surface is best for lining a recording studio?",
+ o:[["Tile, because it gives the clearest echo.","A studio wants as few echoes as possible. Tile reflects the most."],
+    ["Foam, because it reflected the least sound, so it absorbs the most.","Correct: lowest echo → best absorber → fewest unwanted echoes."],
+    ["Wood, because it's in the middle.","The 'middle' value has no special meaning here. Pick based on the aim (fewest echoes)."],
+    ["Cardboard, because it's the cheapest.","The data is about sound, not cost. Use the evidence."]],a:1,
+ why:["State the aim: a studio needs to stop unwanted echoes.","Read the data: the lowest dB = the weakest echo.","Foam (31 dB) reflects least → best choice."],rev:"Echo detectives: reading the data"},
+{t:"echo",k:"Fair test",q:"You test which material best absorbs sound by measuring echo loudness. Which of these must be a CONTROL variable (kept the same)?",
+ o:[["The type of material","That's what you change on purpose: the independent variable."],
+    ["The loudness of the echo","That's what you measure: the dependent variable."],
+    ["The volume of the sound and its distance from the material","Correct: keep these the same so only the material affects the result."],
+    ["Nothing needs to stay the same","Without controls, you can't tell whether the material caused the difference."]],a:2,
+ why:["Name the three kinds of variable: change (independent), measure (dependent), keep the same (control).","Material = change; echo loudness = measure.","Everything else that could affect the echo must be controlled: sound volume, distance, angle."],rev:"Worked reasoning: fair test"},
+
+/* ---------- 6.3 INSIDE THE EARTH ---------- */
+{t:"inside",k:"Layers",q:"Which layer of the Earth is made of SOLID iron and nickel?",
+ o:[["Outer core","The outer core is iron and nickel too, but it's liquid."],
+    ["Mantle","The mantle is hot rock that can flow, not metal."],
+    ["Inner core","Correct: solid iron and nickel, squeezed so hard it can't melt."],
+    ["Crust","The crust is rock. Its most common elements are oxygen and silicon."]],a:2,
+ why:["Use two clues: 'metal' and 'solid'.","Metal → core (inner or outer).","Solid → inner core (the outer core is liquid)."],rev:"Inside the Earth: layer table"},
+{t:"inside",k:"Magnetic field",q:"Which part of the Earth produces its magnetic field, and why?",
+ o:[["The inner core, because solid iron is magnetic.","The inner core is very hot and can't flow. The field comes from moving metal."],
+    ["The outer core, because its liquid iron and nickel swirl and create electric currents.","Correct: moving liquid metal produces the magnetic field."],
+    ["The mantle, because it flows.","The mantle flows, but it's rock, not metal, so it doesn't produce the field."],
+    ["The crust, because some rocks are magnetic.","A few magnetic rocks can't make a planet-wide field."]],a:1,
+ why:["A planet-wide magnetic field needs moving metal.","Which layer is both metal AND able to move? Liquid → outer core.","So the outer core, not the inner core (a classic exam trap)."],rev:"The outer core: Earth's giant magnet"},
+{t:"inside",k:"Crust",q:"What is the most common ELEMENT in the Earth's crust?",
+ o:[["Iron","Iron is abundant in the core, but in the crust it's only about 5%."],
+    ["Aluminium","Aluminium is the most common METAL in the crust, but not the most common element."],
+    ["Silicon","Silicon is second (about 28%)."],
+    ["Oxygen","Correct: about 46% of the crust, locked up in rocks."]],a:3,
+ why:["Read carefully: 'element', not 'metal'.","Rank the crust: oxygen > silicon > aluminium > iron.","Oxygen is first. If the question said 'metal', it would be aluminium."],rev:"What is the crust made of?"},
+{t:"inside",k:"Evidence",q:"Which observation gives the STRONGEST evidence that South America and Africa were once joined?",
+ o:[["Both continents have volcanoes.","Volcanoes occur on many continents and don't show they were joined."],
+    ["Fossils of the same small freshwater reptile are found on both, and nowhere else.","Correct: it couldn't swim across a salty ocean, so the land must have been joined."],
+    ["Both continents are hot.","Climate doesn't show the land was once connected."],
+    ["Both have tall mountains.","Many continents have mountains. It's not a link between these two."]],a:1,
+ why:["Ask: which clue can ONLY be explained if the land was joined?","Test the fossil: could a small freshwater animal cross an ocean? No.","So the reptile lived on one connected landmass, which later split."],rev:"Worked reasoning: fossils"},
+{t:"inside",k:"Wegener",q:"Why did many scientists reject Wegener's idea of continental drift in 1912?",
+ o:[["He had no evidence at all.","He did have evidence: matching coastlines, rocks and fossils."],
+    ["He could not explain what force moved the continents.","Correct: he had evidence but no mechanism."],
+    ["The continents' shapes didn't fit together.","They do fit, which was one of his pieces of evidence."],
+    ["Fossils on different continents didn't match.","They did match, which was more of his evidence."]],a:1,
+ why:["Separate 'evidence that it happened' from 'explanation of how'.","Wegener had the first, not the second.","Scientists wanted a mechanism, which plate tectonics later supplied (1960s)."],rev:"Worked reasoning: being a sceptic"},
+{t:"inside",k:"Plate movement",q:"What actually makes tectonic plates move?",
+ o:[["The Earth's spin flings them around.","Rotation doesn't drive the plates. Heat inside the Earth does."],
+    ["Ocean currents push the continents.","Ocean currents move water, not rock plates many km thick."],
+    ["Slow convection currents in the mantle: hot rock rises, cools and sinks, carrying the plates.","Correct: heat from the core drives mantle convection."],
+    ["Earthquakes push the plates along.","Earthquakes are a RESULT of plate movement, not the cause."]],a:2,
+ why:["Look for an energy source: heat from deep inside.","Heat makes hot rock rise and cool rock sink, forming a loop (convection).","The plates on top are carried along. Watch out for answers that swap cause and effect (earthquakes)."],rev:"Understand it deeper (6.3)"},
+{t:"inside",k:"Calculation",q:"An ocean widens by 2.5 cm every year. How much wider will it be after 1 million years?",
+ o:[["2.5 km","Check the conversion: 2 500 000 cm ÷ 100 = 25 000 m, ÷ 1000 = 25 km."],
+    ["25 km","Correct: 2.5 cm × 1 000 000 = 2 500 000 cm = 25 000 m = 25 km."],
+    ["250 km","Too big by 10×. Recheck the unit steps."],
+    ["25 m","You may have divided by 1000 too many times. 2 500 000 cm = 25 000 m."]],a:1,
+ why:["Multiply rate × time: 2.5 × 1 000 000 = 2 500 000 cm.","Convert step by step: ÷ 100 → 25 000 m; ÷ 1000 → 25 km.","Sense-check: tiny yearly movements add up to big distances over geological time."],rev:"Worked reasoning: drifting ocean"},
+{t:"inside",k:"How we know",q:"How do scientists know the outer core is liquid?",
+ o:[["They have drilled down to it.","The deepest hole is only about 12 km. The core is thousands of km down."],
+    ["One type of earthquake wave cannot travel through liquids, and it doesn't pass through the outer core.","Correct: indirect evidence from seismic waves."],
+    ["Lava from volcanoes comes from the core.","Magma comes from the mantle and crust, not the core."],
+    ["Photos from satellites show it glowing.","Satellites can't see inside the Earth."]],a:1,
+ why:["Ask: can anyone get there directly? No, so the evidence must be indirect.","Which signal passes through the whole Earth? Earthquake waves.","A wave that can't cross liquids gets blocked at the outer core → it must be liquid."],rev:"How do we know what's inside?"},
+{t:"inside",k:"Models",q:"In the 'polystyrene on heated water' model of moving plates, what does the heat source represent?",
+ o:[["The Sun warming the Earth's surface","The Sun heats from above. Plate movement is driven from deep inside."],
+    ["Heat from the Earth's core driving currents in the mantle","Correct: the polystyrene = plates, water = mantle, heat = core."],
+    ["Lava from volcanoes","Volcanoes are an effect of plate movement, not the driver."],
+    ["Friction between the plates","Friction resists plate movement. It doesn't drive it."]],a:1,
+ why:["Match each part of the model to the real thing.","Polystyrene floats on top → plates. Water flows underneath → mantle.","The heat comes from below → the hot core."],rev:"Try it: drifting plates model"},
+
+/* ---------- 6.4 RESTLESS EARTH ---------- */
+{t:"changes",k:"Location",q:"Where are most active volcanoes and earthquakes found?",
+ o:[["Near the equator, where it is hottest","Surface temperature has nothing to do with it. Look at plate positions."],
+    ["At plate boundaries","Correct: that's where plates move against each other."],
+    ["In the middle of large plates","The middles of plates are usually the calmest places."],
+    ["Only near tall mountains","Many volcanoes and earthquakes occur under the sea, far from mountains."]],a:1,
+ why:["Recall what causes them: plates moving against each other.","Where do plates interact? At their edges (boundaries).","So both cluster along boundaries, e.g. the Ring of Fire."],rev:"Geological change"},
+{t:"changes",k:"Boundaries",q:"Two plates are moving APART. What is most likely to form between them?",
+ o:[["Fold mountains","Fold mountains need plates pushing TOGETHER."],
+    ["Volcanoes and new crust, as magma rises to fill the gap","Correct: the crust cracks and lava rises, then cools into new rock."],
+    ["Subduction","Subduction happens when plates move TOGETHER and one goes under the other."],
+    ["Nothing, because the plates are moving away from each other","A gap opening is exactly what lets magma rise."]],a:1,
+ why:["Picture it with your hands: pull apart → a gap opens.","What fills a gap in the crust? Magma from below.","Magma reaching the surface → lava → volcanoes and new crust."],rev:"Three ways plates meet"},
+{t:"changes",k:"Fold mountains",q:"How do fold mountains like the Himalayas form?",
+ o:[["Layers of lava build up after many eruptions.","That's how a volcano grows, not a fold mountain."],
+    ["Two plates push together and the rock layers crumple and fold upwards.","Correct: compression crumples the rock, like pushing a tablecloth."],
+    ["Two plates slide past each other.","Sliding past causes earthquakes, not folding."],
+    ["Rain and wind pile up rock over time.","Weathering wears mountains down; it doesn't build them up."]],a:1,
+ why:["The name is the clue: 'fold' means crumpled.","What crumples rock? Being squeezed from both sides.","Squeezing happens when plates push together."],rev:"Fold mountains"},
+{t:"changes",k:"Earthquakes",q:"Plates move only a few cm a year. Why, then, are earthquakes sudden and violent?",
+ o:[["The plates suddenly speed up for no reason.","There is a reason: built-up force being released."],
+    ["Friction makes the plates stick; force builds up for years, then is released all at once.","Correct: like a bent ruler that suddenly springs back."],
+    ["A volcano always explodes at the same moment.","Most earthquakes have nothing to do with a volcano erupting."],
+    ["Magma pushes the ground up quickly.","Earthquakes at sliding boundaries happen without magma."]],a:1,
+ why:["Slow movement + rough rocks → friction stops the plates sliding.","The pushing continues, so energy is stored in the rock.","When friction can't hold any more, everything slips in seconds."],rev:"Understand it deeper (6.4)"},
+{t:"changes",k:"Magnitude",q:"How many times stronger is a magnitude 7 earthquake than a magnitude 5?",
+ o:[["2 times","You subtracted (7 − 5). On this scale each step MULTIPLIES by 10."],
+    ["20 times","You did 2 × 10. Two steps means 10 × 10."],
+    ["100 times","Correct: 2 steps → 10 × 10 = 100."],
+    ["1.4 times","You divided 7 by 5. The scale works in ×10 steps."]],a:2,
+ why:["Count the steps: 7 − 5 = 2.","Each step = ×10.","10 × 10 = 100 (1 followed by 2 zeros)."],rev:"The magnitude scale"},
+{t:"changes",k:"Magma & lava",q:"What is the difference between magma and lava?",
+ o:[["Magma is liquid rock underground; lava is liquid rock that has reached the surface.","Correct: same material, different location."],
+    ["Magma is much hotter than lava.","Temperature isn't the difference. Location is."],
+    ["Lava is solid and magma is liquid.","Both are liquid (molten) rock."],
+    ["They are completely different kinds of rock.","They're the same molten rock, named by where it is."]],a:0,
+ why:["Ask: what is each one made of? Melted rock in both cases.","So what distinguishes them? Where it is.","Under the ground → magma; at the surface → lava."],rev:"Magma or lava?"},
+{t:"changes",k:"Volcano types",q:"A volcano hasn't erupted for 600 years, but scientists think it could erupt again. It is:",
+ o:[["Active","Active volcanoes have erupted recently and could erupt at any time."],
+    ["Dormant","Correct: 'sleeping', not erupted for a long time but could again."],
+    ["Extinct","Extinct volcanoes will never erupt again, but this one might."],
+    ["Safe","'Dormant' doesn't mean safe. Some have erupted with little warning."]],a:1,
+ why:["Two clues: no eruption for a long time, but might erupt again.","Active = recent; extinct = never again.","Long gap + could erupt again = dormant."],rev:"Active, dormant, extinct"},
+{t:"changes",k:"Map reasoning",q:"Japan has many earthquakes; Australia has very few. What is the best explanation?",
+ o:[["Japan is hotter than Australia.","Climate has nothing to do with it. Look at plate positions."],
+    ["Japan lies where several plates meet; Australia lies near the middle of one plate.","Correct: boundaries are where the plates move against each other."],
+    ["Australia is bigger, so it absorbs the shaking.","Size doesn't stop earthquakes. Location relative to plate boundaries does."],
+    ["Japan is made of islands, which are less stable.","Being islands isn't the cause. Islands far from boundaries are calm."]],a:1,
+ why:["Apply the rule: earthquakes happen at plate boundaries.","Locate each country on a plate map: Japan on several boundaries; Australia in the middle of a plate.","Compare and conclude."],rev:"Worked reasoning: map reasoning"},
+{t:"changes",k:"Tsunami",q:"How can an earthquake far out under the ocean damage a coastline hundreds of km away?",
+ o:[["It creates strong winds that blow onto the land.","Earthquakes don't create winds. The danger is the water."],
+    ["The sea floor suddenly moves and shoves a huge volume of water, creating a tsunami.","Correct: tsunami waves travel across the ocean to the coast."],
+    ["The shaking travels along the sea surface as ripples.","Small ripples don't cause damage. A tsunami moves the whole depth of water."],
+    ["It makes the tide come in early.","Tides are caused by the Moon, not by earthquakes."]],a:1,
+ why:["Start at the source: the sea floor jolts up or down.","That movement pushes the water above it.","The pushed water forms giant waves (tsunami) that carry energy to distant coasts."],rev:"Earthquakes under the sea"},
+{t:"changes",k:"Young vs old",q:"The Himalayas are still rising a few mm each year; the Ural Mountains are not. Why?",
+ o:[["The Indian plate is still pushing into the Eurasian plate.","Correct: the collision that builds the Himalayas is still happening."],
+    ["The Himalayas are made of lava that keeps erupting.","The Himalayas are fold mountains, not volcanoes."],
+    ["The Urals are underwater.","The Urals are on land in Russia."],
+    ["Mountains always keep growing forever.","Once the plates stop pushing, weathering wears mountains down."]],a:0,
+ why:["Recall how fold mountains form: plates pushing together.","Is that still happening at each range? Himalayas: yes. Urals: the collision ended long ago.","No push → no growth → slowly worn down."],rev:"Brain-teaser: young and old mountains"},
+
+/* ---------- 6.5 ECLIPSES ---------- */
+{t:"eclipse",k:"Shadows",q:"Why does an opaque object form a shadow?",
+ o:[["Light bends around the object and leaves a dark gap.","If light bent around it, there would be no shadow. Light travels in straight lines."],
+    ["Light travels in straight lines, and the object blocks the rays from reaching the area behind it.","Correct: straight rays + opaque object → shadow."],
+    ["The object gives out darkness.","Darkness isn't something given out. It's an absence of light."],
+    ["Light passes through it but loses its colour.","That describes a translucent or coloured object, not an opaque one."]],a:1,
+ why:["Recall how light travels: in straight lines (rays).","Opaque = doesn't let light through.","So the rays stop at the object and the area behind gets no light → shadow."],rev:"Shadows first"},
+{t:"eclipse",k:"Solar eclipse",q:"Which arrangement causes a SOLAR eclipse?",
+ o:[["Sun – Earth – Moon","That's a lunar eclipse: Earth's shadow on the Moon."],
+    ["Sun – Moon – Earth","Correct: the Moon blocks the Sun's light from reaching Earth."],
+    ["Moon – Sun – Earth","The Moon never passes between Earth and the Sun this way. It orbits Earth."],
+    ["Earth – Sun – Moon","The Sun isn't between them in any eclipse."]],a:1,
+ why:["'Solar' = the Sun is hidden from us.","What can block the Sun from Earth? Something between them: the Moon.","So Sun – Moon – Earth. (Lunar: the Moon is hidden by Earth's shadow.)"],rev:"Solar eclipse"},
+{t:"eclipse",k:"Shadow parts",q:"A person stands in the PENUMBRA of the Moon's shadow during a solar eclipse. What do they see?",
+ o:[["A total eclipse","A total eclipse is seen from the umbra, the darkest central part."],
+    ["A partial eclipse","Correct: in the penumbra only some of the Sun's light is blocked."],
+    ["An annular 'ring of fire' eclipse","That's seen from the antumbra, beyond the tip of the umbra."],
+    ["Nothing unusual","The penumbra is still part of the shadow, so some sunlight is blocked."]],a:1,
+ why:["Recall the three regions: umbra, penumbra, antumbra.","Penumbra = 'almost' shadow, where only some light is blocked.","Some blocked → partial eclipse."],rev:"Umbra, penumbra and antumbra"},
+{t:"eclipse",k:"When visible",q:"Someone claims they saw a lunar eclipse at midday. Why is this impossible?",
+ o:[["The Moon is too faint to see in the daytime.","The Moon is often visible in daytime. That's not the reason."],
+    ["During a lunar eclipse the Moon is on the opposite side of Earth from the Sun, so it's only above the horizon at night.","Correct: Sun – Earth – Moon puts the Moon in the night sky."],
+    ["The Sun's glare hides the Earth's shadow.","The real issue is position: the Moon isn't in the sky at all."],
+    ["Lunar eclipses only happen in winter.","Eclipses can happen at any time of year."]],a:1,
+ why:["Draw the lunar eclipse order: Sun – Earth – Moon.","Mark a person at midday: on the side of Earth facing the Sun.","Is the Moon above their horizon? No, Earth is in the way. So it's only visible from the night side."],rev:"Exam practice Q5"},
+{t:"eclipse",k:"Frequency",q:"The Moon orbits Earth about once a month. Why isn't there an eclipse every month?",
+ o:[["The Moon's orbit is tilted slightly, so usually it passes just above or below the Sun–Earth line.","Correct: only occasionally do all three line up exactly."],
+    ["The Moon takes a year to orbit the Earth.","It takes about 27 days, not a year."],
+    ["The Sun moves out of the way.","It's the alignment of the Moon's orbit that matters."],
+    ["The Earth's shadow is too small to reach the Moon.","Earth's shadow is big enough. The Moon usually just misses it."]],a:0,
+ why:["Eclipses need an exact straight line: Sun – Moon – Earth or Sun – Earth – Moon.","The Moon passes 'between' every month, but its orbit is tilted.","So most months it misses the line, and eclipses happen only when it's on the line."],rev:"Why not every month?"},
+{t:"eclipse",k:"Moon phase",q:"What phase is the Moon in during a solar eclipse?",
+ o:[["Full moon","At full moon the Moon is behind Earth, which is the lunar eclipse position."],
+    ["New moon","Correct: the Moon's lit side faces the Sun, away from us."],
+    ["Half moon","At half moon the Moon is off to the side, not between the Sun and Earth."],
+    ["Any phase is possible","Only one arrangement puts the Moon between the Sun and Earth."]],a:1,
+ why:["Sketch Sun – Moon – Earth.","Shade the Moon's lit half: the side facing the Sun.","From Earth we see only the dark side → new moon."],rev:"Worked reasoning: reason from a diagram"},
+{t:"eclipse",k:"Sizes",q:"How can the small Moon completely cover the huge Sun?",
+ o:[["The Moon is actually the same size as the Sun.","The Sun is about 400 times wider than the Moon."],
+    ["The Sun is about 400 times wider but also about 400 times further away, so they look the same size.","Correct: like your thumb hiding a distant building."],
+    ["The Moon is closer to the Sun than to Earth.","The Moon is much closer to Earth."],
+    ["Clouds help cover the rest of the Sun.","Clouds have nothing to do with it."]],a:1,
+ why:["How big something looks depends on its size AND its distance.","Sun: 400× bigger but 400× further away.","The two cancel out, so they appear the same size."],rev:"An amazing coincidence"},
+{t:"eclipse",k:"Comparing",q:"Why might you see many lunar eclipses from home in your lifetime but perhaps no total solar eclipse?",
+ o:[["Lunar eclipses can be seen from the whole night side of Earth, while a total solar eclipse is only seen along a narrow path.","Correct: Earth's shadow covers the whole Moon; the Moon's umbra is a small spot on Earth."],
+    ["Solar eclipses only happen at night.","Solar eclipses happen in the daytime."],
+    ["There are far more lunar eclipses than solar eclipses.","They happen at similar rates. The difference is how many people can see each."],
+    ["Solar eclipses are too dangerous, so they're hidden.","The Sun isn't hidden. It's just that few places are in the umbra's path."]],a:0,
+ why:["Compare the shadows: Moon's umbra on Earth (small) vs Earth's shadow on Moon (covers it all).","Who can see each? Total solar: only inside the small umbra path. Lunar: anyone who can see the Moon.","That path rarely crosses the same town."],rev:"Worked reasoning: comparing"},
+{t:"eclipse",k:"Red Moon",q:"Why does the Moon often look red during a total lunar eclipse?",
+ o:[["The Moon gives out its own red light when it's dark.","The Moon makes no light of its own."],
+    ["Some sunlight bends through Earth's atmosphere, and mainly red light gets through to the Moon.","Correct: the same reason sunsets look red."],
+    ["The Moon heats up in Earth's shadow.","It actually cools in the shadow, and it doesn't glow."],
+    ["Mars reflects red light onto it.","Mars is far too far away to light up the Moon."]],a:1,
+ why:["The Moon only reflects light, so ask: where could light still come from?","Sunlight passing through the edge of Earth's atmosphere bends into the shadow.","The atmosphere scatters blue light and lets red through, so the Moon looks red."],rev:"Why does the Moon turn red?"},
+{t:"eclipse",k:"Safety",q:"Which is a SAFE way to watch a solar eclipse?",
+ o:[["Through dark sunglasses","Sunglasses are nowhere near dark enough. They can't protect your eyes."],
+    ["Looking quickly, for just a few seconds","Even short looks can cause permanent eye damage."],
+    ["Using a pinhole projector to cast the Sun's image onto paper","Correct: you look at the paper, not the Sun."],
+    ["Through binoculars","Binoculars concentrate the light, which makes it even more dangerous."]],a:2,
+ why:["Rule 1: never look directly at the Sun.","So any method where light from the Sun enters your eye is out.","A pinhole projector uses straight-line light to make an image you look at instead."],rev:"Never look directly at the Sun"}
+];
+
+/* ---------- state ---------- */
+const KEY="ep-mcq-v1";
+let S=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const app=document.getElementById('app');
+const onPages=/github\.io$/.test(location.hostname);
+const guideLink=(anchor,label)=>onPages?`<a href="Unit_6_EarthPhysics.html#${anchor}">${label}</a>`:`<b>${label}</b>`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+function start(ids){
+  S={list:ids.map(i=>({i,order:shuffle([0,1,2,3]),pick:null,conf:null,done:false})),pos:0};
+  save();render();
+}
+function home(){
+  const saved=load();
+  const counts={};Q.forEach(q=>counts[q.t]=(counts[q.t]||0)+1);
+  app.innerHTML=`
+  <div class="panel">
+    <h2>How it works</h2>
+    <ol class="how">
+      <li>Read the question and <b>think it through</b> before you pick. Wrong answers are common mistakes that look right.</li>
+      <li>Say how sure you are: <b>Sure</b> or <b>Guessing</b>.</li>
+      <li>Check your answer to see why each option is right or wrong, plus the reasoning steps.</li>
+      <li>At the end, your report shows <b>misconceptions</b> (wrong but sure) and <b>lucky guesses</b> (right but unsure). Revise both!</li>
+    </ol>
+    ${saved&&saved.list&&saved.list.some(x=>x.done)&&saved.list.some(x=>!x.done)?`<div class="row"><button class="btn" id="resume">Resume where you left off (${saved.list.filter(x=>x.done).length}/${saved.list.length})</button></div>`:""}
+    <h2 style="margin-top:18px">Choose a test</h2>
+    <div class="chips">
+      <button class="chip all" id="all"><b>Full revision</b><span>All ${Q.length} questions · about 45 min</span></button>
+      ${Object.entries(TOPICS).map(([k,t])=>`<button class="chip" data-t="${k}" style="--c:${t.c}"><b>${t.name}</b><span>${counts[k]} questions</span></button>`).join("")}
+    </div>
+  </div>`;
+  document.getElementById('all').onclick=()=>start(Q.map((_,i)=>i));
+  app.querySelectorAll('.chip[data-t]').forEach(b=>b.onclick=()=>start(Q.map((q,i)=>q.t===b.dataset.t?i:-1).filter(i=>i>=0)));
+  const r=document.getElementById('resume'); if(r) r.onclick=()=>{S=saved;render()};
+}
+
+function render(){
+  if(S.pos>=S.list.length) return report();
+  const it=S.list[S.pos], q=Q[it.i], tp=TOPICS[q.t];
+  const L="ABCD";
+  const correctSlot=it.order.indexOf(q.a);
+  app.innerHTML=`
+  <div class="panel" style="--c:${tp.c}">
+    <div class="qhead"><span class="tag">${tp.name} · ${q.k}</span><span class="eyebrow">Question ${S.pos+1} of ${S.list.length}</span></div>
+    <div class="prog" aria-hidden="true"><i style="width:${(S.pos/S.list.length)*100}%"></i></div>
+    <p class="qtext">${esc(q.q)}</p>
+    <div class="opts" role="radiogroup" aria-label="Answer options">
+      ${it.order.map((oi,slot)=>{
+        let cls="opt";
+        if(it.done){ if(slot===correctSlot) cls+=" right"; else if(slot===it.pick) cls+=" wrong"; }
+        else if(slot===it.pick) cls+=" sel";
+        const fb = it.done && (slot===it.pick || slot===correctSlot) ? `<span class="fb">${esc(q.o[oi][1])}</span>` : "";
+        return `<button class="${cls}" role="radio" aria-checked="${slot===it.pick}" data-s="${slot}" ${it.done?"disabled":""} id="o${slot}"><span class="l">${L[slot]}</span><span>${esc(q.o[oi][0])}${fb}</span></button>`;
+      }).join("")}
+    </div>
+    ${it.done?resultBlock(it,q,tp,correctSlot):`
+    <div class="conf"><b>How sure are you?</b>
+      <div class="row"><button type="button" data-c="sure" aria-pressed="${it.conf==='sure'}">Sure</button><button type="button" data-c="guess" aria-pressed="${it.conf==='guess'}">Guessing</button></div>
+    </div>`}
+    <div class="row nav">
+      <button class="btn ghost" id="quit">Back to start</button>
+      ${it.done?`<button class="btn" id="next">${S.pos+1===S.list.length?"See my report":"Next question →"}</button>`
+               :`<button class="btn" id="check" ${it.pick===null||!it.conf?"disabled":""}>Check answer</button>`}
+    </div>
+  </div>`;
+  if(!it.done){
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{it.pick=+b.dataset.s;save();render();document.getElementById('o'+it.pick).focus()});
+    app.querySelectorAll('.conf button').forEach(b=>b.onclick=()=>{it.conf=b.dataset.c;save();render()});
+    document.getElementById('check').onclick=()=>{it.done=true;it.ok=(it.pick===correctSlot);save();render()};
+  }else{
+    document.getElementById('next').onclick=()=>{S.pos++;save();render();window.scrollTo({top:0})};
+  }
+  document.getElementById('quit').onclick=home;
+}
+function resultBlock(it,q,tp,cs){
+  const ok=it.ok;
+  let head = ok ? (it.conf==="guess"?"Correct, but you were guessing":"Correct!") : (it.conf==="sure"?"Not quite. This one is a misconception to fix":"Not quite");
+  return `<div class="result ${ok?"ok":"bad"}">
+    <h3>${head}</h3>
+    <div class="why"><b>How to reason it out:</b><ol>${q.why.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+    <div class="revise">Revise: ${guideLink(tp.anchor,tp.name)} → "${esc(q.rev)}"</div>
+  </div>`;
+}
+
+function report(){
+  const done=S.list.filter(x=>x.done), score=done.filter(x=>x.ok).length, total=S.list.length;
+  const by={};S.list.forEach(x=>{const t=Q[x.i].t;by[t]=by[t]||{n:0,ok:0};by[t].n++;if(x.ok)by[t].ok++});
+  const mis=S.list.filter(x=>!x.ok&&x.conf==="sure"), wrong=S.list.filter(x=>!x.ok&&x.conf!=="sure"), lucky=S.list.filter(x=>x.ok&&x.conf==="guess");
+  const pct=Math.round(score/total*100);
+  const verdict=pct>=85?"Excellent: you understand this chapter well.":pct>=65?"Good: a few ideas need another look.":"Keep going: revise the topics below, then try again.";
+  const li=x=>{const q=Q[x.i];return `<li><b>${esc(q.k)}</b> (${TOPICS[q.t].name}): ${esc(q.q)}<br><span class="revise">Revise: ${guideLink(TOPICS[q.t].anchor,TOPICS[q.t].name)} → "${esc(q.rev)}"</span></li>`};
+  app.innerHTML=`
+  <div class="panel">
+    <div class="eyebrow">Your report</div>
+    <div class="row" style="gap:18px;margin-top:6px"><div class="big">${score}/${total}</div><div><b>${pct}%</b><br>${verdict}</div></div>
+    <div class="bars">${Object.entries(by).map(([t,v])=>`<div class="bar" style="--c:${TOPICS[t].c}"><span>${TOPICS[t].name}</span><span class="t"><i style="width:${v.ok/v.n*100}%"></i></span><span class="n">${v.ok}/${v.n}</span></div>`).join("")}</div>
+    ${mis.length?`<div class="grp"><h3><span class="pill m">fix first</span>Misconceptions: wrong, but you were sure</h3><p class="revise">These matter most. Your brain has a wrong idea stored, so re-read the section and the reasoning steps.</p><ul>${mis.map(li).join("")}</ul></div>`:""}
+    ${wrong.length?`<div class="grp"><h3><span class="pill s">revise</span>Gaps: wrong, and you knew you were unsure</h3><ul>${wrong.map(li).join("")}</ul></div>`:""}
+    ${lucky.length?`<div class="grp"><h3><span class="pill g">check</span>Lucky guesses: right, but you weren't sure</h3><p class="revise">You got these right, but make sure you can explain why.</p><ul>${lucky.map(li).join("")}</ul></div>`:""}
+    ${!mis.length&&!wrong.length&&!lucky.length?`<p><b>Perfect and confident on every question!</b></p>`:""}
+    <div class="row" style="margin-top:18px">
+      ${(mis.length+wrong.length+lucky.length)?`<button class="btn" id="retry">Retry the ${mis.length+wrong.length+lucky.length} questions to work on</button>`:""}
+      <button class="btn ghost" id="again">Start again</button>
+    </div>
+  </div>`;
+  const r=document.getElementById('retry');
+  if(r) r.onclick=()=>start([...mis,...wrong,...lucky].map(x=>x.i));
+  document.getElementById('again').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){};home()};
+}
+
+(function(){const s=load(); home(); if(s&&s.list&&s.list.length&&s.list.every(x=>x.done)){S=s;report();}})();
+</script>
+</body></html>
