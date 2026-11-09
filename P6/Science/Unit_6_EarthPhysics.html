@@ -1,0 +1,1456 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Earth Physics Field Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single readable column like an explorer's field notebook; each topic is a "station" with its own colour stripe */
+:root{
+  --bg:#f3f6f8; --paper:#ffffff; --ink:#18242c; --muted:#56656f; --line:#d5dfe5;
+  --sound:#2266d4; --echo:#7b4fd6; --earth:#b8661a; --quake:#d23b2a; --sky:#0f8b8d;
+  --tint:#e8f0fb; --hl:#fff3c4; --hl-ink:#5b4500;
+  --sun:#f6b81d; --moon:#9aa6b0; --planet:#3a8ee6; --land:#5aa654;
+  --f-display:"Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --f-body:"Nunito", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --hl:#3d3413; --hl-ink:#ffe38a;
+  --sun:#f6c140; --moon:#b9c3cb; --planet:#5aa6f5; --land:#6cbf66; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4;
+  --tint:#1b2a3a; --hl:#3d3413; --hl-ink:#ffe38a;
+  --sun:#f6c140; --moon:#b9c3cb; --planet:#5aa6f5; --land:#6cbf66; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:820px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,7vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:800}
+h3{font-size:1.3rem;font-weight:600;margin-top:28px}
+p{margin:12px 0;max-width:66ch}
+a{color:inherit}
+.kw{background:var(--hl);color:var(--hl-ink);padding:0 4px;border-radius:4px;font-weight:800}
+small,.cap{font-size:.85rem;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-size:.92em}
+
+/* hero */
+header.hero{padding-block:44px 28px}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero p{font-size:1.1rem}
+.route{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:22px}
+.route a{display:flex;flex-direction:column;gap:2px;text-decoration:none;background:var(--paper);border:1px solid var(--line);
+  border-top:5px solid var(--c);border-radius:10px;padding:10px 12px}
+.route a:hover,.route a:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.route b{font-family:var(--f-display);font-size:1.05rem}
+.route span{font-size:.8rem;color:var(--muted)}
+
+/* stations */
+section.station{margin-top:40px;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.st-head{border-left:8px solid var(--c);padding:22px 22px 6px}
+.st-head .eyebrow{color:var(--c)}
+.st-body{padding:0 22px 24px}
+.goals{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px;padding:0;list-style:none}
+.goals li{font-size:.85rem;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+
+figure{margin:20px 0;}
+figure svg{width:100%;height:auto;display:block;max-width:100%}
+.fig-box{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:6px}
+svg text{font-family:var(--f-body);fill:var(--ink);font-size:13px}
+svg .lbl{font-weight:800}
+
+.callout{border-radius:10px;padding:14px 16px;margin:18px 0;background:var(--tint);border:1px solid var(--line)}
+.callout h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem}
+.callout p{margin:6px 0}
+.callout.try h4::before{content:"Try it · "; color:var(--c)}
+.callout.wow h4::before{content:"Did you know? · "; color:var(--c)}
+.callout.safe{border-color:var(--quake)}
+.callout.safe h4{color:var(--quake)}
+.callout ol,.callout ul{margin:6px 0;padding-left:22px}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:16px 0}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.card h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem;color:var(--c)}
+.card p{margin:4px 0;font-size:.95rem}
+
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tbl{overflow-x:auto;margin:14px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:1rem}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.9rem;white-space:nowrap}
+
+.calc{font-family:var(--f-mono);background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:12px 14px;font-size:.92rem;line-height:1.8;overflow-x:auto}
+
+/* glossary + quiz */
+dl.gloss{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:6px 16px;margin:16px 0}
+dl.gloss dt{font-weight:800}
+dl.gloss dd{margin:0;color:var(--ink)}
+@media (max-width:520px){dl.gloss{grid-template-columns:1fr}dl.gloss dd{margin-bottom:8px}}
+.q{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0}
+.q p{margin:0 0 8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.opts button:hover{border-color:var(--sky)}
+.opts button:focus-visible,.reveal:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.opts button.right{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.opts button.wrong{background:var(--quake);border-color:var(--quake);color:#fff}
+.fb{font-size:.92rem;margin-top:8px;color:var(--muted)}
+.reveal{font:inherit;font-size:.9rem;border:none;background:none;color:var(--sky);font-weight:800;cursor:pointer;padding:0}
+.ans{margin-top:8px;font-size:.95rem;background:var(--tint);border-radius:8px;padding:8px 12px}
+#score{font-family:var(--f-display);font-size:1.2rem}
+.check li{list-style:none;margin:6px 0}
+.check{padding:0}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{margin-top:6px;width:18px;height:18px;accent-color:var(--sky)}
+
+/* animation */
+@keyframes squeeze{0%,100%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+.pt{animation:squeeze 1s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.pt{animation:none}}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+
+/* level-up practice (Focus / Practice / Challenge) */
+.levelup{margin-top:28px;border-top:2px dashed var(--line);padding-top:8px}
+.levelup > h3{margin-top:12px}
+.lv{display:inline-block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:999px;padding:2px 9px;margin-right:6px;vertical-align:2px;color:#fff}
+.lv.f{background:#1f9d55}.lv.p{background:#d08a00}.lv.c{background:var(--quake)}
+details.task{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0;background:var(--paper)}
+details.task > summary{cursor:pointer;font-weight:600;list-style:none}
+details.task > summary::-webkit-details-marker{display:none}
+details.task > summary::after{content:"Show answer ▾";display:block;font-size:.82rem;font-weight:800;color:var(--sky);margin-top:4px}
+details.task[open] > summary::after{content:"Hide answer ▴"}
+details.task .ans{margin-top:8px}
+details.task summary:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:4px}
+
+/* deeper understanding blocks */
+.deeper{margin-top:28px;border-top:2px dashed var(--line);padding-top:8px}
+.deeper > h3{margin-top:12px}
+.myths{display:grid;gap:10px;margin:12px 0}
+.myth{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.myth > div{padding:10px 14px;min-width:0;font-size:.95rem}
+.myth .no{background:var(--bg)}
+.myth .no::before{content:"✗ Myth";display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--quake);font-weight:500;margin-bottom:2px}
+.myth .yes::before{content:"✓ Science says";display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:#1f9d55;font-weight:500;margin-bottom:2px}
+@media (max-width:560px){.myth{grid-template-columns:1fr}}
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+.app{border-left:4px solid var(--c);background:var(--bg);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.93rem;min-width:0}
+.app b{display:block;font-family:var(--f-display);font-size:1.02rem}
+.puzzle{border:2px solid var(--c);border-radius:10px;padding:12px 16px;margin:14px 0}
+.puzzle h4{margin:0 0 4px;font-family:var(--f-display);font-size:1.1rem}
+.puzzle h4::before{content:"Brain-teaser · ";color:var(--c)}
+details.worked{border:1px solid var(--line);border-radius:10px;margin:14px 0;background:var(--paper);overflow:hidden}
+details.worked > summary{cursor:pointer;list-style:none;padding:12px 16px;background:var(--tint)}
+details.worked > summary::-webkit-details-marker{display:none}
+details.worked > summary .tag{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+details.worked > summary .qq{display:block;font-weight:600;margin-top:2px}
+details.worked > summary::after{content:"Think first, then open the step-by-step reasoning ▾";display:block;font-size:.82rem;font-weight:800;color:var(--sky);margin-top:6px}
+details.worked[open] > summary::after{content:"Hide reasoning ▴"}
+details.worked summary:focus-visible{outline:2px solid var(--sky);outline-offset:-2px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:12px 16px 4px}
+.steps li{counter-increment:s;position:relative;padding-left:38px;margin:0 0 12px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;
+  background:var(--c);color:#fff;font-weight:800;font-size:.85rem;display:grid;place-items:center}
+.steps li b.st{display:block;font-family:var(--f-display);font-size:1rem}
+.worked .final{margin:0 16px 14px;padding:8px 12px;border-radius:8px;background:var(--hl);color:var(--hl-ink)}
+.worked .tip{margin:0 16px 14px;font-size:.88rem;color:var(--muted)}
+.cmd td:first-child{font-weight:800;white-space:nowrap}
+</style></head><body>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Science Stage 7 · Chapter 6 study guide</div>
+  <h1>Earth Physics Field Guide</h1>
+  <p>This chapter goes from the buzz of a fly's wings down to the iron centre of our planet, then out to the Moon. There are five stations. Each one has the big ideas, diagrams and experiments you can try, plus a <b>Level up</b> practice set in three steps: <span class="lv f">Focus</span><span class="lv p">Practice</span><span class="lv c">Challenge</span>. Try each question before you open the answer!</p>
+  <nav class="route" aria-label="Topics">
+    <a href="#sound" style="--c:var(--sound)"><b>6.1 Sound waves</b><span>vibrations · particles · vacuum</span></a>
+    <a href="#echo" style="--c:var(--echo)"><b>6.2 Echoes</b><span>reflection · bats · sonar</span></a>
+    <a href="#inside" style="--c:var(--earth)"><b>6.3 Inside Earth</b><span>layers · drifting plates</span></a>
+    <a href="#changes" style="--c:var(--quake)"><b>6.4 Restless Earth</b><span>mountains · volcanoes · quakes</span></a>
+    <a href="#eclipse" style="--c:var(--sky)"><b>6.5 Eclipses</b><span>shadows · Sun · Moon</span></a>
+    <a href="#toolkit" style="--c:var(--ink)"><b>Think like a scientist</b><span>how to answer any question</span></a>
+    <a href="#exam" style="--c:var(--quake)"><b>Exam practice</b><span>past-paper style · mark scheme</span></a>
+  </nav>
+</header>
+
+<!-- ================= Toolkit ================= -->
+<section class="station" id="toolkit" style="--c:var(--ink)">
+  <div class="st-head">
+    <div class="eyebrow">Before you start</div>
+    <h2>Think like a scientist: how to crack any question</h2>
+    <ul class="goals"><li>Read the command word</li><li>Build a chain of reasons</li><li>Solve calculations step by step</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Good scientists don't just know facts. They can <b>explain why</b> something happens and <b>work out</b> answers they have never seen before. These three tools are used in every worked example in this guide.</p>
+
+    <h3>Tool 1: Spot the command word</h3>
+    <p>The first word of a question tells you what kind of answer the examiner wants.</p>
+    <div class="tbl"><table class="cmd">
+      <thead><tr><th>Command word</th><th>What it wants</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>State / Name</td><td>A short fact. No reason needed.</td><td>"Name the layer at the centre of the Earth." → Inner core.</td></tr>
+        <tr><td>Describe</td><td>Say <i>what</i> happens, step by step.</td><td>Describe how the particles move in a sound wave.</td></tr>
+        <tr><td>Explain</td><td>Say <i>why</i> or <i>how</i>. Use "because", "so", "this means".</td><td>Explain why sound can't travel in space.</td></tr>
+        <tr><td>Suggest</td><td>Use your science on an unfamiliar situation; there may be several good answers.</td><td>Suggest why the theatre has soft seats.</td></tr>
+        <tr><td>Calculate</td><td>Show your working and give units.</td><td>Calculate how deep the water is.</td></tr>
+        <tr><td>Predict</td><td>Say what will happen <i>and</i> give a scientific reason.</td><td>Predict what happens as air is pumped out of the jar.</td></tr>
+        <tr><td>Evaluate</td><td>Weigh up good points and bad points, then make a judgement.</td><td>Evaluate the polystyrene model of moving plates.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Tool 2: The reasoning chain (Claim → Evidence → Reasoning)</h3>
+    <p>For "explain" questions, build a chain where every link connects to the next. Missing links are the most common way to lose marks.</p>
+    <div class="grid2">
+      <div class="card" style="--c:var(--sound)"><h4>Claim</h4><p>Your answer in one sentence.<br><i>"We can't hear sound in space."</i></p></div>
+      <div class="card" style="--c:var(--echo)"><h4>Evidence / fact</h4><p>The science fact it depends on.<br><i>"Space is a vacuum: it has no particles."</i></p></div>
+      <div class="card" style="--c:var(--earth)"><h4>Reasoning</h4><p>The link that joins them.<br><i>"Sound is passed on by particles vibrating, so with no particles nothing can carry the vibration."</i></p></div>
+    </div>
+
+    <h3>Tool 3: Calculations with G-U-E-S-S</h3>
+    <div class="grid2">
+      <div class="card" style="--c:var(--sky)"><h4>G · Given</h4><p>Write down the numbers you know, with units.</p></div>
+      <div class="card" style="--c:var(--sky)"><h4>U · Unknown</h4><p>What are you trying to find?</p></div>
+      <div class="card" style="--c:var(--sky)"><h4>E · Equation</h4><p>Pick the formula, e.g. distance = speed × time. Rearrange if needed.</p></div>
+      <div class="card" style="--c:var(--sky)"><h4>S · Substitute</h4><p>Put the numbers in.</p></div>
+      <div class="card" style="--c:var(--sky)"><h4>S · Solve and sense-check</h4><p>Work it out, add units, and ask: <i>"Is this answer sensible?"</i></p></div>
+    </div>
+    <div class="callout"><h4>The speed triangle</h4>
+      <p>One equation, three forms. Cover the one you want to find:</p>
+      <div class="calc">distance = speed × time<br>speed = distance ÷ time<br>time = distance ÷ speed</div>
+      <p class="cap">Echo questions: the sound goes <b>there and back</b>. Always ask yourself, "Is this distance one way, or the round trip?"</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.1 ================= -->
+<section class="station" id="sound" style="--c:var(--sound)">
+  <div class="st-head">
+    <div class="eyebrow">Station 6.1</div>
+    <h2>Sound waves: the world is buzzing</h2>
+    <ul class="goals"><li>Sound comes from vibrations</li><li>How particles move in a sound wave</li><li>Why space is silent</li></ul>
+  </div>
+  <div class="st-body">
+    <h3>Every sound starts with a wobble</h3>
+    <p>Put your fingers on your throat and hum. Feel that tingle? Your vocal cords are <span class="kw">vibrating</span>, which means moving <span class="kw">backwards and forwards</span> very quickly. Anything that makes a sound is vibrating: a drum skin, a guitar string, a mosquito's wings, the paper cone inside a loudspeaker.</p>
+    <p>Sprinkle rice on a drum and hit it, and the grains jump. That is the vibration made visible.</p>
+
+    <div class="grid2">
+      <div class="card"><h4>Loudness</h4><p>A <b>bigger</b> vibration gives a <b>louder</b> sound. Hit a drum harder or pluck a string with more force and the sound gets louder.</p><p class="cap">Loud: thunder, a jackhammer. Quiet: a whisper, rustling leaves.</p></div>
+      <div class="card"><h4>Pitch</h4><p>Pitch is how high or low a sound is. A <b>faster</b> vibration gives a <b>higher</b> pitch.</p><p class="cap">High: a whistle, a baby crying. Low: thunder, a bass drum.</p></div>
+    </div>
+
+    <h3>What is a sound wave?</h3>
+    <p>Sound travels from the vibrating object to your ear as a <span class="kw">sound wave</span>. The vibrating object pushes on the <span class="kw">particles</span> of air next to it. Those particles bump into their neighbours, those bump into the next ones, and so on, like a chain of people passing on a shove.</p>
+    <p><b>Key point:</b> the particles don't travel all the way to your ear. Each one just jiggles backwards and forwards around its own spot. What travels is the <i>energy</i>, passed from particle to particle. The particles vibrate <b>in the same direction</b> that the wave is moving.</p>
+
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 210" role="img" aria-label="Loudspeaker making a sound wave: bunched-up and spread-out particles travel to an ear">
+        <rect x="20" y="70" width="26" height="70" rx="4" fill="var(--muted)"/>
+        <path d="M46 70 L80 45 L80 165 L46 140 Z" fill="var(--sound)" opacity=".8"/>
+        <text x="18" y="190" class="lbl">vibrating cone</text>
+        <g id="parts"></g>
+        <path d="M600 80 q28 25 0 60 q-12 -8 -6 -30 q-6 -22 6 -30z" fill="var(--earth)" opacity=".8"/>
+        <text x="560" y="190" class="lbl">your ear</text>
+        <line x1="200" y1="28" x2="470" y2="28" stroke="var(--sound)" stroke-width="3" marker-end="url(#arr)"/>
+        <text x="245" y="20">sound wave travels this way →</text>
+        <line x1="290" y1="188" x2="350" y2="188" stroke="var(--quake)" stroke-width="3" marker-end="url(#arrR)" marker-start="url(#arrRs)"/>
+        <text x="360" y="193">particles only wobble ↔</text>
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--sound)"/></marker>
+          <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--quake)"/></marker>
+          <marker id="arrRs" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--quake)"/></marker>
+        </defs>
+      </svg>
+      </div>
+      <figcaption>Bunched-up groups of particles (compressions) and spread-out gaps travel to your ear. Each dot just wobbles in place.</figcaption>
+    </figure>
+
+    <p>In air, sound travels at about <b class="mono">343 m/s</b>, the <span class="kw">speed of sound</span>. That's roughly the length of three football pitches every second!</p>
+
+    <h3>Sound needs a medium</h3>
+    <p>The stuff a sound wave travels through is called the <span class="kw">medium</span>. A sound wave needs particles to vibrate, and solids, liquids and gases all have particles, so sound travels through all three.</p>
+    <div class="grid2">
+      <div class="card"><h4>Gas</h4><p>Your friend's voice reaching you across a room.</p></div>
+      <div class="card"><h4>Liquid</h4><p>Whales and dolphins call to each other underwater.</p></div>
+      <div class="card"><h4>Solid</h4><p>Press your ear to a table while someone taps the far end. It sounds <i>louder</i> through the wood!</p></div>
+    </div>
+
+    <h3>Which medium is fastest?</h3>
+    <p>Sound doesn't travel at the same speed everywhere. The closer together the particles are, the faster they can pass the vibration on, like a line of dominoes standing close together compared with far apart.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 170" role="img" aria-label="Bar chart: speed of sound is about 340 m/s in air, 1500 m/s in water and about 3000 m/s in concrete">
+        <line x1="120" y1="20" x2="120" y2="140" stroke="var(--line)"/>
+        <line x1="120" y1="140" x2="620" y2="140" stroke="var(--line)"/>
+        <line x1="270" y1="20" x2="270" y2="140" stroke="var(--line)" stroke-dasharray="3 4"/>
+        <line x1="420" y1="20" x2="420" y2="140" stroke="var(--line)" stroke-dasharray="3 4"/>
+        <line x1="570" y1="20" x2="570" y2="140" stroke="var(--line)" stroke-dasharray="3 4"/>
+        <text x="120" y="158" text-anchor="middle">0</text>
+        <text x="270" y="158" text-anchor="middle">1000</text>
+        <text x="420" y="158" text-anchor="middle">2000</text>
+        <text x="570" y="158" text-anchor="middle">3000 m/s</text>
+        <text x="110" y="45" text-anchor="end" class="lbl">Air (gas)</text>
+        <rect x="120" y="30" width="51" height="22" rx="3" fill="var(--sky)"/>
+        <text x="178" y="46">≈ 340</text>
+        <text x="110" y="83" text-anchor="end" class="lbl">Water (liquid)</text>
+        <rect x="120" y="68" width="225" height="22" rx="3" fill="var(--sound)"/>
+        <text x="352" y="84">≈ 1500</text>
+        <text x="110" y="121" text-anchor="end" class="lbl">Concrete (solid)</text>
+        <rect x="120" y="106" width="443" height="22" rx="3" fill="var(--earth)"/>
+        <text x="500" y="100">≈ 2950</text>
+      </svg>
+      </div>
+      <figcaption>Approximate speeds. Particles in solids are packed tightly and linked strongly, so the vibration is passed on fastest.</figcaption>
+    </figure>
+
+    <h3>Silence in a vacuum</h3>
+    <p>To hear a sound you need two things: <b>a vibration</b> and <b>a medium with particles</b> to carry it. A <b>vacuum</b> is completely empty space with no particles, so there is nothing to pass the vibration along. <b>Sound cannot travel through a vacuum.</b></p>
+
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 220" role="img" aria-label="Electric bell inside a glass jar with the air pumped out">
+        <path d="M200 190 L200 80 Q200 30 260 30 L380 30 Q440 30 440 80 L440 190" fill="none" stroke="var(--sound)" stroke-width="4"/>
+        <rect x="170" y="190" width="300" height="10" fill="var(--muted)"/>
+        <line x1="470" y1="195" x2="590" y2="195" stroke="var(--muted)" stroke-width="6"/>
+        <text x="500" y="185">to vacuum pump</text>
+        <line x1="320" y1="30" x2="320" y2="95" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="295" y="95" width="50" height="26" rx="3" fill="var(--muted)"/>
+        <circle cx="320" cy="140" r="20" fill="var(--sun)"/>
+        <circle cx="305" cy="115" r="5" fill="var(--quake)"/>
+        <text x="40" y="70" class="lbl">bell jar</text>
+        <line x1="100" y1="66" x2="198" y2="80" stroke="var(--muted)"/>
+        <text x="40" y="150" class="lbl">no air = no particles</text>
+        <text x="460" y="70">You can SEE the bell</text>
+        <text x="460" y="90">hammer shaking…</text>
+        <text x="460" y="120" class="lbl">…but hear nothing!</text>
+      </svg>
+      </div>
+      <figcaption>The classic bell jar demonstration. As the air is pumped out, the ringing fades away even though the bell is still vibrating.</figcaption>
+    </figure>
+
+    <div class="callout wow"><h4>The Sun is noisy</h4><p>Space is (almost) a vacuum. Scientists think that if sound could cross space, we'd hear the Sun giving off a high-pitched hum with occasional loud, low roars. Explosions in space films are fake. In real space they'd be totally silent.</p></div>
+
+    <h3>Sound carries energy</h3>
+    <p>Sound is a way of <b>transferring energy</b>. That energy can do real things:</p>
+    <ul>
+      <li>Very loud sounds make the particles in air vibrate so strongly that they can <b>damage your ears</b>. That's why people working near jet engines wear ear defenders.</li>
+      <li>A powerful sound at just the right pitch can make a wine glass vibrate so much that it <b>shatters</b>.</li>
+      <li>Some vibrations are too small for our ears to detect, like a feather landing or a fly walking on a window.</li>
+    </ul>
+
+    <div class="callout try"><h4>Slinky sound wave</h4>
+      <ol><li>Stretch a metal slinky along the floor. Mark a few coils with small paper flags; these are your "particles".</li>
+      <li>Hold one end still. At the other end, push and pull your hand quickly <b>along</b> the length of the slinky.</li>
+      <li>Watch the squashed sections race along while each flag only wiggles back and forth.</li></ol>
+      <p class="cap">This is a <b>model</b>: it shows something we can't see (air particles) using something we can.</p>
+    </div>
+    <div class="callout try"><h4>String telephone</h4>
+      <ol><li>Poke a small hole in the bottom of two paper cups (ask an adult to help with the sharp object). Thread a long string through and knot it inside each cup.</li>
+      <li>Pull the string tight. One person whispers into a cup; the other listens.</li>
+      <li>Now let the string go slack, or pinch it in the middle. What happens?</li></ol>
+      <p class="cap">A tight string passes the vibrations along well. A slack or pinched string stops them. To make it a fair test, try to speak at the same loudness each time (a phone playing a recorded sound works even better).</p>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Picture this:</b> a <b>Newton's cradle</b>, the desk toy with a row of hanging metal balls. Lift the first ball and let it hit the row. The middle balls barely move, yet the last ball flies out. The energy has passed <i>through</i> the balls by each one nudging the next. Air particles in a sound wave behave the same way: each one nudges its neighbour and stays roughly where it was.</p>
+      <p><b>Pitch, more precisely:</b> scientists measure how many vibrations happen every second. This is called the <b>frequency</b> and it's measured in <b>hertz (Hz)</b>. 1 Hz = 1 vibration per second. Humans can hear from about 20 Hz (very low rumble) to about 20 000 Hz (very high whine). Dogs can hear higher than that, which is why a dog whistle sounds silent to you.</p>
+      <div class="grid2">
+        <div class="card"><h4>How instruments change pitch</h4><p><b>Shorter, tighter or thinner</b> strings vibrate faster, so they give a higher pitch. That's why a guitarist presses a string against the neck (making it shorter) to play a higher note, and why a tiny violin sounds higher than a huge double bass.</p></div>
+        <div class="card"><h4>How instruments change loudness</h4><p>Pluck, hit or blow <b>harder</b> and the vibrations get <b>bigger</b> (we say larger <b>amplitude</b>). More energy goes into the sound, so it's louder. The pitch doesn't change.</p></div>
+      </div>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">The air travels from the drum to my ear.</div><div class="yes">The air particles only wobble back and forth. It is the <b>energy</b> that travels to your ear.</div></div>
+        <div class="myth"><div class="no">Loud sounds travel faster than quiet sounds.</div><div class="yes">Loud and quiet, high and low: all sounds travel at the <b>same speed in the same medium</b>. Speed depends on the medium, not the sound.</div></div>
+        <div class="myth"><div class="no">Sound travels best through air.</div><div class="yes">Sound travels <b>faster</b> through solids and liquids, because their particles are closer together.</div></div>
+        <div class="myth"><div class="no">Pitch and loudness mean the same thing.</div><div class="yes">Pitch is about how <b>fast</b> the vibration is (frequency). Loudness is about how <b>big</b> it is (amplitude). A sound can be high and quiet, or low and loud.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Stethoscope</b>Doctors listen to your heart through a tube: the sound travels through the solid and the air inside it, without spreading out.</div>
+        <div class="app"><b>Thunderstorms</b>You see lightning before you hear thunder, because light is about a million times faster than sound.</div>
+        <div class="app"><b>Ear defenders</b>Soft materials absorb the energy of loud sounds before it reaches your ears.</div>
+        <div class="app"><b>Noise-cancelling headphones</b>A microphone listens to outside noise and the speaker makes an opposite vibration that cancels it out.</div>
+        <div class="app"><b>Double glazing</b>The gap between two panes of glass stops a lot of sound passing through, which is why windows near airports often have it.</div>
+      </div>
+
+      <div class="puzzle"><h4>The silent bell</h4><p>In the bell jar demonstration you can still <i>see</i> the bell vibrating after the air is removed. What does that tell you about light compared with sound? <i>(Light doesn't need particles. It can travel through a vacuum. That's how sunlight reaches us across space!)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Calculate · thunder</span><span class="qq">During a storm you count 6 seconds between seeing lightning and hearing thunder. Sound travels at 340 m/s. How far away is the storm?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Understand the situation</b>Lightning and thunder happen at the same moment. Light reaches you almost instantly; sound takes time. So the 6 s gap is how long the <i>sound</i> took to travel. (This is one-way, not an echo!)</li>
+          <li><b class="st">Given</b>speed = 340 m/s, time = 6 s</li>
+          <li><b class="st">Unknown</b>distance</li>
+          <li><b class="st">Equation</b>distance = speed × time</li>
+          <li><b class="st">Substitute and solve</b>340 × 6 = 2040 m</li>
+          <li><b class="st">Sense-check</b>Roughly 3 seconds per kilometre, so 6 s ≈ 2 km. ✓</li>
+        </ol>
+        <p class="final">The storm is about <b>2040 m (≈ 2 km)</b> away.</p>
+        <p class="tip">Handy rule to remember: count the seconds and divide by 3 to get kilometres.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · spacewalk</span><span class="qq">Two astronauts on a spacewalk float right next to each other but have to talk by radio. Explain why.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Spot the command word</b>"Explain" means I need a <i>why</i>, with linked reasons.</li>
+          <li><b class="st">Find the key science idea</b>What does sound need to travel? A <b>medium</b> with particles.</li>
+          <li><b class="st">Apply it to this situation</b>What's in space? Almost nothing: it's a <b>vacuum</b>.</li>
+          <li><b class="st">Build the chain</b>Voice makes vibrations → vibrations must be passed on by particles → no particles in space → the sound wave cannot travel → the other astronaut hears nothing.</li>
+          <li><b class="st">Finish the idea</b>Why does radio work? Radio waves are not sound waves; like light, they can travel through a vacuum.</li>
+        </ol>
+        <p class="final">Sound needs particles to pass on its vibrations. Space is a vacuum with no particles, <b>so</b> sound can't travel between the astronauts. Radio waves can travel through a vacuum, so they use radios.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Predict · bell jar</span><span class="qq">An electric bell is ringing inside a jar. Air is slowly pumped out. Predict what you would hear, and explain your prediction.</span></summary>
+        <ol class="steps">
+          <li><b class="st">What changes?</b>The number of air particles inside the jar goes <b>down gradually</b>, not all at once.</li>
+          <li><b class="st">What does that do?</b>Fewer particles means less is available to pass on the vibration, so less sound energy gets out.</li>
+          <li><b class="st">Make a prediction that matches the change</b>A gradual change gives a gradual effect: the sound gets <b>quieter and quieter</b>, until almost nothing can be heard.</li>
+          <li><b class="st">Check for traps</b>The bell is still vibrating the whole time (you can see it). It's the <i>medium</i> that's disappearing, not the vibration.</li>
+          <li><b class="st">Extend</b>What if air is let back in? The sound gets louder again. That makes this a reversible test of the idea.</li>
+        </ol>
+        <p class="final">The ringing gets gradually quieter until it almost disappears, <b>because</b> there are fewer and fewer particles to carry the vibrations out of the jar.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 6.1</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> A cello is playing at one end of a hall. A listener hears it at the other end. What has to move for the sound to reach the listener?</summary>
+        <div class="ans">The <b>particles in the air</b> vibrate and pass the vibration along. The air itself does not blow across the hall from the cello to the listener.</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> True or false? (a) Sound travels through a metal railing. (b) Sound travels through sea water. (c) Sound travels through a vacuum.</summary>
+        <div class="ans">(a) True. (b) True. (c) False: a vacuum has no particles to vibrate.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> A submarine sends a sound straight down. Which way do the water particles vibrate?</summary>
+        <div class="ans"><b>Up and down</b>, along the same line the sound is travelling, then back again. Each particle stays roughly where it is. (If the wave travelled sideways, the particles would wobble sideways.)</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> You hold your hand close to a loudspeaker playing loud music. What do you feel, and why?</summary>
+        <div class="ans">You feel the air <b>pulsing or vibrating</b> against your hand. The speaker cone is vibrating and pushing the air particles, and they push on your skin.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Model a sound wave with a slinky clamped at one end. How must you move your hand, and what will the slinky look like?</summary>
+        <div class="ans">Push and pull your hand <b>along the length</b> of the slinky (not side to side). The slinky shows areas where the coils are squashed close together, separated by areas where they're stretched apart, and these areas travel along it.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Sound travels at about 340 m/s in air but about 2950 m/s in concrete. Use ideas about particles to explain why.</summary>
+        <div class="ans">In a solid like concrete the particles are <b>very close together and strongly held</b>, so when one vibrates it pushes on its neighbour almost straight away. In a gas the particles are <b>far apart</b>, so each one has to move further before it bumps into the next one. The vibration is passed on more slowly.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Why do airport ground crew wear ear defenders?</summary>
+        <div class="ans">Very loud sounds make the air particles vibrate with a lot of energy. These strong vibrations can <b>damage the delicate parts inside the ear</b>, which can cause permanent hearing loss. Ear defenders absorb much of that energy before it reaches the ear.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.2 ================= -->
+<section class="station" id="echo" style="--c:var(--echo)">
+  <div class="st-head">
+    <div class="eyebrow">Station 6.2</div>
+    <h2>Echoes: sound that bounces back</h2>
+    <ul class="goals"><li>Sound waves can be reflected</li><li>Useful and unwanted echoes</li></ul>
+  </div>
+  <div class="st-body">
+    <h3>Bounce!</h3>
+    <p>One <span class="kw">property</span> (feature) of all waves is that they can be <span class="kw">reflected</span>. Think of throwing a ball at a wall: it comes back. A sound wave does the same, except it isn't pulled down by gravity.</p>
+    <p>A reflected sound is called an <span class="kw">echo</span>. Clap once in an empty room with bare walls and the clap seems to last longer, then fade away. That's the sound bouncing around the walls. This change to a sound is called an <span class="kw">effect on the sound</span>.</p>
+
+    <div class="grid2">
+      <div class="card"><h4>Good reflectors</h4><p>Large, <b>hard, smooth, flat</b> surfaces: glass, tiles, flat metal, smooth concrete.</p></div>
+      <div class="card"><h4>Poor reflectors (absorbers)</h4><p><b>Soft, rough or bumpy</b> materials: thick curtains, carpet, foam, blankets. They soak up the sound energy.</p></div>
+    </div>
+
+    <h3>Useful echoes</h3>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 230" role="img" aria-label="Boat sending a sound pulse down to the seabed and receiving the echo">
+        <rect x="0" y="60" width="640" height="150" fill="var(--sound)" opacity=".15"/>
+        <path d="M0 210 Q160 190 320 205 T640 200 L640 230 L0 230Z" fill="var(--earth)" opacity=".7"/>
+        <path d="M250 60 L390 60 L370 85 L270 85Z" fill="var(--muted)"/>
+        <rect x="300" y="35" width="40" height="25" fill="var(--muted)"/>
+        <line x1="305" y1="90" x2="305" y2="195" stroke="var(--sound)" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#ea)"/>
+        <line x1="335" y1="195" x2="335" y2="90" stroke="var(--echo)" stroke-width="3" marker-end="url(#eb)"/>
+        <text x="120" y="140" class="lbl">sound pulse down</text>
+        <text x="350" y="140" class="lbl">echo comes back up</text>
+        <text x="420" y="40">Depth = half the total distance</text>
+        <defs>
+          <marker id="ea" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--sound)"/></marker>
+          <marker id="eb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--echo)"/></marker>
+        </defs>
+      </svg>
+      </div>
+      <figcaption>Ships measure water depth by timing how long an echo takes to return.</figcaption>
+    </figure>
+    <div class="grid2">
+      <div class="card"><h4>Bats</h4><p>Bats squeak, then listen. From the time the echo takes and the direction it comes from, they work out exactly where an insect is, even in the dark. This is <b>echolocation</b>. Dolphins do it too.</p></div>
+      <div class="card"><h4>Boats</h4><p>A sound sent down from a boat reflects off the seabed or a shoal of fish. The time for the echo tells the crew how deep it is.</p></div>
+      <div class="card"><h4>Medical scans</h4><p>Ultrasound echoes bounce back from inside the body, letting doctors build a picture of an unborn baby without any surgery.</p></div>
+    </div>
+
+    <div class="callout"><h4>Worked example: how deep is the water?</h4>
+      <p>A ship sends a sound down. The echo comes back after <b>0.4 s</b>. Sound travels at about <b>1500 m/s</b> in water.</p>
+      <div class="calc">distance = speed × time<br>distance = 1500 m/s × 0.4 s = 600 m &nbsp;← down <i>and</i> back up<br>depth = 600 m ÷ 2 = <b>300 m</b></div>
+      <p class="cap">Trap to avoid: the echo travels <b>there and back</b>, so always halve the distance.</p>
+    </div>
+
+    <h3>Unwanted echoes</h3>
+    <p>Sometimes echoes are <span class="kw">unwanted</span>. In a recording studio, a single note would repeat and spoil the recording, so the walls are covered with bumpy foam shapes that absorb sound. Theatres use soft seats, curtains and curved, uneven surfaces so the audience hears the actors clearly, without big flat walls to cause echoes.</p>
+
+    <div class="callout try"><h4>Find the bounce</h4>
+      <ol><li>Lay two cardboard tubes on a table in a V shape, with both open ends pointing at a hard surface (like a tile or book), and a barrier between the tubes.</li>
+      <li>Put a phone playing a quiet sound at the end of one tube.</li>
+      <li>Listen at the end of the other tube and turn it until the sound is loudest. Mark the angles.</li>
+      <li>Swap the hard surface for something soft, like foam or a jumper. What changes?</li></ol>
+      <p class="cap">You should find the angles of the two tubes match, just like a ball bouncing. The soft surface gives a much weaker echo.</p>
+    </div>
+
+    <h3>Echo detectives: reading the data</h3>
+    <p>Scientists measure loudness in <b>decibels (dB)</b>. The bigger the number, the louder the sound. Here is an imaginary investigation: the same clap was made in front of four different surfaces, and the loudness of each echo was measured.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 260" role="img" aria-label="Bar chart of echo loudness: tiled wall 68 dB, wooden door 55 dB, cardboard 46 dB, foam panel 31 dB">
+        <line x1="70" y1="20" x2="70" y2="210" stroke="var(--line)"/>
+        <line x1="70" y1="210" x2="620" y2="210" stroke="var(--line)"/>
+        <g font-size="12">
+          <line x1="70" y1="162.5" x2="620" y2="162.5" stroke="var(--line)" stroke-dasharray="3 4"/><text x="62" y="167" text-anchor="end">20</text>
+          <line x1="70" y1="115" x2="620" y2="115" stroke="var(--line)" stroke-dasharray="3 4"/><text x="62" y="119" text-anchor="end">40</text>
+          <line x1="70" y1="67.5" x2="620" y2="67.5" stroke="var(--line)" stroke-dasharray="3 4"/><text x="62" y="72" text-anchor="end">60</text>
+          <line x1="70" y1="20" x2="620" y2="20" stroke="var(--line)" stroke-dasharray="3 4"/><text x="62" y="24" text-anchor="end">80</text>
+          <text x="62" y="214" text-anchor="end">0</text>
+        </g>
+        <text x="16" y="120" transform="rotate(-90 16 120)" text-anchor="middle">echo loudness (dB)</text>
+        <rect x="100" y="48.5" width="90" height="161.5" rx="3" fill="var(--echo)"/><text x="145" y="42" text-anchor="middle" class="lbl">68</text><text x="145" y="230" text-anchor="middle">tiled wall</text>
+        <rect x="230" y="79.4" width="90" height="130.6" rx="3" fill="var(--echo)" opacity=".8"/><text x="275" y="73" text-anchor="middle" class="lbl">55</text><text x="275" y="230" text-anchor="middle">wooden door</text>
+        <rect x="360" y="100.8" width="90" height="109.2" rx="3" fill="var(--echo)" opacity=".6"/><text x="405" y="95" text-anchor="middle" class="lbl">46</text><text x="405" y="230" text-anchor="middle">cardboard</text>
+        <rect x="490" y="136.4" width="90" height="73.6" rx="3" fill="var(--echo)" opacity=".4"/><text x="535" y="130" text-anchor="middle" class="lbl">31</text><text x="535" y="230" text-anchor="middle">foam panel</text>
+        <text x="345" y="252" text-anchor="middle" class="lbl">surface</text>
+      </svg>
+      </div>
+      <figcaption>Example data (made up for practice). For different named things like surfaces, draw a <b>bar chart</b> with gaps between the bars, not a line graph.</figcaption>
+    </figure>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Reflect, absorb or pass through?</b> When a sound wave hits a surface, three things can happen to its energy. Most surfaces do a bit of each:</p>
+      <div class="grid2">
+        <div class="card"><h4>Reflected</h4><p>Bounces back. Hard, smooth surfaces reflect most of the energy, so you hear a strong echo.</p></div>
+        <div class="card"><h4>Absorbed</h4><p>Soaked up. Soft, fluffy or holey materials trap air; the vibrations get used up inside them and the energy ends up as a tiny bit of heat.</p></div>
+        <div class="card"><h4>Transmitted</h4><p>Passes through, which is why you can hear your neighbour's music through a wall.</p></div>
+      </div>
+      <p><b>Why don't you hear an echo in your bedroom?</b> Your brain can only tell two sounds apart if they arrive about <b>0.1 s</b> or more apart. In a small room the reflection comes back much faster than that, so it blends with the original sound and just makes it sound fuller. To hear a separate echo, the wall needs to be roughly <b>17 m or more</b> away (see the worked example below).</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">An echo is louder than the original sound.</div><div class="yes">An echo is always <b>quieter</b>: some energy is absorbed by the surface, and the sound spreads out as it travels.</div></div>
+        <div class="myth"><div class="no">An echo is a new, different sound.</div><div class="yes">It's the <b>same sound wave</b>, reflected back. That's why it has the same pitch.</div></div>
+        <div class="myth"><div class="no">In echo sums, the distance is just speed × time.</div><div class="yes">speed × time gives the <b>round trip</b>. To get the distance to the object, <b>halve it</b>.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Car parking sensors</b>A sensor on the bumper sends out sound pulses too high for us to hear. The faster the echo returns, the closer the wall, and the faster the beeping.</div>
+        <div class="app"><b>Fishing boats</b>Echo sounders show shoals of fish on a screen, because fish reflect sound differently from the seabed.</div>
+        <div class="app"><b>Ultrasound scans</b>High-pitched sound reflects off organs and a baby inside the body. It's safe enough to use during pregnancy.</div>
+        <div class="app"><b>Concert halls</b>Designers balance hard and soft surfaces: a little reflection makes music sound rich; too much makes it muddy.</div>
+        <div class="app"><b>Mapping the sea floor</b>Ships use sonar to map underwater mountains. This is how the mid-ocean ridges in 6.3 were discovered!</div>
+      </div>
+
+      <div class="puzzle"><h4>The empty hall</h4><p>A school hall sounds "echoey" when it's empty, but fine during assembly when it's full of students. Why? <i>(People and their clothes are soft. They absorb sound energy, so less is reflected off the floor and walls.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Calculate · shortest echo</span><span class="qq">Your brain needs at least 0.1 s between two sounds to hear them separately. Sound travels at 340 m/s. How far away must a wall be for you to hear a clear echo?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Picture the journey</b>Draw yourself, a wall, and an arrow going there and an arrow coming back. The 0.1 s is for the <b>whole round trip</b>.</li>
+          <li><b class="st">Given</b>speed = 340 m/s, time (round trip) = 0.1 s</li>
+          <li><b class="st">Find the round-trip distance</b>distance = speed × time = 340 × 0.1 = 34 m</li>
+          <li><b class="st">Convert to one-way</b>The wall is half of that: 34 ÷ 2 = 17 m</li>
+          <li><b class="st">Sense-check</b>A classroom is about 8–10 m long. That's less than 17 m, which matches the fact that we don't hear clear echoes in classrooms. ✓</li>
+        </ol>
+        <p class="final">The wall must be at least <b>17 m</b> away.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Calculate · measuring the speed of sound</span><span class="qq">A class stands 100 m from a large wall. The echo of a clap returns after 0.6 s. Use this to work out the speed of sound.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Spot what's different</b>Usually we're given the speed. This time it's the <b>unknown</b>, so we rearrange: speed = distance ÷ time.</li>
+          <li><b class="st">Which distance?</b>The sound goes to the wall and back, so the distance is 100 + 100 = <b>200 m</b>.</li>
+          <li><b class="st">Substitute</b>speed = 200 ÷ 0.6</li>
+          <li><b class="st">Solve</b>≈ 333 m/s</li>
+          <li><b class="st">Sense-check and evaluate</b>That's close to 340 m/s, but a little low. Why? Starting and stopping a stopwatch by hand adds a reaction-time error. <b>Improvement:</b> repeat several times and take an average, or time 10 echoes and divide by 10.</li>
+        </ol>
+        <p class="final">Speed ≈ <b>333 m/s</b>. Close to the true value; the difference is likely due to human reaction time.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Plan · fair test</span><span class="qq">You want to find out which material is best at absorbing sound. How would you make your investigation a fair test?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Identify what you change (independent variable)</b>The <b>material</b> placed in front of the wall: foam, cardboard, tile, cloth…</li>
+          <li><b class="st">Identify what you measure (dependent variable)</b>The <b>loudness of the echo</b> in dB, using a sound meter or phone app.</li>
+          <li><b class="st">List what must stay the same (control variables)</b>Same sound (use a recording, not a clap), same volume, same distance from sound to surface, same angle, same size of material, same position for the meter.</li>
+          <li><b class="st">Plan for reliable results</b>Repeat each reading 3 times and calculate the mean. Note any odd results (anomalies) and repeat them.</li>
+          <li><b class="st">Decide how to show the results</b>A <b>bar chart</b>, because the materials are categories, not numbers.</li>
+        </ol>
+        <p class="final">Change only the material; keep everything else the same; measure echo loudness; repeat and average.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 6.2</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Which of these would reflect sound best: a hedge, long grass, a smooth brick wall, or a sand dune?</summary>
+        <div class="ans">The <b>smooth brick wall</b>, because it is hard, flat and smooth. The others are soft, uneven or full of gaps, so they absorb or scatter the sound.</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> You stamp your foot in a long concrete underpass and hear the stamp again a moment later. Why?</summary>
+        <div class="ans">The sound wave travels to the hard walls and ceiling, <b>reflects</b>, and comes back to your ears a short time later. That's an <b>echo</b>.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> A singer practises once in a tunnel and once in an open field. Where will she hear more echoes, and why?</summary>
+        <div class="ans">In the <b>tunnel</b>. It is surrounded by hard, flat surfaces close by that reflect the sound back. In a field the sound spreads out, and there are no nearby hard surfaces to bounce it back.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Using the bar chart above: which surface gave the loudest echo? Which would be best for lining a recording studio?</summary>
+        <div class="ans">Loudest echo: the <b>tiled wall</b> (68 dB). Best for a studio: the <b>foam panel</b> (31 dB), because it reflects the least sound, so it causes the fewest echoes.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Leo stands 170 m from a tall cliff and bangs a drum. Sound travels at 340 m/s in air. How long until he hears the echo?</summary>
+        <div class="ans"><div class="calc">total distance = 170 m there + 170 m back = 340 m<br>time = distance ÷ speed = 340 ÷ 340 = <b>1 second</b></div></div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Submarine crews can't see in deep, dark water. How can echoes help them find a large rock ahead?</summary>
+        <div class="ans">The submarine sends out a sound pulse. When the pulse hits the rock it <b>reflects</b> back as an echo. The <b>time</b> the echo takes tells them how far away the rock is (longer time = further away), and the <b>direction</b> the echo comes from tells them where it is. This is called <b>sonar</b>.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.3 ================= -->
+<section class="station" id="inside" style="--c:var(--earth)">
+  <div class="st-head">
+    <div class="eyebrow">Station 6.3</div>
+    <h2>Inside the Earth: a planet in layers</h2>
+    <ul class="goals"><li>A model of Earth's structure</li><li>How the continents have moved</li></ul>
+  </div>
+  <div class="st-body">
+    <p>Scientists have worked out that the Earth is about <b>4500 million years old</b>. Nobody has ever dug to the centre (the deepest hole ever drilled is only about 12 km!), but by studying earthquake waves scientists have worked out what is inside.</p>
+
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Cutaway of Earth showing crust, mantle, outer core and inner core">
+        <circle cx="170" cy="150" r="130" fill="var(--planet)"/>
+        <path d="M170 150 L170 20 A130 130 0 0 1 300 150 Z" fill="#7a4b2a"/>
+        <path d="M170 150 L170 26 A124 124 0 0 1 294 150 Z" fill="#e07a2f"/>
+        <path d="M170 150 L170 80 A70 70 0 0 1 240 150 Z" fill="#f2b23a"/>
+        <path d="M170 150 L170 115 A35 35 0 0 1 205 150 Z" fill="#fde39a"/>
+        <line x1="290" y1="60" x2="390" y2="40" stroke="var(--muted)"/>
+        <text x="395" y="44"><tspan class="lbl">Crust</tspan> · thin, solid rock we live on</text>
+        <line x1="270" y1="110" x2="390" y2="100" stroke="var(--muted)"/>
+        <text x="395" y="104"><tspan class="lbl">Mantle</tspan> · very hot rock that can flow</text>
+        <line x1="230" y1="135" x2="390" y2="160" stroke="var(--muted)"/>
+        <text x="395" y="164"><tspan class="lbl">Outer core</tspan> · liquid iron and nickel</text>
+        <line x1="195" y1="145" x2="390" y2="220" stroke="var(--muted)"/>
+        <text x="395" y="224"><tspan class="lbl">Inner core</tspan> · solid iron and nickel</text>
+      </svg>
+      </div>
+      <figcaption>Like a peach: thin skin (crust), thick flesh (mantle), and a stone in the middle (core).</figcaption>
+    </figure>
+
+    <div class="tbl"><table>
+      <thead><tr><th>Layer</th><th>What it's made of</th><th>Solid or liquid?</th></tr></thead>
+      <tbody>
+        <tr><td><b>Crust</b></td><td>Rock</td><td>Solid</td></tr>
+        <tr><td><b>Mantle</b></td><td>Hot rock that can flow slowly (your book calls it <span class="kw">molten</span>, meaning melted)</td><td>Flows</td></tr>
+        <tr><td><b>Outer core</b></td><td>Metals: iron and nickel</td><td>Liquid (molten)</td></tr>
+        <tr><td><b>Inner core</b></td><td>Metals: iron and nickel</td><td>Solid (squeezed so hard it can't melt)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>What is the crust made of?</h3>
+    <p>The rocks of the crust contain both metals and non-metals. The two most common elements are both non-metals; the most common metal comes third.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Element</th><th>Type</th><th>Approx. share of crust</th></tr></thead>
+      <tbody>
+        <tr><td>Oxygen, O</td><td>Non-metal (the most common)</td><td class="num">≈ 46 %</td></tr>
+        <tr><td>Silicon, Si</td><td>Non-metal</td><td class="num">≈ 28 %</td></tr>
+        <tr><td>Aluminium, Al</td><td>Metal (the most common metal)</td><td class="num">≈ 8 %</td></tr>
+        <tr><td>Iron, Fe</td><td>Metal</td><td class="num">≈ 5 %</td></tr>
+        <tr><td>Calcium, Ca</td><td>Metal</td><td class="num">≈ 4 %</td></tr>
+        <tr><td>Others</td><td>Mixed</td><td class="num">≈ 9 %</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>The jigsaw puzzle continents</h3>
+    <p>People once thought the Earth was only a few thousand years old and had never changed. Then in <b>1912</b> a German scientist called <b>Alfred Wegener</b> had a bold idea: millions of years ago all the land was joined in one giant supercontinent (now called <b>Pangaea</b>), which slowly broke apart. The pieces drifted to where they are today. This idea is called <span class="kw">continental drift</span>.</p>
+    <div class="grid2">
+      <div class="card"><h4>Evidence 1: shapes</h4><p>The coastlines fit together like jigsaw pieces. Look at South America and Africa!</p></div>
+      <div class="card"><h4>Evidence 2: rocks</h4><p>The same types of rock appear on different continents exactly where they would join.</p></div>
+      <div class="card"><h4>Evidence 3: fossils</h4><p>Fossils of the same animals and plants are found on continents now separated by oceans.</p></div>
+    </div>
+    <p>Many scientists rejected Wegener's idea, because he <b>could not explain what made the continents move</b>. Good science needs a mechanism, not just evidence that something happened.</p>
+
+    <h3>The answer: tectonic plates</h3>
+    <p>We now know the crust is broken into huge pieces called <span class="kw">tectonic plates</span>. <b>Oceanic plates</b> lie under the oceans; <b>continental plates</b> carry the continents. The plates float on the hot, slowly flowing rock below. Heat from deep inside the Earth makes this rock churn very slowly, and that carries the plates along. (Below the surface, melted rock is called <span class="kw">magma</span>.)</p>
+    <div class="callout wow"><h4>Speed check</h4><p>Plates move about <b>4 cm per year</b>, about the speed your fingernails grow. That's tiny, but over 100 million years it adds up to 4000 km!</p></div>
+
+    <div class="callout try"><h4>Drifting plates model</h4>
+      <p>Float a few pieces of polystyrene on water in a heat-proof dish. Once they stop moving, heat the water gently from below and watch the pieces drift apart.</p>
+      <p class="cap">Polystyrene = plates, water = mantle, heat source = Earth's hot core. <b>Weakness of the model:</b> the real mantle is rock, not water, and real plates move far, far slower. <b>Safety:</b> an adult should handle the heating, wear safety glasses, and let the dish cool before touching it.</p>
+    </div>
+
+    <h3>From idea to theory</h3>
+    <p>For about 50 years, Wegener's idea stayed unproven. Then in the <b>1960s</b> scientists mapping the ocean floor found long underwater mountain ridges where new rock was forming and spreading outwards. This led to the theory of <b>plate tectonics</b>: the crust is made of moving plates, pushed along by the slow flow of hot rock in the mantle. The theory finally explained <i>how</i> continental drift happens. It shows how science works: a good idea plus new evidence can change what everyone believes.</p>
+
+    <div class="callout"><h4>Think like a scientist: can you trust that website?</h4>
+      <p>When you research online, ask two questions about each source:</p>
+      <ul><li><b>Relevance:</b> does it actually answer my question?</li>
+      <li><b>Reliability and bias:</b> who wrote it? Is it backed by evidence most scientists accept, or is it one person's unusual opinion, or someone trying to sell something?</li></ul>
+      <p>For example, a museum or university website saying "plates move because of flow in the mantle" matches the accepted evidence. A blog claiming "the continents only seem to move because the Earth is getting bigger" goes against a huge amount of evidence, so treat it with caution.</p>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>A boiled egg model.</b> Crack the shell of a hard-boiled egg and cut it in half. The cracked <b>shell</b> is like the crust broken into plates, the <b>white</b> is like the mantle, and the <b>yolk</b> is like the core. Even the egg is too thick-shelled though: if the Earth were an apple, the crust would be <b>thinner than the apple's skin</b>.</p>
+      <p><b>How do we know what's inside?</b> Nobody has been there, so scientists use clever <i>indirect</i> evidence:</p>
+      <div class="grid2">
+        <div class="card"><h4>Earthquake waves</h4><p>Earthquakes send vibrations (seismic waves) right through the Earth. Instruments around the world record when they arrive. The waves speed up, slow down and bend as they pass through different layers. One type of wave <b>cannot travel through liquids</b>, and it never gets through the outer core. That's the evidence that the outer core is liquid!</p></div>
+        <div class="card"><h4>Meteorites</h4><p>Some meteorites are lumps of iron and nickel, left over from when the planets formed. This supports the idea that Earth's core is made of the same metals.</p></div>
+        <div class="card"><h4>Volcanoes</h4><p>Lava brings up material from deep below, giving clues about the mantle.</p></div>
+      </div>
+      <p><b>What actually moves the plates?</b> The core heats the bottom of the mantle. Hot rock is less dense, so it slowly <b>rises</b>; near the top it cools, becomes denser and <b>sinks</b> again. This circular flow is called a <b>convection current</b>, just like soup moving in a pan on a stove. The plates on top get carried along, like toys floating on that soup. This is exactly what the polystyrene experiment models.</p>
+      <div class="callout"><h4>The outer core: Earth's giant magnet</h4>
+        <p>The <b>outer core</b> is liquid iron and nickel, and it is constantly swirling as heat escapes from the centre. Moving liquid metal creates electric currents, and these produce <b>Earth's magnetic field</b>. (Exam tip: it's the <b>outer core</b>, not the inner core. The inner core is solid and can't flow.)</p>
+        <ul><li>It makes <b>compass</b> needles point north, which has helped people navigate for centuries.</li>
+        <li>It acts like an invisible shield, deflecting harmful charged particles streaming from the Sun.</li>
+        <li>When some of those particles get through near the poles, they make the glowing <b>auroras</b> (northern and southern lights).</li></ul>
+      </div>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">The mantle is an ocean of runny lava.</div><div class="yes">Most of the mantle is <b>solid-ish rock</b> so hot it can flow very slowly, like extremely stiff putty, only a few cm a year. Only small pockets melt into magma.</div></div>
+        <div class="myth"><div class="no">Tectonic plates are the same as continents.</div><div class="yes">A plate can carry a continent, an ocean, or both. The plate boundaries often don't follow coastlines at all.</div></div>
+        <div class="myth"><div class="no">Wegener was wrong because people rejected his idea.</div><div class="yes">Being rejected doesn't make an idea wrong. Wegener's <b>evidence</b> was good; he was missing the <b>mechanism</b>. New evidence later proved the main idea right.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>GPS measurements</b>Satellites now measure plate movement directly, millimetre by millimetre, every year.</div>
+        <div class="app"><b>Hazard maps</b>Knowing where plate boundaries are tells governments where to build stronger buildings and plan evacuations.</div>
+        <div class="app"><b>Finding resources</b>Many metals, gems and oil deposits form near old or active plate boundaries.</div>
+        <div class="app"><b>Iceland</b>Iceland sits right on a boundary where two plates move apart. You can stand in the rift valley between them!</div>
+      </div>
+
+      <div class="puzzle"><h4>The traveller fossil</h4><p>Fossils of tropical ferns have been found in Antarctica, which is frozen today. Suggest an explanation. <i>(Antarctica was once much closer to the equator, and has drifted south over millions of years on its tectonic plate.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Evaluate evidence · fossils</span><span class="qq">Fossils of Mesosaurus, a small reptile that lived only in fresh water, are found in South America and in Africa, but nowhere else. Explain why this is strong evidence for continental drift.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Pick out the important clue</b>The reptile lived only in <b>fresh water</b>, and it was small.</li>
+          <li><b class="st">Ask "what are the possible explanations?"</b>(a) It swam across the ocean. (b) It evolved separately in two places. (c) The two continents were once joined.</li>
+          <li><b class="st">Test each one against the evidence</b>(a) A small freshwater animal couldn't cross thousands of km of salty ocean. ✗ (b) Identical species evolving separately in two places is extremely unlikely. ✗ (c) If the land was joined, the animal simply lived in one area that later split. ✓</li>
+          <li><b class="st">Make your claim and link it</b>Only explanation (c) fits all the evidence.</li>
+        </ol>
+        <p class="final">A small freshwater reptile could not have crossed a salty ocean, <b>so</b> South America and Africa must have been <b>joined</b> when it lived, and have drifted apart since.</p>
+        <p class="tip">Ruling out other explanations makes your argument much stronger. This is how real scientists reason.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Calculate · drifting ocean</span><span class="qq">The Atlantic Ocean widens by about 2.5 cm each year. How much wider will it get in 100 million years? Give your answer in km.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Given</b>2.5 cm per year, 100 000 000 years</li>
+          <li><b class="st">Multiply rate × time</b>2.5 × 100 000 000 = 250 000 000 cm</li>
+          <li><b class="st">Convert units step by step</b>÷ 100 to get metres: 2 500 000 m. Then ÷ 1000 to get kilometres: <b>2500 km</b></li>
+          <li><b class="st">Sense-check</b>The Atlantic is several thousand km wide today, and it began opening roughly 180 million years ago. 2500 km in 100 million years is the right size. ✓</li>
+        </ol>
+        <p class="final">About <b>2500 km</b>. A tiny yearly movement becomes an ocean over geological time.</p>
+        <p class="tip">Big lesson: slow processes + very long time = huge changes.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · being a sceptic</span><span class="qq">Why was it reasonable for scientists in 1912 to doubt Wegener, even though he turned out to be right?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Think about what makes a theory convincing</b>Evidence that something happened, <i>and</i> an explanation of how it happens.</li>
+          <li><b class="st">Check what Wegener had</b>Evidence: yes (shapes, rocks, fossils). Mechanism: no. He couldn't say what force could push whole continents.</li>
+          <li><b class="st">Judge the scientists' response</b>Asking "how?" is good science. Extraordinary claims need strong support.</li>
+          <li><b class="st">What changed?</b>In the 1960s, sea-floor mapping gave new evidence and a mechanism (mantle convection), and scientists changed their minds.</li>
+        </ol>
+        <p class="final">His idea lacked a <b>mechanism</b>, so doubting it was sensible. Scientists accepted it once <b>new evidence</b> explained how plates move. Science changes its mind when the evidence demands it.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 6.3</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Which part of the Earth is made of: (a) solid rock, (b) liquid iron and nickel, (c) solid iron and nickel, (d) very hot rock that can flow?</summary>
+        <div class="ans">(a) Crust. (b) Outer core. (c) Inner core. (d) Mantle.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> What is meant by "continental drift"?</summary>
+        <div class="ans">The idea that the continents were once joined together in one large landmass, and have <b>slowly moved apart</b> over millions of years to where they are today.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> List the evidence that led Wegener to his idea.</summary>
+        <div class="ans">1. The coastlines of the continents <b>fit together</b> like a jigsaw. 2. Matching <b>rock types</b> are found where the continents would join. 3. Matching <b>fossils</b> are found on continents now separated by ocean.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Which theory, developed in the 1960s, explained continental drift? How?</summary>
+        <div class="ans"><b>Plate tectonics.</b> Earth's crust is broken into tectonic plates that rest on the mantle. Slow flowing of hot rock in the mantle carries the plates, and the continents on them, very slowly across the Earth's surface.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.4 ================= -->
+<section class="station" id="changes" style="--c:var(--quake)">
+  <div class="st-head">
+    <div class="eyebrow">Station 6.4</div>
+    <h2>Restless Earth: mountains, volcanoes and quakes</h2>
+    <ul class="goals"><li>How fold mountains and volcanoes form</li><li>Why earthquakes happen</li></ul>
+  </div>
+  <div class="st-body">
+    <p>The edges where two tectonic plates meet are called <span class="kw">plate boundaries</span>. Most <span class="kw">geological change</span> (changes to the rocks and land) happens there. Some changes are very slow, taking millions of years. Others are sudden and violent.</p>
+    <p>The edges of the Pacific Ocean are packed with volcanoes and earthquakes. This loop is nicknamed the <b>Ring of Fire</b>. Countries such as Japan, Indonesia, the Philippines and Chile all sit on it.</p>
+
+    <h3>Three ways plates meet</h3>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 660 230" role="img" aria-label="Three plate boundary types: moving together, moving apart, sliding past">
+        <defs>
+          <marker id="pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker>
+        </defs>
+        <!-- together -->
+        <g>
+          <rect x="10" y="120" width="190" height="60" fill="#e07a2f" opacity=".85"/>
+          <path d="M10 90 L95 90 L110 60 L125 90 L200 90 L200 120 L10 120Z" fill="var(--land)"/>
+          <line x1="30" y1="105" x2="70" y2="105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <line x1="180" y1="105" x2="140" y2="105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <text x="105" y="210" text-anchor="middle" class="lbl">Moving together</text>
+          <text x="105" y="226" text-anchor="middle">fold mountains, subduction</text>
+        </g>
+        <!-- apart -->
+        <g transform="translate(230,0)">
+          <rect x="10" y="120" width="190" height="60" fill="#e07a2f" opacity=".85"/>
+          <path d="M10 90 L95 90 L95 120 L10 120Z M115 90 L200 90 L200 120 L115 120Z" fill="var(--land)"/>
+          <path d="M95 180 L105 70 L115 180Z" fill="var(--quake)"/>
+          <line x1="80" y1="105" x2="30" y2="105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <line x1="130" y1="105" x2="180" y2="105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <text x="105" y="210" text-anchor="middle" class="lbl">Moving apart</text>
+          <text x="105" y="226" text-anchor="middle">lava rises → volcanoes</text>
+        </g>
+        <!-- sliding -->
+        <g transform="translate(460,0)">
+          <path d="M20 60 L110 60 L110 160 L20 160Z" fill="var(--land)"/>
+          <path d="M110 40 L200 40 L200 140 L110 140Z" fill="var(--land)" opacity=".7"/>
+          <line x1="65" y1="140" x2="65" y2="80" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <line x1="155" y1="60" x2="155" y2="120" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#pa)"/>
+          <text x="110" y="210" text-anchor="middle" class="lbl">Sliding past</text>
+          <text x="110" y="226" text-anchor="middle">stick, then slip → earthquake</text>
+        </g>
+      </svg>
+      </div>
+      <figcaption>The first two are side views; "sliding past" is seen from above.</figcaption>
+    </figure>
+    <div class="grid2">
+      <div class="card"><h4>Moving together</h4><p>One plate may slide underneath the other. This is <span class="kw">subduction</span>. The sinking rock melts and becomes part of the mantle. Or the rocks crumple upwards into mountains.</p></div>
+      <div class="card"><h4>Moving apart</h4><p>The crust stretches, cracks and thins. Liquid rock from the mantle squeezes up through the gap as <span class="kw">lava</span>, cools and hardens into new crust. This builds a <span class="kw">volcano</span>.</p></div>
+      <div class="card"><h4>Sliding past</h4><p>The plates are huge and rough, so friction makes them stick. Force builds up for years, then they suddenly jerk free. That sudden movement is an <span class="kw">earthquake</span>.</p></div>
+    </div>
+
+    <h3>Fold mountains</h3>
+    <p>When two plates push into each other, the rock layers between them crumple and fold upwards, like pushing a tablecloth together on a table. The result is <span class="kw">fold mountains</span>, which can form on land or under the sea.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Mountain range</th><th>Where</th><th>Age</th></tr></thead>
+      <tbody>
+        <tr><td>Himalayas</td><td>Asia</td><td class="num">10–25 million yrs</td></tr>
+        <tr><td>Rocky Mountains</td><td>North America</td><td class="num">10–25 million yrs</td></tr>
+        <tr><td>Ural Mountains</td><td>Russia</td><td class="num">&gt; 200 million yrs</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cap">Young fold mountains are tall and jagged. Old ones like the Urals have been worn down by weather for so long that they are lower and rounder.</p>
+
+    <h3>Inside a volcano</h3>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Cross-section of a volcano with magma chamber, main vent, secondary vent, crater, ash cloud and layers">
+        <ellipse cx="300" cy="40" rx="90" ry="28" fill="var(--muted)" opacity=".7"/>
+        <path d="M80 250 L260 80 L340 80 L520 250Z" fill="#8a6a50"/>
+        <path d="M120 250 L270 110 L330 110 L480 250" fill="none" stroke="#5e4634" stroke-width="3"/>
+        <path d="M160 250 L280 140 L320 140 L440 250" fill="none" stroke="#5e4634" stroke-width="3"/>
+        <rect x="292" y="80" width="16" height="190" fill="var(--quake)"/>
+        <path d="M300 200 L400 160 L410 168 L305 212Z" fill="var(--quake)"/>
+        <path d="M262 82 Q250 140 200 190" stroke="var(--quake)" stroke-width="6" fill="none"/>
+        <ellipse cx="300" cy="275" rx="120" ry="20" fill="var(--quake)"/>
+        <rect x="0" y="250" width="640" height="4" fill="var(--muted)"/>
+        <text x="400" y="40" class="lbl">ash cloud</text>
+        <text x="350" y="75" class="lbl">crater</text>
+        <text x="40" y="170" class="lbl">lava flow</text>
+        <line x1="110" y1="166" x2="215" y2="175" stroke="var(--muted)"/>
+        <text x="420" y="150" class="lbl">secondary vent</text>
+        <text x="530" y="205" class="lbl">layers of</text>
+        <text x="530" y="221" class="lbl">ash and lava</text>
+        <line x1="528" y1="210" x2="440" y2="225" stroke="var(--muted)"/>
+        <text x="320" y="240" class="lbl">main vent</text>
+        <text x="440" y="285" class="lbl">magma chamber</text>
+      </svg>
+      </div>
+      <figcaption>Each eruption adds new layers of ash and lava, so the volcano grows taller.</figcaption>
+    </figure>
+    <div class="callout"><h4>Magma or lava?</h4><p>Same stuff, different place. <b>Magma</b> = liquid rock <b>underground</b>. <b>Lava</b> = liquid rock that has reached the <b>surface</b>.</p></div>
+    <p>If the magma is very thick and full of dissolved gas, pressure builds up until the volcano explodes violently, blasting out gas, ash and rock. Huge eruptions can even set off avalanches, earthquakes, and tsunamis if the volcano is near the sea. In 2018, part of Anak Krakatau in Indonesia collapsed into the sea and caused a tsunami.</p>
+    <div class="grid2">
+      <div class="card"><h4>Active</h4><p>Has erupted recently and could erupt at any time.</p></div>
+      <div class="card"><h4>Dormant / inactive</h4><p>"Sleeping": hasn't erupted for a very long time, but might again.</p></div>
+      <div class="card"><h4>Extinct</h4><p>Will not erupt ever again.</p></div>
+    </div>
+
+    <h3>Earthquakes</h3>
+    <p>Some earthquakes are so slight that only scientific instruments notice them; others crack roads and flatten buildings. The strength of an earthquake is called its <span class="kw">magnitude</span>. It depends on the size of the faults (cracks) at the plate boundary and on how far the rocks move. In the biggest earthquakes, rocks can lurch tens of metres in seconds.</p>
+
+    <div class="callout try"><h4>Model the boundaries</h4>
+      <ul><li><b>Cloth:</b> push your hands together on a flat cloth and watch it fold into "mountains".</li>
+      <li><b>Paper:</b> push two sheets together; one slides over the other, like subduction.</li>
+      <li><b>Modelling clay:</b> push two flat slabs together and they crumple and thicken.</li>
+      <li><b>Chocolate bars with soft centres:</b> push them together and the soft "mantle" oozes out. (Don't eat it if it's used in a lab!)</li></ul>
+      <p class="cap">For each model, ask: what does it show well, and what does it get wrong?</p>
+    </div>
+
+    <h3>The magnitude scale: ×10 each step</h3>
+    <p>Earthquake magnitude is measured on a <b>"times 10" scale</b>. Each time the number goes up by 1, the earthquake is <b>10 times stronger</b>. So the numbers grow much faster than they look!</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 640 190" role="img" aria-label="Magnitude steps: going from 4 to 5 is 10 times, to 6 is 100 times, to 7 is 1000 times stronger">
+        <g>
+          <rect x="30" y="120" width="24" height="24" rx="3" fill="var(--quake)" opacity=".35"/>
+          <text x="42" y="168" text-anchor="middle" class="lbl">Mag 4</text><text x="42" y="184" text-anchor="middle">×1</text>
+          <rect x="140" y="96" width="48" height="48" rx="4" fill="var(--quake)" opacity=".5"/>
+          <text x="164" y="168" text-anchor="middle" class="lbl">Mag 5</text><text x="164" y="184" text-anchor="middle">×10</text>
+          <rect x="270" y="58" width="86" height="86" rx="5" fill="var(--quake)" opacity=".7"/>
+          <text x="313" y="168" text-anchor="middle" class="lbl">Mag 6</text><text x="313" y="184" text-anchor="middle">×100</text>
+          <rect x="440" y="8" width="136" height="136" rx="6" fill="var(--quake)"/>
+          <text x="508" y="168" text-anchor="middle" class="lbl">Mag 7</text><text x="508" y="184" text-anchor="middle">×1000</text>
+          <text x="95" y="120" text-anchor="middle">→ ×10</text>
+          <text x="229" y="100" text-anchor="middle">→ ×10</text>
+          <text x="398" y="80" text-anchor="middle">→ ×10</text>
+        </g>
+      </svg>
+      </div>
+      <figcaption>Compared with magnitude 4. (Boxes are only roughly to scale.)</figcaption>
+    </figure>
+
+    <div class="callout"><h4>Earthquakes under the sea</h4><p>Many earthquakes happen under the oceans, at plate boundaries on the sea floor. When the sea floor suddenly jolts, it shoves a huge amount of water. This makes a <b>tsunami</b>: a series of giant waves that can race across the ocean and cause damage on coasts hundreds of kilometres away.</p></div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>Why earthquakes are sudden.</b> Bend a plastic ruler slowly. Energy is being <b>stored</b> in it. Nothing seems to happen… until it suddenly snaps or springs back and releases all that energy at once. Plates do the same: friction holds them stuck for years or centuries while energy builds up, then the rock gives way in seconds. The point underground where the rock breaks is the <b>focus</b>; the point on the surface directly above it is the <b>epicentre</b>, where shaking is usually strongest.</p>
+      <p><b>Why do plates melt when they sink?</b> In subduction, the plate is pushed deep down where it's much hotter. Water carried down with the plate also helps the rock melt more easily. This new magma rises, which is why there's often a line of volcanoes next to a subduction zone, like the Andes in South America and the volcanoes of Indonesia.</p>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">Scientists can predict exactly when an earthquake will strike.</div><div class="yes">They can say <b>where</b> earthquakes are likely and roughly how often, but not the exact day or hour.</div></div>
+        <div class="myth"><div class="no">A magnitude 8 earthquake is twice as strong as a magnitude 4.</div><div class="yes">It's 4 steps up the ×10 scale: 10 × 10 × 10 × 10 = <b>10 000 times</b> stronger.</div></div>
+        <div class="myth"><div class="no">Volcanoes only happen on land.</div><div class="yes">Most volcanic activity is <b>under the sea</b>, at boundaries where plates move apart along the ocean floor.</div></div>
+        <div class="myth"><div class="no">Dormant means safe.</div><div class="yes">Dormant only means "sleeping". Some volcanoes thought dormant for centuries have erupted with very little warning.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Earthquake-proof buildings</b>Flexible steel frames, cross-bracing and rubber "base isolators" let buildings sway instead of snapping, like a tree bending in the wind.</div>
+        <div class="app"><b>Tsunami warning buoys</b>Sensors on the sea floor detect sudden pressure changes and send alerts so coasts can evacuate.</div>
+        <div class="app"><b>Volcano watching</b>Scientists measure gas, ground swelling and tiny tremors to spot an eruption coming.</div>
+        <div class="app"><b>Rich farmland</b>Volcanic ash breaks down into very fertile soil, which is why many people farm near volcanoes in Indonesia and Italy.</div>
+        <div class="app"><b>Geothermal energy</b>Iceland uses heat from underground near its plate boundary to generate electricity and heat homes.</div>
+        <div class="app"><b>Close to home</b>Singapore isn't on a plate boundary, but tall buildings sometimes sway gently from big earthquakes in Sumatra, hundreds of km away.</div>
+      </div>
+
+      <div class="puzzle"><h4>Young and old mountains</h4><p>The Himalayas are still getting a few millimetres taller each year, but the Ural Mountains are not. Suggest why. <i>(The Indian plate is still pushing into the Eurasian plate. The plates that made the Urals stopped colliding long ago, so weathering slowly wears them down.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Method · the ×10 scale</span><span class="qq">How many times stronger is a magnitude 9 earthquake than a magnitude 5?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Find the number of steps</b>9 − 5 = <b>4 steps</b></li>
+          <li><b class="st">Each step multiplies by 10</b>So multiply 10 by itself 4 times: 10 × 10 × 10 × 10</li>
+          <li><b class="st">Solve</b>= 10 000</li>
+          <li><b class="st">Shortcut</b>The answer is 1 followed by as many zeros as there are steps. 4 steps → 10 000.</li>
+          <li><b class="st">Common error check</b>Did you add (5 + 4 = 9 → "4 times")? That's wrong. On this scale you <b>multiply</b>, you don't add.</li>
+        </ol>
+        <p class="final">A magnitude 9 earthquake is <b>10 000 times</b> stronger than a magnitude 5.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · map reasoning</span><span class="qq">Japan has many earthquakes and volcanoes. Australia has very few. Use your knowledge of tectonic plates to explain why.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Recall the rule</b>Earthquakes and volcanoes mostly happen at <b>plate boundaries</b>.</li>
+          <li><b class="st">Apply it to Japan</b>Japan sits where <b>several plates meet</b> (it's on the Ring of Fire). Plates are pushing and sliding under each other right below it.</li>
+          <li><b class="st">Apply it to Australia</b>Australia is in the <b>middle</b> of the Indo-Australian plate, far from its edges.</li>
+          <li><b class="st">Compare and conclude</b>Close to boundaries means lots of plate movement, so lots of activity. Far from boundaries means little activity.</li>
+        </ol>
+        <p class="final">Japan lies on boundaries between several plates, where the plates move against each other. Australia lies near the centre of one plate, <b>so</b> it experiences far fewer earthquakes and volcanoes.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Evaluate · living near a volcano</span><span class="qq">Millions of people live near active volcanoes. Evaluate whether this is a sensible choice.</span></summary>
+        <ol class="steps">
+          <li><b class="st">"Evaluate" means weigh up both sides</b>Make two lists, then reach a judgement.</li>
+          <li><b class="st">Benefits</b>Very fertile soil for farming; tourism jobs; geothermal energy; families may have lived there for generations.</li>
+          <li><b class="st">Risks</b>Eruptions, lava flows, ash clouds, poisonous gases, tsunamis near the coast.</li>
+          <li><b class="st">What changes the balance?</b>Monitoring and warning systems, evacuation plans, and whether the volcano erupts gently or explosively.</li>
+          <li><b class="st">Judge</b>Give a conclusion that depends on the facts ("it can be sensible <i>if</i>…").</li>
+        </ol>
+        <p class="final">It can be a sensible choice because of the fertile soil and jobs, <b>provided</b> the volcano is closely monitored and there are good warning and evacuation plans. Without these, the risk to life is high.</p>
+        <p class="tip">There is no single right answer to "evaluate" questions. Marks come from showing both sides and justifying your judgement.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 6.4</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> What is the name for the line where two tectonic plates meet? What is the violent movement between two plates called?</summary>
+        <div class="ans">A <b>plate boundary</b>. An <b>earthquake</b>.</div></details>
+      <details class="task"><summary><span class="lv p">Practice</span> Looking at a map of a tectonic plate, where would you expect to find earthquakes, volcanoes and fold mountains?</summary>
+        <div class="ans">All three are found <b>near the plate boundaries</b>, not in the middle of the plate. For example, along the west coast of South America, where the Nazca plate pushes under the South American plate, there are earthquakes, volcanoes and the Andes fold mountains.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> How many times stronger is (a) magnitude 6 than magnitude 5? (b) magnitude 8 than magnitude 5?</summary>
+        <div class="ans"><div class="calc">(a) 1 step → 10 times stronger<br>(b) 3 steps → 10 × 10 × 10 = 1000 times stronger</div></div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> (a) Where under the oceans are earthquakes most likely? (b) How can an earthquake far out at sea damage land?</summary>
+        <div class="ans">(a) At <b>plate boundaries</b> on the ocean floor. (b) The sudden movement of the sea floor pushes the water and creates a <b>tsunami</b>. The giant waves travel across the ocean and flood coastal land.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.5 ================= -->
+<section class="station" id="eclipse" style="--c:var(--sky)">
+  <div class="st-head">
+    <div class="eyebrow">Station 6.5</div>
+    <h2>Eclipses: when the lights go out</h2>
+    <ul class="goals"><li>How solar eclipses happen</li><li>How lunar eclipses happen</li></ul>
+  </div>
+  <div class="st-body">
+    <h3>Shadows first</h3>
+    <p>Light travels in <b>straight lines</b>, called <span class="kw">rays</span>. An <span class="kw">opaque</span> object doesn't let light pass through it. When an opaque object blocks the light from a source, a dark area forms behind it: a <span class="kw">shadow</span>.</p>
+    <p>Watch the shadow of an aeroplane racing over a field. The ground in the shadow goes dark because the metal plane blocks the Sun's rays, while the grass around it stays bright. Stand in its path and it would suddenly go dim, then bright again.</p>
+    <p class="cap">Remember: the <b>Sun</b> gives out its own light. The <b>Moon does not</b>. We only see the Moon because it reflects sunlight.</p>
+
+    <h3>Solar eclipse: the Moon hides the Sun</h3>
+    <p>A <span class="kw">solar eclipse</span> happens when the <b>Moon comes between the Sun and the Earth</b>. The Moon is opaque rock, so it blocks the sunlight and casts its shadow onto the Earth.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 660 230" role="img" aria-label="Solar eclipse: Sun, then Moon, then Earth in a line, with the Moon's shadow falling on Earth">
+        <circle cx="40" cy="115" r="100" fill="var(--sun)"/>
+        <text x="40" y="120" text-anchor="middle" class="lbl" style="fill:#3a2a00">Sun</text>
+        <polygon points="140,40 395,108 395,122 140,190" fill="var(--sun)" opacity=".18"/>
+        <polygon points="380,107 540,92 540,138 380,123" fill="var(--ink)" opacity=".25"/>
+        <circle cx="390" cy="115" r="10" fill="var(--moon)"/>
+        <text x="390" y="95" text-anchor="middle" class="lbl">Moon</text>
+        <circle cx="560" cy="115" r="45" fill="var(--planet)"/>
+        <path d="M535 90 q20 10 10 30 q-15 10 -5 25" stroke="var(--land)" stroke-width="10" fill="none"/>
+        <text x="560" y="185" text-anchor="middle" class="lbl">Earth</text>
+        <circle cx="517" cy="115" r="4" fill="var(--ink)"/>
+        <text x="470" y="40">total eclipse in the</text>
+        <text x="470" y="56">darkest middle of the shadow</text>
+        <text x="470" y="215">partial eclipse around the edges</text>
+      </svg>
+      </div>
+      <figcaption>Order to remember for a solar eclipse: <b>Sun · Moon · Earth</b>. (Not to scale: the real Sun is about 400 times wider than the Moon.)</figcaption>
+    </figure>
+    <div class="grid2">
+      <div class="card"><h4>Total solar eclipse</h4><p>Seen from the very middle of the Moon's shadow. All direct sunlight is blocked, the sky goes dark in daytime, and only the Sun's glowing outer edge (the corona) shows.</p></div>
+      <div class="card"><h4>Partial solar eclipse</h4><p>Seen from further out, where only some of the Sun's rays are blocked. The Sun looks like a cookie with a bite taken out.</p></div>
+    </div>
+    <div class="callout safe"><h4>Never look directly at the Sun</h4><p>Not even during an eclipse. The light is strong enough to permanently damage your eyes. Use certified eclipse glasses or a pinhole projector.</p></div>
+
+    <h3>Lunar eclipse: Earth's shadow covers the Moon</h3>
+    <p>A <span class="kw">lunar eclipse</span> happens when the <b>Earth comes between the Sun and the Moon</b>. The Earth blocks the sunlight, and its shadow falls on the Moon. During a total lunar eclipse the Moon often turns a coppery red.</p>
+    <figure>
+      <div class="fig-box">
+      <svg viewBox="0 0 660 220" role="img" aria-label="Lunar eclipse: Sun, then Earth, then Moon in a line, with Earth's shadow falling on the Moon">
+        <circle cx="40" cy="110" r="100" fill="var(--sun)"/>
+        <text x="40" y="115" text-anchor="middle" class="lbl" style="fill:#3a2a00">Sun</text>
+        <polygon points="140,35 380,75 380,145 140,185" fill="var(--sun)" opacity=".18"/>
+        <polygon points="380,75 640,95 640,125 380,145" fill="var(--ink)" opacity=".25"/>
+        <circle cx="380" cy="110" r="38" fill="var(--planet)"/>
+        <text x="380" y="175" text-anchor="middle" class="lbl">Earth</text>
+        <circle cx="580" cy="110" r="12" fill="#b4563b"/>
+        <text x="580" y="85" text-anchor="middle" class="lbl">Moon</text>
+        <path d="M580 40 A70 70 0 0 1 580 180" fill="none" stroke="var(--muted)" stroke-dasharray="4 4"/>
+        <text x="595" y="200">orbit of Moon</text>
+      </svg>
+      </div>
+      <figcaption>Order to remember for a lunar eclipse: <b>Sun · Earth · Moon</b>.</figcaption>
+    </figure>
+
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Solar eclipse</th><th>Lunar eclipse</th></tr></thead>
+      <tbody>
+        <tr><td><b>What's in the middle?</b></td><td>Moon</td><td>Earth</td></tr>
+        <tr><td><b>Whose shadow?</b></td><td>Moon's shadow on Earth</td><td>Earth's shadow on Moon</td></tr>
+        <tr><td><b>When can you see it?</b></td><td>Daytime only (the Sun must be up)</td><td>Night-time (the Moon must be up)</td></tr>
+        <tr><td><b>Safe to look at?</b></td><td>No! Eye protection needed</td><td>Yes</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Why not every month?</h3>
+    <p>The Moon orbits the Earth about every <b>27 days</b>, so you might expect an eclipse every month. But the Moon's orbit is <b>tilted slightly</b> compared to Earth's path around the Sun. Most months the Moon passes a little above or below the line. Eclipses only happen when the <b>Sun, Earth and Moon line up exactly in a straight line</b>.</p>
+
+    <div class="callout wow"><h4>Ancient eclipse predictors</h4><p>About 3000 years ago, astronomers in the Middle East noticed that eclipse patterns repeat every <b>223 lunar months</b>. With a lunar month of 29.5 days, that's 223 × 29.5 ≈ <b>6579 days</b>, about 18 years. Spotting patterns in observations is how scientists make predictions! Working backwards, modern scientists have even used a recorded eclipse to date an ancient battle in Greece to 28 May 585 BCE.</p></div>
+
+    <div class="callout try"><h4>Eclipse in your bedroom</h4>
+      <p>Use a lamp as the Sun, a football as the Earth and a tennis ball on a string as the Moon. Darken the room.</p>
+      <ul><li>Swing the tennis ball between the lamp and the football: its shadow lands on the football. That's a <b>solar</b> eclipse.</li>
+      <li>Move the tennis ball behind the football, into its shadow. That's a <b>lunar</b> eclipse.</li></ul>
+      <p class="cap">Safety: the lamp bulb gets hot, and never use the real Sun for this.</p>
+    </div>
+
+    <div class="callout"><h4>Drawing an eclipse diagram: checklist</h4>
+      <p>Exam questions often ask you to <b>draw</b> an eclipse. Include:</p>
+      <ul><li>Sun, Earth and Moon in the <b>right order</b>, in a straight line, and labelled</li>
+      <li>Sun drawn biggest and Moon smallest</li>
+      <li><b>Straight rays</b> of light from the Sun, drawn with a ruler</li>
+      <li>The <b>shadow</b> shaded in</li>
+      <li>For a solar eclipse, labels showing where a <b>total</b> eclipse and a <b>partial</b> eclipse are seen</li></ul>
+    </div>
+
+    <div class="deeper">
+      <h3>Understand it deeper</h3>
+      <p><b>An amazing coincidence.</b> The Sun is about <b>400 times wider</b> than the Moon, but it is also about <b>400 times further away</b>. So from Earth, they look almost exactly the same size in the sky! That's why the Moon can cover the Sun perfectly in a total eclipse. Try it: close one eye and hold up your thumb. Your small thumb can hide a huge building far away.</p>
+      <p><b>Why does the Moon turn red?</b> During a total lunar eclipse, a little sunlight still gets to the Moon by bending through Earth's atmosphere. The atmosphere scatters away blue light and lets red light through, the same reason sunsets are red. In a way, the Moon is lit by all the sunrises and sunsets on Earth at once!</p>
+      <h3>Umbra, penumbra and antumbra (exam favourite!)</h3>
+      <p>Because the Sun is a big, wide light source (not a tiny dot), the Moon's shadow has different parts. Exams love these words:</p>
+      <figure>
+        <div class="fig-box">
+        <svg viewBox="0 0 660 250" role="img" aria-label="Moon's shadow: dark umbra cone, lighter penumbra around it, and antumbra beyond the umbra's tip">
+          <circle cx="40" cy="125" r="60" fill="var(--sun)"/>
+          <text x="40" y="130" text-anchor="middle" class="lbl" style="fill:#3a2a00">Sun</text>
+          <polygon points="290,105 600,6 600,244 290,145" fill="var(--ink)" opacity=".12"/>
+          <polygon points="290,105 290,145 415,125" fill="var(--ink)" opacity=".6"/>
+          <polygon points="415,125 600,95 600,155" fill="var(--ink)" opacity=".28"/>
+          <line x1="40" y1="65" x2="600" y2="244" stroke="var(--sun)" stroke-width="1.5"/>
+          <line x1="40" y1="185" x2="600" y2="6" stroke="var(--sun)" stroke-width="1.5"/>
+          <line x1="40" y1="65" x2="600" y2="155" stroke="var(--sun)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <line x1="40" y1="185" x2="600" y2="95" stroke="var(--sun)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <circle cx="290" cy="125" r="20" fill="var(--moon)"/>
+          <text x="290" y="92" text-anchor="middle" class="lbl">Moon</text>
+          <line x1="345" y1="128" x2="345" y2="205" stroke="var(--muted)"/>
+          <text x="345" y="220" text-anchor="middle" class="lbl">umbra</text>
+          <text x="470" y="64" class="lbl">penumbra</text>
+          <text x="470" y="196" class="lbl">penumbra</text>
+          <text x="545" y="130" class="lbl">antumbra</text>
+        </svg>
+        </div>
+        <figcaption>Not to scale. Straight rays from the top and bottom edges of the Sun mark out the different parts of the shadow.</figcaption>
+      </figure>
+      <div class="tbl"><table>
+        <thead><tr><th>Part of shadow</th><th>What it is</th><th>What you'd see from there</th></tr></thead>
+        <tbody>
+          <tr><td><b>Umbra</b></td><td>The darkest, central part. <b>All</b> of the Sun's light is blocked.</td><td><b>Total</b> solar eclipse</td></tr>
+          <tr><td><b>Penumbra</b></td><td>The lighter outer part. Only <b>some</b> of the Sun's light is blocked.</td><td><b>Partial</b> solar eclipse</td></tr>
+          <tr><td><b>Antumbra</b></td><td>The region beyond the tip of the umbra, when the Moon is a bit further from Earth and looks slightly smaller than the Sun.</td><td><b>Annular</b> eclipse: a bright "ring of fire" around the Moon</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap">Memory trick: <b>Um</b>bra = <b>um</b>… totally dark. <b>Pen</b>umbra = "almost" (like a <i>pen</i>insula, which is almost an island). Antumbra = "beyond" the umbra.</p>
+
+      <div class="grid2">
+        <div class="card"><h4>Solar eclipse: seen by few</h4><p>The Moon's shadow on Earth is small, at most a few hundred km wide for the total part. Only people in that narrow path see a total eclipse, and it lasts just a few minutes.</p></div>
+        <div class="card"><h4>Lunar eclipse: seen by many</h4><p>Earth's shadow is big enough to cover the whole Moon. <b>Anyone on the night side</b> of Earth can see it, and it can last over an hour.</p></div>
+      </div>
+
+      <h3>Myth-busters</h3>
+      <div class="myths">
+        <div class="myth"><div class="no">The Moon's phases (crescent, half, gibbous) are caused by Earth's shadow.</div><div class="yes">Phases are caused by how much of the Moon's <b>sunlit half</b> we can see as it orbits. Earth's shadow only reaches the Moon during a lunar eclipse.</div></div>
+        <div class="myth"><div class="no">The Moon makes its own light.</div><div class="yes">The Moon only <b>reflects</b> sunlight. That's why it goes dark when Earth blocks the sunlight.</div></div>
+        <div class="myth"><div class="no">It's safe to look at a solar eclipse through sunglasses.</div><div class="yes">Sunglasses are nowhere near dark enough. Use certified eclipse glasses or a pinhole projector only.</div></div>
+      </div>
+
+      <h3>Where you meet it in real life</h3>
+      <div class="apps">
+        <div class="app"><b>Testing Einstein</b>In 1919, astronomers photographed stars near the Sun during a total eclipse and showed that the Sun's gravity bends starlight, as Einstein had predicted.</div>
+        <div class="app"><b>Studying the corona</b>The Sun's outer atmosphere is normally hidden by its glare. Eclipses let scientists study it.</div>
+        <div class="app"><b>Dating history</b>Records of ancient eclipses help historians fix exact dates of events, like the battle in Greece in 585 BCE.</div>
+        <div class="app"><b>Pinhole projector</b>A tiny hole in card projects a safe image of the Sun onto paper, because light travels in straight lines.</div>
+      </div>
+
+      <div class="puzzle"><h4>Moon-phase detective</h4><p>A solar eclipse can only happen at <b>new moon</b>, and a lunar eclipse only at <b>full moon</b>. Can you work out why from the order of the Sun, Earth and Moon? <i>(Solar: the Moon is between us and the Sun, so its lit side faces away from us: new moon. Lunar: the Moon is behind Earth, opposite the Sun, so its whole lit side faces us: full moon.)</i></p></div>
+
+      <h3>Worked reasoning: focus on the process</h3>
+      <details class="worked"><summary><span class="tag">Reason from a diagram</span><span class="qq">During a solar eclipse, what phase is the Moon in? Explain how you know.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Draw it</b>Sketch the order for a solar eclipse: Sun · Moon · Earth, in a line.</li>
+          <li><b class="st">Shade the lit half</b>The Moon's sunlit half always faces the Sun, so shade the side of the Moon facing the Sun.</li>
+          <li><b class="st">Look from Earth</b>Which side of the Moon faces Earth? The dark side, away from the Sun.</li>
+          <li><b class="st">Name it</b>When we see none of the lit half, that's a <b>new moon</b>.</li>
+        </ol>
+        <p class="final">The Moon is a <b>new moon</b>, because its sunlit side faces the Sun and away from Earth.</p>
+        <p class="tip">A quick sketch turns a hard "imagine it" question into an easy "look at it" question.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Explain · comparing</span><span class="qq">In your whole life you might see many lunar eclipses from home, but perhaps no total solar eclipse at all. Explain why.</span></summary>
+        <ol class="steps">
+          <li><b class="st">Compare the shadows</b>Solar eclipse: the <b>Moon's</b> shadow on Earth. The Moon is small, so the dark centre of its shadow is only a narrow strip on Earth.</li>
+          <li><b class="st">Who can see each one?</b>Total solar: only people inside that narrow strip. Lunar: everyone on Earth's night side, which is about half the planet.</li>
+          <li><b class="st">Link to "from home"</b>The narrow strip of a solar eclipse lands somewhere different each time, so it rarely crosses the same town.</li>
+          <li><b class="st">Conclude with a comparison word</b>Use "whereas" or "but" to show you're comparing.</li>
+        </ol>
+        <p class="final">A lunar eclipse can be seen from the whole night side of Earth, <b>whereas</b> a total solar eclipse is only seen along a narrow path covered by the Moon's small shadow. That path rarely passes over any one place.</p>
+      </details>
+      <details class="worked"><summary><span class="tag">Calculate · ancient predictions</span><span class="qq">Ancient astronomers knew eclipse patterns repeat every 223 lunar months. A lunar month is 29.5 days. About how many years is that?</span></summary>
+        <ol class="steps">
+          <li><b class="st">Months to days</b>223 × 29.5. Split it to make it easier: 223 × 30 = 6690, then subtract 223 × 0.5 = 111.5. So 6690 − 111.5 = <b>6578.5 days</b>.</li>
+          <li><b class="st">Days to years</b>6578.5 ÷ 365 ≈ <b>18 years</b></li>
+          <li><b class="st">Sense-check</b>A year has about 12.4 lunar months, and 223 ÷ 12.4 ≈ 18, so about 18 years is right. ✓</li>
+          <li><b class="st">Think about the science</b>Why does a pattern repeat? Because the Sun, Earth and Moon return to almost the same arrangement. Spotting a repeating pattern lets you <b>predict</b> the future.</li>
+        </ol>
+        <p class="final">About <b>6580 days ≈ 18 years</b>. Ancient astronomers used this pattern to predict eclipses without telescopes.</p>
+      </details>
+    </div>
+
+    <div class="levelup">
+      <h3>Level up: practise 6.5</h3>
+      <details class="task"><summary><span class="lv f">Focus</span> Which of these gives out its own light: the Sun, the Moon, the Earth?</summary>
+        <div class="ans">Only <b>the Sun</b>. The Moon and the Earth do not; we see the Moon because it reflects sunlight.</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> What forms when an opaque object blocks rays of light?</summary>
+        <div class="ans">A <b>shadow</b>.</div></details>
+      <details class="task"><summary><span class="lv f">Focus</span> Complete: a solar eclipse happens when ___ comes between ___ and ___. A lunar eclipse happens when ___ comes between ___ and ___.</summary>
+        <div class="ans">Solar: <b>the Moon</b> comes between <b>the Sun</b> and <b>the Earth</b>. Lunar: <b>the Earth</b> comes between <b>the Sun</b> and <b>the Moon</b>.</div></details>
+      <details class="task"><summary><span class="lv c">Challenge</span> Someone says: "I saw a lunar eclipse at midday." Explain why this can't be true.</summary>
+        <div class="ans">In a lunar eclipse the Earth is <b>between</b> the Sun and the Moon. So the Moon is on the <b>opposite side</b> of the Earth from the Sun. At midday you are on the side of Earth facing the Sun, so the Moon would be below your horizon and you couldn't see it. Sketch Sun · Earth · Moon in a line, mark a person on the sunny side of Earth, and you'll see the Earth is in the way.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Exam practice ================= -->
+<section class="station" id="exam" style="--c:var(--quake)">
+  <div class="st-head">
+    <div class="eyebrow">Exam room</div>
+    <h2>Exam-style practice paper</h2>
+    <ul class="goals"><li>Same style as school assessments</li><li>Marks shown in [ ]</li><li>Mark scheme explains how to earn each mark</li></ul>
+  </div>
+  <div class="st-body">
+    <div class="callout"><h4>Exam technique</h4>
+      <ul>
+        <li><b>Use the marks as a guide.</b> [1] usually needs one point; [3] needs three separate points. In a 50-mark, 90-minute paper you have about <b>1.5–2 minutes per mark</b>.</li>
+        <li><b>Multiple choice:</b> cross out the options you know are wrong first, then choose from what's left.</li>
+        <li><b>Labelling diagrams:</b> draw label lines with a ruler that touch the exact part, and spell key words correctly (mantle, not "mental"!).</li>
+        <li><b>"Which is correct? Why?"</b> The choice alone usually earns nothing. The mark is for the <i>reason</i>.</li>
+        <li><b>Drawing eclipses:</b> label all three bodies, use straight ruled rays, and shade the shadow.</li>
+      </ul>
+    </div>
+
+    <details class="worked"><summary><span class="tag">Q1 · Multiple choice [1]</span><span class="qq">Someone sees a partial solar eclipse. Which part of the Moon's shadow are they standing in? A. Umbra &nbsp; B. Penumbra &nbsp; C. Antumbra &nbsp; D. Corona</span></summary>
+      <ol class="steps">
+        <li><b class="st">Eliminate</b>D (corona) is part of the Sun, not a shadow. ✗</li>
+        <li><b class="st">Match each shadow to its eclipse</b>Umbra → total. Antumbra → annular (ring). Penumbra → partial.</li>
+        <li><b class="st">Choose</b>Partial matches penumbra.</li>
+      </ol>
+      <p class="final"><b>B. Penumbra</b> [1]</p>
+      <p class="tip">Watch out: the past paper asked the reverse (total eclipse → umbra). Learn the whole matching table so you can answer either way round.</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q2 · Multiple choice [1]</span><span class="qq">Which layer of the Earth is liquid metal and produces Earth's magnetic field? A. Crust &nbsp; B. Mantle &nbsp; C. Outer core &nbsp; D. Inner core</span></summary>
+      <ol class="steps">
+        <li><b class="st">Use the clue "metal"</b>Crust and mantle are rock. ✗ That leaves C and D.</li>
+        <li><b class="st">Use the clue "liquid"</b>The inner core is solid; the outer core is liquid. ✗ D</li>
+        <li><b class="st">Check with the science</b>A magnetic field needs <b>moving</b> metal, and only a liquid can swirl. ✓ C</li>
+      </ol>
+      <p class="final"><b>C. Outer core</b> [1]</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q3 · Short answer [2]</span><span class="qq">(a) Where are most active volcanoes found? [1] (b) Name one region of the world where earthquakes are common. [1]</span></summary>
+      <ol class="steps">
+        <li><b class="st">Recall the key idea</b>Both volcanoes and earthquakes happen where plates move against each other.</li>
+        <li><b class="st">Answer (a) precisely</b>"At plate boundaries" earns the mark. "Near the sea" or "in hot countries" does not.</li>
+        <li><b class="st">Answer (b) with an example</b>Name a real place on a boundary, e.g. "around the edge of the Pacific Ocean (Ring of Fire), such as Japan".</li>
+      </ol>
+      <p class="final">(a) <b>At plate boundaries</b> (where tectonic plates meet) [1]. (b) <b>Along plate boundaries, e.g. the Pacific Ring of Fire / Japan / Indonesia</b> [1]</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q4 · Extended answer [3]</span><span class="qq">Explain what is meant by continental drift, and give evidence that supports the idea.</span></summary>
+      <ol class="steps">
+        <li><b class="st">Count the marks</b>[3] → plan 1 mark for the meaning + 2 marks for two separate pieces of evidence.</li>
+        <li><b class="st">Meaning (1 mark)</b>The continents were once joined as one landmass (Pangaea) and have slowly moved apart over millions of years.</li>
+        <li><b class="st">Evidence 1 (1 mark)</b>The shapes of continents such as South America and Africa fit together like a jigsaw.</li>
+        <li><b class="st">Evidence 2 (1 mark)</b>Matching fossils and/or matching rock types are found on continents now separated by oceans.</li>
+        <li><b class="st">Bonus thinking (not needed for marks)</b>Today we know plates are moved by convection currents in the mantle.</li>
+      </ol>
+      <p class="final">Continental drift is the idea that the continents were once joined and have slowly drifted apart [1]. Evidence: coastlines fit together [1]; the same fossils and rock types are found on different continents [1].</p>
+      <p class="tip">Common way to lose marks: listing only one piece of evidence, or describing the evidence without first saying what continental drift means.</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q5 · Reasoning [1] + Diagram [4]</span><span class="qq">Ravi says, "You can see a lunar eclipse in the afternoon." Mia says, "No, lunar eclipses are seen at night." (a) Who is correct? Why? [1] (b) Draw and describe the positions of the Sun, Earth and Moon in a solar eclipse and a lunar eclipse. [4]</span></summary>
+      <ol class="steps">
+        <li><b class="st">(a) Picture the positions</b>Lunar eclipse: Sun · Earth · Moon. The Moon is on the opposite side of Earth from the Sun.</li>
+        <li><b class="st">(a) Link to day and night</b>The side of Earth facing the Moon is facing away from the Sun, so it's night there.</li>
+        <li><b class="st">(a) Give the choice + reason together</b>"Mia, because during a lunar eclipse the Moon is on the night side of Earth."</li>
+        <li><b class="st">(b) Plan the 4 marks</b>Likely 1 mark for each correct order and 1 mark for each correct shadow/rays. So for <i>each</i> eclipse: draw, label and shade.</li>
+        <li><b class="st">(b) Solar eclipse</b>Draw Sun → Moon → Earth in a straight line. Rule rays from the Sun; shade the Moon's shadow falling on Earth. Write: "The Moon passes between the Sun and Earth and blocks sunlight."</li>
+        <li><b class="st">(b) Lunar eclipse</b>Draw Sun → Earth → Moon in a straight line. Shade Earth's shadow falling on the Moon. Write: "The Earth passes between the Sun and Moon and blocks sunlight from reaching the Moon."</li>
+      </ol>
+      <p class="final">(a) <b>Mia</b>: a lunar eclipse happens when the Moon is on the opposite side of Earth from the Sun, so it can only be seen from the night side [1]. Solar eclipses are seen in the daytime. (b) Solar: Sun–Moon–Earth in a line, Moon's shadow on Earth [2]. Lunar: Sun–Earth–Moon in a line, Earth's shadow on Moon [2].</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q6 · Completion [3]</span><span class="qq">Complete: (a) Plates moving together can produce ____. (b) Plates moving apart produce ____. (c) Plates sliding past each other cause ____.</span></summary>
+      <ol class="steps">
+        <li><b class="st">Picture each movement</b>Use your hands: push together, pull apart, slide past.</li>
+        <li><b class="st">Together</b>Rocks get squashed and crumple upwards → fold mountains (and subduction, which can lead to volcanoes).</li>
+        <li><b class="st">Apart</b>A gap opens and magma rises to fill it → volcanoes / new crust.</li>
+        <li><b class="st">Sliding</b>Friction makes them stick, then suddenly slip → earthquakes.</li>
+      </ol>
+      <p class="final">(a) <b>Fold mountains</b> [1] (b) <b>Volcanoes</b> / new crust [1] (c) <b>Earthquakes</b> [1]</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q7 · Calculation [3]</span><span class="qq">A ship's echo sounder sends a pulse to the sea bed. The echo returns after 0.8 s. Sound travels at 1500 m/s in sea water. Calculate the depth of the water. Show your working.</span></summary>
+      <ol class="steps">
+        <li><b class="st">Given</b>speed = 1500 m/s; time = 0.8 s (there and back)</li>
+        <li><b class="st">Equation [1]</b>distance = speed × time</li>
+        <li><b class="st">Substitute and solve [1]</b>1500 × 0.8 = 1200 m (total journey)</li>
+        <li><b class="st">Halve for depth [1]</b>1200 ÷ 2 = 600 m</li>
+      </ol>
+      <p class="final">Depth = <b>600 m</b>. Even if the final answer is wrong, correct working can still earn marks, so always show every step.</p>
+    </details>
+
+    <details class="worked"><summary><span class="tag">Q8 · Explain [2]</span><span class="qq">Explain why a film showing a loud explosion in outer space is not scientifically accurate.</span></summary>
+      <ol class="steps">
+        <li><b class="st">Point 1: the fact [1]</b>Space is a vacuum; there are no particles.</li>
+        <li><b class="st">Point 2: the link [1]</b>Sound needs particles to vibrate and pass the wave on, so the explosion would make no sound.</li>
+      </ol>
+      <p class="final">Space is a vacuum with no particles [1], so there is nothing to carry the sound vibrations and the explosion would be silent [1].</p>
+    </details>
+  </div>
+</section>
+
+<!-- ================= Glossary ================= -->
+<section class="station" id="words" style="--c:var(--ink)">
+  <div class="st-head"><div class="eyebrow">Toolkit</div><h2>Key words</h2></div>
+  <div class="st-body">
+    <dl class="gloss">
+      <dt>Backwards and forwards</dt><dd>The to-and-fro motion of a vibrating object or particle.</dd>
+      <dt>Loudness</dt><dd>How loud or quiet a sound is; bigger vibrations are louder.</dd>
+      <dt>Pitch</dt><dd>How high or low a sound is; faster vibrations give a higher pitch.</dd>
+      <dt>Particles</dt><dd>The tiny bits that all matter (solids, liquids, gases) is made of.</dd>
+      <dt>Sound wave</dt><dd>Vibrations passed from particle to particle, carrying sound energy.</dd>
+      <dt>Speed of sound</dt><dd>How fast sound travels; about 343 m/s in air.</dd>
+      <dt>Medium</dt><dd>The substance a wave travels through: solid, liquid or gas.</dd>
+      <dt>Echo</dt><dd>A sound reflected back from a surface.</dd>
+      <dt>Reflected</dt><dd>Bounced back from a surface.</dd>
+      <dt>Property</dt><dd>A feature or characteristic of something.</dd>
+      <dt>Effect on the sound</dt><dd>A change to how a sound is heard, e.g. an echo making it last longer.</dd>
+      <dt>Unwanted</dt><dd>Not wanted, e.g. echoes that spoil a recording.</dd>
+      <dt>Crust</dt><dd>Earth's thin, solid, rocky outer layer.</dd>
+      <dt>Mantle</dt><dd>The thick layer of very hot rock below the crust, which can flow.</dd>
+      <dt>Core</dt><dd>Earth's centre, made of iron and nickel: liquid outer core, solid inner core.</dd>
+      <dt>Molten</dt><dd>Melted; turned to liquid by heat.</dd>
+      <dt>Magma</dt><dd>Liquid rock underground.</dd>
+      <dt>Lava</dt><dd>Liquid rock at the Earth's surface.</dd>
+      <dt>Continental drift</dt><dd>Wegener's idea that the continents were once joined and have slowly moved apart.</dd>
+      <dt>Tectonic plates</dt><dd>The giant pieces that Earth's crust is broken into.</dd>
+      <dt>Plate boundary</dt><dd>Where two tectonic plates meet.</dd>
+      <dt>Subduction</dt><dd>One plate sliding underneath another and sinking into the mantle.</dd>
+      <dt>Geological change</dt><dd>Changes to Earth's rocks and land, slow or sudden.</dd>
+      <dt>Fold mountains</dt><dd>Mountains formed when rock layers crumple as plates push together.</dd>
+      <dt>Volcano</dt><dd>An opening in the crust where magma erupts as lava, ash and gas.</dd>
+      <dt>Active / dormant (inactive) / extinct</dt><dd>Could erupt any time / hasn't erupted for ages but might / will never erupt again.</dd>
+      <dt>Earthquake</dt><dd>Sudden shaking caused when stuck plates jerk past each other.</dd>
+      <dt>Magnitude</dt><dd>The size or strength of an earthquake.</dd>
+      <dt>Ray</dt><dd>A straight line showing the path light travels.</dd>
+      <dt>Opaque</dt><dd>Does not let light pass through.</dd>
+      <dt>Shadow</dt><dd>A dark area formed where an opaque object blocks light.</dd>
+      <dt>Solar eclipse</dt><dd>The Moon passes between Sun and Earth; the Moon's shadow falls on Earth.</dd>
+      <dt>Lunar eclipse</dt><dd>The Earth passes between Sun and Moon; Earth's shadow falls on the Moon.</dd>
+      <dt>Total / partial</dt><dd>All of the light is blocked / only some of it is blocked.</dd>
+      <dt>Umbra</dt><dd>The darkest central part of a shadow, where all the light is blocked (total eclipse).</dd>
+      <dt>Penumbra</dt><dd>The lighter outer part of a shadow, where only some light is blocked (partial eclipse).</dd>
+      <dt>Antumbra</dt><dd>The region beyond the tip of the umbra, where an annular "ring" eclipse is seen.</dd>
+      <dt>Magnetic field</dt><dd>The invisible area of magnetic force around Earth, produced by the moving liquid metal of the outer core.</dd>
+      <dt>Frequency</dt><dd>The number of vibrations per second, measured in hertz (Hz); higher frequency = higher pitch.</dd>
+      <dt>Amplitude</dt><dd>The size of a vibration; bigger amplitude = louder sound.</dd>
+      <dt>Convection current</dt><dd>A circular flow where hot material rises and cooler material sinks, as in the mantle.</dd>
+      <dt>Epicentre</dt><dd>The point on Earth's surface directly above where an earthquake starts.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ================= Quiz ================= -->
+<section class="station" id="quiz" style="--c:var(--sky)">
+  <div class="st-head"><div class="eyebrow">Check yourself</div><h2>Quick-fire quiz</h2>
+    <p>Tap an answer. <span id="score">Score: 0 / 0</span></p></div>
+  <div class="st-body" id="mcq"></div>
+</section>
+
+<section class="station" style="--c:var(--earth)">
+  <div class="st-head"><div class="eyebrow">Explain it</div><h2>Thinking questions</h2></div>
+  <div class="st-body" id="open"></div>
+</section>
+
+<section class="station" style="--c:var(--land)">
+  <div class="st-head"><div class="eyebrow">Self-check</div><h2>I can…</h2></div>
+  <div class="st-body">
+    <ul class="check">
+      <li><label><input type="checkbox" id="c1"> explain that sound is made by vibrations</label></li>
+      <li><label><input type="checkbox" id="c2"> describe how particles move in a sound wave</label></li>
+      <li><label><input type="checkbox" id="c3"> say why sound travels through solids, liquids and gases but not a vacuum</label></li>
+      <li><label><input type="checkbox" id="c4"> explain what an echo is and give useful and unwanted examples</label></li>
+      <li><label><input type="checkbox" id="c5"> calculate a distance from an echo time (and remember to halve it!)</label></li>
+      <li><label><input type="checkbox" id="c6"> label the four layers of the Earth</label></li>
+      <li><label><input type="checkbox" id="c7"> give three pieces of evidence for continental drift</label></li>
+      <li><label><input type="checkbox" id="c8"> explain how fold mountains, volcanoes and earthquakes form</label></li>
+      <li><label><input type="checkbox" id="c9"> draw the Sun, Earth and Moon for both kinds of eclipse</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>An original study guide written to accompany Chapter 6 (Earth physics) of the Cambridge Lower Secondary Science Stage 7 course (Learner's Book and Workbook). All explanations, diagrams, data and questions are original.</footer>
+</div>
+
+<script>
+// animated particles for the sound wave figure
+(function(){
+  const g=document.getElementById('parts'); if(!g) return;
+  const ns='http://www.w3.org/2000/svg';
+  for(let col=0; col<40; col++){
+    const baseX=100+col*11.5;
+    const dense=Math.cos(col*0.55)>0.2; // bunched regions
+    const x=baseX+(dense?-3:3);
+    for(let r=0;r<7;r++){
+      const c=document.createElementNS(ns,'circle');
+      c.setAttribute('cx',x); c.setAttribute('cy',62+r*16+((col%2)*6));
+      c.setAttribute('r',dense?3.2:2.4);
+      c.setAttribute('fill','var(--sound)');
+      c.setAttribute('opacity',dense?'.95':'.45');
+      c.setAttribute('class','pt');
+      c.style.animationDelay=(-col*0.09)+'s';
+      c.style.transformBox='fill-box';
+      g.appendChild(c);
+    }
+  }
+})();
+
+// multiple-choice quiz
+const MCQ=[
+ {q:"What must happen for any object to make a sound?",o:["It must be made of metal","It must vibrate","It must be hollow","It must be heated"],a:1,why:"All sounds come from vibrations."},
+ {q:"A drummer hits the drum harder. What changes?",o:["The sound gets louder","The pitch gets lower","The sound gets quieter","Nothing"],a:0,why:"More force makes bigger vibrations, which give a louder sound."},
+ {q:"In a sound wave in air, how do the particles move?",o:["In circles","Up and down only","Backwards and forwards in the direction the wave travels","All the way from the source to your ear"],a:2,why:"Particles wobble to and fro along the wave's direction; only the energy travels on."},
+ {q:"Which one can sound NOT travel through?",o:["Water","Steel","Air","A vacuum"],a:3,why:"A vacuum has no particles to pass the vibration along."},
+ {q:"Which surface would give the strongest echo?",o:["A thick rug","A smooth tiled wall","A foam panel","A heavy curtain"],a:1,why:"Hard, smooth, flat surfaces reflect sound best."},
+ {q:"A boat's sound pulse returns after 0.2 s. Sound travels at 1500 m/s in water. How deep is the water?",o:["300 m","150 m","750 m","3000 m"],a:1,why:"1500 × 0.2 = 300 m there and back, so the depth is 300 ÷ 2 = 150 m."},
+ {q:"Which layer of the Earth is solid iron and nickel?",o:["Crust","Mantle","Outer core","Inner core"],a:3,why:"The inner core is solid; the outer core is liquid."},
+ {q:"What is the most common metal in Earth's crust?",o:["Iron","Aluminium","Gold","Calcium"],a:1,why:"Aluminium is the most common metal; oxygen is the most common element overall."},
+ {q:"Why did many scientists reject Wegener's idea at first?",o:["He had no evidence at all","He couldn't explain what moved the continents","He was not a scientist","The continents don't fit together"],a:1,why:"He had good evidence, but no mechanism to explain the movement."},
+ {q:"Plates slide past each other, stick, then suddenly slip. What happens?",o:["A fold mountain forms","A volcano erupts","An earthquake","A tsunami always happens"],a:2,why:"The sudden release of built-up force shakes the ground."},
+ {q:"Liquid rock that has reached the surface is called…",o:["Magma","Lava","Mantle","Crust"],a:1,why:"Underground it's magma; at the surface it's lava."},
+ {q:"In a solar eclipse, what is in the middle?",o:["The Sun","The Earth","The Moon","Nothing"],a:2,why:"Sun · Moon · Earth. The Moon's shadow falls on Earth."},
+ {q:"Why don't we get an eclipse every month?",o:["The Moon's orbit is tilted slightly","The Sun moves away","The Moon only orbits once a year","Clouds block it"],a:0,why:"The tilt means the three bodies only line up exactly now and then."},
+ {q:"In which medium does sound travel fastest?",o:["Air","Water","Concrete","A vacuum"],a:2,why:"Particles in solids are closest together, so they pass the vibration on fastest. A vacuum carries no sound at all."},
+ {q:"You stand 85 m from a cliff and shout. Sound travels at 340 m/s. How long until you hear the echo?",o:["0.25 s","0.5 s","1 s","4 s"],a:1,why:"85 m there + 85 m back = 170 m. 170 ÷ 340 = 0.5 s."},
+ {q:"Which decade's discoveries led to the theory of plate tectonics?",o:["1860s","1910s","1960s","2000s"],a:2,why:"Mapping the ocean floor in the 1960s gave the evidence that explained Wegener's idea."},
+ {q:"How many times stronger is a magnitude 7 earthquake than a magnitude 4?",o:["3 times","30 times","100 times","1000 times"],a:3,why:"3 steps up: 10 × 10 × 10 = 1000."},
+ {q:"An earthquake on the sea floor can damage coasts far away by causing…",o:["a fold mountain","a tsunami","a lunar eclipse","an echo"],a:1,why:"The sudden movement pushes the water and creates giant tsunami waves."},
+ {q:"Which of these does NOT give out its own light?",o:["The Sun","The Moon","A lamp","A candle flame"],a:1,why:"The Moon only reflects sunlight."},
+ {q:"A total solar eclipse is seen by people standing in the Moon's…",o:["Penumbra","Antumbra","Umbra","Orbit"],a:2,why:"The umbra is the darkest part of the shadow, where all the Sun's light is blocked."},
+ {q:"Which part of the Earth produces its magnetic field?",o:["Crust","Mantle","Outer core","Inner core"],a:2,why:"Swirling liquid iron and nickel in the outer core creates the magnetic field."},
+ {q:"A string vibrates 500 times per second. Another vibrates 200 times per second. Which has the higher pitch?",o:["500 Hz string","200 Hz string","Both the same","Can't tell"],a:0,why:"Higher frequency (more vibrations per second) means higher pitch."}
+];
+let score=0, tried=0;
+const box=document.getElementById('mcq'), sc=document.getElementById('score');
+MCQ.forEach((it,i)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<p><b>${i+1}.</b> ${it.q}</p><div class="opts"></div><div class="fb" hidden></div>`;
+  const opts=d.querySelector('.opts'), fb=d.querySelector('.fb');
+  it.o.forEach((t,j)=>{
+    const b=document.createElement('button'); b.type='button'; b.textContent=t; b.id=`q${i}o${j}`;
+    b.addEventListener('click',()=>{
+      if(d.dataset.done) return; d.dataset.done=1; tried++;
+      if(j===it.a){score++; b.classList.add('right'); fb.textContent='Correct! '+it.why;}
+      else{b.classList.add('wrong'); opts.children[it.a].classList.add('right'); fb.textContent='Not quite. '+it.why;}
+      fb.hidden=false; sc.textContent=`Score: ${score} / ${tried}`;
+    });
+    opts.appendChild(b);
+  });
+  box.appendChild(d);
+});
+
+// open questions with reveal
+const OPEN=[
+ ["A fly walks up a window. Its feet make vibrations. Why can't you hear it?","The vibrations are far too small. They carry so little energy that your ears can't detect them."],
+ ["Astronauts on the Moon worked right next to each other. Why couldn't they hear each other hammering, even without radios?","The Moon has no atmosphere, so there are no air particles to carry the sound wave. The vibration has no medium to travel through."],
+ ["A drummer wants to stop echoes in her practice room. What should she put on the walls, and why?","Soft, thick materials like heavy curtains or foam panels. They absorb sound instead of reflecting it, so there are fewer echoes."],
+ ["Explain how fold mountains form.","Two tectonic plates push towards each other. The rock layers between them are squeezed, so they crumple and fold upwards, building mountains over millions of years."],
+ ["Why can a solar eclipse only be seen in the daytime?","A solar eclipse is the Moon blocking the Sun. You can only see the Sun being blocked when the Sun is in your sky, which means daytime."],
+ ["True or false: \"A total lunar eclipse can only be seen in the daytime.\" Explain.","False. A lunar eclipse is Earth's shadow on the Moon, so you need to see the Moon, which happens at night, on the side of Earth facing away from the Sun."],
+ ["Describe one strength and one weakness of the polystyrene-on-water model of moving plates.","Strength: it shows how heat from below can make floating pieces move apart. Weakness: water is a liquid, but the mantle is hot rock, and real plates move only a few centimetres a year."]
+];
+const ob=document.getElementById('open');
+OPEN.forEach(([q,a],i)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<p><b>${i+1}.</b> ${q}</p><button class="reveal" type="button" id="r${i}">Show a model answer</button><div class="ans" hidden>${a}</div>`;
+  const btn=d.querySelector('.reveal'), ans=d.querySelector('.ans');
+  btn.addEventListener('click',()=>{ans.hidden=!ans.hidden; btn.textContent=ans.hidden?'Show a model answer':'Hide answer';});
+  ob.appendChild(d);
+});
+
+// remember checklist ticks for this viewer
+document.querySelectorAll('.check input').forEach(cb=>{
+  try{ if(localStorage.getItem('ep-'+cb.id)==='1') cb.checked=true; }catch(e){}
+  cb.addEventListener('change',()=>{ try{ localStorage.setItem('ep-'+cb.id, cb.checked?'1':'0'); }catch(e){} });
+});
+</script>
+</body></html>
