@@ -1,0 +1,598 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Properties of Materials Revision Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one question card at a time, like an exam desk; topic colour stripes match the Field Guide */
+:root{
+  --bg:#f3f6f8; --paper:#ffffff; --ink:#18242c; --muted:#56656f; --line:#d5dfe5;
+  --sound:#2266d4; --echo:#7b4fd6; --earth:#b8661a; --quake:#d23b2a; --sky:#0f8b8d; --land:#3f9a4f;
+  --tint:#e8f0fb; --ok:#1f8a4c; --ok-bg:#e3f5ea; --bad:#c23a2b; --bad-bg:#fbe7e4; --warn:#a86b00; --warn-bg:#fff3d6;
+  --f-display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4; --land:#6cbf66;
+  --tint:#1b2a3a; --ok:#53c787; --ok-bg:#16301f; --bad:#ff7a66; --bad-bg:#3a1a16; --warn:#ffc35a; --warn-bg:#352a10; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --paper:#172129; --ink:#e6edf1; --muted:#9aaab4; --line:#2a3842;
+  --sound:#6ea2ff; --echo:#b195ff; --earth:#e7954b; --quake:#ff7a66; --sky:#3cc3c4; --land:#6cbf66;
+  --tint:#1b2a3a; --ok:#53c787; --ok-bg:#16301f; --bad:#ff7a66; --bad-bg:#3a1a16; --warn:#ffc35a; --warn-bg:#352a10; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:800}
+p{margin:10px 0}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header{padding-block:36px 18px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:16px}
+button{font:inherit;cursor:pointer}
+.btn{border:none;border-radius:10px;padding:10px 18px;font-weight:800;background:var(--sky);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.conf button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* start */
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+.chip{text-align:left;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:10px 12px}
+.chip b{display:block;font-family:var(--f-display);font-size:1.05rem}
+.chip span{font-size:.82rem;color:var(--muted)}
+.chip.all{border-left-color:var(--ink)}
+.how{font-size:.95rem}
+.how li{margin:4px 0}
+
+/* question */
+.qhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c);font-weight:500}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 16px}
+.prog i{display:block;height:100%;background:var(--sky);transition:width .3s}
+.qtext{font-size:1.12rem;font-weight:600;margin:6px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 12px}
+.opt:hover:not(:disabled){border-color:var(--sky)}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--paper);border:1px solid var(--line);font-size:.9rem}
+.opt.sel{border-color:var(--sky);background:var(--tint)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+.opt .fb{display:block;font-size:.9rem;margin-top:4px;color:var(--ink)}
+.conf{margin-top:16px;font-size:.95rem}
+.conf .row{margin-top:6px}
+.conf button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:600}
+.conf button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.result{margin-top:16px;border-radius:10px;padding:12px 16px}
+.result.ok{background:var(--ok-bg)}
+.result.bad{background:var(--bad-bg)}
+.result h3{font-size:1.15rem}
+.why{margin-top:8px}
+.why ol{margin:6px 0;padding-left:22px}
+.why li{margin:3px 0}
+.revise{margin-top:8px;font-size:.9rem;color:var(--muted)}
+.revise a{color:var(--sky);font-weight:800}
+.nav{margin-top:18px;justify-content:space-between}
+
+/* results */
+.big{font-family:var(--f-display);font-size:3rem;font-weight:800;line-height:1}
+.bars{display:grid;gap:10px;margin:14px 0}
+.bar{display:grid;grid-template-columns:minmax(120px,170px) 1fr 64px;gap:10px;align-items:center;font-size:.92rem}
+.bar .t{height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--c)}
+.bar .n{font-family:var(--f-mono);font-size:.85rem;text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.bar{grid-template-columns:1fr 56px}.bar .t{grid-column:1/-1;grid-row:2}}
+.grp{margin-top:16px}
+.grp h3{font-size:1.1rem}
+.grp ul{padding-left:20px;margin:6px 0}
+.grp li{margin:6px 0;font-size:.95rem}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.72rem;border-radius:999px;padding:1px 8px;margin-right:6px}
+.pill.m{background:var(--bad-bg);color:var(--bad)}
+.pill.g{background:var(--warn-bg);color:var(--warn)}
+.pill.s{background:var(--tint);color:var(--sky)}
+@media (prefers-reduced-motion: reduce){.prog i{transition:none}}
+footer{margin-top:28px;color:var(--muted);font-size:.85rem}
+</style></head><body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Science Stage 7 · Chapter 5</div>
+  <h1>Properties of Materials Revision Check</h1>
+  <p>58 questions that cover every idea in the chapter. The wrong answers are built from the most common mistakes, so you'll need to <b>think it through</b>, not just spot a familiar word.</p>
+</header>
+
+<div id="app"></div>
+<footer>Original questions written to accompany the Properties of Materials Field Guide (Unit 5). Your progress is saved in this browser only.</footer>
+</div>
+
+<script>
+const TOPICS={
+  metals:{name:"5.1 Metals and non-metals",c:"var(--sound)",anchor:"metals"},
+  compare:{name:"5.2 Comparing them",c:"var(--echo)",anchor:"compare"},
+  alloys:{name:"5.3 Alloys",c:"var(--earth)",anchor:"alloys"},
+  separate:{name:"5.4 Separating mixtures",c:"var(--sky)",anchor:"separate"},
+  acids:{name:"5.5 Acids and alkalis",c:"var(--quake)",anchor:"acids"},
+  ph:{name:"5.6 Indicators and pH",c:"var(--land)",anchor:"ph"}
+};
+const Q=[
+/* ---------- 5.1 METALS AND NON-METALS ---------- */
+{t:"metals",k:"Property → use",q:"Why is copper the best choice for the wires inside a phone charger cable?",
+ o:[["It conducts electricity well and can be drawn into thin wires.","Correct: good conductor → current flows easily; ductile → can be made into thin wires."],
+    ["It is magnetic, so it holds the electric current inside the wire.","Copper isn't magnetic. Only iron, nickel and cobalt are."],
+    ["It is shiny, so it reflects the electricity along the cable.","Shine is true of copper but has nothing to do with carrying current."],
+    ["It has a high melting point, so it never gets warm.","It's true copper has a high melting point, but that isn't why it's chosen for wires. Look for the property the job needs."]],a:0,
+ why:["Ask what the job needs: carry electric current, and be thin and bendy.","Match each need to a property: current → conductor; thin wire → ductile.","Reject options that are true facts but don't fit the job."],rev:"Property → use"},
+{t:"metals",k:"Conduction",q:"On a cool morning, a metal railing feels colder than a wooden bench right next to it. Why?",
+ o:[["The metal has cooled down more than the wood overnight.","They've been in the same place, so they're at the same temperature. It's about what they do to your hand."],
+    ["Metal conducts heat away from your hand faster than wood.","Correct: your skin senses heat leaving it, and metal takes it away quickly."],
+    ["Wood slowly gives out a little of its own heat.","Wood doesn't make heat. It's simply a poor conductor."],
+    ["Metal is shiny, so it reflects warmth away from you.","Shininess is about light, not about how heat leaves your hand on contact."]],a:1,
+ why:["Notice both objects are in the same place → same temperature.","So the difference must be in how heat moves from your hand.","Metals are good conductors, so heat leaves your skin faster → feels cold."],rev:"Understand it deeper (5.1)"},
+{t:"metals",k:"Magnetism",q:"A recycling bin contains steel cans, aluminium cans, copper pipes and nickel coins. A big magnet is lowered in. What does it pick up?",
+ o:[["All of them, because they are all metals","Not all metals are magnetic. That's a very common mistake."],
+    ["Steel cans and nickel coins","Correct: steel contains iron, and nickel is magnetic. Aluminium and copper aren't."],
+    ["Only the steel cans","Nickel is one of the three magnetic metals (iron, nickel, cobalt)."],
+    ["Aluminium and steel cans, because they're both cans","The shape of an object doesn't matter. Only the material does."]],a:1,
+ why:["Recall the magnetic metals: iron, nickel, cobalt (and steel, which contains iron).","Check each item: steel ✓, aluminium ✗, copper ✗, nickel ✓.","So the magnet lifts the steel and the nickel."],rev:"What makes a metal a metal?"},
+{t:"metals",k:"Insulators",q:"A frying pan is made of steel, but its handle is made of hard plastic. What is the best explanation?",
+ o:[["Steel conducts heat to the food; plastic insulates, so the handle stays cool.","Correct: each material is chosen for its own job."],
+    ["Plastic is stronger than steel, so the handle won't snap off when lifted.","Steel is far stronger. The handle is plastic for a different reason."],
+    ["Plastic conducts heat better than steel, so the whole pan heats up faster.","Plastic is a poor conductor. That's exactly why it's used for the handle."],
+    ["Steel is too heavy for a handle, so plastic keeps the pan light.","Weight isn't the main reason. Think about heat."]],a:0,
+ why:["Split the object into its two parts and their two jobs.","Pan's job: pass heat to food → conductor (steel).","Handle's job: stay safe to hold → insulator (plastic)."],rev:"Brain-teaser: the cooking pan"},
+{t:"metals",k:"Shine",q:"An old spoon looks dull and grey. A student says it can't be a metal. What is the best way to check?",
+ o:[["Polish a small area and test whether it conducts electricity","Correct: metals look dull when their surface reacts with air. Underneath, the shine returns, and metals conduct."],
+    ["Check its colour, because metals are always silver-grey","Metals come in many colours (copper, gold), and non-metals can be grey too."],
+    ["Agree with the student, because dull means it's a non-metal","Old metals often go dull on the surface. Dullness alone isn't enough evidence."],
+    ["Drop it on the floor to see whether it bounces back up","Bouncing isn't a property used to identify metals."]],a:0,
+ why:["Remember why old metals look dull: the surface reacts with the air.","So look underneath (polish or scratch) for the true shine.","Back it up with a stronger test: does it conduct electricity?"],rev:"Understand it deeper (5.1)"},
+{t:"metals",k:"Property → use",q:"Which property is the main reason gold is used for jewellery?",
+ o:[["It conducts heat well, so it feels warm on your skin.","True, but conducting heat isn't what makes good jewellery."],
+    ["It stays shiny for a long time and is easy to shape.","Correct: it doesn't go dull, and it's malleable enough to make detailed designs."],
+    ["It is magnetic, so it clings to skin and stays on.","Gold isn't magnetic."],
+    ["It is brittle, so it can be carved into fine shapes.","Gold is a metal, so it's malleable, not brittle."]],a:1,
+ why:["Ask what jewellery needs: to look attractive for years and be made into shapes.","Match: stays shiny → attractive; malleable → shaped.","Reject true-but-irrelevant facts (heat conduction)."],rev:"Property → use"},
+{t:"metals",k:"Non-metal uses",q:"Party balloons are filled with helium, a non-metal. Why helium rather than hydrogen, which is even lighter?",
+ o:[["Helium is a metal, so it's stronger and won't leak out.","Helium is a non-metal gas."],
+    ["Helium is lighter than air and won't catch fire, unlike hydrogen.","Correct: helium is unreactive, so it's safe."],
+    ["Hydrogen is heavier than air, so the balloons would sink to the floor.","Hydrogen is the lightest gas of all. That isn't the problem."],
+    ["Helium conducts electricity, which helps keep balloons up.","Conductivity has nothing to do with floating."]],a:1,
+ why:["Both gases are lighter than air, so both would float.","What's the difference? Hydrogen is flammable; helium is unreactive.","Choose the safe one for parties: helium."],rev:"Property → use"},
+{t:"metals",k:"Periodic Table",q:"A new element is found near the left side of the Periodic Table. Predict which properties it most likely has.",
+ o:[["Dull, brittle, an insulator","Those are non-metal properties. Non-metals are on the right."],
+    ["Shiny, conducts electricity, malleable","Correct: elements on the left and middle are metals."],
+    ["A colourless gas at room temperature","Most gases are non-metals on the right (hydrogen is the exception, top left)."],
+    ["It will definitely be magnetic","Only a few metals are magnetic, so we can't predict that."]],a:1,
+ why:["Recall the layout: metals left and middle; non-metals right.","So this element is most likely a metal.","Predict typical metal properties, but not rare ones like magnetism."],rev:"Property → use (Periodic Table)"},
+{t:"metals",k:"Melting point",q:"Old toy soldiers were made by pouring melted tin into moulds. Which property of tin made this easy?",
+ o:[["It is magnetic, so it sticks firmly to a metal mould.","Tin isn't magnetic, and magnetism doesn't help with moulding."],
+    ["It has a low melting point for a metal (about 232 °C).","Correct: it melts easily, so it can be poured into moulds."],
+    ["It is brittle, so the shape snaps cleanly out of the mould.","Tin is a metal, so it's malleable. Brittle toys would also break easily."],
+    ["It has a very high melting point, so it sets very quickly.","A very high melting point would make it harder to melt and pour."]],a:1,
+ why:["Think about the process: melt → pour → set.","Which property makes melting easy? A low melting point.","Check the number: 232 °C is low compared with iron or copper (over 1000 °C)."],rev:"Worked reasoning: unfamiliar context"},
+
+/* ---------- 5.2 COMPARING ---------- */
+{t:"compare",k:"Using data",q:"Substance X is silvery, conducts electricity and melts at −39 °C. What is X?",
+ o:[["A non-metal, because it's a liquid at room temperature","Being liquid is unusual for a metal, but one metal is liquid: mercury."],
+    ["A metal: mercury","Correct: shiny + conducts = metal; liquid at room temperature = mercury."],
+    ["A gas, because the melting point is below zero","Melting at −39 °C means it's liquid at room temperature, not a gas."],
+    ["An alloy, because it's silvery","Silvery colour doesn't tell you it's an alloy."]],a:1,
+ why:["Read the clues one by one: silvery (metal), conducts (metal).","Work out its state: melts at −39 °C, so at about 25 °C it's a liquid.","Recall the only liquid metal at room temperature: mercury."],rev:"Understand it deeper (5.2)"},
+{t:"compare",k:"Exceptions",q:"A black solid is brittle and dull, but it conducts electricity. What is the best conclusion?",
+ o:[["It must be a metal, because conducting electricity proves it.","One clue isn't enough. The other clues say non-metal."],
+    ["It's a non-metal, probably graphite: the exception that conducts.","Correct: two non-metal clues, plus a known exception explains the third."],
+    ["The test went wrong, because non-metals never conduct.","Graphite is a real non-metal that conducts. Don't dismiss evidence."],
+    ["It's an alloy, because it has a mix of metal and non-metal properties.","Alloys are metal mixtures and are usually shiny and malleable, not brittle."]],a:1,
+ why:["Sort the clues: brittle (non-metal), dull (non-metal), conducts (metal).","Majority points to non-metal.","Ask: is there a known non-metal that conducts? Yes: graphite."],rev:"Worked reasoning: identify from data"},
+{t:"compare",k:"Best test",q:"Which ONE test is most reliable for telling a solid metal from a solid non-metal?",
+ o:[["Look to see whether its surface is shiny or dull","Old metals can look dull, so this test can mislead."],
+    ["Tap it to hear whether it makes a ringing sound","Glass and pottery ring too, so this test can mislead."],
+    ["Test whether it conducts electricity in a circuit","Correct: almost all metals conduct and almost all solid non-metals don't."],
+    ["Hold it to feel whether it is cold to the touch","Hard to judge and depends on the size of the object."]],a:2,
+ why:["List each test's weak spot.","Shine: tarnish. Ringing: glass. Feel: unreliable.","Circuit test: clear yes/no with only one common exception (graphite)."],rev:"The best test: does it conduct electricity?"},
+{t:"compare",k:"Fair testing",q:"In a circuit test, the lamp doesn't light with a material between the clips. What should you check FIRST?",
+ o:[["Whether the material is shiny when polished","Shine is a separate test. First make sure the circuit itself works."],
+    ["That the lamp lights when the two clips touch","Correct: this proves the circuit works, so 'no light' really means 'doesn't conduct'."],
+    ["Whether the material is attracted to a magnet","Magnetism doesn't affect this test."],
+    ["Nothing, because it's definitely a non-metal","A broken bulb or loose wire would give the same result. Check first."]],a:1,
+ why:["Ask: what else could stop the lamp lighting? A fault in the circuit.","Rule it out: touch the clips together; the lamp should light.","Also make good contact with the material, then retest."],rev:"The best test: does it conduct electricity?"},
+{t:"compare",k:"Evidence",q:"A glass bottle makes a ringing sound when tapped. What can you conclude?",
+ o:[["It's a metal, because ringing (sonorous) is a metal property.","Glass isn't a metal. Ringing alone isn't enough evidence."],
+    ["Ringing alone doesn't prove it's a metal; more tests are needed.","Correct: use several properties before deciding."],
+    ["It's an alloy, because both glass and metal can ring.","Alloys are metal mixtures. Glass isn't one."],
+    ["It conducts electricity, because sonorous things do.","Ringing tells you nothing about conducting, and glass is an insulator."]],a:1,
+ why:["Recall: sonorous is a metal property, but not ONLY metals ring.","Think of a counter-example: glass, ceramic cups.","So you need more evidence: shine, conductivity, malleability."],rev:"Myth-busters (5.1)"},
+{t:"compare",k:"Comparing",q:"Which sentence is the best COMPARISON of metals and non-metals?",
+ o:[["Metals are shiny and are good conductors of heat.","This only describes metals. A comparison needs both."],
+    ["Metals are shiny, whereas solid non-metals are dull.","Correct: both groups, the same property, linked with 'whereas'."],
+    ["Non-metals are dull, brittle and poor conductors.","This only describes non-metals."],
+    ["Metals are shiny and non-metals are brittle.","It mentions both, but compares different properties, so it isn't a true comparison."]],a:1,
+ why:["A comparison talks about BOTH groups.","It compares the SAME property for each.","It uses a linking word: whereas, but, compared with."],rev:"Writing a good comparison"},
+{t:"compare",k:"Using data",q:"A yellow solid crumbles when hit, melts at about 115 °C and doesn't conduct electricity. What is it?",
+ o:[["A metal, because it's a solid","Most metals are solids, but so are many non-metals. Look at the other clues."],
+    ["A non-metal, likely sulfur","Correct: brittle, low melting point and an insulator → non-metal; yellow → sulfur."],
+    ["Gold, because it's yellow","Gold is malleable, conducts, and melts at over 1000 °C."],
+    ["An alloy like brass, because it's yellow","Brass is a metal mixture: it conducts and isn't brittle."]],a:1,
+ why:["Ignore colour at first; it can mislead (gold, brass, sulfur are all yellow).","Use the property clues: brittle, low melting point, insulator → non-metal.","Then use colour to name it: yellow non-metal = sulfur."],rev:"Understand it deeper (5.2)"},
+{t:"compare",k:"Sorting",q:"A list contains silver, oxygen, helium, carbon, copper, nitrogen, sulfur and iron. How many are metals?",
+ o:[["3","Correct: silver, copper and iron."],
+    ["5","You may have counted carbon and sulfur because they're solids. They're non-metals."],
+    ["4","Check carbon or sulfur again: both are non-metals."],
+    ["8","They're all elements, but not all are metals."]],a:0,
+ why:["Go through one at a time; don't guess from state (solid/gas).","Metals: silver, copper, iron.","Solids like carbon and sulfur are still non-metals."],rev:"Level up: practise 5.2"},
+{t:"compare",k:"Weighing evidence",q:"A transparent, very hard solid has a melting point above 3500 °C and doesn't conduct electricity. Metal or non-metal?",
+ o:[["Metal, because a very high melting point is a metal property","Usually true, but it's not shiny like a metal and doesn't conduct. Weigh all the clues."],
+    ["Non-metal (diamond, a form of carbon)","Correct: it doesn't conduct and isn't metallic-looking; diamond is the exception with a very high melting point."],
+    ["Metal, because it's hard","Many non-metals are hard (diamond is the hardest natural material)."],
+    ["You can't decide from data","You can: weigh the clues and use known exceptions."]],a:1,
+ why:["List clues for each side: metal (high melting point), non-metal (transparent, doesn't conduct).","The circuit test is the most reliable clue, so it weighs most.","Find the known exception that fits: diamond."],rev:"Level up: practise 5.2"},
+
+/* ---------- 5.3 ALLOYS ---------- */
+{t:"alloys",k:"Particle theory",q:"Why is steel harder than pure iron?",
+ o:[["Different-sized carbon atoms disrupt the layers so they can't slide.","Correct: jammed layers → harder."],
+    ["Steel has more iron atoms packed tightly together than iron does.","Steel actually has slightly less iron. The key is the different atoms."],
+    ["The atoms in steel are chemically joined into a compound.","An alloy is a mixture; the atoms aren't chemically bonded."],
+    ["Steel is heated to a much higher temperature when it's made.","Heating isn't the reason. It's the particle arrangement."]],a:0,
+ why:["Picture pure iron: same-sized atoms in neat layers that slide.","Add carbon atoms of a different size: they disrupt the layers.","Layers can't slide easily → harder."],rev:"Why are alloys harder? Particle theory"},
+{t:"alloys",k:"Mixture",q:"Which statement about an alloy is correct?",
+ o:[["It is a compound, because the metals are melted and joined together.","Melting together doesn't make a chemical bond. The atoms just mix."],
+    ["It is a mixture: the atoms mix but don't bond, and amounts can vary.","Correct: that's why different brasses exist."],
+    ["It is a pure element, because it is still a metal.","An alloy contains at least two elements."],
+    ["It always contains only metals and never non-metals.","Steel contains carbon, a non-metal."]],a:1,
+ why:["Recall the difference: compound = chemically joined; mixture = not joined.","In an alloy the atoms mix but don't bond.","Check the extra clue: amounts can vary → a mixture."],rev:"Quick recap: element, compound, mixture"},
+{t:"alloys",k:"Carats",q:"What percentage of 18 carat gold is pure gold?",
+ o:[["18%","Carats are out of 24, not out of 100."],
+    ["75%","Correct: 18 ÷ 24 = 0.75 = 75%."],
+    ["82%","You may have done 100 − 18. Carats work as 'parts out of 24'."],
+    ["50%","That would be 12 carat."]],a:1,
+ why:["Remember: carats are parts out of 24.","18 carat = 18/24.","18 ÷ 24 = 0.75 → 75%."],rev:"Gold and carats"},
+{t:"alloys",k:"Carats",q:"A 12 g necklace is made of 22 carat gold. About how much pure gold does it contain?",
+ o:[["22 g","22 is the carat number, not grams, and it's more than the whole necklace!"],
+    ["11 g","Correct: 22/24 = 11/12; 11/12 × 12 g = 11 g."],
+    ["10 g","Recheck: 22/24 of 12 g is 11 g."],
+    ["2 g","That's how much of the necklace is NOT gold."]],a:1,
+ why:["Turn carats into a fraction: 22/24 = 11/12.","Multiply by the mass: 11/12 × 12 g = 11 g.","Sense-check: 22 carat is nearly pure, so nearly all 12 g ✓"],rev:"Worked reasoning: carats"},
+{t:"alloys",k:"Melting range",q:"Copper melts at 1085 °C. Why does a book give brass a melting RANGE (about 900–1000 °C) instead?",
+ o:[["Brass is a mixture, and its recipe of copper and zinc can vary.","Correct: different mixes melt at different temperatures."],
+    ["Thermometers can't measure brass accurately at high temperatures.","It's not a measuring problem; it's because brass isn't one pure substance."],
+    ["Brass is a pure element that softens slowly as it heats up.","Brass is an alloy: copper + zinc."],
+    ["Brass melts at a higher temperature than copper does.","Brass actually melts lower than copper."]],a:0,
+ why:["Recall: pure substances melt at one fixed temperature.","Brass is a mixture whose proportions can change.","Different proportions → different melting points → a range."],rev:"Mixtures melt over a range"},
+{t:"alloys",k:"Choosing materials",q:"Why are aeroplane bodies made from aluminium alloys rather than pure aluminium or steel?",
+ o:[["Aluminium alloys are both light and strong.","Correct: pure aluminium is too soft; steel is too heavy."],
+    ["Aluminium alloys are magnetic, which helps navigation.","Magnetism isn't needed for a plane body."],
+    ["Pure aluminium is too heavy to fly.","Pure aluminium is light. Its problem is that it's too soft."],
+    ["Steel is too weak to survive the forces.","Steel is strong. Its problem is that it's heavy."]],a:0,
+ why:["List what a plane needs: light (saves fuel) and strong.","Check options: pure aluminium (light, soft), steel (strong, heavy).","Only the alloy ticks both boxes."],rev:"Worked reasoning: choosing a material"},
+{t:"alloys",k:"Uses",q:"Why are 'silver' coins usually made from a copper–nickel alloy?",
+ o:[["The alloy is harder, so it lasts longer, and it's cheaper.","Correct: hardness and cost."],
+    ["Pure silver is magnetic, which would jam vending machines.","Silver isn't magnetic."],
+    ["The alloy conducts electricity better, so it can be detected.","Conductivity doesn't matter for coins."],
+    ["Pure silver is too hard to stamp patterns into.","Pure silver is soft. That's the problem: coins would wear away."]],a:0,
+ why:["Ask what a coin needs: to last years of handling, and not cost too much.","Pure silver is soft and expensive.","An alloy is harder and cheaper."],rev:"Coins and medals"},
+{t:"alloys",k:"Particle theory",q:"Pure gold is very easy to bend and scratch. Which explanation is correct?",
+ o:[["Its atoms are all the same size, so its layers slide easily.","Correct: the reason pure metals are soft and malleable."],
+    ["Its atoms are spread far apart, like the particles in a gas.","Atoms in a solid metal are tightly packed."],
+    ["Gold atoms are much bigger than other metal atoms, so they squash.","Size alone isn't the reason. It's that they're all the SAME size, in regular layers."],
+    ["Gold is a non-metal, so it is naturally soft.","Gold is a metal."]],a:0,
+ why:["Recall the particle picture of a pure metal: regular layers of identical atoms.","Identical atoms → nothing blocks the layers.","Layers slide → easy to bend and scratch."],rev:"Why are alloys harder? Particle theory"},
+{t:"alloys",k:"Uses",q:"Which properties make a titanium alloy suitable for an artificial hip joint?",
+ o:[["Strong, light, doesn't corrode, safe inside the body","Correct: all four matter inside a body for many years."],
+    ["Magnetic, so the joint stays firmly in place","Magnetism isn't needed (and titanium isn't magnetic)."],
+    ["Brittle, so it can be carved to the exact shape of a bone","Brittle would be dangerous; it could shatter."],
+    ["Good conductor, so it carries nerve signals","Conductivity isn't needed for a joint."]],a:0,
+ why:["Imagine the job: inside a moving, wet body for many years.","Needs: strong, light, won't corrode, won't harm the body.","Reject properties that don't help the job."],rev:"Famous alloys"},
+{t:"alloys",k:"Modern alloys",q:"A boy sits on his glasses. The frames bend, but go back to their shape when dipped in warm water. What are they made of?",
+ o:[["A shape memory alloy, such as nitinol","Correct: it returns to its original shape when warmed."],
+    ["Pure gold, which is soft and bendy","Pure gold bends but wouldn't spring back when warmed."],
+    ["Ordinary plastic, which is flexible","Ordinary plastic doesn't have shape memory."],
+    ["Steel, which is strong and springy","Steel stays bent."]],a:0,
+ why:["The key clue: returns to shape when warmed.","Which material does that? A shape memory alloy.","Name it: nitinol (nickel + titanium)."],rev:"Famous alloys"},
+
+/* ---------- 5.4 SEPARATING ---------- */
+{t:"separate",k:"Choosing a method",q:"You need to remove sand from salty water. Which method, and why?",
+ o:[["Filtration: sand doesn't dissolve, so filter paper traps it","Correct: insoluble solid → filter."],
+    ["Evaporation: the water boils away and leaves the sand","That would leave sand AND salt mixed together."],
+    ["Distillation: it purifies the water and removes the sand","It would work for the water, but it's far more complicated than needed to remove sand."],
+    ["A magnet: sand is magnetic, so it can be pulled out","Sand isn't magnetic."]],a:0,
+ why:["Ask: is the sand dissolved? No, it's insoluble.","Insoluble solid + liquid → filtration.","The salt stays dissolved and passes through with the water."],rev:"Filtration"},
+{t:"separate",k:"Choosing a method",q:"A ship needs drinking water from sea water. Which method should it use?",
+ o:[["Filtration","Salt is dissolved, so it passes straight through filter paper."],
+    ["Distillation","Correct: boil the water, then condense the steam to collect pure water."],
+    ["Evaporation","The water escapes into the air. You'd keep the salt but lose the water you wanted."],
+    ["Using a magnet","Salt isn't magnetic."]],a:1,
+ why:["Ask: which part do we want? The water.","The salt is dissolved, so filtering won't work.","To KEEP the water, boil it and condense it again: distillation."],rev:"Distillation"},
+{t:"separate",k:"Choosing a method",q:"You want to get the salt back from salty water, and you don't need the water. Which is the simplest method?",
+ o:[["Filtration","Dissolved salt passes through filter paper."],
+    ["Evaporation","Correct: heat it so the water escapes and the salt is left behind."],
+    ["Distillation","This works but is more complex than needed, since you don't need the water."],
+    ["Using a magnet","Salt isn't magnetic."]],a:1,
+ why:["Which part do we want? The salt.","We don't need the water, so we can let it escape.","Evaporation is the simplest method that does this."],rev:"Evaporation"},
+{t:"separate",k:"Filtration",q:"Salty water with sand in it is filtered. What is in the liquid that passes through (the filtrate)?",
+ o:[["Pure water","The salt is dissolved, so it passes through with the water."],
+    ["Salty water","Correct: dissolved salt particles are small enough to pass through the paper."],
+    ["Sand and water","Sand is trapped as the residue."],
+    ["Nothing; all the liquid stays in the paper","Liquid passes through filter paper."]],a:1,
+ why:["Recall: filter paper traps big, undissolved particles.","Dissolved salt particles are tiny, so they pass through.","So the filtrate is salty water; the residue is sand."],rev:"Filtration"},
+{t:"separate",k:"Condenser",q:"What is the job of the condenser in distillation?",
+ o:[["To heat the salty water until it starts to boil","The Bunsen burner does that."],
+    ["To cool the steam so it condenses back into water","Correct: cold water around the tube takes heat from the steam."],
+    ["To filter the salt out of the steam as it passes","No salt reaches the condenser; it stays in the flask."],
+    ["To measure the exact boiling point of the water","The thermometer does that."]],a:1,
+ why:["Ask what enters the condenser: hot steam (gas).","Ask what should come out: liquid water.","Gas → liquid needs cooling: that's the condenser's job."],rev:"Distillation"},
+{t:"separate",k:"Distillation",q:"After sea water is distilled, what is left in the flask?",
+ o:[["Pure water, ready to drink","The pure water collects in the beaker, not the flask."],
+    ["Salt and other dissolved solids","Correct: their boiling points are far higher, so they stay behind."],
+    ["Nothing; it all evaporates","Only the water boils at 100 °C. The salt doesn't."],
+    ["Steam that hasn't condensed yet","Steam leaves the flask and goes into the condenser."]],a:1,
+ why:["Which substance boils at 100 °C? Water.","Which doesn't? The dissolved salt (very high boiling point).","So the salt is left behind in the flask."],rev:"Distillation"},
+{t:"separate",k:"Planning",q:"A mixture contains iron filings, sand and salt. What is the best FIRST step?",
+ o:[["Add water to everything and filter it","Possible, but the iron would end up mixed with the sand in the filter paper."],
+    ["Use a magnet to remove the iron filings","Correct: removing the iron first is quick, and it stops it mixing with the sand later."],
+    ["Heat the mixture until the salt melts","Heating a dry mixture doesn't separate it."],
+    ["Distil it to collect the pure salt","Distillation is for getting a liquid out of a solution."]],a:1,
+ why:["List each part's special property: iron (magnetic), salt (dissolves), sand (neither).","Remove the easiest one first so it doesn't get in the way: the magnet.","Then dissolve, filter, and evaporate."],rev:"Separating a three-part mixture: sand, salt and water"},
+{t:"separate",k:"Planning",q:"Powdered carbon is mixed with table salt. Which plan separates them?",
+ o:[["Pour the dry powder through filter paper","Dry powders both pass through or both stay. Filtration needs a liquid."],
+    ["Add water, stir, filter, then evaporate","Correct: salt dissolves, carbon doesn't."],
+    ["Use a magnet to pull out the carbon","Neither carbon nor salt is magnetic."],
+    ["Heat it until the salt boils away","Salt's boiling point is over 1400 °C; this isn't practical or safe."]],a:1,
+ why:["Find the property difference: salt dissolves in water; carbon doesn't.","Use it: dissolve → filter (carbon stays in the paper).","Get the salt back by evaporating the filtrate."],rev:"Brain-teaser: the black and white powder"},
+{t:"separate",k:"Technique",q:"A student stirs the mixture inside the filter paper with a pencil to speed things up. What's the problem?",
+ o:[["Wet filter paper tears easily, so sand gets through.","Correct: then the separation fails."],
+    ["The pencil's graphite will dissolve into the filtrate.","Pencils don't dissolve in water."],
+    ["Stirring stops the salt from dissolving in the water.","Stirring helps dissolving; that's not the problem."],
+    ["No problem; stirring always speeds up filtering.","Think about what wet paper is like."]],a:0,
+ why:["Think about what wet filter paper is like: weak and soft.","A pencil could poke a hole.","A hole lets the solid through, so the filtrate is no longer clear."],rev:"Level up: practise 5.4"},
+{t:"separate",k:"Safety",q:"When evaporating salt water in an evaporating basin, why should you NOT heat it until completely dry?",
+ o:[["Hot crystals can spit out of the basin and burn someone.","Correct: heat until about half has gone, then leave it somewhere warm."],
+    ["The salt will turn into a gas and escape into the air.","Salt doesn't boil at Bunsen temperatures."],
+    ["The evaporating basin will melt in the strong heat.","Evaporating basins are made to be heated."],
+    ["The salt will turn back into water when it is too hot.","Salt can't turn into water."]],a:0,
+ why:["Picture the end of evaporating: very little water, very hot crystals.","Crystals can crack and jump out (spit).","Safer: stop early and let the rest evaporate slowly."],rev:"Evaporation"},
+
+/* ---------- 5.5 ACIDS AND ALKALIS ---------- */
+{t:"acids",k:"Hazard symbols",q:"A bottle's red diamond label shows liquid dripping onto a hand and onto a metal bar, both being eaten away. What does it mean?",
+ o:[["Irritant: it may make your skin red and sore","Irritant uses an exclamation mark, and it doesn't destroy materials."],
+    ["Corrosive: destroys living tissue and attacks metal","Correct: the picture shows damage to skin and metal."],
+    ["Toxic: it is poisonous if it is swallowed or breathed in","Toxic uses a skull and crossbones."],
+    ["Flammable: it catches fire easily near a flame","Flammable uses a flame."]],a:1,
+ why:["Describe what the picture shows: something being destroyed.","Destroying skin and metal = corrosive.","Rule out the other symbols by their pictures."],rev:"Hazard warning symbols"},
+{t:"acids",k:"Hazard symbols",q:"A bottle shows a skull and crossbones. Which pair of precautions best matches this hazard?",
+ o:[["Keep it well away from flames and store it somewhere cool","Those match flammable substances, not toxic ones."],
+    ["Wear gloves and glasses; wash hands; never eat in the lab","Correct: they stop poison entering through skin, eyes or mouth."],
+    ["Shake it well before use so it is evenly mixed","That doesn't protect you, and could cause splashes."],
+    ["None: it's only dangerous in very large amounts","Toxic substances can harm in small amounts."]],a:1,
+ why:["Name the hazard: toxic (poisonous).","Ask how a poison gets into the body: skin, eyes, mouth, breathing.","Choose precautions that block those routes."],rev:"Worked reasoning: hazard symbol"},
+{t:"acids",k:"Spills",q:"Some dilute acid splashes onto your hand. What should you do first?",
+ o:[["Wipe it off quickly and carefully with a dry paper tissue","Wiping can spread the acid around; it doesn't remove it well."],
+    ["Wash it with lots of running water, then tell the teacher","Correct: water dilutes the acid and washes it away."],
+    ["Cover it with a plaster to keep the acid off","That traps the acid against your skin."],
+    ["Add some alkali to it to cancel the acid out","Strong alkali could burn you too. Water is the safe first step."]],a:1,
+ why:["Goal: get the acid off and make it weaker, fast.","Water does both: dilutes and rinses away.","Then tell the teacher. Never add another chemical to skin."],rev:"Dilute means less dangerous, not safe"},
+{t:"acids",k:"Dilution",q:"Concentrated acid is corrosive. What changes when it is diluted with lots of water?",
+ o:[["It becomes completely safe, even to drink.","Dilute acids can still be harmful or irritant. Never drink lab chemicals."],
+    ["It is less dangerous, but may still harm or irritate.","Correct: diluting reduces the danger but doesn't remove it."],
+    ["It turns into an alkali once enough water is added.","Adding water doesn't turn an acid into an alkali."],
+    ["It becomes more dangerous because there is more of it.","Water makes it less concentrated, so less dangerous."]],a:1,
+ why:["Diluting spreads the acid out in more water.","Less concentrated → less damaging, so corrosive may become irritant.","'Less dangerous' isn't the same as 'safe'."],rev:"Dilute means less dangerous, not safe"},
+{t:"acids",k:"Alkalis",q:"Which statement about oven cleaner (a strong alkali) is correct?",
+ o:[["It is safe to touch, because only acids are ever dangerous.","Strong alkalis are corrosive too."],
+    ["It can burn skin, so gloves and eye protection are needed.","Correct: strong alkalis are as dangerous as strong acids."],
+    ["It's an acid, because most cleaning products are acids.","Many cleaners are alkalis, not acids."],
+    ["It has a pH of 7, because it is used in homes.","Strong alkalis have a pH of about 12–14."]],a:1,
+ why:["Classify it: oven cleaner = strong alkali.","Recall: strong acids AND strong alkalis are corrosive.","So handle it with gloves and eye protection."],rev:"Myth-busters (5.5)"},
+{t:"acids",k:"Lab safety",q:"Why should you put a bottle stopper upside down on the bench?",
+ o:[["So the chemical doesn't touch the bench or pick up dirt","Correct: it protects both the bench and the chemical."],
+    ["So it can't roll off the bench and break on the floor","It may help a little, but that's not the main reason."],
+    ["So the chemical can drain back down into the stopper","That isn't how stoppers work."],
+    ["So you can tell which bottle the stopper came from","Upside down doesn't help you identify it."]],a:0,
+ why:["Picture the stopper: its bottom part has been inside the chemical.","Right way up → chemical on the bench; dirt on the stopper.","Upside down → both problems avoided."],rev:"Working safely with acids and alkalis"},
+{t:"acids",k:"Lab safety",q:"Why is it safer to stand up when using acids?",
+ o:[["You can step back quickly if something spills.","Correct: a spill won't land in your lap."],
+    ["Standing makes you look more professional.","That's not a safety reason."],
+    ["Acids work better when you stand.","Your position doesn't affect the chemical."],
+    ["You can see the hazard symbols more clearly.","Possibly, but the main reason is moving away from spills."]],a:0,
+ why:["Think about what could go wrong: a spill.","Sitting: the spill lands on you and you can't move fast.","Standing: you can step back immediately."],rev:"Working safely with acids and alkalis"},
+{t:"acids",k:"Strength",q:"Lemon juice and hydrochloric acid are both acids. Why is lemon juice safe to eat but hydrochloric acid in the lab is not?",
+ o:[["Lemon juice has a weak acid; lab acid can be strong and corrosive.","Correct: strength and concentration decide the danger."],
+    ["Lemon juice isn't really an acid; it only tastes sour to us.","It is: it contains citric acid."],
+    ["Lab acids are really alkalis in disguise, which is why they burn skin.","Acids and alkalis are opposites; an acid isn't an alkali."],
+    ["Lemon juice is neutral, so it can't harm your body at all.","Lemon juice has a pH of about 2–3, so it's acidic."]],a:0,
+ why:["Both are acids, so the difference must be in how strong they are.","Food acids (citric, ethanoic) are weak.","Lab acids can be strong and corrosive. Never taste anything in a lab."],rev:"Myth-busters (5.5)"},
+{t:"acids",k:"Symbols",q:"Why do hazard warning labels use pictures instead of only words?",
+ o:[["Pictures are understood quickly in any language.","Correct: important for safety everywhere."],
+    ["Words fade on bottles much faster than pictures.","Not the main reason."],
+    ["Pictures make the bottles look nicer on shelves.","Labels are for safety, not decoration."],
+    ["Only trained scientists can read the hazard words.","Anyone can read words in their own language. The point is that pictures work in every language."]],a:0,
+ why:["Ask who needs to understand the label: everyone who handles it, anywhere.","People speak many languages.","A picture is recognised instantly by everyone."],rev:"Understand it deeper (5.5)"},
+{t:"acids",k:"Neutralisation",q:"An indigestion tablet helps when you have too much stomach acid. What kind of substance is it, and why does it work?",
+ o:[["A mild alkali, because alkalis cancel out acids","Correct: acids and alkalis are chemical opposites."],
+    ["A strong acid, to add more acid","More acid would make indigestion worse."],
+    ["A neutral substance that absorbs acid like a sponge","It works by a chemical reaction, not by soaking acid up."],
+    ["A strong alkali like oven cleaner","Strong alkalis are corrosive and dangerous to swallow."]],a:0,
+ why:["Problem: too much acid.","Opposite of an acid = an alkali, which cancels it out (neutralisation).","Must be safe to swallow, so a mild alkali."],rev:"Acids and alkalis: chemical opposites"},
+
+/* ---------- 5.6 INDICATORS AND pH ---------- */
+{t:"ph",k:"Litmus",q:"Vinegar, sugar solution and detergent are tested with red litmus paper. Two show NO change. Which two?",
+ o:[["Vinegar and detergent","Detergent is an alkali, so it turns red litmus blue."],
+    ["Vinegar and sugar solution","Correct: red litmus only changes (to blue) in an alkali."],
+    ["Sugar solution and detergent","Detergent would turn it blue."],
+    ["All three show no change","The alkaline detergent changes it."]],a:1,
+ why:["Classify: vinegar = acid; sugar solution = neutral; detergent = alkali.","Red litmus turns blue ONLY in alkali.","So the acid and the neutral one leave it red."],rev:"Litmus"},
+{t:"ph",k:"Litmus",q:"Blue litmus paper is dipped into a strongly alkaline solution. What happens?",
+ o:[["It turns red.","Blue litmus turns red in ACIDS, not alkalis."],
+    ["It stays blue.","Correct: alkalis don't change blue litmus."],
+    ["It turns green.","Green is a universal indicator colour, not a litmus colour."],
+    ["It turns red, then back to blue.","Litmus doesn't flip back and forth like that."]],a:1,
+ why:["Recall: blue litmus changes only in acid (to red).","This is an alkali → no reason to change.","Ignore colours from other indicators."],rev:"Litmus"},
+{t:"ph",k:"Universal indicator",q:"Universal indicator turns violet when added to a cleaning liquid. What does this tell you?",
+ o:[["It is strongly acidic, about pH 1","Strong acids turn universal indicator red."],
+    ["It is neutral, exactly pH 7","Neutral is green."],
+    ["It is strongly alkaline, about pH 13","Correct: violet/purple is at the top end of the scale."],
+    ["It is weakly acidic, about pH 5","Weak acids are orange or yellow."]],a:2,
+ why:["Recall the colour order: red → orange → yellow → green → blue → purple.","Violet is at the far alkaline end.","So it's strongly alkaline, pH about 12–14."],rev:"Universal indicator and the pH scale"},
+{t:"ph",k:"pH scale",q:"Which of these is the STRONGEST acid?",
+ o:[["pH 6","pH 6 is only weakly acidic, close to neutral."],
+    ["pH 2","Correct: the lower the pH, the stronger the acid."],
+    ["pH 9","pH 9 is an alkali, not an acid."],
+    ["pH 4","pH 4 is a weaker acid than pH 2."]],a:1,
+ why:["Below 7 = acid; above 7 = alkali.","For acids: further below 7 = stronger.","Lowest number = strongest acid: pH 2."],rev:"Universal indicator and the pH scale"},
+{t:"ph",k:"Neutral",q:"Which liquid would turn universal indicator green?",
+ o:[["Lemon juice","Lemon juice is acidic (orange/red)."],
+    ["Sugar solution","Correct: sugar solution is neutral, pH 7."],
+    ["Soap solution","Soap is alkaline (blue)."],
+    ["Vinegar","Vinegar is acidic."]],a:1,
+ why:["Green = neutral = pH 7.","Classify each liquid: acid, alkali or neutral.","Only sugar solution is neutral."],rev:"Universal indicator and the pH scale"},
+{t:"ph",k:"Comparing indicators",q:"Why is universal indicator more useful than litmus?",
+ o:[["It shows how strong the acid or alkali is, not just which.","Correct: many colours that match pH numbers."],
+    ["It's the only indicator that works on acids as well as alkalis.","Litmus works on acids too."],
+    ["It's made from red cabbage, so it is safer to use.","Universal indicator is a mixture of several indicators."],
+    ["It doesn't change colour, so it's easier to read.","Changing colour is exactly what an indicator does."]],a:0,
+ why:["What does litmus tell you? Only acid or alkali.","What does universal indicator add? A range of colours matching pH.","So it tells you the strength as well."],rev:"Universal indicator and the pH scale"},
+{t:"ph",k:"Homemade indicators",q:"Red cabbage indicator is added to cola, but the result is hard to read. What is the most likely reason?",
+ o:[["Cola is neutral, so the indicator doesn't change.","Cola is acidic, so the indicator should change."],
+    ["Cola's dark colour hides the indicator's colour change.","Correct: coloured liquids mask the change. A pH meter would work better."],
+    ["Red cabbage indicator only ever changes colour in alkalis.","It changes colour in acids too (red/pink)."],
+    ["The bubbles in cola destroy the indicator dye.","Bubbles aren't the main problem."]],a:1,
+ why:["The indicator works by showing a colour.","If the liquid already has a strong colour, you can't see the change.","Use a different method for coloured liquids (pH meter)."],rev:"Homemade indicators"},
+{t:"ph",k:"Two indicators",q:"A liquid turns methyl orange RED (red below about pH 3) and leaves phenolphthalein colourless (colourless below about pH 8). What is its pH?",
+ o:[["About 10","Phenolphthalein would turn pink above pH 8."],
+    ["About 3 or lower","Correct: both clues must be true, and the methyl orange clue is the tighter one."],
+    ["Exactly 7","Methyl orange would be yellow at pH 7."],
+    ["Between 3 and 8","That ignores the methyl orange result, which says below about 3."]],a:1,
+ why:["Turn each clue into a pH rule: methyl orange red → pH below ~3; phenolphthalein colourless → pH below ~8.","Find where BOTH are true: below ~3.","So it's a fairly strong acid."],rev:"Understand it deeper (5.6)"},
+{t:"ph",k:"Neutralisation",q:"An alkali is slowly added to an acid of pH 2. What happens to the pH?",
+ o:[["It falls towards 0 as the liquid gets more acidic.","Adding alkali makes the solution less acidic, so the pH goes up."],
+    ["It rises towards 7 as the acid is cancelled out.","Correct: this is neutralisation."],
+    ["It stays at 2, because acids never change.","The alkali reacts with the acid, so the pH changes."],
+    ["It jumps straight to 14 with the first drop.","It rises gradually as more alkali is added."]],a:1,
+ why:["Acid and alkali are opposites.","Adding alkali cancels some of the acid → less acidic.","Less acidic = pH number goes UP, towards 7."],rev:"Understand it deeper (5.6): neutralisation"},
+{t:"ph",k:"Spotting errors",q:"A results table says: 'Lemon juice, universal indicator yellow, pH 4, weakly alkaline.' Which part is wrong?",
+ o:[["The colour should be green, not yellow","Yellow/orange at pH 4 fits a weak acid."],
+    ["The pH value should be 9, not 4","pH 4 is a sensible value for lemon juice."],
+    ["The conclusion should say weakly acidic","Correct: pH 4 is below 7, so it's an acid."],
+    ["Nothing is wrong with this result","Check the conclusion against the pH."]],a:2,
+ why:["Check each part against the others.","pH 4 → below 7 → acidic.","So 'weakly alkaline' contradicts the data; it should be 'weakly acidic'."],rev:"Level up: practise 5.6"}
+];
+
+/* ---------- state ---------- */
+const KEY="pm-mcq-v1";
+let S=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const app=document.getElementById('app');
+const onPages=/github\.io$/.test(location.hostname);
+const guideLink=(anchor,label)=>onPages?`<a href="Unit_5_PropertiesOfMaterials.html#${anchor}">${label}</a>`:`<b>${label}</b>`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+function start(ids){
+  S={list:ids.map(i=>({i,order:shuffle([0,1,2,3]),pick:null,conf:null,done:false})),pos:0};
+  save();render();
+}
+function home(){
+  const saved=load();
+  const counts={};Q.forEach(q=>counts[q.t]=(counts[q.t]||0)+1);
+  app.innerHTML=`
+  <div class="panel">
+    <h2>How it works</h2>
+    <ol class="how">
+      <li>Read the question and <b>think it through</b> before you pick. Wrong answers are common mistakes that look right.</li>
+      <li>Say how sure you are: <b>Sure</b> or <b>Guessing</b>.</li>
+      <li>Check your answer to see why each option is right or wrong, plus the reasoning steps.</li>
+      <li>At the end, your report shows <b>misconceptions</b> (wrong but sure) and <b>lucky guesses</b> (right but unsure). Revise both!</li>
+    </ol>
+    ${saved&&saved.list&&saved.list.some(x=>x.done)&&saved.list.some(x=>!x.done)?`<div class="row"><button class="btn" id="resume">Resume where you left off (${saved.list.filter(x=>x.done).length}/${saved.list.length})</button></div>`:""}
+    <h2 style="margin-top:18px">Choose a test</h2>
+    <div class="chips">
+      <button class="chip all" id="all"><b>Full revision</b><span>All ${Q.length} questions · about 55 min</span></button>
+      ${Object.entries(TOPICS).map(([k,t])=>`<button class="chip" data-t="${k}" style="--c:${t.c}"><b>${t.name}</b><span>${counts[k]} questions</span></button>`).join("")}
+    </div>
+  </div>`;
+  document.getElementById('all').onclick=()=>start(Q.map((_,i)=>i));
+  app.querySelectorAll('.chip[data-t]').forEach(b=>b.onclick=()=>start(Q.map((q,i)=>q.t===b.dataset.t?i:-1).filter(i=>i>=0)));
+  const r=document.getElementById('resume'); if(r) r.onclick=()=>{S=saved;render()};
+}
+
+function render(){
+  if(S.pos>=S.list.length) return report();
+  const it=S.list[S.pos], q=Q[it.i], tp=TOPICS[q.t];
+  const L="ABCD";
+  const correctSlot=it.order.indexOf(q.a);
+  app.innerHTML=`
+  <div class="panel" style="--c:${tp.c}">
+    <div class="qhead"><span class="tag">${tp.name} · ${q.k}</span><span class="eyebrow">Question ${S.pos+1} of ${S.list.length}</span></div>
+    <div class="prog" aria-hidden="true"><i style="width:${(S.pos/S.list.length)*100}%"></i></div>
+    <p class="qtext">${esc(q.q)}</p>
+    <div class="opts" role="radiogroup" aria-label="Answer options">
+      ${it.order.map((oi,slot)=>{
+        let cls="opt";
+        if(it.done){ if(slot===correctSlot) cls+=" right"; else if(slot===it.pick) cls+=" wrong"; }
+        else if(slot===it.pick) cls+=" sel";
+        const fb = it.done && (slot===it.pick || slot===correctSlot) ? `<span class="fb">${esc(q.o[oi][1])}</span>` : "";
+        return `<button class="${cls}" role="radio" aria-checked="${slot===it.pick}" data-s="${slot}" ${it.done?"disabled":""} id="o${slot}"><span class="l">${L[slot]}</span><span>${esc(q.o[oi][0])}${fb}</span></button>`;
+      }).join("")}
+    </div>
+    ${it.done?resultBlock(it,q,tp,correctSlot):`
+    <div class="conf"><b>How sure are you?</b>
+      <div class="row"><button type="button" data-c="sure" aria-pressed="${it.conf==='sure'}">Sure</button><button type="button" data-c="guess" aria-pressed="${it.conf==='guess'}">Guessing</button></div>
+    </div>`}
+    <div class="row nav">
+      <button class="btn ghost" id="quit">Back to start</button>
+      ${it.done?`<button class="btn" id="next">${S.pos+1===S.list.length?"See my report":"Next question →"}</button>`
+               :`<button class="btn" id="check" ${it.pick===null||!it.conf?"disabled":""}>Check answer</button>`}
+    </div>
+  </div>`;
+  if(!it.done){
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{it.pick=+b.dataset.s;save();render();document.getElementById('o'+it.pick).focus()});
+    app.querySelectorAll('.conf button').forEach(b=>b.onclick=()=>{it.conf=b.dataset.c;save();render()});
+    document.getElementById('check').onclick=()=>{it.done=true;it.ok=(it.pick===correctSlot);save();render()};
+  }else{
+    document.getElementById('next').onclick=()=>{S.pos++;save();render();window.scrollTo({top:0})};
+  }
+  document.getElementById('quit').onclick=home;
+}
+function resultBlock(it,q,tp,cs){
+  const ok=it.ok;
+  let head = ok ? (it.conf==="guess"?"Correct, but you were guessing":"Correct!") : (it.conf==="sure"?"Not quite. This one is a misconception to fix":"Not quite");
+  return `<div class="result ${ok?"ok":"bad"}">
+    <h3>${head}</h3>
+    <div class="why"><b>How to reason it out:</b><ol>${q.why.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+    <div class="revise">Revise: ${guideLink(tp.anchor,tp.name)} → "${esc(q.rev)}"</div>
+  </div>`;
+}
+
+function report(){
+  const done=S.list.filter(x=>x.done), score=done.filter(x=>x.ok).length, total=S.list.length;
+  const by={};S.list.forEach(x=>{const t=Q[x.i].t;by[t]=by[t]||{n:0,ok:0};by[t].n++;if(x.ok)by[t].ok++});
+  const mis=S.list.filter(x=>!x.ok&&x.conf==="sure"), wrong=S.list.filter(x=>!x.ok&&x.conf!=="sure"), lucky=S.list.filter(x=>x.ok&&x.conf==="guess");
+  const pct=Math.round(score/total*100);
+  const verdict=pct>=85?"Excellent: you understand this chapter well.":pct>=65?"Good: a few ideas need another look.":"Keep going: revise the topics below, then try again.";
+  const li=x=>{const q=Q[x.i];return `<li><b>${esc(q.k)}</b> (${TOPICS[q.t].name}): ${esc(q.q)}<br><span class="revise">Revise: ${guideLink(TOPICS[q.t].anchor,TOPICS[q.t].name)} → "${esc(q.rev)}"</span></li>`};
+  app.innerHTML=`
+  <div class="panel">
+    <div class="eyebrow">Your report</div>
+    <div class="row" style="gap:18px;margin-top:6px"><div class="big">${score}/${total}</div><div><b>${pct}%</b><br>${verdict}</div></div>
+    <div class="bars">${Object.entries(by).map(([t,v])=>`<div class="bar" style="--c:${TOPICS[t].c}"><span>${TOPICS[t].name}</span><span class="t"><i style="width:${v.ok/v.n*100}%"></i></span><span class="n">${v.ok}/${v.n}</span></div>`).join("")}</div>
+    ${mis.length?`<div class="grp"><h3><span class="pill m">fix first</span>Misconceptions: wrong, but you were sure</h3><p class="revise">These matter most. Your brain has a wrong idea stored, so re-read the section and the reasoning steps.</p><ul>${mis.map(li).join("")}</ul></div>`:""}
+    ${wrong.length?`<div class="grp"><h3><span class="pill s">revise</span>Gaps: wrong, and you knew you were unsure</h3><ul>${wrong.map(li).join("")}</ul></div>`:""}
+    ${lucky.length?`<div class="grp"><h3><span class="pill g">check</span>Lucky guesses: right, but you weren't sure</h3><p class="revise">You got these right, but make sure you can explain why.</p><ul>${lucky.map(li).join("")}</ul></div>`:""}
+    ${!mis.length&&!wrong.length&&!lucky.length?`<p><b>Perfect and confident on every question!</b></p>`:""}
+    <div class="row" style="margin-top:18px">
+      ${(mis.length+wrong.length+lucky.length)?`<button class="btn" id="retry">Retry the ${mis.length+wrong.length+lucky.length} questions to work on</button>`:""}
+      <button class="btn ghost" id="again">Start again</button>
+    </div>
+  </div>`;
+  const r=document.getElementById('retry');
+  if(r) r.onclick=()=>start([...mis,...wrong,...lucky].map(x=>x.i));
+  document.getElementById('again').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){};home()};
+}
+
+(function(){const s=load(); home(); if(s&&s.list&&s.list.length&&s.list.every(x=>x.done)){S=s;report();}})();
+</script>
+</body></html>
